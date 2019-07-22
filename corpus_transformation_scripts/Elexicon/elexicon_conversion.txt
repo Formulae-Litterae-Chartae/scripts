@@ -1,0 +1,24 @@
+First, transform the docx files to TEI with OxGarage.
+
+Start Docker Image for OxGarage:
+
+sudo docker run --rm -p 8080:8080 --mount type=bind,source="/home/matt/tei/tei-xsl/xml/tei/stylesheet",target="/usr/share/xml/tei/stylesheet" --mount type=bind,source="/home/matt/tei/tei/xml/tei/odd",target="/usr/share/xml/tei/odd" -e WEBSERVICE_URL=http://localhost:8080/ege-webservice/ --name oxgarage teic/oxgarage:dev
+
+The actual transformation can be done with the following script once OxGarage is running. In order to avoid retransforming all the formulae as well, edit the ~/docx_tei_cte_conversion/folder_list.txt file so that only the eLexicon folder is done:
+
+bash ~/docx_tei_cte_conversion/folder_conversion.sh
+
+Once this transformation to TEI is finished, run the following in an IPython shell:
+
+from glob import glob
+
+import subprocess
+
+lexes = glob('/home/matt/results/FORMAKAD/Werkstatt/e-Lexikon-DOCX/*.xml')
+
+for lex in lexes:
+    new_name = '/home/matt/results/formulae/data/elexicon/{entry}/elexicon.{entry}.deu001.xml'.format(entry=lex.split('/')[-1].replace('.xml', '').replace('-', '').replace('  ', ' ').replace(' ', '_').lower())
+    subprocess.run(['java', '-jar',  '/home/matt/Downloads/SaxonHE9-8-0-11J/saxon9he.jar', '{}'.format(lex), '/home/matt/docx_tei_cte_conversion/transform_elex_to_dll.xsl', '-o:{}'.format(new_name)])
+    subprocess.run(['java', '-jar',  '/home/matt/Downloads/SaxonHE9-8-0-11J/saxon9he.jar', '{}'.format(new_name), '/home/matt/docx_tei_cte_conversion/create_cts_files_elex.xsl', '-o:/home/matt/results/formulae/data/elexicon/{entry}/__cts__.xml'.format(entry=lex.split('/')[-1].replace('.xml', '').replace('-', '').replace('  ', ' ').replace(' ', '_').lower())])
+    
+There will almost certainly be some cleanup required here as the way the files are named and the way the URNs are assigned are essentially different. The folder structure, filenames, and URNs will need to be unified.

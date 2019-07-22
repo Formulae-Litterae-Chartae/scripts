@@ -1,0 +1,17 @@
+In [1]: from formulae.app import nemo
+
+In [2]: from formulae import create_app, db
+
+In [3]: from formulae.models import User
+
+In [4]: app = create_app()
+
+In [5]: app.app_context().push()
+
+In [6]: u = User(username="USERNAME", email="EMAIL", project_team=???, default_locale="de")
+
+In [7]: u.set_password('PASSWORD')
+
+In [8]: db.session.add(u)
+
+In [9]: db.session.commit()

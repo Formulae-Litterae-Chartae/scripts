@@ -1,0 +1,12 @@
+Start Docker Image for OxGarage:
+
+sudo docker run --rm -p 8080:8080 --mount type=bind,source="/home/matt/tei/tei-xsl/xml/tei/stylesheet",target="/usr/share/xml/tei/stylesheet" --mount type=bind,source="/home/matt/tei/tei/xml/tei/odd",target="/usr/share/xml/tei/odd" -e WEBSERVICE_URL=http://localhost:8080/ege-webservice/ --name oxgarage teic/oxgarage:dev
+
+Send DOCX document to API:
+
+for i in $( ls /media/matt/uhhdisk/Geschichte/Projekte/FORMAKAD/Werkstatt/formulae-andecavenses/Uebersetzungen/ ); do o=$( echo $i | sed -e 's/\.docx/\.xml/' ); curl -s  -o $o -F upload=@/media/matt/uhhdisk/Geschichte/Projekte/FORMAKAD/Werkstatt/formulae-andecavenses/Uebersetzungen/$i http://localhost:8080/ege-webservice/Conversions/docx%3Aapplication%3Avnd.openxmlformats-officedocument.wordprocessingml.document/TEI%3Atext%3Axml/; done
+
+I have set up two scripts to do the whole conversion process. For the first script to run, make sure to start OxGarage as described above. Then run the following at the terminal:
+
+bash ~/docx_tei_cte_conversion/corpus_transformation_scripts/folder_conversion.sh
+bash ~/docx_tei_cte_conversion/corpus_transformation_scripts/tei_to_cte_xslt_conversion.sh
