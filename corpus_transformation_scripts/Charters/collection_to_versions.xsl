@@ -115,6 +115,7 @@
                             <xsl:copy-of select="node()/ancestor::tei:text[@xml:id]/descendant::tei:div[@subtype='regest']"/>
                             <xsl:copy-of select="node()/ancestor::tei:text[@xml:id]/descendant::tei:div[@subtype='ausstellungsort']"/>
                             <xsl:copy-of select="node()/ancestor::tei:text[@xml:id]/descendant::tei:dateline"/>
+                            <xsl:copy-of select="node()/ancestor::tei:text[@xml:id]/descendant::tei:note[@type='echtheit']"/>
                         </xsl:element>
                         
                         <!-- Copy of the rest of the current <body> target. -->

@@ -301,58 +301,10 @@
                                             <xsl:value-of select="$textgroup"/><xsl:text>.</xsl:text><xsl:value-of select="normalize-space($work)"/><xsl:value-of select="format-number(number($urkundennummer),'0000')"/>
                                         </xsl:attribute>
                                         
-                                        <xsl:element name="front" namespace="http://www.tei-c.org/ns/1.0">
-                                            <xsl:attribute name="xml:lang">deu</xsl:attribute>
-                                            
-                                            <!-- URKUNDENNUMMER = first column (first cell in row). -->
-                                            <xsl:element name="div" namespace="http://www.tei-c.org/ns/1.0">
-                                                <xsl:attribute name="type">section</xsl:attribute>
-                                                <xsl:attribute name="subtype">urkundennummer</xsl:attribute>
-                                                <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
-                                                    <xsl:value-of select="$urkundennummer"/>
-                                                </xsl:element>
-                                            </xsl:element>
-                                            <!-- SEITEN = second column (second cell in row). -->
-                                            <xsl:element name="div" namespace="http://www.tei-c.org/ns/1.0">
-                                                <xsl:attribute name="type">section</xsl:attribute>
-                                                <xsl:attribute name="subtype">seiten</xsl:attribute>
-                                                <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
-                                                    <xsl:value-of select="child::tei:cell[position()=2]"/>
-                                                </xsl:element>
-                                            </xsl:element>
-                                            <!-- REGEST = third column (third cell in row). -->
-                                            <xsl:element name="div" namespace="http://www.tei-c.org/ns/1.0">
-                                                <xsl:attribute name="type">section</xsl:attribute>
-                                                <xsl:attribute name="subtype">regest</xsl:attribute>
-                                                <xsl:if test="child::tei:cell[position()=3]/not(tei:p)">
-                                                    <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
-                                                        <xsl:value-of select="child::tei:cell[position()=3]"/>
-                                                    </xsl:element>
-                                                </xsl:if>
-                                                <xsl:if test="child::tei:cell[position()=3]/tei:p">
-                                                    <xsl:for-each select="child::tei:cell[position()=3]/tei:p">
-                                                        <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
-                                                            <xsl:value-of select="node()"/>
-                                                        </xsl:element>
-                                                    </xsl:for-each>
-                                                </xsl:if>
-                                            </xsl:element>
-                                            <!-- AUSTELLUNGSORT = fourth column (fourth cell in row). -->
-                                            <xsl:if test="child::tei:cell[position()=4]/text()">
-                                                <xsl:element name="div" namespace="http://www.tei-c.org/ns/1.0">
-                                                    <xsl:attribute name="type">section</xsl:attribute>
-                                                    <xsl:attribute name="subtype">ausstellungsort</xsl:attribute>
-                                                    <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
-                                                        <xsl:value-of select="child::tei:cell[position()=4]"/>
-                                                    </xsl:element>
-                                                </xsl:element>
-                                            </xsl:if>
-                                            <!-- DATES = fifth column (fifth cell in row). -->
-                                            <xsl:call-template name="addDateline">
-                                                <xsl:with-param name="currentElement" select="current()"/>
-                                            </xsl:call-template>
-                                            
-                                        </xsl:element>
+                                        <xsl:call-template name="createFront">
+                                            <xsl:with-param name="urkundennummer" select="$urkundennummer"/>
+                                            <xsl:with-param name="currentNode" select="current()"/>
+                                        </xsl:call-template>
                                         
                                         <xsl:element name="group" namespace="http://www.tei-c.org/ns/1.0">
                                             
@@ -473,58 +425,10 @@
                                             <xsl:value-of select="$charter-number"/>
                                         </xsl:attribute>
                                         
-                                        <xsl:element name="front" namespace="http://www.tei-c.org/ns/1.0">
-                                            <xsl:attribute name="xml:lang">deu</xsl:attribute>
-                                            
-                                            <!-- URKUNDENNUMMER = first column (first cell in row). -->
-                                            <xsl:element name="div" namespace="http://www.tei-c.org/ns/1.0">
-                                                <xsl:attribute name="type">section</xsl:attribute>
-                                                <xsl:attribute name="subtype">urkundennummer</xsl:attribute>
-                                                <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
-                                                    <xsl:value-of select="number($charter-number)"/>
-                                                </xsl:element>
-                                            </xsl:element>
-                                            <!-- SEITEN = second column (second cell in row). -->
-                                            <xsl:element name="div" namespace="http://www.tei-c.org/ns/1.0">
-                                                <xsl:attribute name="type">section</xsl:attribute>
-                                                <xsl:attribute name="subtype">seiten</xsl:attribute>
-                                                <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
-                                                    <xsl:value-of select="child::tei:cell[position()=2]"/>
-                                                </xsl:element>
-                                            </xsl:element>
-                                            <!-- REGEST = third column (third cell in row). As it may or may not be in paragraphs, there are two options (=xsl:if). -->
-                                            <xsl:element name="div" namespace="http://www.tei-c.org/ns/1.0">
-                                                <xsl:attribute name="type">section</xsl:attribute>
-                                                <xsl:attribute name="subtype">regest</xsl:attribute>
-                                                <xsl:if test="child::tei:cell[position()=3]/not(tei:p)"> 
-                                                    <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
-                                                        <xsl:value-of select="child::tei:cell[position()=3]"/>
-                                                    </xsl:element>
-                                                </xsl:if>
-                                                <xsl:if test="child::tei:cell[position()=3]/tei:p">
-                                                    <xsl:for-each select="child::tei:cell[position()=3]/tei:p">
-                                                        <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
-                                                            <xsl:value-of select="node()"/>
-                                                        </xsl:element>
-                                                    </xsl:for-each>
-                                                </xsl:if>
-                                            </xsl:element>
-                                            <!-- AUSTELLUNGSORT = fourth column (fourth cell in row). -->
-                                            <xsl:if test="child::tei:cell[position()=4]/text()">
-                                                <xsl:element name="div" namespace="http://www.tei-c.org/ns/1.0">
-                                                    <xsl:attribute name="type">section</xsl:attribute>
-                                                    <xsl:attribute name="subtype">ausstellungsort</xsl:attribute>
-                                                    <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
-                                                        <xsl:value-of select="child::tei:cell[position()=4]"/>
-                                                    </xsl:element>
-                                                </xsl:element>
-                                            </xsl:if>
-                                            <!-- DATES = fifth column (fifth cell in row). -->
-                                            <xsl:call-template name="addDateline">
-                                                <xsl:with-param name="currentElement" select="current()"/>
-                                            </xsl:call-template>
-                                            
-                                        </xsl:element>
+                                        <xsl:call-template name="createFront">
+                                            <xsl:with-param name="urkundennummer" select="number($charter-number)"/>
+                                            <xsl:with-param name="currentNode" select="current()"/>
+                                        </xsl:call-template>
                                         
                                         <xsl:element name="body" namespace="http://www.tei-c.org/ns/1.0">
                                             <xsl:element name="div" namespace="http://www.tei-c.org/ns/1.0">
@@ -581,58 +485,10 @@
                                             <xsl:value-of select="format-number(number(replace($urkundennummer, '\D', '')),'0000')"/><xsl:value-of select="replace($urkundennummer, '\d', '')"/>
                                         </xsl:attribute>
                                         
-                                        <xsl:element name="front" namespace="http://www.tei-c.org/ns/1.0">
-                                            <xsl:attribute name="xml:lang">deu</xsl:attribute>
-                                            
-                                            <!-- URKUNDENNUMMER = first column (first cell in row). -->
-                                            <xsl:element name="div" namespace="http://www.tei-c.org/ns/1.0">
-                                                <xsl:attribute name="type">section</xsl:attribute>
-                                                <xsl:attribute name="subtype">urkundennummer</xsl:attribute>
-                                                <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
-                                                    <xsl:value-of select="$urkundennummer"/>
-                                                </xsl:element>
-                                            </xsl:element>
-                                            <!-- SEITEN = second column (second cell in row). -->
-                                            <xsl:element name="div" namespace="http://www.tei-c.org/ns/1.0">
-                                                <xsl:attribute name="type">section</xsl:attribute>
-                                                <xsl:attribute name="subtype">seiten</xsl:attribute>
-                                                <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
-                                                    <xsl:value-of select="child::tei:cell[position()=2]"/>
-                                                </xsl:element>
-                                            </xsl:element>
-                                            <!-- REGEST = third column (third cell in row). As it may or may not be in paragraphs, there are two options (=xsl:if). -->
-                                            <xsl:element name="div" namespace="http://www.tei-c.org/ns/1.0">
-                                                <xsl:attribute name="type">section</xsl:attribute>
-                                                <xsl:attribute name="subtype">regest</xsl:attribute>
-                                                <xsl:if test="child::tei:cell[position()=3]/not(tei:p)"> 
-                                                    <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
-                                                        <xsl:value-of select="child::tei:cell[position()=3]"/>
-                                                    </xsl:element>
-                                                </xsl:if>
-                                                <xsl:if test="child::tei:cell[position()=3]/tei:p">
-                                                    <xsl:for-each select="child::tei:cell[position()=3]/tei:p">
-                                                        <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
-                                                            <xsl:value-of select="node()"/>
-                                                        </xsl:element>
-                                                    </xsl:for-each>
-                                                </xsl:if>
-                                            </xsl:element>
-                                            <!-- AUSTELLUNGSORT = fourth column (fourth cell in row). -->
-                                            <xsl:if test="child::tei:cell[position()=4]/text()">
-                                                <xsl:element name="div" namespace="http://www.tei-c.org/ns/1.0">
-                                                    <xsl:attribute name="type">section</xsl:attribute>
-                                                    <xsl:attribute name="subtype">ausstellungsort</xsl:attribute>
-                                                    <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
-                                                        <xsl:value-of select="child::tei:cell[position()=4]"/>
-                                                    </xsl:element>
-                                                </xsl:element>
-                                            </xsl:if>
-                                            <!-- DATES = fifth column (fifth cell in row). -->
-                                            <xsl:call-template name="addDateline">
-                                                <xsl:with-param name="currentElement" select="current()"/>
-                                            </xsl:call-template>
-                                            
-                                        </xsl:element>
+                                        <xsl:call-template name="createFront">
+                                            <xsl:with-param name="urkundennummer" select="$urkundennummer"/>
+                                            <xsl:with-param name="currentNode" select="current()"/>
+                                        </xsl:call-template>
                                         
                                         <xsl:element name="body" namespace="http://www.tei-c.org/ns/1.0">
                                             <xsl:element name="div" namespace="http://www.tei-c.org/ns/1.0">
@@ -712,6 +568,70 @@
             
         </xsl:result-document>
         
+    </xsl:template>
+    
+    <xsl:template name="createFront">
+        <xsl:param name="urkundennummer"/>
+        <xsl:param name="currentNode"/>
+        <xsl:element name="front" namespace="http://www.tei-c.org/ns/1.0">
+            <xsl:attribute name="xml:lang">deu</xsl:attribute>
+            
+            <!-- URKUNDENNUMMER = first column (first cell in row). -->
+            <xsl:element name="div" namespace="http://www.tei-c.org/ns/1.0">
+                <xsl:attribute name="type">section</xsl:attribute>
+                <xsl:attribute name="subtype">urkundennummer</xsl:attribute>
+                <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
+                    <xsl:value-of select="$urkundennummer"/>
+                </xsl:element>
+            </xsl:element>
+            <!-- SEITEN = second column (second cell in row). -->
+            <xsl:element name="div" namespace="http://www.tei-c.org/ns/1.0">
+                <xsl:attribute name="type">section</xsl:attribute>
+                <xsl:attribute name="subtype">seiten</xsl:attribute>
+                <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
+                    <xsl:value-of select="$currentNode/child::tei:cell[position()=2]"/>
+                </xsl:element>
+            </xsl:element>
+            <!-- REGEST = third column (third cell in row). -->
+            <xsl:element name="div" namespace="http://www.tei-c.org/ns/1.0">
+                <xsl:attribute name="type">section</xsl:attribute>
+                <xsl:attribute name="subtype">regest</xsl:attribute>
+                <xsl:if test="$currentNode/child::tei:cell[position()=3]/not(tei:p)">
+                    <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
+                        <xsl:value-of select="$currentNode/child::tei:cell[position()=3]"/>
+                    </xsl:element>
+                </xsl:if>
+                <xsl:if test="$currentNode/child::tei:cell[position()=3]/tei:p">
+                    <xsl:for-each select="$currentNode/child::tei:cell[position()=3]/tei:p">
+                        <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
+                            <xsl:value-of select="node()"/>
+                        </xsl:element>
+                    </xsl:for-each>
+                </xsl:if>
+            </xsl:element>
+            <!-- AUSTELLUNGSORT = fourth column (fourth cell in row). -->
+            <xsl:if test="$currentNode/child::tei:cell[position()=4]/text()">
+                <xsl:element name="div" namespace="http://www.tei-c.org/ns/1.0">
+                    <xsl:attribute name="type">section</xsl:attribute>
+                    <xsl:attribute name="subtype">ausstellungsort</xsl:attribute>
+                    <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
+                        <xsl:value-of select="$currentNode/child::tei:cell[position()=4]"/>
+                    </xsl:element>
+                </xsl:element>
+            </xsl:if>
+            <!-- DATES = fifth column (fifth cell in row). -->
+            <xsl:call-template name="addDateline">
+                <xsl:with-param name="currentElement" select="$currentNode"/>
+            </xsl:call-template>
+            <!-- Echtheit = the seventh column (seventh cell in a row). Not all collections will have this. -->
+            <xsl:if test="$currentNode/child::tei:cell[position()=7]//text()">
+                <xsl:element name="note" namespace="http://www.tei-c.org/ns/1.0">
+                    <xsl:attribute name="type">echtheit</xsl:attribute>
+                    <xsl:value-of select="$currentNode/child::tei:cell[position()=7]"/>
+                </xsl:element>
+            </xsl:if>
+            
+        </xsl:element>
     </xsl:template>
     
     <xsl:template name="addDateline">

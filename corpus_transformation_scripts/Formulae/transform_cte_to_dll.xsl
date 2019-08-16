@@ -12,7 +12,14 @@
     <xsl:param name="formNumber">
         <xsl:choose>
             <xsl:when test="contains(lower-case($formTitle), 'markulf')">
-                <xsl:number value="substring-after(subsequence(tokenize($formTitle, '\s+'), 2, 1), ',')" format="001"/>
+                <xsl:choose>
+                    <xsl:when test="contains($formTitle, ',')">
+                        <xsl:number value="substring-after(subsequence(tokenize($formTitle, '\s+'), 2, 1), ',')" format="001"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:number value="subsequence(tokenize($formTitle, '\s+'), 2, 1)" format="001"/>
+                    </xsl:otherwise>
+                </xsl:choose>
             </xsl:when>
             <xsl:when test="contains($formTitle, ',')">
                 <xsl:number value="substring-before(subsequence(tokenize($formTitle, '\s+'), 2, 1), ',')" format="001"/>
@@ -25,7 +32,7 @@
     <xsl:param name="manuscript">
         <xsl:choose>
             <xsl:when test="contains($formTitle, '(')">
-                <xsl:value-of select="substring-before(substring-after($formTitle, '('), ')')"/>
+                <xsl:value-of select="lower-case(replace($formTitle, '.*\((\w+)\)$', '$1'))"/>
             </xsl:when>
             <xsl:when test="contains(lower-case($formTitle), 'deutsch')">
                 <xsl:text>deu001</xsl:text>
@@ -224,6 +231,14 @@
                     <xsl:apply-templates select="node()|comment()"/>
                 </xsl:copy>
             </xsl:when>
+            <!-- The notes without @targetEnd are the marginal notes referring to sources. -->
+            <xsl:when test="not(@targetEnd)">
+                <xsl:copy>
+                    <xsl:attribute name="type">n1</xsl:attribute>
+                    <xsl:if test="@n"><xsl:attribute name="n" select="@n"/></xsl:if>
+                    <xsl:apply-templates select="node()|comment()"/>
+                </xsl:copy>
+            </xsl:when>
             <xsl:otherwise>
                 <xsl:copy>
                     <xsl:attribute name="targetEnd" select="@targetEnd"/>
@@ -402,6 +417,13 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
+    
+    <!-- name elements are used to enclose document names in the text in CTE that we don't want to bring into the XML -->
+    <xsl:template match="tei:name"/>
+    
+    
+    <!-- Remove the xml-stylesheet declaration that CTE sometimes has -->
+    <xsl:template match="processing-instruction('xml-stylesheet')"/>
     
     <xsl:template match="@*|node()|comment()">
         <xsl:copy>

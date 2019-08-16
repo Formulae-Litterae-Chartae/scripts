@@ -5,7 +5,7 @@ import os
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-latins = [x for x in glob('/home/matt/results/formulae/data/*/*/__cts__.xml') if not re.search('elexicon|andecavensis', x)]
+latins = [x for x in glob('/home/matt/results/formulae/data/*/*/__cts__.xml') if re.search('fulda', x)]
 
 for latin in latins:
     print(latin)

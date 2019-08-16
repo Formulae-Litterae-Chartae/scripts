@@ -59,6 +59,7 @@
             <inflected><xsl:value-of select="normalize-space(replace(replace(replace(replace($theText, ' ([\.,:;”])', '$1'), '(\[|&lt;)\s+', ''), '\s+(\]|&gt;)', ''), '\[|&lt;|\]|&gt;|…', '$2'))"/></inflected>
             <lemmatized><xsl:value-of select="normalize-space(replace($theLems, '\s+', ' '))"/></lemmatized>
             <regest><xsl:value-of select="$theRegest"/></regest>
+            <forgery><xsl:value-of select="boolean(/tei:TEI/tei:text/tei:front/tei:note[@type='echtheit'])"/></forgery>
         </xml>
     </xsl:template>
     

@@ -45,6 +45,45 @@
             <xsl:value-of select="/tei:TEI/tei:teiHeader/descendant::tei:sourceDesc/descendant::tei:monogr/descendant::tei:date[@n='originalAusgabe']"/>-->
             <xsl:value-of select="/tei:TEI/tei:teiHeader/descendant::tei:monogr/tei:title"/>
         </xsl:variable>
+        <xsl:variable name="dateCopyrighted"><xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:monogr/tei:imprint/tei:date[1]/@when"/></xsl:variable>
+        <xsl:variable name="otherEds" select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:monogr/tei:editor"/>
+        <xsl:variable name="bibliographicCitation">
+            <xsl:for-each select="$otherEds">
+                <xsl:choose>
+                    <xsl:when test="contains(./text(), ',')">
+                        <xsl:value-of select="substring-after(./text(), ', ')"/><xsl:text> &lt;span class="surname"&gt;</xsl:text><xsl:value-of select="substring-before(./text(), ', ')"/><xsl:text>&lt;/span&gt;</xsl:text>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:variable name="names" select="tokenize(./text(), '\s+')"/>
+                        <xsl:value-of select="string-join(subsequence($names, 1, count($names) - 1), ' ')"/><xsl:text> &lt;span class="surname"&gt;</xsl:text><xsl:value-of select="$names[last()]"/><xsl:text>&lt;/span&gt;</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <xsl:if test="count($otherEds) > 1 and count($otherEds) != index-of($otherEds, .)">
+                    <xsl:choose>
+                        <xsl:when test="index-of($otherEds, .) != count($otherEds) - 1">
+                            <xsl:text>, </xsl:text>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:text> und </xsl:text>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:if>
+            </xsl:for-each>
+            <xsl:text>, </xsl:text>
+            <xsl:value-of select="string-join(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:monogr/tei:title/text(), ': ')"/>
+            <xsl:if test="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:monogr/tei:imprint/tei:biblScope[@unit='volume']">
+                <xsl:text> Bd. </xsl:text><xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:monogr/tei:imprint/tei:biblScope[@unit='volume']/text()"/>
+            </xsl:if>
+            <xsl:text>, </xsl:text><xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:monogr/tei:imprint/tei:pubPlace/text()"/>
+            <xsl:text> </xsl:text><xsl:value-of select="$dateCopyrighted"/>
+            <xsl:if test="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:monogr/tei:idno[@type='URI']">
+                <xsl:text>, [URI: &lt;a target="_blank" href="</xsl:text><xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:monogr/tei:idno[@type='URI']/text()"/>
+                <xsl:text>"&gt;</xsl:text><xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:monogr/tei:idno[@type='URI']/text()"/>
+                <xsl:text>&lt;/a&gt;]</xsl:text>
+            </xsl:if>
+            <xsl:text>, S. </xsl:text>
+            <xsl:value-of select="normalize-space(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:monogr/tei:imprint/tei:biblScope[@unit='pp']/text())"/><xsl:text>.</xsl:text>
+        </xsl:variable>
         
         <xsl:for-each select="/tei:TEI/tei:text/tei:group/tei:text">
             <xsl:result-document format="general" href="data/{ancestor::tei:group[@xml:id]/@xml:id}/{substring-after(@xml:id,'.')}/__cts__.xml">
@@ -78,12 +117,13 @@
                             <xsl:call-template name="makeEdName">
                                 <xsl:with-param name="element" select="current()"></xsl:with-param>
                             </xsl:call-template>
+                            <xsl:text>/</xsl:text>
                         </xsl:for-each>
                         <xsl:call-template name="makeEdName">
                             <xsl:with-param name="element" select="/tei:TEI/tei:teiHeader/descendant::tei:monogr/tei:editor[position()=last()]"></xsl:with-param>
                         </xsl:call-template>
                         <!--<xsl:value-of select="/tei:TEI/tei:teiHeader/descendant::tei:monogr/tei:editor[position()=last()]/substring-after(text(),' ')"/>-->
-                        
+                        <xsl:text>) </xsl:text>
                         <xsl:value-of select="node()/descendant::tei:div[@subtype='urkundennummer']"/>
                     </xsl:element>
                    

@@ -50,7 +50,8 @@
                                 <xsl:value-of select="substring-after(./text(), ', ')"/><xsl:text> &lt;span class="surname"&gt;</xsl:text><xsl:value-of select="substring-before(./text(), ', ')"/><xsl:text>&lt;/span&gt;</xsl:text>
                             </xsl:when>
                             <xsl:otherwise>
-                                <xsl:value-of select="substring-before(./text(), ' ')"/><xsl:text> &lt;span class="surname"&gt;</xsl:text><xsl:value-of select="substring-after(./text(), ' ')"/><xsl:text>&lt;/span&gt;</xsl:text>
+                                <xsl:variable name="names" select="tokenize(./text(), '\s+')"/>
+                                <xsl:value-of select="string-join(subsequence($names, 1, count($names) - 1), ' ')"/><xsl:text> &lt;span class="surname"&gt;</xsl:text><xsl:value-of select="$names[last()]"/><xsl:text>&lt;/span&gt;</xsl:text>
                             </xsl:otherwise>
                         </xsl:choose>
                         <xsl:if test="count($otherEds) > 1 and count($otherEds) != index-of($otherEds, .)">
