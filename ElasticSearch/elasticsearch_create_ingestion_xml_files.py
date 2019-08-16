@@ -2,6 +2,7 @@ from glob import glob
 import subprocess
 from multiprocessing import Pool
 import os
+import sys
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 home_dir = os.environ.get('HOME', '')
@@ -9,7 +10,7 @@ home_dir = os.environ.get('HOME', '')
 # When rebuilding for the open corpus
 # corpus = 'formulae-open'
 # When rebuilding for the full corpus
-orig = 'results/formulae' # The folder in the home directory where the source files are location and where the search txt files will be saved
+orig = str(sys.argv[1]) if len(sys.argv) > 1 else 'results/formulae' # The folder in the home directory where the source files are location and where the search txt files will be saved
 # When building test files for new corpora
 # corpus = 'corpus_transform'
 
