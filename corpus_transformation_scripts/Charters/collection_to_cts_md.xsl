@@ -168,6 +168,14 @@
                                 </xsl:element>
                             </xsl:for-each>
                             
+                            <xsl:element name="dct:dateCopyrighted">
+                                <xsl:value-of select="$dateCopyrighted"/>
+                            </xsl:element>
+                            
+                            <xsl:element name="dct:bibliographicCitation">
+                                <xsl:value-of select="$bibliographicCitation"/>
+                            </xsl:element>
+                            
                             <xsl:element name="dc:publisher">
                                 <xsl:attribute name="xml:lang">
                                     <xsl:value-of select="/tei:TEI/descendant::tei:publicationStmt/tei:publisher/@xml:lang"/>

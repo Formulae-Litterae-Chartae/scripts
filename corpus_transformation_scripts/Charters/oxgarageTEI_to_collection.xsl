@@ -57,7 +57,10 @@
                         <!-- The titleStmt contains empty elements because the real files are the split version files which are to be produced with another XSLT
                             and their titles will be made from their particular Urkundennummer. As the scribes are anonym, the author element is also empty. -->
                         <xsl:element name="titleStmt" namespace="http://www.tei-c.org/ns/1.0">
-                            <xsl:element name="title" namespace="http://www.tei-c.org/ns/1.0"/>
+                            <xsl:element name="title" namespace="http://www.tei-c.org/ns/1.0">
+                                <xsl:value-of select="$sourceD/tei:row[descendant::text()='Title']/tei:cell[position()=3]/descendant::text()"/>
+                                <xsl:text> (Ed. INSERT EDITOR(S) LAST NAME(S) HERE)</xsl:text>
+                            </xsl:element>
                             <xsl:element name="author" namespace="http://www.tei-c.org/ns/1.0"/>
                         </xsl:element>
                         
