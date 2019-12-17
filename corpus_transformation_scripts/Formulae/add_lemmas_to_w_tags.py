@@ -8,7 +8,7 @@ import os
 ns = {'tei': "http://www.tei-c.org/ns/1.0"}
 xmls = glob('/home/matt/results/formulae/data/andecavensis/*/*lat001.xml')
 xmls += glob('/home/matt/results/formulae/data/andecavensis/*/*deu001.xml')
-lex_xml = etree.parse('/home/matt/docx_tei_cte_conversion/elexicon/Begriffe_eLexikon.xml')
+lex_xml = etree.parse('/home/matt/docx_tei_cte_conversion/corpus_transformation_scripts/Elexicon/Begriffe_eLexikon.xml')
 lex_dict = {}
 for lem in lex_xml.xpath('/xml/lem'):
     lex_dict[lem.text] = lem.get('elex')
@@ -34,9 +34,9 @@ def test_text(lemmas, orig):
         inflected, lemma = word.split(';')[:2]
         tried = []
         try:
-            while inflected.replace('v', 'u') != re.sub(r'[{}„“‚‘’”]'.format(punctuation), '', orig[i].text.lower().replace('v', 'u')):
+            while inflected.replace('v', 'u') != re.sub(r'[{}„“‚‘’”\[\]]'.format(punctuation), '', orig[i].text.lower().replace('v', 'u')):
                 try:
-                    tried.append(re.sub(r'[{}„“‚‘’”]'.format(punctuation), '', orig[i].text.lower().replace('v', 'u')))
+                    tried.append(re.sub(r'[{}„“‚‘’”\[\]]'.format(punctuation), '', orig[i].text.lower().replace('v', 'u')))
                     i += 1
                     if i == len(orig):
                         not_found.append((inflected, tried))
@@ -48,7 +48,10 @@ def test_text(lemmas, orig):
             print(i, inflected, lemma, len(orig))
             continue
         orig[i].set('lemma', lemma)
-        set_lemmaRef(orig[i], lemma, next_lem, prev_lem)
+        if lemma in lex_dict.keys():
+            orig[i].set('lemmaRef', lex_dict[lemma])
+        else:
+            set_lemmaRef(orig[i], lemma, next_lem, prev_lem)
     return not_found
 
 
@@ -86,11 +89,14 @@ for xml_file in xmls:
             print(xml_file, not_found)
         else:
             xml.getroottree().write(xml_file)
-            subprocess.run(['java', '-jar',  '/home/matt/Downloads/SaxonHE9-8-0-11J/saxon9he.jar', '{}'.format(xml_file), '/home/matt/docx_tei_cte_conversion/extract_text_search.xsl', '-o:/home/matt/results/formulae/search/{}'.format(xml_file.split('/')[-1].replace('xml', 'txt'))])
+            subprocess.run(['java', '-jar',  '/home/matt/Downloads/SaxonHE9-8-0-11J/saxon9he.jar', '{}'.format(xml_file), '/home/matt/docx_tei_cte_conversion/ElasticSearch/extract_text_search_to_xml.xsl', '-o:/home/matt/results/formulae/search/{}'.format(xml_file.split('/')[-1].replace('xml', 'txt'))])
     else:
         latin_words = xml.xpath('//tei:seg[@type="latin-word;"]/tei:w', namespaces=ns)
         for i, w in enumerate(latin_words):
-            set_lemmaRef(w, w.text.lower(), latin_words[i + 1].text.lower() if len(latin_words) > i + 1 else ' ', latin_words[i - 1].text.lower() if i > 0 else ' ')
+            if w.text.lower() in lex_dict.keys():
+                w.set('lemmaRef', lex_dict[w.text.lower()])
+            else:
+                set_lemmaRef(w, w.text.lower(), latin_words[i + 1].text.lower() if len(latin_words) > i + 1 else ' ', latin_words[i - 1].text.lower() if i > 0 else ' ')
         xml.getroottree().write(xml_file)
 
 # TO RECREATE THE TEXT FILES USED TO POPULATE THE ELASTICSEARCH INDEX

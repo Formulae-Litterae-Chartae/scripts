@@ -8,33 +8,62 @@
     <xsl:output omit-xml-declaration="yes" indent="yes"/>
     
     <xsl:param name="pSeparators">&#xA;&#x9;&#x20;&#8230;&#8221;,.;:?!()'"„“‚‘</xsl:param>
-    <xsl:param name="formTitle"><xsl:value-of select="normalize-space(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title/text())"/></xsl:param>
+    <xsl:param name="formTitle">
+        <xsl:variable name="tempTitle"><xsl:value-of select="normalize-space(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title/text())"/></xsl:variable>
+        <xsl:choose>
+            <xsl:when test="contains($tempTitle, '(')">
+                <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
+                    <xsl:attribute name="type">form-name</xsl:attribute>
+                    <xsl:value-of select="replace(string-join(subsequence(tokenize($tempTitle, '\s+'), 1, 2), ' '), ',$', '')"/>
+                </xsl:element>
+                <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
+                    <xsl:attribute name="type">siglum</xsl:attribute>
+                    <xsl:value-of select="replace($tempTitle, '.*\((\w+)\)$', '$1')"/>
+                </xsl:element>
+                <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
+                    <xsl:attribute name="type">manuscript-desc</xsl:attribute>
+                    <xsl:value-of select="normalize-space(string-join(subsequence(tokenize(substring-before($tempTitle, '('), '\s+'), 3), ' '))"/>
+                </xsl:element>
+            </xsl:when>
+            <xsl:when test="contains($tempTitle, 'Deutsch')">
+                <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
+                    <xsl:attribute name="type">form-name</xsl:attribute>
+                    <xsl:value-of select="replace(string-join(subsequence(tokenize($tempTitle, '\s+'), 1, 2), ' '), ',$', '')"/>
+                </xsl:element>
+                <xsl:element name="xml:lang">deu</xsl:element>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
+                    <xsl:attribute name="type">form-name</xsl:attribute>
+                    <xsl:value-of select="replace(string-join(subsequence(tokenize($tempTitle, '\s+'), 1, 2), ' '), ',$', '')"/>
+                </xsl:element>
+                <xsl:element name="xml:lang">lat</xsl:element>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:param>
     <xsl:param name="formNumber">
         <xsl:choose>
-            <xsl:when test="contains(lower-case($formTitle), 'markulf')">
+            <xsl:when test="contains(lower-case($formTitle/tei:ref[@type='form-name']), 'markulf')">
                 <xsl:choose>
-                    <xsl:when test="contains($formTitle, ',')">
-                        <xsl:number value="substring-after(subsequence(tokenize($formTitle, '\s+'), 2, 1), ',')" format="001"/>
+                    <xsl:when test="contains($formTitle/tei:ref[@type='form-name'], ',')">
+                        <xsl:number value="substring-after($formTitle/tei:ref[@type='form-name'], ',')" format="001"/>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:number value="subsequence(tokenize($formTitle, '\s+'), 2, 1)" format="001"/>
+                        <xsl:number value="subsequence(tokenize($formTitle/tei:ref[@type='form-name'], '\s+'), 2, 1)" format="001"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:when>
-            <xsl:when test="contains($formTitle, ',')">
-                <xsl:number value="substring-before(subsequence(tokenize($formTitle, '\s+'), 2, 1), ',')" format="001"/>
-            </xsl:when>
             <xsl:otherwise>
-                <xsl:number value="subsequence(tokenize($formTitle, '\s+'), 2, 1)" format="001"/>
+                <xsl:number value="subsequence(tokenize($formTitle/tei:ref[@type='form-name'], '\s+'), 2, 1)" format="001"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:param>
     <xsl:param name="manuscript">
         <xsl:choose>
-            <xsl:when test="contains($formTitle, '(')">
-                <xsl:value-of select="lower-case(replace($formTitle, '.*\((\w+)\)$', '$1'))"/>
+            <xsl:when test="$formTitle/tei:ref[@type='siglum']">
+                <xsl:value-of select="$formTitle/tei:ref[@type='siglum']"/>
             </xsl:when>
-            <xsl:when test="contains(lower-case($formTitle), 'deutsch')">
+            <xsl:when test="$formTitle/xml:lang = 'deu'">
                 <xsl:text>deu001</xsl:text>
             </xsl:when>
             <xsl:otherwise><xsl:text>lat001</xsl:text></xsl:otherwise>
@@ -44,7 +73,7 @@
     <xsl:param name="biblFile">/home/matt/results/Bibliographie_E-Lexikon.xml</xsl:param>
     <xsl:param name="urnStart">
         <xsl:choose>
-            <xsl:when test="contains(lower-case($formTitle), 'markulf')">
+            <xsl:when test="contains(lower-case($formTitle/tei:ref[@type='form-name']), 'markulf')">
                 <xsl:text>urn:cts:formulae:markulf.form</xsl:text>
             </xsl:when>
             <xsl:otherwise>
@@ -64,20 +93,22 @@
                 <xsl:attribute name="xml:lang">deu</xsl:attribute>
                 <xsl:element name="fileDesc" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:element name="titleStmt" namespace="http://www.tei-c.org/ns/1.0">
-                        <xsl:element name="title" namespace="http://www.tei-c.org/ns/1.0"><xsl:value-of select="$formTitle"/></xsl:element>
+                        <xsl:element name="title" namespace="http://www.tei-c.org/ns/1.0">
+                            <xsl:value-of select="$formTitle/tei:ref[@type='form-name']"/>
+                        </xsl:element>
                         <xsl:element name="author" namespace="http://www.tei-c.org/ns/1.0"></xsl:element>
                         <xsl:element name="editor" namespace="http://www.tei-c.org/ns/1.0">Christoph Walther</xsl:element>
                 </xsl:element>
                     <xsl:element name="editionStmt" namespace="http://www.tei-c.org/ns/1.0">
                         <xsl:choose>
                             <xsl:when test="$manuscript = 'lat001'">
-                                <xsl:element name="edition" namespace="http://www.tei-c.org/ns/1.0">Digitale Edition von <xsl:value-of select="$formTitle"/></xsl:element>
+                                <xsl:element name="edition" namespace="http://www.tei-c.org/ns/1.0">Digitale Edition von <xsl:value-of select="$formTitle/tei:ref[@type='form-name']"/></xsl:element>
                             </xsl:when>
                             <xsl:when test="$manuscript = 'deu001'">
-                                <xsl:element name="edition" namespace="http://www.tei-c.org/ns/1.0">Digitale deutsche Übersetzung von <xsl:value-of select="replace($formTitle, ' Deutsch', '')"/></xsl:element>
+                                <xsl:element name="edition" namespace="http://www.tei-c.org/ns/1.0">Digitale deutsche Übersetzung von <xsl:value-of select="$formTitle/tei:ref[@type='form-name']"/></xsl:element>
                             </xsl:when>
                             <xsl:otherwise>
-                                <xsl:element name="edition" namespace="http://www.tei-c.org/ns/1.0">Digitale Transkription von <xsl:value-of select="$formTitle"/></xsl:element>
+                                <xsl:element name="edition" namespace="http://www.tei-c.org/ns/1.0">Digitale Transkription von <xsl:value-of select="$formTitle/tei:ref[@type='form-name']"/>, <xsl:value-of select="$formTitle/tei:ref[@type='siglum']"/> (<xsl:value-of select="$formTitle/tei:ref[@type='manuscript-desc']"/>)</xsl:element>
                             </xsl:otherwise>
                         </xsl:choose>
                         <xsl:element name="respStmt" namespace="http://www.tei-c.org/ns/1.0">
@@ -88,7 +119,7 @@
                         <xsl:element name="respStmt" namespace="http://www.tei-c.org/ns/1.0">
                             <xsl:element name="resp" namespace="http://www.tei-c.org/ns/1.0">Editor/Übersetzer</xsl:element>
                             <xsl:element name="resp" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="xml:lang">eng</xsl:attribute>Editor/Translator</xsl:element>
-                            <xsl:element name="persName" namespace="http://www.tei-c.org/ns/1.0">Christoph Walther (Universität Hamburg)</xsl:element>
+                            <xsl:element name="persName" namespace="http://www.tei-c.org/ns/1.0">Dr. Christoph Walther (Universität Hamburg)</xsl:element>
                         </xsl:element>
                         <xsl:element name="respStmt" namespace="http://www.tei-c.org/ns/1.0">
                             <xsl:element name="resp" namespace="http://www.tei-c.org/ns/1.0">Hauptentwickler</xsl:element>
@@ -120,8 +151,24 @@
                     </xsl:element>
                 </xsl:element>-->
                 <xsl:element name="sourceDesc" namespace="http://www.tei-c.org/ns/1.0">
-                    <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">Digitales Original: mit Classical Text Editor erstellt</xsl:element>
-                    <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="xml:lang">eng</xsl:attribute>Born Digital: created with the Classical Text Editor</xsl:element>
+                    <xsl:choose>
+                        <xsl:when test="$formTitle/tei:ref[@type='siglum']">
+                            <xsl:element name="msDesc" namespace="http://www.tei-c.org/ns/1.0">
+                                <xsl:element name="msIdentifier" namespace="http://www.tei-c.org/ns/1.0">
+                                    <xsl:element name="idno" namespace="http://www.tei-c.org/ns/1.0">
+                                        <xsl:value-of select="$formTitle/tei:ref[@type='siglum']"/>
+                                    </xsl:element>
+                                    <xsl:element name="msName" namespace="http://www.tei-c.org/ns/1.0">
+                                        <xsl:value-of select="$formTitle/tei:ref[@type='manuscript-desc']"/>
+                                    </xsl:element>
+                                </xsl:element>
+                            </xsl:element>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">Digitales Original: mit Classical Text Editor erstellt</xsl:element>
+                            <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="xml:lang">eng</xsl:attribute>Born Digital: created with the Classical Text Editor</xsl:element>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </xsl:element>
                 </xsl:element>
                 <xsl:element name="encodingDesc" namespace="http://www.tei-c.org/ns/1.0">
@@ -290,7 +337,7 @@
             <xsl:when test="not(parent::tei:locus) and (contains($rends, 'font-style:italic;') or contains($rends, 'bold') or contains($rends, 'font-variant:small-caps;') or contains($rends, 'vertical-align:super;') or contains($rends, 'vertical-align:sub;') or contains($rends, 'text-decoration:line-through;'))">
                 <xsl:element name="seg" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="type">
-                        <xsl:if test="contains(@rendition, 'bold')">
+                        <xsl:if test="contains($rends, 'bold')">
                             <xsl:text>platzhalter;</xsl:text>
                         </xsl:if>
                         <xsl:if test="contains($rends, 'font-style:italic;')">
@@ -357,8 +404,27 @@
     <xsl:template match="tei:p">
         <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
             <xsl:attribute name="xml:space">preserve</xsl:attribute>
+            <xsl:if test="matches($manuscript, 'deu0|lat0')">
+                <xsl:variable name="prevPars" select="count(current()/preceding-sibling::tei:p) + 1"/>
+                <xsl:variable name="thisLang" select="$formTitle/xml:lang"/>
+                <xsl:variable name="transformedUrn" select="replace(concat($urnStart, $formNumber, '.', $manuscript, '-', $prevPars), ':', '-')"/>
+                <xsl:attribute name="xml:id"><xsl:value-of select="$transformedUrn"/></xsl:attribute>
+                <xsl:choose>
+                    <xsl:when test="$thisLang = 'deu'">
+                        <xsl:attribute name="corresp"><xsl:value-of select="replace($transformedUrn, $thisLang, 'lat')"/></xsl:attribute>
+                    </xsl:when>
+                    <xsl:when test="$thisLang = 'lat'">
+                        <xsl:attribute name="corresp"><xsl:value-of select="replace($transformedUrn, $thisLang, 'deu')"/></xsl:attribute>
+                    </xsl:when>
+                </xsl:choose>
+            </xsl:if>
+            <xsl:if test="contains(@style, 'margin-left:5mm;')"><xsl:attribute name="style">subparagraph</xsl:attribute></xsl:if>
             <xsl:apply-templates select="node()|comment()"/>
         </xsl:element>
+    </xsl:template>
+    
+    <xsl:template match="tei:s">
+        <xsl:apply-templates/>
     </xsl:template>
     
     <!-- Removes the @rend attribute from the <mentioned> elements in the apparatus notes. -->
@@ -399,7 +465,7 @@
         </xsl:for-each>
     </xsl:template>
     
-    <xsl:include href="../make_bib_entry.xsl"/>
+    <xsl:include href="../../bibliography/make_bib_entry.xsl"/>
     
     <xsl:template match="tei:caption">
         <xsl:element name="title" namespace="http://www.tei-c.org/ns/1.0">
@@ -421,6 +487,10 @@
     <!-- name elements are used to enclose document names in the text in CTE that we don't want to bring into the XML -->
     <xsl:template match="tei:name"/>
     
+    <!-- both the title and locus elements should be ignored -->
+    <xsl:template match="/tei:TEI/tei:text/tei:body/tei:div/tei:div/tei:p/tei:title" />
+
+    <xsl:template match="/tei:TEI/tei:text/tei:body/tei:div/tei:div/tei:p/tei:locus" />
     
     <!-- Remove the xml-stylesheet declaration that CTE sometimes has -->
     <xsl:template match="processing-instruction('xml-stylesheet')"/>

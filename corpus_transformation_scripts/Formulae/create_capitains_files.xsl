@@ -4,12 +4,14 @@
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:ti="http://chs.harvard.edu/xmlns/cts"
     xmlns:dct="http://purl.org/dc/terms/" 
-    xmlns:cpt="http://purl.org/capitains/ns/1.0#" 
     xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns="http://purl.org/ns/capitains"
+    xmlns:owl="http://www.w3.org/2002/07/owl#" 
+    xmlns:bib="http://bibliotek-o.org/1.0/ontology/"
     exclude-result-prefixes="xs tei"
     version="2.0">
     
-    <xsl:output omit-xml-declaration="yes" indent="yes"/>
+    <xsl:output omit-xml-declaration="no" indent="yes"/>
     
     <xsl:template match="/">
         <xsl:param name="folderName"><xsl:value-of select="replace(base-uri(), tokenize(base-uri(), '/')[last()], '')"/></xsl:param>
@@ -17,26 +19,39 @@
         <xsl:param name="title">
             <xsl:copy-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>
         </xsl:param>
-        <xsl:element name="ti:work" namespace="http://chs.harvard.edu/xmlns/cts">
-            <xsl:attribute name="groupUrn"><xsl:value-of select="$urn[1]"/></xsl:attribute>
-            <xsl:attribute name="xml:lang"><xsl:value-of select="/tei:TEI/tei:text/tei:body/tei:div/@xml:lang"/></xsl:attribute>
-            <xsl:attribute name="urn"><xsl:value-of select="concat($urn[1], '.', $urn[2])"/></xsl:attribute>
-            <xsl:element name="ti:title" namespace="http://chs.harvard.edu/xmlns/cts">
-                <xsl:attribute name="xml:lang">deu</xsl:attribute>
+        <xsl:param name="pubLang">
+            <xsl:choose>
+                <xsl:when test="/tei:TEI/tei:text/tei:front[@xml:lang]">
+                    <xsl:value-of select="/tei:TEI/tei:text/tei:front/@xml:lang"/>
+                </xsl:when>
+                <xsl:otherwise>deu</xsl:otherwise>
+            </xsl:choose>
+        </xsl:param>
+        <xsl:processing-instruction name="xml-model">href="../../../capitains.rng" schematypens="http://relaxng.org/ns/structure/1.0"</xsl:processing-instruction>
+        <collection>
+            <identifier><xsl:value-of select="concat($urn[1], '.', $urn[2])"/></identifier>
+            <parent><xsl:value-of select="$urn[1]"/></parent>
+            <dc:title>
+                <xsl:attribute name="xml:lang"><xsl:value-of select="$pubLang"/></xsl:attribute>
                 <xsl:value-of select="$title"/>
-            </xsl:element>
-            <xsl:for-each select="collection(concat($folderName, '?select=*.xml;on-error=ignore'))">
-                <xsl:if test="tokenize(document-uri(.), '/')[last()] != '__cts__.xml'">
-                    <xsl:call-template name="createCTS">
-                        <xsl:with-param name="textURI"><xsl:value-of select="document-uri(.)"/></xsl:with-param>
-                    </xsl:call-template>
-                </xsl:if>
-            </xsl:for-each>
-        </xsl:element>
+            </dc:title>
+            <dc:type>cts:work</dc:type>
+            <members>
+                <xsl:for-each select="collection(concat($folderName, '?select=*.xml;on-error=ignore'))">
+                    <xsl:if test="not(matches(document-uri(.), '__capitains__|__cts__'))">
+                        <xsl:call-template name="createCTS">
+                            <xsl:with-param name="textURI"><xsl:value-of select="document-uri(.)"/></xsl:with-param>
+                            <xsl:with-param name="pubLang"><xsl:value-of select="$pubLang"/></xsl:with-param>
+                        </xsl:call-template>
+                    </xsl:if>
+                </xsl:for-each>
+            </members>
+        </collection>
     </xsl:template>
     
     <xsl:template name="createCTS">
         <xsl:param name="textURI"/>
+        <xsl:param name="pubLang"/>
         <xsl:param name="textFile" select="document($textURI)"/>
         <xsl:param name="urn" select="tokenize($textFile/tei:TEI/tei:text/tei:body/tei:div/@n, '\.')"/>
         <xsl:param name="lang" select="$textFile/tei:TEI/tei:text/tei:body/tei:div/@xml:lang"/>
@@ -67,9 +82,11 @@
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="string-join($title//text(), '')"/>
-                    <xsl:text> (</xsl:text>
-                    <xsl:value-of select="$lang"/>
-                    <xsl:text>)</xsl:text>
+                    <xsl:if test="matches($textURI, 'andecavensis|markulf')">
+                        <xsl:text> (</xsl:text>
+                        <xsl:value-of select="$lang"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:if>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:param>
@@ -77,7 +94,14 @@
             <xsl:value-of select="document(concat(replace($textURI, '/data/.*', '/regesten/'), $urn[1], '_regesten.xml'))/xml/regest[@docId=concat($urn[1], '.', $urn[2])]/shortDesc/text()"/>
         </xsl:param>
         <xsl:param name="long-regest">
-            <xsl:value-of select="document(concat(replace($textURI, '/data/.*', '/regesten/'), $urn[1], '_regesten.xml'))/xml/regest[@docId=concat($urn[1], '.', $urn[2])]/longDesc/text()"/>
+            <xsl:choose>
+                <xsl:when test="matches($textURI, 'andecavensis|markulf')">
+                    <xsl:value-of select="document(concat(replace($textURI, '/data/.*', '/regesten/'), $urn[1], '_regesten.xml'))/xml/regest[@docId=concat($urn[1], '.', $urn[2])]/longDesc/text()"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="$textFile/tei:TEI/tei:text/tei:front/tei:div[@subtype='regest']//text()"/>
+                </xsl:otherwise>
+            </xsl:choose>
         </xsl:param>
         <xsl:param name="dateCopyrighted">
             <xsl:choose>
@@ -149,15 +173,35 @@
             </xsl:choose>
         </xsl:param>
         <xsl:param name="metadata">
-            <cpt:structured-metadata xml:lang="deu">
-                <dc:title><xsl:value-of select="$markedUpTitle"/></dc:title>
-                <dct:abstract><xsl:value-of select="$short-regest"/></dct:abstract>
-                <dc:source><xsl:value-of select="$docSource"/></dc:source>
-                <xsl:for-each select="$textFile/tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:respStmt/tei:persName/text()">
-                    <dc:contributor><xsl:value-of select="."/></dc:contributor>
-                </xsl:for-each>
+            <dc:language><xsl:value-of select="$lang"/></dc:language>
+            <dc:type>
+                <xsl:choose>
+                    <xsl:when test="$lang = 'lat'">cts:edition</xsl:when>
+                    <xsl:otherwise>cts:translation</xsl:otherwise>
+                </xsl:choose>
+            </dc:type>
+            <xsl:for-each select="$textFile/tei:TEI/tei:teiHeader/tei:fileDesc/tei:editionStmt/tei:respStmt/tei:persName/text()">
+                <dc:contributor><xsl:value-of select="."/></dc:contributor>
+            </xsl:for-each>
+            <dc:publisher xml:lang="mul">Formulae-Litterae-Chartae Projekt</dc:publisher>
+            <dc:format>application/tei+xml</dc:format>
+            <dc:source>
+                <xsl:choose>
+                    <xsl:when test="matches($textURI, 'andecavensis|markulf')">
+                        <xsl:value-of select="$docSource"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="$bibliographicCitation"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </dc:source>
+            <structured-metadata>
+                <dct:abstract>
+                    <xsl:attribute name="xml:lang"><xsl:value-of select="$pubLang"/></xsl:attribute>
+                    <xsl:value-of select="$short-regest"/>
+                </dct:abstract>
                 <xsl:for-each select="$allEds">
-                    <dc:editor><xsl:value-of select="."/></dc:editor>
+                    <bib:editor><xsl:value-of select="."/></bib:editor>
                 </xsl:for-each>
                 <xsl:choose>
                     <xsl:when test="not(matches($textURI, 'andecavensis|markulf'))">
@@ -169,62 +213,26 @@
                     </xsl:otherwise>
                 </xsl:choose>
                 <dct:bibliographicCitation><xsl:value-of select="$bibliographicCitation"/></dct:bibliographicCitation>
-                <dc:publisher xml:lang="mul">Formulae-Litterae-Chartae Projekt</dc:publisher>
-                <dc:format>application/tei+xml</dc:format>
-            </cpt:structured-metadata>
+            </structured-metadata>
         </xsl:param>
         
-        <xsl:choose>
-            <xsl:when test="contains(string-join($urn, '.'), 'deu')">
-                <xsl:element name="ti:translation" namespace="http://chs.harvard.edu/xmlns/cts">
-                    <xsl:attribute name="xml:lang"><xsl:value-of select="$textFile/tei:TEI/tei:text/tei:body/tei:div/@xml:lang"/></xsl:attribute>
-                    <xsl:attribute name="urn"><xsl:value-of select="string-join($urn, '.')"/></xsl:attribute>
-                    <xsl:attribute name="workUrn"><xsl:value-of select="concat($urn[1], '.', $urn[2])"/></xsl:attribute>
-                    <xsl:element name="ti:label" namespace="http://chs.harvard.edu/xmlns/cts">
-                        <xsl:attribute name="xml:lang">deu</xsl:attribute>
-                        <xsl:value-of select="string-join($title//text(), '')"/>
-                        <xsl:text> (</xsl:text>
-                        <xsl:value-of select="$lang"/>
-                        <xsl:text>)</xsl:text>
-                    </xsl:element>
-                    <xsl:element name="ti:description" namespace="http://chs.harvard.edu/xmlns/cts">
-                        <xsl:attribute name="xml:lang">deu</xsl:attribute>
-                        <xsl:copy-of select="normalize-space($long-regest)"/>
-                    </xsl:element>
-                    <xsl:copy-of select="$metadata"/>
-                </xsl:element>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:element name="ti:edition" namespace="http://chs.harvard.edu/xmlns/cts">
-                    <xsl:attribute name="urn"><xsl:value-of select="string-join($urn, '.')"/></xsl:attribute>
-                    <xsl:attribute name="workUrn"><xsl:value-of select="concat($urn[1], '.', $urn[2])"/></xsl:attribute>
-                    <xsl:element name="ti:label" namespace="http://chs.harvard.edu/xmlns/cts">
-                        <xsl:attribute name="xml:lang">deu</xsl:attribute>
-                        <xsl:choose>
-                            <xsl:when test="$textFile/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:msDesc">
-                                <xsl:value-of select="$title"/>
-                                <xsl:text>, </xsl:text>
-                                <xsl:value-of select="$textFile/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:msDesc/tei:msIdentifier/tei:idno"/>
-                                <xsl:text> (</xsl:text>
-                                <xsl:value-of select="$textFile/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:msDesc/tei:msIdentifier/tei:msName"/>
-                                <xsl:text>)</xsl:text>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:value-of select="string-join($title//text(), '')"/>
-                                <xsl:text> (</xsl:text>
-                                <xsl:value-of select="$lang"/>
-                                <xsl:text>)</xsl:text>
-                            </xsl:otherwise>
-                        </xsl:choose>
-                    </xsl:element>
-                    <xsl:element name="ti:description" namespace="http://chs.harvard.edu/xmlns/cts">
-                        <xsl:attribute name="xml:lang">deu</xsl:attribute>
-                        <xsl:copy-of select="normalize-space($long-regest)"/>
-                    </xsl:element>
-                    <xsl:copy-of select="$metadata"/>
-                </xsl:element>
-            </xsl:otherwise>
-        </xsl:choose>
+        <collection>
+            <xsl:attribute name="readable">true</xsl:attribute>
+            <xsl:attribute name="path"><xsl:text>./</xsl:text><xsl:value-of select="tokenize($textURI, '/')[last()]"/></xsl:attribute>
+            <identifier><xsl:value-of select="string-join($urn, '.')"/></identifier>
+            <parent><xsl:value-of select="concat($urn[1], '.', $urn[2])"/></parent>
+            <dc:title>
+                <xsl:attribute name="xml:lang"><xsl:value-of select="$pubLang"/></xsl:attribute>
+                <xsl:value-of select="$markedUpTitle"/>
+            </dc:title>
+            <dc:description>
+                <xsl:attribute name="xml:lang"><xsl:value-of select="$pubLang"/></xsl:attribute>
+                <xsl:copy-of select="normalize-space($long-regest)"/>
+            </dc:description>
+            <xsl:copy-of select="$metadata"/>
+        </collection>
+            
+        
     </xsl:template>
     
 </xsl:stylesheet>

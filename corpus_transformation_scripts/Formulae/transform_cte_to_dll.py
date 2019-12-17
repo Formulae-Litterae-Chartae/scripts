@@ -7,11 +7,11 @@ home_dir = environ.get('HOME', '')
 saxon_location = home_dir + '/Downloads/SaxonHE9-8-0-11J/saxon9he.jar'
 text_transformation_xslt = home_dir + '/docx_tei_cte_conversion/corpus_transformation_scripts/Formulae/transform_cte_to_dll.xsl'
 metadata_transformation_xslt = home_dir + '/docx_tei_cte_conversion/corpus_transformation_scripts/Formulae/create_cts_files_new.xsl'
-corpus_name = 'markulf' # Used to build the folder structure
-destination_folder = home_dir + '/Documents/Markulf_XML' # The base folder where the corpus folder structure should be built
-latins = glob(home_dir + '/Documents/Markulf_XML/Latin/*.xml')
-germans = glob(home_dir + '/Documents/Markulf_XML/Deutsch/*.xml')
-transcriptions = glob(home_dir + '/Documents/Markulf_XML/Transkripte/*.xml')
+corpus_name = 'andecavensis' # Used to build the folder structure
+destination_folder = home_dir + '/Documents/Angers_XML' # The base folder where the corpus folder structure should be built
+latins = glob(home_dir + '/Documents/Angers_XML/Latin/*.xml')
+germans = glob(home_dir + '/Documents/Angers_XML/Deutsch/*.xml')
+transcriptions = glob(home_dir + '/Documents/Angers_XML/Transkripte/*.xml')
 
 def remove_space_before_note(filename):
     with open(filename) as f:

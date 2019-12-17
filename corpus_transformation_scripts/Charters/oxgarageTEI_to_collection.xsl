@@ -285,7 +285,20 @@
                         </xsl:attribute>
                         
                         <xsl:for-each select="$charters/tei:row[position()>1]">
-                            <xsl:variable name="urkundennummer"><xsl:value-of select="normalize-space(child::tei:cell[position()=1]/descendant::text())"/></xsl:variable>
+                            <xsl:variable name="urkundennummer">
+                                <xsl:value-of select="normalize-space(tokenize(child::tei:cell[position()=1]/descendant::text(), '\s+')[1])"/>
+                                <!--<xsl:value-of select="position()"/>-->
+                            </xsl:variable>
+                            <xsl:variable name="charterdesc">
+                                <xsl:value-of select="normalize-space(string-join(child::tei:cell[position()=1]/descendant::text(), ' '))"/>
+                            </xsl:variable>
+                            <xsl:variable name="addressee">
+                                <!--<xsl:if test="contains(child::tei:cell[position()=1]/descendant::text(), ' ')">
+                                    <xsl:value-of select="replace(lower-case(tokenize(normalize-space(child::tei:cell[position()=1]/descendant::text()), '\s+')[2]), '\W', '')"/>
+                                    <xsl:value-of select="replace(lower-case(tokenize(normalize-space(child::tei:cell[position()=1]/descendant::text()), '\s+')[3]), '\W', '')"/>
+                                    <xsl:value-of select="replace(lower-case(tokenize(normalize-space(child::tei:cell[position()=1]/descendant::text()), '\s+')[last()]), '\W', '')"/>
+                                </xsl:if>-->
+                            </xsl:variable>
                             
                             <xsl:choose>
                                 <!-- DO NOTHING WHEN CURRENT ROW IS ANOTHER VERSION OF PREVIOUS ROW. -->
@@ -301,11 +314,19 @@
                                         <xsl:attribute name="type">charta</xsl:attribute>
                                         <xsl:attribute name="xml:space">preserve</xsl:attribute>
                                         <xsl:attribute name="xml:id">
-                                            <xsl:value-of select="$textgroup"/><xsl:text>.</xsl:text><xsl:value-of select="normalize-space($work)"/><xsl:value-of select="format-number(number($urkundennummer),'0000')"/>
+                                            <xsl:value-of select="$textgroup"/>
+                                            <xsl:text>.</xsl:text>
+                                            <xsl:value-of select="normalize-space($work)"/>
+                                            <xsl:if test="not($addressee = '')">
+                                                <xsl:text>-</xsl:text>
+                                                <xsl:value-of select="$addressee"/>
+                                                <xsl:text>-</xsl:text>
+                                            </xsl:if>
+                                            <xsl:value-of select="format-number(number($urkundennummer),'0000')"/>
                                         </xsl:attribute>
                                         
                                         <xsl:call-template name="createFront">
-                                            <xsl:with-param name="urkundennummer" select="$urkundennummer"/>
+                                            <xsl:with-param name="urkundennummer" select="$charterdesc"/>
                                             <xsl:with-param name="currentNode" select="current()"/>
                                         </xsl:call-template>
                                         
@@ -322,6 +343,11 @@
                                                             <xsl:value-of select="$textgroup"/>
                                                             <xsl:text>.</xsl:text>
                                                             <xsl:value-of select="normalize-space($work)"/>
+                                                            <xsl:if test="not($addressee = '')">
+                                                                <xsl:text>-</xsl:text>
+                                                                <xsl:value-of select="$addressee"/>
+                                                                <xsl:text>-</xsl:text>
+                                                            </xsl:if>
                                                             <xsl:value-of select="format-number(number($urkundennummer),'0000')"/>
                                                             <xsl:text>.lat</xsl:text>
                                                             <xsl:value-of select="format-number(count(preceding-sibling::tei:row[descendant::text()=current()/tei:cell[position()=1]/text()])+1,'000')"/>
@@ -353,6 +379,11 @@
                                                                 <xsl:value-of select="$textgroup"/>
                                                                 <xsl:text>.</xsl:text>
                                                                 <xsl:value-of select="normalize-space($work)"/>
+                                                                <xsl:if test="not($addressee = '')">
+                                                                    <xsl:text>-</xsl:text>
+                                                                    <xsl:value-of select="$addressee"/>
+                                                                    <xsl:text>-</xsl:text>
+                                                                </xsl:if>
                                                                 <xsl:value-of select="format-number(number($urkundennummer),'0000')"/>
                                                                 <xsl:text>.lat</xsl:text>
                                                                 <xsl:value-of select="format-number(count(preceding-sibling::tei:row[descendant::text()=current()/tei:cell[position()=1]/text()])+1,'000')"/>
@@ -485,11 +516,16 @@
                                         <xsl:attribute name="xml:space">preserve</xsl:attribute>
                                         <xsl:attribute name="xml:id">
                                             <xsl:value-of select="$textgroup"/><xsl:text>.</xsl:text><xsl:value-of select="normalize-space($work)"/>
+                                            <xsl:if test="not($addressee = '')">
+                                                <xsl:text>-</xsl:text>
+                                                <xsl:value-of select="$addressee"/>
+                                                <xsl:text>-</xsl:text>
+                                            </xsl:if>
                                             <xsl:value-of select="format-number(number(replace($urkundennummer, '\D', '')),'0000')"/><xsl:value-of select="replace($urkundennummer, '\d', '')"/>
                                         </xsl:attribute>
                                         
                                         <xsl:call-template name="createFront">
-                                            <xsl:with-param name="urkundennummer" select="$urkundennummer"/>
+                                            <xsl:with-param name="urkundennummer" select="$charterdesc"/>
                                             <xsl:with-param name="currentNode" select="current()"/>
                                         </xsl:call-template>
                                         
@@ -502,6 +538,11 @@
                                                     <xsl:value-of select="$textgroup"/>
                                                     <xsl:text>.</xsl:text>
                                                     <xsl:value-of select="normalize-space($work)"/>
+                                                    <xsl:if test="not($addressee = '')">
+                                                        <xsl:text>-</xsl:text>
+                                                        <xsl:value-of select="$addressee"/>
+                                                        <xsl:text>-</xsl:text>
+                                                    </xsl:if>
                                                     <xsl:value-of select="format-number(number(replace($urkundennummer, '\D', '')),'0000')"/><xsl:value-of select="replace($urkundennummer, '\d', '')"/>
                                                     <xsl:text>.lat001</xsl:text>
                                                 </xsl:attribute>
@@ -660,6 +701,12 @@
                     <xsl:element name="head" namespace="http://www.tei-c.org/ns/1.0">
                         <xsl:attribute name="xml:space">preserve</xsl:attribute>
                         <xsl:value-of select="replace(.,'\*','')"/>
+                    </xsl:element>
+                </xsl:when>
+                <xsl:when test="parent::tei:hi[@rend='superscript']">
+                    <xsl:element name="seg" namespace="http://www.tei-c.org/ns/1.0">
+                        <xsl:attribute name="type">superscript</xsl:attribute>
+                        <xsl:value-of select="."/>
                     </xsl:element>
                 </xsl:when>
                 <xsl:otherwise>

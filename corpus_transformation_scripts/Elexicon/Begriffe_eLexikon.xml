@@ -67,6 +67,7 @@
 	<!--<lem elex="homo">homo</lem>-->
 	<lem elex="ingenuus">ingenuus</lem>
 	<lem elex="iudex">iudex</lem>
+	<lem elex="iudex">iudices</lem>
 	<!--<lem elex="iudicium">iudicium</lem>-->
 	<lem elex="ius">ius</lem>
 	<lem elex="lex">lex</lem>
@@ -140,6 +141,7 @@
 	<!--<lem elex="vacuaturia">vacuaturia</lem>-->
 	<!--<lem elex="vendicio">vendicio</lem>-->
 	<lem elex="via_publica">via publicus</lem>
+	<lem elex="via_publica">via publica</lem>
 	<lem elex="villa">villa</lem>
 	<lem elex="vir_apostolicus">vir apostolicus</lem>
 	<lem elex="vir_illustris">vir illustris</lem>

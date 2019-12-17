@@ -47,7 +47,7 @@ for e in sorted(bib_database.entries, key=author_year_sort):
     editor = ''
     if 'editor' in e:
         editor = []
-        for ed in e['editor'].split(' und '):
+        for ed in e['editor'].split(' and '):
             if len(ed.split(',')) > 1:
                 editor.append(E.editor(E.forename(ed.split(',')[-1].strip()), E.surname(ed.split(',')[0])))
             else:
@@ -119,7 +119,7 @@ for e in sorted(bib_database.entries, key=author_year_sort):
     entries.append(entry)
     
 
-tree = etree.parse('/home/matt/docx_tei_cte_conversion/biblatex/tei_bibliography_template.xml')
+tree = etree.parse('/home/matt/docx_tei_cte_conversion/internal/biblatex/tei_bibliography_template.xml')
 tree.xpath('//tei:body', namespaces={'tei': "http://www.tei-c.org/ns/1.0"})[0].append(entries)
 # tree.write('/home/matt/results/Bibliographie_E-Lexikon.xml', encoding="utf-8", pretty_print=True)
 xml_str = etree.tostring(tree, pretty_print=True, encoding="unicode")
