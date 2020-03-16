@@ -1,0 +1,36 @@
+In [1]: from formulae.app import nemo
+
+In [2]: from formulae import create_app, db
+
+In [3]: from formulae.models import User
+
+In [4]: app = create_app()
+
+In [5]: app.app_context().push()
+
+In [6]: u = User(username="USERNAME", email="EMAIL", project_team=???, default_locale="de")
+
+In [7]: u.set_password('PASSWORD')
+
+In [8]: db.session.add(u)
+
+In [9]: db.session.commit()
+
+To remove a user:
+
+Do [1]-[5] above
+Then:
+
+users = User.query.all()
+for u in users: 
+    print(u.id, u.username, u.project_team)
+# Use this user information to decide which user id(s) should be deleted
+to_delete = User.query.get(int(<ID>))
+db.session.delete(to_delete)
+# Repeat this for all the user accounts you want to delete
+# Then check to make sure the accounts have been deleted and no other accounts were accidentally deleted with:
+users = User.query.all()
+for u in users: 
+    print(u.id, u.username, u.project_team)
+# Once you are satisfied with the results, commit the session:
+db.session.commit()

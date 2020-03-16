@@ -6,21 +6,22 @@
     xmlns:ti="http://chs.harvard.edu/xmlns/cts"
     xmlns:dct="http://purl.org/dc/terms/"
     xmlns:cpt="http://purl.org/capitains/ns/1.0#"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
     version="2.0">
     
     <xsl:output method="xml" omit-xml-declaration="yes" indent="yes" exclude-result-prefixes="#all"/>
-    <xsl:param name="metadataFile"><xsl:value-of select="replace(base-uri(), tokenize(base-uri(), '/')[last()], '__cts__.xml')"/></xsl:param>
+    <xsl:param name="metadataFile"><xsl:value-of select="replace(base-uri(), tokenize(base-uri(), '/')[last()], '__capitains__.xml')"/></xsl:param>
     <xsl:param name="urn"><xsl:value-of select="/tei:TEI/tei:text/tei:body/tei:div/@n"/></xsl:param>
     
     <xsl:template match="/">
         <xsl:variable name="theText">
             <xsl:call-template name="extractText">
-                <xsl:with-param name="text" select="//tei:w"/>
+                <xsl:with-param name="text" select="//tei:w[not(@type='no-search')]"/>
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="theLems">
             <xsl:call-template name="extractLem">
-                <xsl:with-param name="text" select="//tei:w"/>
+                <xsl:with-param name="text" select="//tei:w[not(@type='no-search')]"/>
             </xsl:call-template>                        
         </xsl:variable>
         <xsl:variable name="dates">
@@ -30,14 +31,14 @@
         </xsl:variable>
         <xsl:variable name="theRegest">
             <xsl:call-template name="extractRegest">
-                <xsl:with-param name="shortRegest" select="document($metadataFile)/ti:work/*[@urn=$urn]/cpt:structured-metadata/dct:abstract/text()"/>
-                <xsl:with-param name="fullRegest" select="document($metadataFile)/ti:work/*[@urn=$urn]/ti:description/text()"/>
+                <xsl:with-param name="shortRegest" select="document($metadataFile)/cpt:collection/cpt:members/cpt:collection[child::cpt:identifier/text()=$urn]/cpt:structured-metadata/dct:abstract/text()"/>
+                <xsl:with-param name="fullRegest" select="document($metadataFile)/cpt:collection/cpt:members/cpt:collection[child::cpt:identifier/text()=$urn]/dc:description/text()"/>
             </xsl:call-template>
         </xsl:variable>
         <xml>
             <title><xsl:value-of select="normalize-space(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title/text())"/></title>
-            <dateStr><xsl:value-of select="document($metadataFile)/ti:work/ti:edition[@urn=$urn]/cpt:structured-metadata/dct:temporal/text()"/></dateStr>
-            <compositionPlace><xsl:value-of select="document($metadataFile)/ti:work/ti:edition[@urn=$urn]/cpt:structured-metadata/dct:spatial/text()"/></compositionPlace>
+            <dateStr><xsl:value-of select="document($metadataFile)/cpt:collection/cpt:members/cpt:collection[child::cpt:identifier/text()=$urn]/cpt:structured-metadata/dct:temporal/text()"/></dateStr>
+            <compositionPlace><xsl:value-of select="document($metadataFile)/cpt:collection/cpt:members/cpt:collection[child::cpt:identifier/text()=$urn]/cpt:structured-metadata/dct:spatial/text()"/></compositionPlace>
             <urn><xsl:value-of select="$urn"/></urn>
             <xsl:choose>
                 <xsl:when test="contains(lower-case(normalize-space(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title/text())), 'formula')">
@@ -56,7 +57,7 @@
                 </xsl:otherwise>
             </xsl:choose>
             <!-- The outer replace function should include other text critical marks that should not get in the way of the search. -->
-            <inflected><xsl:value-of select="normalize-space(replace(replace(replace(replace($theText, ' ([\.,:;”])', '$1'), '(\[|&lt;)\s+', ''), '\s+(\]|&gt;)', ''), '\[|&lt;|\]|&gt;|…', '$2'))"/></inflected>
+            <inflected><xsl:value-of select="normalize-space(replace(replace(replace(replace($theText, '> ([\.,:;”])', '>$1'), '(\[|&lt;)\s+', ''), '\s+(\]|&gt;)', ''), '\[|&lt;|\]|&gt;|…', '$2'))"/></inflected>
             <lemmatized><xsl:value-of select="normalize-space(replace($theLems, '\s+', ' '))"/></lemmatized>
             <regest><xsl:value-of select="$theRegest"/></regest>
             <forgery><xsl:value-of select="boolean(/tei:TEI/tei:text/tei:front/tei:note[@type='echtheit'])"/></forgery>
@@ -67,6 +68,7 @@
         <xsl:param name="text"/>
         <xsl:for-each select="$text">
             <xsl:variable name="tail"><xsl:value-of select="following-sibling::text()[1]"/></xsl:variable>
+            <!--<xsl:value-of select="concat(./text(), normalize-space($tail), ' ')"/>-->
             <xsl:choose>
                 <xsl:when test="not(contains($tail, ' '))">
                     <xsl:value-of select="concat(./text(), $tail, ' ')"/>

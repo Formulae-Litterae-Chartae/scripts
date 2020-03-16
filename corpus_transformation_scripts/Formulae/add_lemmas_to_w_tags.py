@@ -6,12 +6,12 @@ from string import punctuation
 import os
 
 ns = {'tei': "http://www.tei-c.org/ns/1.0"}
-xmls = glob('/home/matt/results/formulae/data/andecavensis/*/*lat001.xml')
-xmls += glob('/home/matt/results/formulae/data/andecavensis/*/*deu001.xml')
+xmls = glob('/home/matt/Documents/Angers_XML/data/andecavensis/*/*lat001.xml')
+xmls += glob('/home/matt/Documents/Angers_XML/data/andecavensis/*/*deu001.xml')
 lex_xml = etree.parse('/home/matt/docx_tei_cte_conversion/corpus_transformation_scripts/Elexicon/Begriffe_eLexikon.xml')
 lex_dict = {}
 for lem in lex_xml.xpath('/xml/lem'):
-    lex_dict[lem.text] = lem.get('elex')
+    lex_dict[lem.text.strip()] = lem.get('elex').strip()
 del lex_xml
 first_words = []
 second_words = []
@@ -89,7 +89,7 @@ for xml_file in xmls:
             print(xml_file, not_found)
         else:
             xml.getroottree().write(xml_file)
-            subprocess.run(['java', '-jar',  '/home/matt/Downloads/SaxonHE9-8-0-11J/saxon9he.jar', '{}'.format(xml_file), '/home/matt/docx_tei_cte_conversion/ElasticSearch/extract_text_search_to_xml.xsl', '-o:/home/matt/results/formulae/search/{}'.format(xml_file.split('/')[-1].replace('xml', 'txt'))])
+            #subprocess.run(['java', '-jar',  '/home/matt/Downloads/SaxonHE9-8-0-11J/saxon9he.jar', '{}'.format(xml_file), '/home/matt/docx_tei_cte_conversion/ElasticSearch/extract_text_search_to_xml.xsl', '-o:/home/matt/results/formulae/search/{}'.format(xml_file.split('/')[-1].replace('xml', 'txt'))])
     else:
         latin_words = xml.xpath('//tei:seg[@type="latin-word;"]/tei:w', namespaces=ns)
         for i, w in enumerate(latin_words):

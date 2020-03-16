@@ -4,6 +4,7 @@ import subprocess
 from json import load
 from lxml.builder import ElementMaker
 import os
+from lxml import etree
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -27,7 +28,7 @@ def add_inRefs_to_cts(filename):
     xml = etree.parse(filename)                                                             
     md = xml.xpath('/ti:work/ti:edition/cpt:structured-metadata', namespaces=ns)[0]
     for ref, cit in form_elex_mapping[key].items():
-        md.append(E.isReferencedBy(ref + '%' + '%'.join(cit)))
+        md.append(E.isReferencedBy('%' + ref + '%' + '%'.join(cit)))
     xml.write(filename, encoding='utf-8', pretty_print=True)
 
 for lex in lexes:

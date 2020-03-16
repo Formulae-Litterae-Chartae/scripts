@@ -5,7 +5,7 @@
     xmlns:ti="http://chs.harvard.edu/xmlns/cts"
     xmlns:dct="http://purl.org/dc/terms/" 
     xmlns:dc="http://purl.org/dc/elements/1.1/"
-    xmlns="http://purl.org/ns/capitains"
+    xmlns="http://purl.org/capitains/ns/1.0#"
     xmlns:owl="http://www.w3.org/2002/07/owl#" 
     xmlns:bib="http://bibliotek-o.org/1.0/ontology/"
     exclude-result-prefixes="xs tei"
@@ -73,9 +73,10 @@
                 </xsl:if>
             </xsl:for-each>
             <xsl:text>, </xsl:text>
-            <xsl:value-of select="string-join(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:monogr/tei:title/text(), ': ')"/>
+            <xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:monogr/tei:title/text()"/>
+            <xsl:text>: </xsl:text>
             <xsl:if test="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:monogr/tei:imprint/tei:biblScope[@unit='volume']">
-                <xsl:text> Bd. </xsl:text><xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:monogr/tei:imprint/tei:biblScope[@unit='volume']/text()"/>
+                <xsl:text>Bd. </xsl:text><xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:monogr/tei:imprint/tei:biblScope[@unit='volume']/text()"/>
             </xsl:if>
             <xsl:text>, </xsl:text><xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:monogr/tei:imprint/tei:pubPlace/text()"/>
             <xsl:text> </xsl:text><xsl:value-of select="$dateCopyrighted"/>

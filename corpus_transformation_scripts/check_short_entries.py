@@ -5,7 +5,7 @@ import re
 
 kurz = [re.sub('[„“"\'’]', '', x) for x in etree.parse('/home/matt/results/Bibliographie_E-Lexikon.xml').xpath('//tei:title[@type="short"]/text()', namespaces={'tei': 'http://www.tei-c.org/ns/1.0'})]
 
-texts = [x for x in glob('/home/matt/Documents/Angers_XML/data/*/*/*.xml') if re.search('andecavensis|elexicon', x) and '__cts__' not in x]
+texts = [x for x in glob('/home/matt/Documents/Angers_XML/data/andecavensis/*/*.xml', recursive=True) if re.search('andecavensis|elexicon', x) and '__cts__' not in x]
 
 problems = []
 

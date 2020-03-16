@@ -65,11 +65,13 @@
 	<lem elex="hereditas">hereditas</lem>
 	<lem elex="heres">heres</lem>
 	<!--<lem elex="homo">homo</lem>-->
+	<lem elex="kalendae">idus</lem>
 	<lem elex="ingenuus">ingenuus</lem>
 	<lem elex="iudex">iudex</lem>
 	<lem elex="iudex">iudices</lem>
 	<!--<lem elex="iudicium">iudicium</lem>-->
 	<lem elex="ius">ius</lem>
+	<lem elex="kalendae">kalendae</lem>
 	<lem elex="lex">lex</lem>
 	<!--<lem elex="lex_romana">lex romanus</lem>-->
 	<!--<lem elex="liber">liber</lem>-->
@@ -88,6 +90,7 @@
 	<lem elex="matrona">matrona</lem>
 	<lem elex="modius">modius</lem>
 	<lem elex="mos">mos</lem>
+	<lem elex="kalendae">nonae</lem>
 	<lem elex="notar">notar</lem>
 	<lem elex="notarius">notarius</lem>
 	<!--<lem elex="noticia">notitia</lem>-->

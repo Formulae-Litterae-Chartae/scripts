@@ -5,6 +5,12 @@
     exclude-result-prefixes="xs tei"
     version="2.0">
     
+    <xsl:output
+        name="general"
+        method="xml"
+        encoding="UTF-8"
+        indent="yes"/>
+    
     <xsl:output omit-xml-declaration="yes" indent="yes"/>
     
     <xsl:param name="pSeparators">&#xA;&#x9;&#x20;&#8230;&#8221;,.;:?!()'"„“‚‘</xsl:param>
@@ -12,9 +18,17 @@
         <xsl:variable name="tempTitle"><xsl:value-of select="normalize-space(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title/text())"/></xsl:variable>
         <xsl:choose>
             <xsl:when test="contains($tempTitle, '(')">
+                <xsl:variable name="folia" select="/tei:TEI/tei:text/tei:body/tei:p[starts-with(., '[fol.')]"/>
                 <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="type">form-name</xsl:attribute>
-                    <xsl:value-of select="replace(string-join(subsequence(tokenize($tempTitle, '\s+'), 1, 2), ' '), ',$', '')"/>
+                    <xsl:choose>
+                        <xsl:when test="contains($tempTitle, 'Weltzeitalter')">
+                            <xsl:value-of select="normalize-space(substring-before($tempTitle, '('))"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="replace(string-join(subsequence(tokenize($tempTitle, '\s+'), 1, 2), ' '), ',$', '')"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </xsl:element>
                 <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="type">siglum</xsl:attribute>
@@ -22,20 +36,48 @@
                 </xsl:element>
                 <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="type">manuscript-desc</xsl:attribute>
-                    <xsl:value-of select="normalize-space(string-join(subsequence(tokenize(substring-before($tempTitle, '('), '\s+'), 3), ' '))"/>
+                    <xsl:choose>
+                        <xsl:when test="contains($tempTitle, 'Fu2')">
+                            <xsl:text>Fulda, Hessische Landesbibliothek, D1</xsl:text>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="normalize-space(string-join(subsequence(tokenize(substring-before($tempTitle, '('), '\s+'), 3), ' '))"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:element>
+                <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
+                    <xsl:attribute name="type">folia</xsl:attribute>
+                    <xsl:value-of select="normalize-space(translate(string-join($folia[1], ' '), '[]', ''))"/>
+                    <xsl:if test="count($folia) > 1">
+                        <xsl:text>-</xsl:text><xsl:value-of select="normalize-space(translate(string-join($folia[last()], ' '), '[]', ''))"/>
+                    </xsl:if>
                 </xsl:element>
             </xsl:when>
             <xsl:when test="contains($tempTitle, 'Deutsch')">
                 <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="type">form-name</xsl:attribute>
-                    <xsl:value-of select="replace(string-join(subsequence(tokenize($tempTitle, '\s+'), 1, 2), ' '), ',$', '')"/>
+                    <xsl:choose>
+                        <xsl:when test="contains($tempTitle, 'Weltzeitalter')">
+                            <xsl:value-of select="replace($tempTitle, ' Deutsch', '')"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="replace(string-join(subsequence(tokenize($tempTitle, '\s+'), 1, 2), ' '), ',$', '')"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </xsl:element>
                 <xsl:element name="xml:lang">deu</xsl:element>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="type">form-name</xsl:attribute>
-                    <xsl:value-of select="replace(string-join(subsequence(tokenize($tempTitle, '\s+'), 1, 2), ' '), ',$', '')"/>
+                    <xsl:choose>
+                        <xsl:when test="contains($tempTitle, 'Weltzeitalter')">
+                            <xsl:value-of select="$tempTitle"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="replace(string-join(subsequence(tokenize($tempTitle, '\s+'), 1, 2), ' '), ',$', '')"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </xsl:element>
                 <xsl:element name="xml:lang">lat</xsl:element>
             </xsl:otherwise>
@@ -43,26 +85,29 @@
     </xsl:param>
     <xsl:param name="formNumber">
         <xsl:choose>
-            <xsl:when test="contains(lower-case($formTitle/tei:ref[@type='form-name']), 'markulf')">
+            <xsl:when test="$formTitle/tei:ref[@type='folia']">
+                <xsl:value-of select="normalize-space(replace($formTitle/tei:ref[@type='folia'], 'fol\.\s*|-', ''))"/>
+            </xsl:when>
+            <xsl:when test="contains(lower-case($formTitle/tei:ref[@type='form-name']), 'marculf')">
                 <xsl:choose>
                     <xsl:when test="contains($formTitle/tei:ref[@type='form-name'], ',')">
-                        <xsl:number value="substring-after($formTitle/tei:ref[@type='form-name'], ',')" format="001"/>
+                        <xsl:text>form</xsl:text><xsl:number value="substring-after($formTitle/tei:ref[@type='form-name'], ',')" format="001"/>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:number value="subsequence(tokenize($formTitle/tei:ref[@type='form-name'], '\s+'), 2, 1)" format="001"/>
+                        <xsl:text>form</xsl:text><xsl:number value="subsequence(tokenize($formTitle/tei:ref[@type='form-name'], '\s+'), 2, 1)" format="001"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:when>
+            <xsl:when test="contains($formTitle, 'Weltzeitalter')">
+                <xsl:text>computus</xsl:text>
+            </xsl:when>
             <xsl:otherwise>
-                <xsl:number value="subsequence(tokenize($formTitle/tei:ref[@type='form-name'], '\s+'), 2, 1)" format="001"/>
+                <xsl:text>form</xsl:text><xsl:number value="subsequence(tokenize($formTitle/tei:ref[@type='form-name'], '\s+'), 2, 1)" format="001"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:param>
     <xsl:param name="manuscript">
         <xsl:choose>
-            <xsl:when test="$formTitle/tei:ref[@type='siglum']">
-                <xsl:value-of select="$formTitle/tei:ref[@type='siglum']"/>
-            </xsl:when>
             <xsl:when test="$formTitle/xml:lang = 'deu'">
                 <xsl:text>deu001</xsl:text>
             </xsl:when>
@@ -71,20 +116,48 @@
     </xsl:param>
     <!--<xsl:param name="formNumber">1</xsl:param>-->
     <xsl:param name="biblFile">/home/matt/results/Bibliographie_E-Lexikon.xml</xsl:param>
-    <xsl:param name="urnStart">
+    <xsl:param name="collection">
         <xsl:choose>
-            <xsl:when test="contains(lower-case($formTitle/tei:ref[@type='form-name']), 'markulf')">
-                <xsl:text>urn:cts:formulae:markulf.form</xsl:text>
+            <xsl:when test="$formTitle/tei:ref[@type='siglum']">
+                <xsl:value-of select="lower-case($formTitle/tei:ref[@type='siglum'])"/>
+            </xsl:when>
+            <xsl:when test="contains(lower-case($formTitle/tei:ref[@type='form-name']), 'marculf')">
+                <xsl:text>marculf</xsl:text>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:text>urn:cts:formulae:andecavensis.form</xsl:text>
+                <xsl:text>andecavensis</xsl:text>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:param>
+    <xsl:param name="urnStart">
+        <xsl:choose>
+            <xsl:when test="$formTitle/tei:ref[@type='siglum']">
+                <xsl:text>urn:cts:formulae:</xsl:text><xsl:value-of select="lower-case($formTitle/tei:ref[@type='siglum'])"/><xsl:text>.</xsl:text>
+            </xsl:when>
+            <xsl:when test="contains(lower-case($formTitle/tei:ref[@type='form-name']), 'marculf')">
+                <xsl:text>urn:cts:formulae:marculf.</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:text>urn:cts:formulae:andecavensis.</xsl:text>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:param>
     
     <xsl:template match="/">
-        <xsl:processing-instruction name="xml-model">href="https://digitallatin.github.io/guidelines/critical-editions.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"</xsl:processing-instruction>
-        <xsl:apply-templates select="node()|comment()"/>
+        <xsl:choose>
+            <xsl:when test="$formTitle/tei:ref[@type='folia']">
+                <xsl:result-document format="general" href="./temp/{$collection}.{$formNumber}.{$manuscript}.xml" validation="strip">
+                    <xsl:processing-instruction name="xml-model">href="https://digitallatin.github.io/guidelines/critical-editions.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"</xsl:processing-instruction>
+                    <xsl:apply-templates select="node()|comment()"/>
+                </xsl:result-document>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:result-document format="general" href="./data/{$collection}/{$formNumber}/{$collection}.{$formNumber}.{$manuscript}.xml" validation="strip">
+                    <xsl:processing-instruction name="xml-model">href="https://digitallatin.github.io/guidelines/critical-editions.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"</xsl:processing-instruction>
+                    <xsl:apply-templates select="node()|comment()"/>
+                </xsl:result-document>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
     
     <!-- Create teiHeader -->
@@ -93,22 +166,35 @@
                 <xsl:attribute name="xml:lang">deu</xsl:attribute>
                 <xsl:element name="fileDesc" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:element name="titleStmt" namespace="http://www.tei-c.org/ns/1.0">
-                        <xsl:element name="title" namespace="http://www.tei-c.org/ns/1.0">
-                            <xsl:value-of select="$formTitle/tei:ref[@type='form-name']"/>
-                        </xsl:element>
-                        <xsl:element name="author" namespace="http://www.tei-c.org/ns/1.0"></xsl:element>
-                        <xsl:element name="editor" namespace="http://www.tei-c.org/ns/1.0">Christoph Walther</xsl:element>
+                        <xsl:choose>
+                            <xsl:when test="$formTitle/tei:ref[@type='manuscript-desc']">
+                                <xsl:element name="title" namespace="http://www.tei-c.org/ns/1.0">
+                                    <xsl:value-of select="$formTitle/tei:ref[@type='manuscript-desc']"/>
+                                    <xsl:text> </xsl:text>
+                                    <xsl:text>[</xsl:text>
+                                    <xsl:value-of select="$formTitle/tei:ref[@type='folia']"/>
+                                    <xsl:text>]</xsl:text>
+                                </xsl:element>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:element name="title" namespace="http://www.tei-c.org/ns/1.0">
+                                    <xsl:value-of select="$formTitle/tei:ref[@type='form-name']"/>
+                                </xsl:element>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    <xsl:element name="author" namespace="http://www.tei-c.org/ns/1.0"></xsl:element>
+                    <xsl:element name="editor" namespace="http://www.tei-c.org/ns/1.0">Christoph Walther</xsl:element>
                 </xsl:element>
                     <xsl:element name="editionStmt" namespace="http://www.tei-c.org/ns/1.0">
                         <xsl:choose>
+                            <xsl:when test="$formTitle/tei:ref[@type='manuscript-desc']">
+                                <xsl:element name="edition" namespace="http://www.tei-c.org/ns/1.0">Digitale Transkription von <xsl:value-of select="$formTitle/tei:ref[@type='manuscript-desc']"/> [<xsl:value-of select="$formTitle/tei:ref[@type='folia']"/>]</xsl:element>
+                            </xsl:when>
                             <xsl:when test="$manuscript = 'lat001'">
                                 <xsl:element name="edition" namespace="http://www.tei-c.org/ns/1.0">Digitale Edition von <xsl:value-of select="$formTitle/tei:ref[@type='form-name']"/></xsl:element>
                             </xsl:when>
-                            <xsl:when test="$manuscript = 'deu001'">
-                                <xsl:element name="edition" namespace="http://www.tei-c.org/ns/1.0">Digitale deutsche Übersetzung von <xsl:value-of select="$formTitle/tei:ref[@type='form-name']"/></xsl:element>
-                            </xsl:when>
                             <xsl:otherwise>
-                                <xsl:element name="edition" namespace="http://www.tei-c.org/ns/1.0">Digitale Transkription von <xsl:value-of select="$formTitle/tei:ref[@type='form-name']"/>, <xsl:value-of select="$formTitle/tei:ref[@type='siglum']"/> (<xsl:value-of select="$formTitle/tei:ref[@type='manuscript-desc']"/>)</xsl:element>
+                                <xsl:element name="edition" namespace="http://www.tei-c.org/ns/1.0">Digitale deutsche Übersetzung von <xsl:value-of select="$formTitle/tei:ref[@type='form-name']"/></xsl:element>
                             </xsl:otherwise>
                         </xsl:choose>
                         <xsl:element name="respStmt" namespace="http://www.tei-c.org/ns/1.0">
@@ -207,8 +293,26 @@
                     <xsl:otherwise>
                         <xsl:attribute name="type">edition</xsl:attribute>
                         <xsl:attribute name="xml:lang">lat</xsl:attribute>
-                        <xsl:attribute name="n"><xsl:value-of select="concat($urnStart, $formNumber, '.', lower-case($manuscript))"/></xsl:attribute>
-                        <xsl:if test="not(contains($manuscript, 'lat0'))"><xsl:attribute name="subtype">transcription</xsl:attribute></xsl:if>
+                        <xsl:choose>
+                            <xsl:when test="lower-case($formTitle/tei:ref[@type='siglum']) = 'fu2'">
+                                <xsl:attribute name="n">
+                                    <xsl:text>urn:cts:formulae:andecavensis.</xsl:text>
+                                    <xsl:choose>
+                                        <xsl:when test="contains($formTitle/tei:ref[@type='form-name']/text(), 'Weltzeitalter')">
+                                            <xsl:text>computus</xsl:text>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:text>form</xsl:text><xsl:number value="subsequence(tokenize($formTitle/tei:ref[@type='form-name'], '\s+'), 2, 1)" format="001"/>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                    <xsl:text>.fu2</xsl:text>
+                                </xsl:attribute>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:attribute name="n"><xsl:value-of select="concat($urnStart, $formNumber, '.', lower-case($manuscript))"/></xsl:attribute>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                        <xsl:if test="$formTitle/tei:ref[@type='folia']"><xsl:attribute name="subtype">transcription</xsl:attribute></xsl:if>
                     </xsl:otherwise>
                 </xsl:choose>
                 <xsl:element name="div" namespace="http://www.tei-c.org/ns/1.0">
@@ -404,7 +508,7 @@
     <xsl:template match="tei:p">
         <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
             <xsl:attribute name="xml:space">preserve</xsl:attribute>
-            <xsl:if test="matches($manuscript, 'deu0|lat0')">
+            <xsl:if test="not($formTitle/tei:ref[@type='folia']) and matches($manuscript, 'deu0|lat0') and current()/parent::tei:body">
                 <xsl:variable name="prevPars" select="count(current()/preceding-sibling::tei:p) + 1"/>
                 <xsl:variable name="thisLang" select="$formTitle/xml:lang"/>
                 <xsl:variable name="transformedUrn" select="replace(concat($urnStart, $formNumber, '.', $manuscript, '-', $prevPars), ':', '-')"/>

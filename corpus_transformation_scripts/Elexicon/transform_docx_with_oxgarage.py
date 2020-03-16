@@ -1,7 +1,7 @@
 from glob import glob
 import os
 
-docx = [x for x in glob("/media/matt/uhhdisk/Geschichte/Projekte/FORMAKAD/Werkstatt/e-Lexikon/Online/*.docx") if '~' not in x]
+docx = [x for x in glob("/media/FORMAKAD/Werkstatt/e-Lexikon/Freigabe/*.docx") if '~' not in x]
 
 for doc in docx:
     entry_name = doc.lower().split('/')[-1].replace('.docx', '').split('-')
