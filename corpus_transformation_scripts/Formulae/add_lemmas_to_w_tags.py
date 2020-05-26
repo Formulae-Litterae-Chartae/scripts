@@ -6,9 +6,9 @@ from string import punctuation
 import os
 
 ns = {'tei': "http://www.tei-c.org/ns/1.0"}
-xmls = glob('/home/matt/Documents/Angers_XML/data/andecavensis/*/*lat001.xml')
-xmls += glob('/home/matt/Documents/Angers_XML/data/andecavensis/*/*deu001.xml')
-lex_xml = etree.parse('/home/matt/docx_tei_cte_conversion/corpus_transformation_scripts/Elexicon/Begriffe_eLexikon.xml')
+xmls = glob('/home/matt/formulae-corpora/data/marculf/*/*lat001.xml')
+xmls += glob('/home/matt/formulae-corpora/data/marculf/*/*deu001.xml')
+lex_xml = etree.parse('/home/matt/scripts/corpus_transformation_scripts/Elexicon/Begriffe_eLexikon.xml')
 lex_dict = {}
 for lem in lex_xml.xpath('/xml/lem'):
     lex_dict[lem.text.strip()] = lem.get('elex').strip()
@@ -25,16 +25,22 @@ for k, v in lex_dict.items():
 def test_text(lemmas, orig):
     not_found = []
     for i, word in enumerate(lemmas):
+        inflected, lemma = word.split('\t')[:2]
+        if not re.search(r'\w', inflected):
+            continue
         prev_lem = '' 
         next_lem = ''
         if i < len(lemmas) - 1:
-            next_lem = lemmas[i+1].split(';')[1]
+            try:
+                next_lem = lemmas[i+1].split('\t')[1]
+            except IndexError:
+                print(lemmas[i+1], i)
+                continue
         if i > 0:
-            prev_lem = lemmas[i-1].split(';')[1]
-        inflected, lemma = word.split(';')[:2]
+            prev_lem = lemmas[i-1].split('\t')[1]
         tried = []
         try:
-            while inflected.replace('v', 'u') != re.sub(r'[{}„“‚‘’”\[\]]'.format(punctuation), '', orig[i].text.lower().replace('v', 'u')):
+            while inflected.replace('v', 'u').lower() != re.sub(r'[{}„“‚‘’”\[\]]'.format(punctuation), '', orig[i].text.lower().replace('v', 'u')):
                 try:
                     tried.append(re.sub(r'[{}„“‚‘’”\[\]]'.format(punctuation), '', orig[i].text.lower().replace('v', 'u')))
                     i += 1
@@ -76,12 +82,12 @@ for xml_file in xmls:
         os.makedirs(os.path.dirname(new_xml))
     except OSError:
         pass'''
-    number = xml_file.split('.')[-3].replace('form', '').lstrip('0')
+    form_name = os.path.basename(xml_file)
     if 'lat001' in xml_file:
-        lem_file = '/home/matt/results/angers_lemmatisiert_neu/Form._And._{}_tokenized_bi_lemmed.csv'.format(number)
+        lem_file = '/home/matt/lemmatization/pyrrha_output/results/{}.txt'.format(form_name.replace('.xml', ''))
         try:
             with open(lem_file) as f:
-                lems = f.read().split('\n')[1:-1]
+                lems = f.read().strip().split('\n')
         except FileNotFoundError:
             continue
         not_found = test_text(lems, xml.xpath('//tei:w', namespaces=ns))

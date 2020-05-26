@@ -74,7 +74,6 @@
             </xsl:for-each>
             <xsl:text>, </xsl:text>
             <xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:monogr/tei:title/text()"/>
-            <xsl:text>: </xsl:text>
             <xsl:if test="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:monogr/tei:imprint/tei:biblScope[@unit='volume']">
                 <xsl:text>Bd. </xsl:text><xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:monogr/tei:imprint/tei:biblScope[@unit='volume']/text()"/>
             </xsl:if>
@@ -187,7 +186,7 @@
                                    </xsl:element>
                                    <xsl:element name="dct:bibliographicCitation">
                                        <xsl:value-of select="$bibliographicCitation"/>
-                                       <xsl:value-of select="normalize-space(parent::tei:body/parent::tei:text/tei:front/tei:div[@subtype='seiten']//text())"/><xsl:text>.</xsl:text>
+                                       <xsl:value-of select="normalize-space(current()/ancestor::tei:text[@xml:id]/tei:front/tei:div[@subtype='seiten']//text())"/><xsl:text>.</xsl:text>
                                    </xsl:element>
                                    <xsl:element name="dct:temporal"><xsl:value-of select="normalize-space(/tei:TEI/tei:text/tei:group/tei:text[@xml:id=$urn]/tei:front/tei:dateline//text())"/></xsl:element>
                                    <xsl:element name="dct:spatial"><xsl:value-of select="/tei:TEI/tei:text/tei:group/tei:text[@xml:id=$urn]/tei:front/tei:div[@subtype='ausstellungsort']/tei:p/text()"/></xsl:element>

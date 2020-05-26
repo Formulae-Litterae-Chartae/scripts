@@ -703,11 +703,19 @@
                         <xsl:value-of select="replace(.,'\*','')"/>
                     </xsl:element>
                 </xsl:when>
-                <xsl:when test="parent::tei:hi[@rend='superscript']">
+                <!--<xsl:when test="parent::tei:hi[@rend='superscript']">
                     <xsl:element name="seg" namespace="http://www.tei-c.org/ns/1.0">
                         <xsl:attribute name="type">superscript</xsl:attribute>
                         <xsl:value-of select="."/>
                     </xsl:element>
+                </xsl:when>-->
+                <xsl:when test="parent::tei:cell">         
+                    <xsl:choose>
+                        <xsl:when test="count(parent::tei:cell/preceding-sibling::tei:cell) = 0 and count(parent::tei:cell/parent::tei:row/preceding-sibling::tei:row) = 0">
+                            <xsl:copy-of select="parent::tei:cell/parent::tei:row/parent::tei:table"></xsl:copy-of>
+                        </xsl:when>
+                        <xsl:otherwise/>
+                    </xsl:choose>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">

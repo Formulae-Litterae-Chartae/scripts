@@ -111,7 +111,7 @@
                         
                         <!-- Copy of all possible parts of the tagetted <front> element which weren't moved into the teiHeader. -->
                         <xsl:element name="front" namespace="http://www.tei-c.org/ns/1.0">
-                            <xsl:attribute name="xml:lang">deu</xsl:attribute>
+                            <xsl:attribute name="xml:lang"><xsl:value-of select="node()/ancestor::tei:text[@xml:id]/descendant::tei:front/@xml:lang"/></xsl:attribute>
                             <xsl:copy-of select="node()/ancestor::tei:text[@xml:id]/descendant::tei:div[@subtype='regest']"/>
                             <xsl:copy-of select="node()/ancestor::tei:text[@xml:id]/descendant::tei:div[@subtype='ausstellungsort']"/>
                             <xsl:copy-of select="node()/ancestor::tei:text[@xml:id]/descendant::tei:dateline"/>

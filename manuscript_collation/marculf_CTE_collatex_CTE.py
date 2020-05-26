@@ -98,7 +98,7 @@ def produce_cte_xml(base_text, json_output_filename):
                 i += 1
         for k in sorted(d.keys(), key=lambda x: d[x]):
             if k != baseline:
-                readings.append('{reading} {witness}'.format(witness=', '.join(['<hi rend="font-size:10pt;font-style:italic;">{}</hi><hi rend="font-size:10pt;font-style:italic;vertical-align:sub;font-size:smaller;">{}</hi>'.format(re.search(r'(\D+)', witnesses[x]).group(0), re.search(r'(\d+)', witnesses[x]).group(0).lstrip('0')) for x in d[k]]), reading=k.replace('<', '&lt;').replace('>', '&gt;') if k != ' ' else '<hi rend="font-style:italic;">om.</hi>'))
+                readings.append('{reading} {witness}'.format(witness=', '.join(['<hi rend="font-size:10pt;font-style:italic;">{}</hi><hi rend="font-size:10pt;font-style:italic;vertical-align:sub;font-size:smaller;">{}</hi>'.format(re.search(r'(\D+)(\d*)', witnesses[x]).groups('')[0], re.search(r'(\D+)(\d*)', witnesses[x]).groups('')[1].lstrip('0')) for x in d[k]]), reading=k.replace('<', '&lt;').replace('>', '&gt;') if k != ' ' else '<hi rend="font-style:italic;">om.</hi>'))
         if readings:
             output_text += beg_note + '; '.join(readings) + end_note
             note_num += 1

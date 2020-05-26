@@ -97,17 +97,19 @@
                             <lte>
                                 <xsl:choose>
                                     <xsl:when test="string-length(./@notAfter) = 4">
-                                        <xsl:value-of select="format-number(number(./@notAfter) + 1, '0000')"/>
+                                        <xsl:value-of select="format-number(number(./@notAfter), '0000')"/>
+                                        <xsl:text>-12-31</xsl:text>
                                     </xsl:when>
                                     <xsl:when test="string-length(./@notAfter) = 7">
-                                        <xsl:choose>
+                                        <xsl:value-of select="xs:date(concat(./@notAfter, '-01')) + xs:yearMonthDuration('P1M') - xs:dayTimeDuration('P1D')"/>
+                                        <!--<xsl:choose>
                                             <xsl:when test="substring-after(./@notAfter, '-') != '12'">
                                                 <xsl:value-of select="substring-before(./@notAfter, '-')"/>
                                                 <xsl:text>-</xsl:text>
                                                 <xsl:value-of select="format-number(number(substring-after(./@notAfter, '-')) + 1, '00')"/>
                                             </xsl:when>
-                                            <xsl:otherwise><xsl:value-of select="format-number(number(substring-before(./@notAfter, '-')) + 1, '0000')"/></xsl:otherwise>
-                                        </xsl:choose>
+                                            <xsl:otherwise><xsl:value-of select="format-number(number(substring-before(./@notAfter, '-')), '0000')"/><xsl:text>-12-31</xsl:text></xsl:otherwise>
+                                        </xsl:choose>-->
                                     </xsl:when>
                                     <xsl:otherwise>
                                         <xsl:value-of select="./@notAfter"/>
