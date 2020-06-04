@@ -55,7 +55,8 @@ def test_text(lemmas, orig):
             continue
         orig[i].set('lemma', lemma)
         if lemma in lex_dict.keys():
-            orig[i].set('lemmaRef', lex_dict[lemma])
+            if set_lemmaRef(orig[i], lemma, next_lem, prev_lem) is False:
+                orig[i].set('lemmaRef', lex_dict[lemma])
         else:
             set_lemmaRef(orig[i], lemma, next_lem, prev_lem)
     return not_found
@@ -65,13 +66,18 @@ def set_lemmaRef(orig, lemma, next_lem, prev_lem):
     if lemma in first_words:
         if '{} {}'.format(lemma, next_lem) in lex_dict:
             orig.set('lemmaRef', lex_dict['{} {}'.format(lemma, next_lem)])
+            return True
         elif '{} {}'.format(lemma, prev_lem) in lex_dict:
             orig.set('lemmaRef', lex_dict['{} {}'.format(lemma, prev_lem)])
+            return True
     elif lemma in second_words:
         if '{} {}'.format(prev_lem, lemma) in lex_dict:
             orig.set('lemmaRef', lex_dict['{} {}'.format(prev_lem, lemma)])
+            return True
         elif '{} {}'.format(next_lem, lemma) in lex_dict:
             orig.set('lemmaRef', lex_dict['{} {}'.format(next_lem, lemma)])
+            return True
+    return False
 
 
 for xml_file in xmls:
@@ -100,7 +106,8 @@ for xml_file in xmls:
         latin_words = xml.xpath('//tei:seg[@type="latin-word;"]/tei:w', namespaces=ns)
         for i, w in enumerate(latin_words):
             if w.text.lower() in lex_dict.keys():
-                w.set('lemmaRef', lex_dict[w.text.lower()])
+                if set_lemmaRef(w, w.text.lower(), latin_words[i + 1].text.lower() if len(latin_words) > i + 1 else ' ', latin_words[i - 1].text.lower() if i > 0 else ' ') is False:
+                    w.set('lemmaRef', lex_dict[w.text.lower()])
             else:
                 set_lemmaRef(w, w.text.lower(), latin_words[i + 1].text.lower() if len(latin_words) > i + 1 else ' ', latin_words[i - 1].text.lower() if i > 0 else ' ')
         xml.getroottree().write(xml_file)

@@ -8,7 +8,7 @@
     <xsl:output omit-xml-declaration="yes" indent="yes"/>
     
     <xsl:param name="pSeparators">&#xA;&#x9;&#x20;,.;:?!()'"</xsl:param>
-    <xsl:param name="entryTitle"><xsl:value-of select="normalize-space(/tei:TEI/tei:text/tei:body/tei:p[1]/tei:hi[2]/text())"/></xsl:param>
+    <xsl:param name="entryTitle"><xsl:value-of select="normalize-space(string-join(/tei:TEI/tei:text/tei:body/tei:p[1]/tei:hi[starts-with(@rend, 'Überschrift') or @rend = 'italic bold']/text(), ', '))"/></xsl:param>
     <xsl:param name="urn"><xsl:value-of select="lower-case(replace(replace(substring-before(tokenize(base-uri(), '/')[last()], '.xml'), '[%20\-\s]+', '_'), '\s+', ''))"/></xsl:param>
     <xsl:param name="authorMapping">
         <abbr full="Bart Quintilier">BQ</abbr>

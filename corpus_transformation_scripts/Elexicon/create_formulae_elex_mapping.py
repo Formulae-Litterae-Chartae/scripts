@@ -3,10 +3,11 @@ from lxml import etree
 from collections import defaultdict
 from json import dump
 import os
+import re
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-forms = sorted(glob('/home/matt/results/formulae/data/andecavensis/*/*lat001.xml'))
+forms = sorted([x for x in glob('/home/matt/results/formulae/data/**/*.xml', recursive=True) if re.search('marculf|andecavensis', x) and '__capitains__' not in x])
 ns = {'tei': 'http://www.tei-c.org/ns/1.0'}
 mapping = defaultdict(dict)
 

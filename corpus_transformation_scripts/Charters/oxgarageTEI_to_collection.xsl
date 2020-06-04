@@ -709,7 +709,7 @@
                         <xsl:value-of select="."/>
                     </xsl:element>
                 </xsl:when>-->
-                <xsl:when test="parent::tei:cell">         
+                <xsl:when test="parent::tei:cell/parent::tei:row/parent::tei:table/parent::tei:cell">         
                     <xsl:choose>
                         <xsl:when test="count(parent::tei:cell/preceding-sibling::tei:cell) = 0 and count(parent::tei:cell/parent::tei:row/preceding-sibling::tei:row) = 0">
                             <xsl:copy-of select="parent::tei:cell/parent::tei:row/parent::tei:table"></xsl:copy-of>

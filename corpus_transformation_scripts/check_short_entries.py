@@ -2,10 +2,13 @@ from lxml import etree
 from glob import glob
 from difflib import get_close_matches
 import re
+import sys
+
+orig = str(sys.argv[1]) if len(sys.argv) > 1 else os.path.join(work_dir, 'results/formulae') 
 
 kurz = [re.sub('[„“"\'’]', '', x) for x in etree.parse('/home/matt/results/Bibliographie_E-Lexikon.xml').xpath('//tei:title[@type="short"]/text()', namespaces={'tei': 'http://www.tei-c.org/ns/1.0'})]
 
-texts = [x for x in glob('/home/matt/Documents/Angers_XML/data/andecavensis/*/*.xml', recursive=True) if re.search('andecavensis|elexicon', x) and '__cts__' not in x]
+texts = [x for x in glob(orig + '/data/**/*.xml', recursive=True) if re.search('andecavensis|elexicon|marculf', x) and '__capitains__' not in x]
 
 problems = []
 
