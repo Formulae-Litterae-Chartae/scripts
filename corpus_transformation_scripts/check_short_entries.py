@@ -3,6 +3,7 @@ from glob import glob
 from difflib import get_close_matches
 import re
 import sys
+import os
 
 orig = str(sys.argv[1]) if len(sys.argv) > 1 else os.path.join(work_dir, 'results/formulae') 
 

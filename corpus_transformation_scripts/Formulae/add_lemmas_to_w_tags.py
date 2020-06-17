@@ -6,8 +6,8 @@ from string import punctuation
 import os
 
 ns = {'tei': "http://www.tei-c.org/ns/1.0"}
-xmls = glob('/home/matt/formulae-corpora/data/marculf/*/*lat001.xml')
-xmls += glob('/home/matt/formulae-corpora/data/marculf/*/*deu001.xml')
+xmls = glob('/home/matt/results/formel_transform/angers/data/andecavensis/form054/andecavensis.form054.lat001.xml')
+xmls += glob('/home/matt/results/formel_transform/angers/data/andecavensis/form054/andecavensis.form054.deu001.xml')
 lex_xml = etree.parse('/home/matt/scripts/corpus_transformation_scripts/Elexicon/Begriffe_eLexikon.xml')
 lex_dict = {}
 for lem in lex_xml.xpath('/xml/lem'):
