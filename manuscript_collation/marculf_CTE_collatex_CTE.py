@@ -38,7 +38,7 @@ def collate_to_csv(formula, hauptquellen=''):
         wit_id = os.path.basename(i).split('_')[2]
         with open(i) as f:
             txt = f.read().split('******\n')[3]
-        wits.append({'id': wit_id, 'tokens': [{'t': make_lower(w.rstrip(punct))} for w in txt.split()]})
+        wits.append({'id': wit_id, 'tokens': [{'t': make_lower(w.rstrip(punct))} for w in txt.split() if w.rstrip(punct)]})
         if 'P12' in i:
             base_text = [{'t': w} for w in txt.split()]
 

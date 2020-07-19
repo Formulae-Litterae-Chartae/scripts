@@ -640,18 +640,24 @@
             <xsl:element name="div" namespace="http://www.tei-c.org/ns/1.0">
                 <xsl:attribute name="type">section</xsl:attribute>
                 <xsl:attribute name="subtype">regest</xsl:attribute>
-                <xsl:if test="$currentNode/child::tei:cell[position()=3]/not(tei:p)">
-                    <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
-                        <xsl:value-of select="$currentNode/child::tei:cell[position()=3]"/>
-                    </xsl:element>
-                </xsl:if>
-                <xsl:if test="$currentNode/child::tei:cell[position()=3]/tei:p">
-                    <xsl:for-each select="$currentNode/child::tei:cell[position()=3]/tei:p">
-                        <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
-                            <xsl:value-of select="node()"/>
-                        </xsl:element>
-                    </xsl:for-each>
-                </xsl:if>
+                <xsl:choose>
+                    <xsl:when test="$currentNode/child::tei:cell[position()=3]/tei:p">
+                        <xsl:for-each select="$currentNode/child::tei:cell[position()=3]/tei:p">
+                            <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
+                                <xsl:attribute name="xml:space">preserve</xsl:attribute>
+                                <xsl:apply-templates mode="textTemps"/>
+                            </xsl:element>
+                        </xsl:for-each>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:for-each select="$currentNode/child::tei:cell[position()=3]">
+                            <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
+                                <xsl:attribute name="xml:space">preserve</xsl:attribute>
+                                <xsl:apply-templates mode="textTemps"/>
+                            </xsl:element>
+                        </xsl:for-each>
+                    </xsl:otherwise>
+                </xsl:choose>
             </xsl:element>
             <!-- AUSTELLUNGSORT = fourth column (fourth cell in row). -->
             <xsl:if test="$currentNode/child::tei:cell[position()=4]/text()">
@@ -695,36 +701,74 @@
     
     <xsl:template name="extractText">
         <xsl:param name="currentNode"/>
-        <xsl:for-each select="$currentNode/child::tei:cell[position()=6]//text()">
-            <xsl:choose>
-                <xsl:when test=".[contains(.,'***')]">
-                    <xsl:element name="head" namespace="http://www.tei-c.org/ns/1.0">
-                        <xsl:attribute name="xml:space">preserve</xsl:attribute>
-                        <xsl:value-of select="replace(.,'\*','')"/>
-                    </xsl:element>
-                </xsl:when>
-                <!--<xsl:when test="parent::tei:hi[@rend='superscript']">
-                    <xsl:element name="seg" namespace="http://www.tei-c.org/ns/1.0">
-                        <xsl:attribute name="type">superscript</xsl:attribute>
-                        <xsl:value-of select="."/>
-                    </xsl:element>
-                </xsl:when>-->
-                <xsl:when test="parent::tei:cell/parent::tei:row/parent::tei:table/parent::tei:cell">         
+        <xsl:choose>
+            <xsl:when test="$currentNode/child::tei:cell[position()=6]/tei:p">
+                <xsl:for-each select="$currentNode/child::tei:cell[position()=6]/*">
                     <xsl:choose>
-                        <xsl:when test="count(parent::tei:cell/preceding-sibling::tei:cell) = 0 and count(parent::tei:cell/parent::tei:row/preceding-sibling::tei:row) = 0">
-                            <xsl:copy-of select="parent::tei:cell/parent::tei:row/parent::tei:table"></xsl:copy-of>
+                        <xsl:when test=".[contains(.,'***')]">
+                            <xsl:element name="head" namespace="http://www.tei-c.org/ns/1.0">
+                                <xsl:attribute name="xml:space">preserve</xsl:attribute>
+                                <xsl:value-of select="replace(.,'\*','')"/>
+                            </xsl:element>
                         </xsl:when>
-                        <xsl:otherwise/>
+                        <!--<xsl:when test="parent::tei:hi[@rend='superscript']">
+                            <xsl:element name="seg" namespace="http://www.tei-c.org/ns/1.0">
+                                <xsl:attribute name="type">superscript</xsl:attribute>
+                                <xsl:value-of select="."/>
+                            </xsl:element>
+                        </xsl:when>-->
+                        <xsl:when test="self::tei:table">
+                            <xsl:copy-of select="."></xsl:copy-of>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
+                                <xsl:attribute name="xml:space">preserve</xsl:attribute>
+                                <xsl:apply-templates mode="textTemps"/>
+                            </xsl:element>
+                        </xsl:otherwise>
                     </xsl:choose>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
-                        <xsl:attribute name="xml:space">preserve</xsl:attribute>
-                        <xsl:value-of select="."/>
-                    </xsl:element>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:for-each> 
+                </xsl:for-each> 
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:for-each select="$currentNode/child::tei:cell[position()=6]">
+                    <xsl:choose>
+                        <xsl:when test=".[contains(.,'***')]">
+                            <xsl:element name="head" namespace="http://www.tei-c.org/ns/1.0">
+                                <xsl:attribute name="xml:space">preserve</xsl:attribute>
+                                <xsl:apply-templates mode="textTemps"/>
+                            </xsl:element>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
+                                <xsl:attribute name="xml:space">preserve</xsl:attribute>
+                                <xsl:apply-templates mode="textTemps"/>
+                            </xsl:element>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:for-each>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template match="tei:hi" mode="textTemps">
+        <xsl:choose>
+            <xsl:when test="matches(@rend, 'superscript|italic')">            
+                <xsl:element name="seg" namespace="http://www.tei-c.org/ns/1.0">
+                    <xsl:if test="contains(@rend, 'superscript')"><xsl:attribute name="type">superscript </xsl:attribute></xsl:if>
+                    <xsl:if test="contains(@rend, 'italic')"><xsl:attribute name="type">italic</xsl:attribute></xsl:if>
+                    <xsl:value-of select="."/>
+                </xsl:element>
+            </xsl:when>
+            <xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template match="tei:table" mode="textTemps">
+        <xsl:copy-of select="."/>
+    </xsl:template>
+    
+    <xsl:template match=".[contains(., '***')]" mode="textTemps">
+        <xsl:value-of select="replace(.,'\*','')"/>
     </xsl:template>
     
 </xsl:stylesheet>

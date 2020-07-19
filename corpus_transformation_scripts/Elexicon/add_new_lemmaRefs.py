@@ -5,11 +5,12 @@ import re
 from os import environ
 
 home_dir = environ.get('HOME', '')
-corpus_folder = sys.argv[1] if len(sys.argv) > 1 else home_dir + 'formulae-corpora/'
-scripts_folder = sys.argv[2] if len(sys.argv) > 2 else home_dir + 'scripts/'
+corpus_folder = sys.argv[1] if len(sys.argv) > 1 else home_dir + '/formulae-corpora/'
+scripts_folder = sys.argv[2] if len(sys.argv) > 2 else home_dir + '/scripts/'
 
-latins = [x for x in glob(corpus_folder + 'data/**/*lat*.xml') if re.search('marculf|andecavensis', x)]
-germans = [x for x in glob(corpus_folder + 'data/**/*deu*.xml') if re.search('marculf|andecavensis', x)]
+latins = [x for x in glob(corpus_folder + 'data/**/*lat*.xml', recursive=True) if re.search('marculf|andecavensis', x)]
+germans = [x for x in glob(corpus_folder + 'data/**/*deu*.xml', recursive=True) if re.search('marculf|andecavensis', x)]
+elexes = [x for x in glob(corpus_folder + 'data/elexicon/*/*.xml') if '__capitains__' not in x]
 lex_xml = etree.parse(scripts_folder + 'corpus_transformation_scripts/Elexicon/Begriffe_eLexikon.xml')
 
 lex_dict = {}
@@ -66,6 +67,17 @@ for g in germans:
         if w.text.lower() in lex_dict.keys(): 
             if set_lemmaRef(w, w.text.lower(), latin_words[i + 1].text.lower() if len(latin_words) > i + 1 else ' ', latin_words[i - 1].text.lower() if i > 0 else ' ') is False: 
                 w.set('lemmaRef', lex_dict[w.text.lower()]) 
-        else: 
-            set_lemmaRef(w, w.text.lower(), latin_words[i + 1].text.lower() if len(latin_words) > i + 1 else ' ', latin_words[i - 1].text.lower() if i > 0 else ' ') 
+        elif set_lemmaRef(w, w.text.lower(), latin_words[i + 1].text.lower() if len(latin_words) > i + 1 else ' ', latin_words[i - 1].text.lower() if i > 0 else ' ') is False:
+            w.attrib.pop('lemmaRef', None)
     xml.write(g, encoding='utf-8', pretty_print=True) 
+    
+for elex in elexes: 
+    xml = etree.parse(elex) 
+    latin_words = xml.xpath('//tei:w[@type="latin-word"]', namespaces=ns) 
+    for i, w in enumerate(latin_words): 
+        if w.text.lower() in lex_dict.keys(): 
+            if set_lemmaRef(w, w.text.lower(), latin_words[i + 1].text.lower() if len(latin_words) > i + 1 else ' ', latin_words[i - 1].text.lower() if i > 0 else ' ') is False: 
+                w.set('lemmaRef', lex_dict[w.text.lower()]) 
+        elif set_lemmaRef(w, w.text.lower(), latin_words[i + 1].text.lower() if len(latin_words) > i + 1 else ' ', latin_words[i - 1].text.lower() if i > 0 else ' ') is False:
+            w.attrib.pop('lemmaRef', None)
+    xml.write(elex, encoding='utf-8', pretty_print=True) 

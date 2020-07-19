@@ -57,6 +57,7 @@
 	<lem elex="dominium">dominium</lem>
 	<lem elex="dominus">dominus</lem>
 	<lem elex="dos">dos</lem>
+	<lem elex="dos">dotis</lem>
 	<lem elex="dux">dux</lem>
 	<lem elex="episcopus">episcopus</lem>
 	<!--<lem elex="epistula">epistula</lem>-->
@@ -184,4 +185,5 @@
 	<lem elex="vir_venerabilis">viri venerabiles</lem>
 	<lem elex="weregeldus">weregeldus</lem>
 	<lem elex="wirigeldus">wirigeldus</lem>
-	<lem elex="xenodochium">xenodochium</lem></xml>
+	<lem elex="xenodochium">xenodochium</lem>
+</xml>
