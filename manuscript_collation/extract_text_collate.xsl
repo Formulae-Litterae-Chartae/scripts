@@ -2,7 +2,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     exclude-result-prefixes="xs"
-    xmlns:tei="http://www.tei-c.org/ns/1.0"
+    xmlns:tei="https://www.tei-c.org/ns/1.0"
     xmlns:ti="http://chs.harvard.edu/xmlns/cts"
     xmlns:dct="http://purl.org/dc/terms/"
     xmlns:cpt="http://purl.org/capitains/ns/1.0#"
