@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    exclude-result-prefixes="xs tei ti dct cpt"
+    exclude-result-prefixes="xs tei ti dct cpt dc"
     xmlns:tei="http://www.tei-c.org/ns/1.0"
     xmlns:ti="http://chs.harvard.edu/xmlns/cts"
     xmlns:dct="http://purl.org/dc/terms/"
@@ -12,6 +12,7 @@
     <xsl:output method="xml" omit-xml-declaration="yes" indent="yes" exclude-result-prefixes="#all"/>
     <xsl:param name="metadataFile"><xsl:value-of select="replace(base-uri(), tokenize(base-uri(), '/')[last()], '__capitains__.xml')"/></xsl:param>
     <xsl:param name="urn"><xsl:value-of select="/tei:TEI/tei:text/tei:body/tei:div/@n"/></xsl:param>
+    <xsl:param name="teiBase" select="/tei:TEI"/>
     
     <xsl:template match="/">
         <xsl:variable name="theText">
@@ -35,6 +36,7 @@
                 <xsl:with-param name="fullRegest" select="document($metadataFile)/cpt:collection/cpt:members/cpt:collection[child::cpt:identifier/text()=$urn]/dc:description/text()"/>
             </xsl:call-template>
         </xsl:variable>
+        <xsl:variable name="partTags"></xsl:variable>
         <xml>
             <title><xsl:value-of select="normalize-space(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title/text())"/></title>
             <dateStr><xsl:value-of select="document($metadataFile)/cpt:collection/cpt:members/cpt:collection[child::cpt:identifier/text()=$urn]/cpt:structured-metadata/dct:temporal/text()"/></dateStr>
@@ -61,6 +63,22 @@
             <lemmatized><xsl:value-of select="normalize-space(replace($theLems, '\s+', ' '))"/></lemmatized>
             <regest><xsl:value-of select="$theRegest"/></regest>
             <forgery><xsl:value-of select="boolean(/tei:TEI/tei:text/tei:front/tei:note[@type='echtheit'])"/></forgery>
+            <!-- A tag for each formulaic part -->
+            <xsl:for-each select="distinct-values(//tei:seg/@function)">
+                <xsl:element name="part">
+                    <xsl:attribute name="type"><xsl:value-of select="."/></xsl:attribute>
+                    <xsl:for-each select="$teiBase//tei:seg[@function=current()]">
+                        <xsl:value-of select="."/>
+                        <xsl:if test="position()!=last()">
+                            <xsl:text> ... </xsl:text>
+                        </xsl:if>
+                    </xsl:for-each>
+                </xsl:element>
+                <xsl:element name="part">
+                    <xsl:attribute name="type"><xsl:value-of select="."/><xsl:text>-lems</xsl:text></xsl:attribute>
+                    <xsl:value-of select="string-join($teiBase//tei:seg[@function=current()]//tei:w/@lemma, ' ')"/>
+                </xsl:element>
+            </xsl:for-each>
         </xml>
     </xsl:template>
     
