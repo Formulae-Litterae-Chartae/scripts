@@ -12,6 +12,7 @@ import re
 
 # to rstrip any punctuation that is not a closing square bracket
 punct = punctuation.replace(']', '')
+baseline_sigla = 'P12'
 
 # This is the function to produce the lines in the CSV file 
 def make_lines(json):
@@ -39,7 +40,7 @@ def collate_to_csv(formula, hauptquellen=''):
         with open(i) as f:
             txt = f.read().split('******\n')[3]
         wits.append({'id': wit_id, 'tokens': [{'t': make_lower(w.rstrip(punct))} for w in txt.split() if w.rstrip(punct)]})
-        if 'P12' in i:
+        if baseline_sigla in i:
             base_text = [{'t': w} for w in txt.split()]
 
     with open(json_input_filename, mode="w") as f:
@@ -70,7 +71,7 @@ def produce_cte_xml(base_text, json_output_filename):
 
     # for many witnesses
     witnesses = sorted(output['witnesses'])
-    baseline_index = witnesses.index('P12')
+    baseline_index = witnesses.index(baseline_sigla)
     witnesses.pop(baseline_index)
     # Add placeholders for missing words in the base_text list
     for i, v in enumerate(output['table']):
@@ -98,7 +99,7 @@ def produce_cte_xml(base_text, json_output_filename):
                 i += 1
         for k in sorted(d.keys(), key=lambda x: d[x]):
             if k != baseline:
-                readings.append('{reading} {witness}'.format(witness=', '.join(['<hi rend="font-size:10pt;font-style:italic;">{}</hi><hi rend="font-size:10pt;font-style:italic;vertical-align:sub;font-size:smaller;">{}</hi>'.format(re.search(r'(\D+)(\d*)', witnesses[x]).groups('')[0], re.search(r'(\D+)(\d*)', witnesses[x]).groups('')[1].lstrip('0')) for x in d[k]]), reading=k.replace('<', '&lt;').replace('>', '&gt;') if k != ' ' else '<hi rend="font-style:italic;">om.</hi>'))
+                readings.append('{reading} {witness}'.format(witness=', '.join(['<hi rend="font-size:10pt;font-style:italic;">{}</hi><hi rend="font-size:10pt;font-style:italic;vertical-align:sub;font-size:smaller;">{}</hi>'.format(re.search(r'(\D+)(\d*)', witnesses[x]).groups('')[0], re.search(r'(\D+)(\d*)', witnesses[x]).groups('')[1].lstrip('0')) for x in d[k]]), reading=k.replace('<', '&lt;').replace('>', '&gt;') if k != ' ' else '<hi rend="font-style:italic;">fehlt</hi>'))
         if readings:
             output_text += beg_note + '; '.join(readings) + end_note
             note_num += 1
