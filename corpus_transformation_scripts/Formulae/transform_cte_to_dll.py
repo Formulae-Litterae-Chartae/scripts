@@ -27,6 +27,8 @@ def remove_tei_dtd_reference(filename):
     with open(filename) as f:
         text = f.read()
     text = text.replace('<!DOCTYPE TEI PUBLIC "-//TEI//DTD TEI P5//EN" "tei.dtd" >', '')
+    # Correct the TEI namespace URL
+    text = text.replace('https://www.tei-c.org/ns/1.0', 'http://www.tei-c.org/ns/1.0')
     with open(filename, mode="w") as f:
         f.write(text)
 
