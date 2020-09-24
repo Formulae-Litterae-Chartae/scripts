@@ -9,6 +9,7 @@ import os
 ns = {'tei': 'http://www.tei-c.org/ns/1.0'}
 punc = punctuation.replace(']', '')
 not_typed = []
+typed = {}
 json_file = argv[1] # The JSON file with the formulaic parts of the charters
 corpus_dir = argv[2] # The /data directory in which the XML files for the corpora are kept
 dest_file = argv[3] # The JSON file that will contain the parts of the charters that were not assigned a formulaic category
@@ -56,7 +57,21 @@ for charter in charter_forms:
         if k != 'file':                                                        
             for phrase in v:
                 form_words = [x.rstrip(punc) for x in phrase.strip().split()]
-                check_phrases(k, xml_words, form_words)
+                try:
+                    check_phrases(k, xml_words, form_words)
+                except:
+                    print(charter[k], charter['file'])
+    # taking this line out for now since I am only testing. It should be added back in later.
+    xml.write(xml_file, encoding='utf-8', pretty_print=True)
+    with open(xml_file) as f:
+        s = f.read()
+    s = re.sub(r'<seg function="([\w\-]+)\-begin"/>', r'<seg function="\1">', s)
+    s = re.sub(r'<seg function="([\w\-]+)\-end"/>', r'</seg>', s)
+    with open(xml_file, mode="w") as f:
+        f.write(s)
+    xml = etree.parse(xml_file)
+    xml_words = xml.xpath('//tei:w', namespaces=ns)
+    types = {}
     w_no_type = []
     phrase = []
     prev_i = 0
@@ -73,15 +88,29 @@ for charter in charter_forms:
     if phrase and phrase not in w_no_type:
         w_no_type.append(phrase)
     not_typed.append({charter['file']:[' '.join(p) for p in w_no_type]})
-    # taking this line out for now since I am only testing. It should be added back in later.
-    xml.write(xml_file, encoding='utf-8', pretty_print=True)
-    with open(xml_file) as f:
-        s = f.read()
-    s = re.sub(r'<seg function="([\w\-]+)\-begin"/>', r'<seg function="\1">', s)
-    s = re.sub(r'<seg function="([\w\-]+)\-end"/>', r'</seg>', s)
-    with open(xml_file, mode="w") as f:
-        f.write(s)
+    for seg in xml.xpath('//tei:seg[@function]', namespaces=ns):
+        if seg.get('function') in types:
+            types[seg.get('function')].append(re.sub(r'\s+', ' ', ''.join([t for t in seg.xpath('.//text()')])))
+        else:
+            types[seg.get('function')] = [re.sub(r'\s+', ' ', ''.join([t for t in seg.xpath('.//text()')]))]
+    typed[charter['file']] = types
     
     
 with open(dest_file, mode='w') as f:
     dump(not_typed, f, ensure_ascii=False, indent='\t')
+    
+with open(os.path.splitext(dest_file)[0] + '.csv', mode='w') as f:
+    for r in not_typed:
+        for k, v in r.items():
+            f.write(k + '\n\t')
+            f.write('\n\t'.join(v))
+            f.write('\n')
+            
+with open(os.path.splitext(dest_file)[0] + '_types' + '.csv', mode='w') as f:
+    for r in typed.keys():
+        f.write(r + '\n\t')
+        for k, v in typed[r].items():
+            f.write(k + '\t')
+            f.write('\n\t\t'.join(v))
+            f.write('\n\t')
+        f.write('\n')
