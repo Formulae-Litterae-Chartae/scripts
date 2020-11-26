@@ -89,10 +89,10 @@
             <!--<xsl:value-of select="concat(./text(), normalize-space($tail), ' ')"/>-->
             <xsl:choose>
                 <xsl:when test="not(contains($tail, ' '))">
-                    <xsl:value-of select="concat(./text(), $tail, ' ')"/>
+                    <xsl:value-of select="concat(string-join(.//text(), ''), $tail, ' ')"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="concat(./text(), $tail)"/>
+                    <xsl:value-of select="concat(string-join(.//text(), ''), $tail)"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:for-each>

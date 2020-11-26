@@ -22,7 +22,7 @@
                 <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="type">form-name</xsl:attribute>
                     <xsl:choose>
-                        <xsl:when test="contains($tempTitle, 'Weltzeitalter')">
+                        <xsl:when test="matches($tempTitle, 'Weltzeitalter|Capitula')">
                             <xsl:value-of select="normalize-space(substring-before($tempTitle, '('))"/>
                         </xsl:when>
                         <xsl:otherwise>
@@ -71,7 +71,7 @@
                 <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="type">form-name</xsl:attribute>
                     <xsl:choose>
-                        <xsl:when test="contains($tempTitle, 'Weltzeitalter')">
+                        <xsl:when test="matches($tempTitle, 'Weltzeitalter|Capitula')">
                             <xsl:value-of select="$tempTitle"/>
                         </xsl:when>
                         <xsl:otherwise>
@@ -88,18 +88,21 @@
             <xsl:when test="$formTitle/tei:ref[@type='folia']">
                 <xsl:value-of select="normalize-space(replace($formTitle/tei:ref[@type='folia'], 'fol\.\s*|-', ''))"/>
             </xsl:when>
-            <xsl:when test="contains(lower-case($formTitle/tei:ref[@type='form-name']), 'marculf')">
+            <xsl:when test="contains($formTitle, 'Weltzeitalter')">
+                <xsl:text>computus</xsl:text>
+            </xsl:when>
+            <xsl:when test="contains($formTitle, 'Capitula')">
+                <xsl:if test="contains($formTitle/tei:ref[@type='form-name'], 'II')"><xsl:text>2_</xsl:text></xsl:if><xsl:text>capitula</xsl:text>
+            </xsl:when>
+            <xsl:when test="matches(lower-case($formTitle/tei:ref[@type='form-name']), 'marculf|markulf')">
                 <xsl:choose>
                     <xsl:when test="contains($formTitle/tei:ref[@type='form-name'], ',')">
-                        <xsl:text>form</xsl:text><xsl:number value="substring-after($formTitle/tei:ref[@type='form-name'], ',')" format="001"/>
+                        <xsl:text>form</xsl:text><xsl:if test="contains($formTitle/tei:ref[@type='form-name'], 'II')"><xsl:text>2_</xsl:text></xsl:if><xsl:number value="substring-after($formTitle/tei:ref[@type='form-name'], ',')" format="001"/>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:text>form</xsl:text><xsl:number value="subsequence(tokenize($formTitle/tei:ref[@type='form-name'], '\s+'), 2, 1)" format="001"/>
                     </xsl:otherwise>
                 </xsl:choose>
-            </xsl:when>
-            <xsl:when test="contains($formTitle, 'Weltzeitalter')">
-                <xsl:text>computus</xsl:text>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:text>form</xsl:text><xsl:number value="subsequence(tokenize($formTitle/tei:ref[@type='form-name'], '\s+'), 2, 1)" format="001"/>
@@ -121,7 +124,7 @@
             <xsl:when test="$formTitle/tei:ref[@type='siglum']">
                 <xsl:value-of select="lower-case($formTitle/tei:ref[@type='siglum'])"/>
             </xsl:when>
-            <xsl:when test="contains(lower-case($formTitle/tei:ref[@type='form-name']), 'marculf')">
+            <xsl:when test="matches(lower-case($formTitle/tei:ref[@type='form-name']), 'marculf|markulf')">
                 <xsl:text>marculf</xsl:text>
             </xsl:when>
             <xsl:otherwise>
@@ -134,7 +137,7 @@
             <xsl:when test="$formTitle/tei:ref[@type='siglum']">
                 <xsl:text>urn:cts:formulae:</xsl:text><xsl:value-of select="lower-case($formTitle/tei:ref[@type='siglum'])"/><xsl:text>.</xsl:text>
             </xsl:when>
-            <xsl:when test="contains(lower-case($formTitle/tei:ref[@type='form-name']), 'marculf')">
+            <xsl:when test="matches(lower-case($formTitle/tei:ref[@type='form-name']), 'marculf|markulf')">
                 <xsl:text>urn:cts:formulae:marculf.</xsl:text>
             </xsl:when>
             <xsl:otherwise>

@@ -9,7 +9,6 @@
     version="2.0">
     
     <xsl:output method="text" omit-xml-declaration="yes" indent="no"/>
-    <xsl:param name="metadataFile"><xsl:value-of select="replace(base-uri(), tokenize(base-uri(), '/')[last()], '__cts__.xml')"/></xsl:param>
     <xsl:param name="urn"><xsl:value-of select="/tei:TEI/tei:text/tei:body/tei:div/@n"/></xsl:param>
     
     <xsl:template match="/">
@@ -30,9 +29,7 @@
         </xsl:variable>
         <xsl:value-of select="normalize-space(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title/text())"/>
         <xsl:text>*!</xsl:text>
-        <xsl:value-of select="document($metadataFile)/ti:work/ti:edition[@urn=$urn]/cpt:structured-metadata/dct:temporal/text()"/>
         <xsl:text>*!</xsl:text>
-        <xsl:value-of select="document($metadataFile)/ti:work/ti:edition[@urn=$urn]/cpt:structured-metadata/dct:spatial/text()"/>
         <xsl:text>&#13;******&#13;</xsl:text>
         <xsl:value-of select="$urn"/>
         <xsl:text>&#13;******&#13;</xsl:text>
