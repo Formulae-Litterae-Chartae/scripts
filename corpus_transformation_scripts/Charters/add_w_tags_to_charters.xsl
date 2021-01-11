@@ -7,7 +7,7 @@
     
     <xsl:output omit-xml-declaration="yes" indent="yes"/>
     
-    <xsl:param name="pSeparators">&#xA;&#x9;&#x20;,.;:?!()'"„“‚‘+</xsl:param>
+    <xsl:param name="pSeparators">&#xA;&#x9;&#x20;,.;:?!()'"„“‚‘+«»…</xsl:param>
     
     <xsl:template match="/">
         <xsl:processing-instruction name="xml-model">href="https://digitallatin.github.io/guidelines/critical-editions.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"</xsl:processing-instruction>

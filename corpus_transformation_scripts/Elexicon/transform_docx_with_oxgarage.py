@@ -1,7 +1,7 @@
 from glob import glob
 import os
 
-docx = [x for x in glob("/home/matt/results/corpus_transformation/marculf_II/Deutsch/*.docx") if '~' not in x]
+docx = [x for x in glob("/home/matt/results/corpus_transformation/marculf_II/Deutsch/docx/*.docx") if '~' not in x]
 
 for doc in docx:
     entry_name = doc.lower().split('/')[-1].replace('.docx', '').split('-')

@@ -57,7 +57,7 @@
                 <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="type">form-name</xsl:attribute>
                     <xsl:choose>
-                        <xsl:when test="contains($tempTitle, 'Weltzeitalter')">
+                        <xsl:when test="matches($tempTitle, 'Weltzeitalter|Capitula')">
                             <xsl:value-of select="replace($tempTitle, ' Deutsch', '')"/>
                         </xsl:when>
                         <xsl:otherwise>

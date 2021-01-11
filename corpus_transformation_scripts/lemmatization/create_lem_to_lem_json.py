@@ -28,17 +28,25 @@ for line in s[1:]:
         parts = line.strip().lower().split('\t') 
         if not re.search(r'\w', parts[0]):
             continue
-        lem_parts = parts[1].split('-')
+        display_lem = parts[1]
+        if '=' in parts[1]:
+            primary_lem = parts[1].split('=')[0].split('/')[0]
+            lem_parts = parts[1].split('=')[0].split('/') + parts[1].split('=')[1].split('+')
+        elif '-' in parts[1]:
+            primary_lem = parts[1].split('-')[0]
+            lem_parts = parts[1].split('-')[1].split('+')
+            display_lem = parts[1].split('-')[1]
+        else:
+            primary_lem = parts[1].split('/')[0]
+            lem_parts = parts[1].split('/')
         lem_parts = [x.split('/') for x in lem_parts] 
-        primary_lem = lem_parts[0][0]
         for lem_part in lem_parts:
             if len(lem_part) > 1: 
                 for i, l in enumerate(lem_part[1:]): 
-                    lem_to_lem_mapping[l].update(lem_part[:i + 1])
                     lem_to_lem_mapping[l].update([primary_lem])
             if lem_part[0] != primary_lem:
                 lem_to_lem_mapping[lem_part[0]].update([primary_lem])
-        inflected_to_primary_lem[formula].append((parts[0], primary_lem))
+        inflected_to_primary_lem[formula].append((parts[0], primary_lem, display_lem))
         inflected_to_lem_mapping[parts[0]].update([primary_lem])
                 
 for k, v in lem_to_lem_mapping.items():
@@ -56,4 +64,4 @@ with open(dest_file_2, mode="w") as f:
 
 for form, mapping in inflected_to_primary_lem.items():
     with open(os.path.join(result_dir, form + '.txt'), mode="w") as f:
-        f.write('\n'.join(['{}\t{}'.format(x, y) for x, y in mapping]))
+        f.write('\n'.join(['{}\t{}\t{}'.format(x, y, z) for x, y, z in mapping]))

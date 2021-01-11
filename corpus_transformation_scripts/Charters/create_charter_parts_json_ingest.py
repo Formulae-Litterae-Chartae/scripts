@@ -1,65 +1,86 @@
-from json import dump, load, JSONDecodeError
-from string import punctuation
+import csv
+import json
 from sys import argv
 import re
-from os.path import isfile
+import os.path
 
+input_file = argv[1]
 
-punc = punctuation.replace(']', '')
-
-# source should be a CSV file that contains the names of each charter to be analyzed and then each column after the name
-# should contain the contents of one formulaic section of that charter.
-if isfile(argv[1]):
+if os.path.isfile(argv[1]):
     source = argv[1]
 else:
     print(argv[1], 'is not a file.')
     raise FileNotFoundError
-
-# This should be the JSON file to which the results should be saved.
-dest = argv[2]
-if len(argv) == 4:
+    
+if len(argv) == 3:
     try:
-        with open(argv[3]) as f:
-            form_mapping = load(f)
+        with open(argv[2]) as f:
+            form_mapping = json.load(f)
     except FileNotFoundError as E:
-        print(argv[3], 'is not a file.')
+        print(argv[2], 'is not a file.')
         raise E
-    except JSONDecodeError as E:
-        print(argv[3], 'is not a valid JSON file.')
+    except json.JSONDecodeError as E:
+        print(argv[2], 'is not a valid JSON file.')
         raise E
     
-# This pattern should extract the name of the charter from the correct column in the CSV. Change this as necessary
-pat = re.compile(r'(?:Nr. )?(\d+)(\.lat00\d)?')
+corp_mapping = {'Mondsee': ['mondsee', 'rath'], 
+                'Passau': ['passau', 'heuwieser'], 
+                'Regensburg': ['regensburg', 'wiedemann'],
+                'Bünden': ['buenden', 'meyer-marthaler'],
+                'Freising': ['freising', 'bitterauf'],
+                'Fulda': ['fulda', 'stengel'],
+                'Lorsch': ['lorsch', 'gloeckner'],
+                'Rätien': ['raetien', 'erhart'],
+                'Rheinau': ['zuerich', 'escher'],
+                'Salzburg': ['salzburg', 'hauthaler-'],
+                'Schäftlarn': ['schaeftlarn', 'weissthanner'],
+                'St. Gallen': ['stgallen', 'wartmann'],
+                'Weißenburg': ['weissenburg', 'gloeckner'],
+                'Zürich': ['zuerich', 'escher'],
+                'Zürich, S. Felix und Regula': ['zuerich', 'escher']}
 
-# coll_mapping maps the names of the charter collections given in the CSV to the different parts of their URNs
-# each value is a list with the first member being the first part of the URN, e.g., 'mondsee' in mondsee.rath0001.lat001
-# the second member is then the first part of the second part of the URN, e.g., 'rath' in the URN above.
-coll_mapping = {'Mondsee': ['mondsee', 'rath'], 'Passau': ['passau', 'heuwieser'], 'Regensburg': ['regensburg', 'wiedemann']}
-
-charter_forms = []
+json_output = []
+temp_dict = dict()
 
 with open(source) as f:                                         
     res = f.readlines()
     # This assumes that the first two columns of the CSV are given over to the naming of the charter and the rest with the formulaic
     # elements.
     # parts contains the names of the formulaic elements in the first line of the CSV.
-    parts = [form_mapping.get(x.strip(), x.strip()) for x in res[0].split('\t')[2:]]
+    parts = [form_mapping.get(x.strip(), None) for x in res[0].split('\t')]
     # charters are the rows of the CSV that actually contain the charter names and formulaic elements.
     charters = [x.rstrip('\n').split('\t') for x in res[1:]]
+    
 
-for c in charters:
-    # This assumes that the second column contains the number while the first contains the name of the charter collection
-    nr = re.search(pat, c[1])
-    # Builds the filepath from the coll_mapping and the charter nr
-    file = '/'.join(coll_mapping[c[0].strip()]) + '{:004}'.format(int(nr[1])) + '/' + '.'.join(coll_mapping[c[0].strip()]) + '{:004}'.format(int(nr[1])) + nr.groups('.lat001')[1]
-    form_part_dict = {'file': file}                       
-    for i, p in enumerate(c[2:]):                                              
-        if p:
-            # The split here is on the separator that was used in the CSV to denote when a single formulaic part is 
-            # interrupted by another. So if the dating of the charter comes in the middle of the arenga, the arenga would
-            # have this separator to denote that something else comes in this place.
-            form_part_dict[parts[i]] = re.split(r' \[\.+\] | \[…\] ', p)     
-    charter_forms.append(form_part_dict)
+for row in charters:
+    if row[0] not in corp_mapping:
+        continue
+    codex = '' 
+    if row[0] == 'Salzburg': 
+        if 'Codex' in row[1]: 
+            codex = re.sub(r'.+Codex (\w)', r'\1', row[1]).lower() 
+        else: 
+            codex = 'a' 
+    number = re.sub(r'(?:nr.)?\s*(\d+).*', r'\1', row[1].lower()) 
+    file_name = '{coll}/{ed}{codex}{num:04}/{coll}.{ed}{codex}{num:04}.lat001'.format(coll=corp_mapping[row[0]][0], codex=codex, ed=corp_mapping[row[0]][1], num=int(number)) 
+    if number == '784' and row[0] == 'Freising':
+        if '784a' in row[1]:
+            file_name = 'freising/bitterauf0784/freising.bitterauf0784.lat003'
+        else:
+            file_name = 'freising/bitterauf0784/freising.bitterauf0784.lat004'
+    if file_name not in temp_dict:
+        temp_dict[file_name] = dict()
+    for i, col in enumerate(row): 
+        if parts[i] and parts[i] not in ['Überlieferung', 'Nummer + Seite'] and col: 
+            split_val = re.split(r'\s*[\[\{]…\.? ?[\]\[9]\s*|\s*\[\.+[ \-]?[\]\}]\s*', col)
+            if parts[i] in temp_dict[file_name]:
+                temp_dict[file_name][parts[i]] += [x for x in split_val if x]
+            else:
+                temp_dict[file_name][parts[i]] = [x for x in split_val if x]
 
-with open(dest, mode="w") as f:                            
-    dump(charter_forms, f, ensure_ascii=False, indent='\t')
+for k, v in temp_dict.items():
+    v.update({'file': k})
+    json_output.append(v)
+
+with open(os.path.splitext(input_file)[0] + '.json', mode="w") as f: 
+    json.dump(json_output, f, ensure_ascii=False, indent='\t')

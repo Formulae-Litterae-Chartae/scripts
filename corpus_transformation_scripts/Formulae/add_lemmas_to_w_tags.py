@@ -6,8 +6,8 @@ from string import punctuation
 import os
 
 ns = {'tei': "http://www.tei-c.org/ns/1.0"}
-xmls = glob('/home/matt/formulae-corpora/data/marculf/**/*.lat001.xml', recursive=True)
-xmls += glob('/home/matt/formulae-corpora/data/marculf/**/*.deu001.xml', recursive=True)
+xmls = glob('/home/matt/formulae-corpora/data/marmoutier_serfs/**/*.lat00*.xml', recursive=True)
+xmls += glob('/home/matt/formulae-corpora/data/marmoutier_serfs/**/*.deu001.xml', recursive=True)
 lex_xml = etree.parse('/home/matt/scripts/corpus_transformation_scripts/Elexicon/Begriffe_eLexikon.xml')
 lex_dict = {}
 for lem in lex_xml.xpath('/xml/lem'):
@@ -25,9 +25,10 @@ for k, v in lex_dict.items():
 def test_text(lemmas, orig):
     not_found = []
     for i, word in enumerate(lemmas):
-        inflected, lemma = word.split('\t')[:2]
+        inflected, lemma, display_lem = word.split('\t')[:3]
         if not re.search(r'\w', inflected):
             continue
+        inflected = re.sub(r'[{}«»„“‚‘’”\[\]]'.format(punctuation), '', inflected)
         prev_lem = '' 
         next_lem = ''
         if i < len(lemmas) - 1:
@@ -40,9 +41,9 @@ def test_text(lemmas, orig):
             prev_lem = lemmas[i-1].split('\t')[1]
         tried = []
         try:
-            while inflected.lower().replace('v', 'u') != re.sub(r'[{}„“‚‘’”\[\]]'.format(punctuation), '', ''.join(orig[i].xpath('.//text()', namespaces=ns)).lower().replace('v', 'u')):
+            while inflected.lower().replace('v', 'u') != re.sub(r'[{}«»„“‚‘’”\[\]]'.format(punctuation), '', ''.join(orig[i].xpath('.//text()', namespaces=ns)).lower().replace('v', 'u')):
                 try:
-                    tried.append(re.sub(r'[{}„“‚‘’”\[\]]'.format(punctuation), '', ''.join(orig[i].xpath('.//text()', namespaces=ns)).lower().replace('v', 'u')))
+                    tried.append(re.sub(r'[{}«»„“‚‘’”\[\]]'.format(punctuation), '', ''.join(orig[i].xpath('.//text()', namespaces=ns)).lower().replace('v', 'u')))
                     i += 1
                     if i == len(orig):
                         not_found.append((inflected, tried))
@@ -57,6 +58,7 @@ def test_text(lemmas, orig):
             print(prev_lem, next_lem, inflected, lemma, len(orig), E)
             continue
         orig[i].set('lemma', lemma.lower())
+        orig[i].set('n', display_lem)
         for lem in lemma.split('/'):
             if lem in lex_dict.keys():
                 if set_lemmaRef(orig[i], lem, next_lem, prev_lem) is False:

@@ -690,11 +690,19 @@
             <xsl:variable name="datestring"><xsl:value-of select="$currentElement/child::tei:cell[position()=5]"/></xsl:variable>
             <xsl:value-of select="$datestring"/>
             <xsl:element name="date" namespace="http://www.tei-c.org/ns/1.0">
-                <xsl:if test="matches($datestring, '^\d{3,4}[\- ]\d{1,2}[\- ]\d{1,2}$')">
-                    <xsl:attribute name="when"><xsl:number value="tokenize($datestring, '[ \-]')[1]" format="0001"/><xsl:text>-</xsl:text>
-                        <xsl:number value="tokenize($datestring, '[ \-]')[2]" format="01"/><xsl:text>-</xsl:text>
-                        <xsl:number value="tokenize($datestring, '[ \-]')[3]" format="01"/></xsl:attribute>
-                </xsl:if>
+                <xsl:choose>
+                    <xsl:when test="matches($datestring, '^\d{3,4}[\- ]\d{1,2}[\- ]\d{1,2}$')">
+                        <xsl:attribute name="when"><xsl:number value="tokenize($datestring, '[ \-]')[1]" format="0001"/><xsl:text>-</xsl:text>
+                            <xsl:number value="tokenize($datestring, '[ \-]')[2]" format="01"/><xsl:text>-</xsl:text>
+                            <xsl:number value="tokenize($datestring, '[ \-]')[3]" format="01"/>
+                        </xsl:attribute>
+                    </xsl:when>
+                    <xsl:when test="matches($datestring, '^\d{3,4}$')">
+                        <xsl:attribute name="when">
+                            <xsl:number value="$datestring" format="0001"/>
+                        </xsl:attribute>
+                    </xsl:when>
+                </xsl:choose>
             </xsl:element>
         </xsl:element>
     </xsl:template>
@@ -705,7 +713,7 @@
             <xsl:when test="$currentNode/child::tei:cell[position()=6]/tei:p">
                 <xsl:for-each select="$currentNode/child::tei:cell[position()=6]/*">
                     <xsl:choose>
-                        <xsl:when test=".[contains(.,'***')]">
+                        <xsl:when test=".[starts-with(.,'***')] and .[ends-with(., '***')]">
                             <xsl:element name="head" namespace="http://www.tei-c.org/ns/1.0">
                                 <xsl:attribute name="xml:space">preserve</xsl:attribute>
                                 <xsl:value-of select="replace(.,'\*','')"/>
@@ -732,7 +740,7 @@
             <xsl:otherwise>
                 <xsl:for-each select="$currentNode/child::tei:cell[position()=6]">
                     <xsl:choose>
-                        <xsl:when test=".[contains(.,'***')]">
+                        <xsl:when test=".[starts-with(.,'***')] and .[ends-with(., '***')]">
                             <xsl:element name="head" namespace="http://www.tei-c.org/ns/1.0">
                                 <xsl:attribute name="xml:space">preserve</xsl:attribute>
                                 <xsl:apply-templates mode="textTemps"/>
@@ -768,7 +776,9 @@
     </xsl:template>
     
     <xsl:template match=".[contains(., '***')]" mode="textTemps">
-        <xsl:value-of select="replace(.,'\*','')"/>
+        <xsl:if test=".[starts-with(.,'***')] and .[ends-with(., '***')]">
+            <xsl:value-of select="replace(.,'\*','')"/>
+        </xsl:if>
     </xsl:template>
     
 </xsl:stylesheet>
