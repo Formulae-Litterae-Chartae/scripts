@@ -94,7 +94,7 @@
                                     <xsl:text>Proofreading</xsl:text>
                                 </xsl:element>
                                 <xsl:element name="persName" namespace="http://www.tei-c.org/ns/1.0">
-                                    <xsl:text>Franziska Quaas (Universität Hamburg)</xsl:text>
+                                    <xsl:text>Alexander Mueller (Universität Hamburg)</xsl:text>
                                 </xsl:element>
                             </xsl:element>
                             
