@@ -94,7 +94,7 @@
                                     <xsl:text>Proofreading</xsl:text>
                                 </xsl:element>
                                 <xsl:element name="persName" namespace="http://www.tei-c.org/ns/1.0">
-                                    <xsl:text>Alexander Mueller (Universität Hamburg)</xsl:text>
+                                    <xsl:text>Christina Rothe (Universität Hamburg)</xsl:text>
                                 </xsl:element>
                             </xsl:element>
                             
@@ -210,7 +210,7 @@
                                         <!-- First print date. -->
                                         <xsl:if test="$sourceD/tei:row[descendant::text()='Originalausgabe']/tei:cell[position()=3]/descendant::text()">
                                             <xsl:element name="date" namespace="http://www.tei-c.org/ns/1.0">
-                                                <xsl:attribute name="when"><xsl:value-of select="$sourceD/tei:row[descendant::text()='Originalausgabe']/tei:cell[position()=3]/descendant::tei:hi"/></xsl:attribute>
+                                                <xsl:attribute name="when"><xsl:value-of select="$sourceD/tei:row[descendant::text()='Originalausgabe']/tei:cell[position()=3]/descendant::text()"/></xsl:attribute>
                                                 <xsl:attribute name="n">originalAusgabe</xsl:attribute>
                                                 <xsl:value-of select="$sourceD/tei:row[descendant::text()='Originalausgabe']/tei:cell[position()=3]/descendant::text()"/>
                                             </xsl:element>
@@ -218,7 +218,7 @@
                                         <!-- The digitized print. -->
                                         <xsl:if test="$sourceD/tei:row[descendant::text()='Neudrück']/tei:cell[position()=3]/descendant::text()">
                                             <xsl:element name="date" namespace="http://www.tei-c.org/ns/1.0">
-                                                <xsl:attribute name="when"><xsl:value-of select="$sourceD/tei:row[descendant::text()='Neudrück']/tei:cell[position()=3]/descendant::tei:hi"/></xsl:attribute>
+                                                <xsl:attribute name="when"><xsl:value-of select="$sourceD/tei:row[descendant::text()='Neudrück']/tei:cell[position()=3]/descendant::text()"/></xsl:attribute>
                                                 <xsl:attribute name="n">neudruck</xsl:attribute>
                                                 <xsl:value-of select="$sourceD/tei:row[descendant::text()='Neudrück']/tei:cell[position()=3]/descendant::text()"/>
                                             </xsl:element>
@@ -630,11 +630,22 @@
             </xsl:element>
             <!-- SEITEN = second column (second cell in row). -->
             <xsl:element name="div" namespace="http://www.tei-c.org/ns/1.0">
-                <xsl:attribute name="type">section</xsl:attribute>
-                <xsl:attribute name="subtype">seiten</xsl:attribute>
-                <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
-                    <xsl:value-of select="$currentNode/child::tei:cell[position()=2]"/>
-                </xsl:element>
+                <xsl:choose>
+                    <xsl:when test="$currentNode/child::tei:cell[position()=2] = 'URL'">
+                        <xsl:attribute name="type">section</xsl:attribute>
+                        <xsl:attribute name="subtype">url</xsl:attribute>
+                        <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
+                            <xsl:text>http://www.cn-telma.fr//originaux/charte</xsl:text><xsl:value-of select="$urkundennummer"/><xsl:text>/</xsl:text>
+                        </xsl:element>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:attribute name="type">section</xsl:attribute>
+                        <xsl:attribute name="subtype">seiten</xsl:attribute>
+                        <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
+                            <xsl:value-of select="$currentNode/child::tei:cell[position()=2]"/>
+                        </xsl:element>
+                    </xsl:otherwise>
+                </xsl:choose>
             </xsl:element>
             <!-- REGEST = third column (third cell in row). -->
             <xsl:element name="div" namespace="http://www.tei-c.org/ns/1.0">
@@ -677,6 +688,9 @@
             <xsl:if test="$currentNode/child::tei:cell[position()=7]//text()">
                 <xsl:element name="note" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="type">echtheit</xsl:attribute>
+                    <xsl:if test="boolean(index-of(('Acte faux'), $currentNode/child::tei:cell[position()=7]))">
+                        <xsl:attribute name="n">forgery</xsl:attribute>
+                    </xsl:if>
                     <xsl:value-of select="$currentNode/child::tei:cell[position()=7]"/>
                 </xsl:element>
             </xsl:if>
@@ -697,9 +711,24 @@
                             <xsl:number value="tokenize($datestring, '[ \-]')[3]" format="01"/>
                         </xsl:attribute>
                     </xsl:when>
+                    <xsl:when test="matches($datestring, '^\d{3,4}[\- ]\d{1,2}$')">
+                        <xsl:variable name="year"><xsl:number value="tokenize($datestring, '[ \-]')[1]" format="0001"/></xsl:variable>
+                        <xsl:variable name="month"><xsl:number value="tokenize($datestring, '[ \-]')[2]" format="01"/></xsl:variable>
+                        <xsl:variable name="firstDay" select="xs:date(string-join(($year, $month, '01'), '-'))"/>
+                        <xsl:variable name="lastDay" select="($firstDay + xs:yearMonthDuration('P0Y1M')) + xs:dayTimeDuration('-P1D')"/>
+                        <xsl:attribute name="notBefore">
+                            <xsl:value-of select="format-date($firstDay, '[Y0001]-[M01]-[D01]')"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="notAfter">
+                            <xsl:value-of select="format-date($lastDay, '[Y0001]-[M01]-[D01]')"/>
+                        </xsl:attribute>
+                    </xsl:when>
                     <xsl:when test="matches($datestring, '^\d{3,4}$')">
-                        <xsl:attribute name="when">
-                            <xsl:number value="$datestring" format="0001"/>
+                        <xsl:attribute name="notBefore">
+                            <xsl:number value="$datestring" format="0001"/><xsl:text>-01-01</xsl:text>
+                        </xsl:attribute>
+                        <xsl:attribute name="notAfter">
+                            <xsl:number value="$datestring" format="0001"/><xsl:text>-12-31</xsl:text>
                         </xsl:attribute>
                     </xsl:when>
                 </xsl:choose>

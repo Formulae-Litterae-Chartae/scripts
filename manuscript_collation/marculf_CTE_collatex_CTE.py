@@ -12,14 +12,20 @@ import re
 
 # to rstrip any punctuation that is not a closing square bracket
 punct = punctuation.replace(']', '')
-baseline_sigla = 'Wa1'
+baseline_sigla = 'FLC'
 
 # This is the function to produce the lines in the CSV file 
 def make_lines(json):
     lines = []
+    temp_lines = []
     for i, w in enumerate(json['witnesses']):
         line = [x[i][0]['t'] if x[i] else '-' for x in json['table']]
-        lines.append(w + '\t' + '\t'.join(line))
+        temp_lines.append(['{}\t{}'.format(w, '\t'.join(line[x:x+500])) for x in range(0, len(line), 500)])
+    for i, l in enumerate(temp_lines[0]):
+        lines.append(l)
+        for other_l in temp_lines[1:]:
+            lines.append(other_l[i])
+        lines.append('\n')
     return lines
     
 def make_lower(word):

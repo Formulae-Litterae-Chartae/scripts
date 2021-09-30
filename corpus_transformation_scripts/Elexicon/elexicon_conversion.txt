@@ -4,6 +4,24 @@ Start Docker Image for OxGarage:
 
 sudo docker run --rm -p 8080:8080 --mount type=bind,source="/home/matt/tei/tei-xsl/xml/tei/stylesheet",target="/usr/share/xml/tei/stylesheet" --mount type=bind,source="/home/matt/tei/tei/xml/tei/odd",target="/usr/share/xml/tei/odd" -e WEBSERVICE_URL=http://localhost:8080/ege-webservice/ --name oxgarage teic/oxgarage:dev
 
+Then run the following script to transform the DOCX to TEI:
+
+python ~/scripts/corpus_transformation_scripts/Elexicon/transform_docx_with_oxgarage.py <LOCATION OF DOCX FILES>
+
+Then run the following script to transform the TEI to DLL:
+
+python ~/scripts/corpus_transformation_scripts/Elexicon/transform_elex_to_dll.py <FORMULAE CORPUS FOLDER> <PATH TO SAXON JAR> <NUMBER OF THREADS>
+
+Then run the following script to check the bibliographical short titles:
+
+python /home/matt/scripts/corpus_transformation_scripts/check_short_entries.py <FORMULAE CORPUS FOLDER>
+
+Then run the following to add new lemmaRef attributes to the appropriate words:
+
+python /home/matt/scripts/corpus_transformation_scripts/Elexicon/add_new_lemmaRefs.py
+
+OLD INFORMATION
+
 The actual transformation can be done with the following script once OxGarage is running. In order to avoid retransforming all the formulae as well, edit the ~/docx_tei_cte_conversion/folder_list.txt file so that only the eLexicon folder is done:
 
 bash ~/docx_tei_cte_conversion/folder_conversion.sh

@@ -27,7 +27,7 @@ try:
         charter_forms = load(f)
 except FileNotFoundError as E:
     print(json_file, 'is not a file.')
-    raise E
+    raise E 
 except JSONDecodeError as E:
     print(json_file, 'is not a valid JSON file.')
     raise E
@@ -52,7 +52,15 @@ for charter in charter_forms:
         print(xml_file + ' not found.')
         continue
     xml = etree.parse(xml_file)
-    xml_words = xml.xpath('//tei:w', namespaces=ns)                   
+    xml_words = xml.xpath('//tei:w', namespaces=ns)
+    # remove existing seg[@function] elements
+    for seg_f in xml.xpath('//tei:seg[@function]', namespaces=ns):
+        parent = seg_f.getparent()
+        seg_index = parent.index(seg_f)
+        for c in seg_f:
+            parent.insert(seg_index, c)
+            seg_index += 1
+        parent.remove(seg_f)
     for k, v in charter.items():                      
         if k != 'file':                                                        
             for phrase in v:
@@ -65,8 +73,8 @@ for charter in charter_forms:
     xml.write(xml_file, encoding='utf-8', pretty_print=True)
     with open(xml_file) as f:
         s = f.read()
-    s = re.sub(r'<seg function="([\w\-]+)\-begin"/>', r'<seg function="\1">', s)
-    s = re.sub(r'<seg function="([\w\-]+)\-end"/>', r'</seg>', s)
+    s = re.sub(r'\s*<seg function="([\w\-]+)\-begin"/>', r' <seg function="\1">', s)
+    s = re.sub(r'<seg function="([\w\-]+)\-end"/>\s*', r'</seg> ', s)
     with open(xml_file, mode="w") as f:
         f.write(s)
     xml = etree.parse(xml_file)

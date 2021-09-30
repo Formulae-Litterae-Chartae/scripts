@@ -74,7 +74,16 @@
                             <!-- Creating the sourceDesc. -->
                             <xsl:element name="sourceDesc" namespace="http://www.tei-c.org/ns/1.0">
                                 <xsl:element name="biblStruct" namespace="http://www.tei-c.org/ns/1.0">
+                                    <xsl:if test="node()/ancestor::tei:text[@xml:id]/descendant::tei:div[@subtype='url']">
+                                        <xsl:element name="analytic" namespace="http://www.tei-c.org/ns/1.0">
+                                            <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
+                                               <xsl:attribute name="type">url</xsl:attribute>
+                                               <xsl:value-of select="node()/ancestor::tei:text[@xml:id]/descendant::tei:div[@subtype='url']"/>
+                                           </xsl:element>
+                                        </xsl:element>
+                                    </xsl:if>
                                     <xsl:element name="monogr" namespace="http://www.tei-c.org/ns/1.0">
+                                        
                                         
                                         <!-- Copying the contents of the <monogr> element except the one to which I need another element added). -->
                                         <xsl:apply-templates select="/tei:TEI/tei:teiHeader/descendant::tei:monogr/*[not(self::tei:imprint)]"/>
@@ -84,11 +93,13 @@
                                             
                                             <!-- Fishing another information from the <front> element of whichever particular <text> the <xsl:for-each>
                                                 element is currently focusing on and storing it in a parameter. -->
-                                            <xsl:call-template name="seiten">
-                                                <xsl:with-param name="snb">
-                                                    <xsl:value-of select="node()/ancestor::tei:text[@xml:id]/descendant::tei:div[@subtype='seiten']"/>
-                                                </xsl:with-param>
-                                            </xsl:call-template>
+                                            <xsl:if test="node()/ancestor::tei:text[@xml:id]/descendant::tei:div[@subtype='seiten']">
+                                                <xsl:call-template name="seiten">
+                                                    <xsl:with-param name="snb">
+                                                        <xsl:value-of select="node()/ancestor::tei:text[@xml:id]/descendant::tei:div[@subtype='seiten']"/>
+                                                    </xsl:with-param>
+                                                </xsl:call-template>
+                                            </xsl:if>
                                             
                                         </xsl:element>
                                     </xsl:element>

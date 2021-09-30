@@ -84,7 +84,6 @@
                 <xsl:text>"&gt;</xsl:text><xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:monogr/tei:idno[@type='URI']/text()"/>
                 <xsl:text>&lt;/a&gt;]</xsl:text>
             </xsl:if>
-            <xsl:text>, S. </xsl:text>
         </xsl:variable>
         
         <xsl:for-each select="/tei:TEI/tei:text/tei:group/tei:text">
@@ -103,32 +102,7 @@
                     <!-- Creating the title from the group location, the editor whose numbering we are using and the number itself. -->
                     <xsl:element name="dc:title">
                         <xsl:attribute name="xml:lang"><xsl:value-of select="$frontLang"/></xsl:attribute>
-                        <xsl:value-of select="/tei:TEI/tei:teiHeader/descendant::tei:monogr/tei:title"/><xsl:text> (</xsl:text>
-                                                
-                        <!--<!-\- If there is only one editor, his/her name will be followed by the Urkundennummer. -\->
-                        <xsl:if test="/tei:TEI/tei:teiHeader/descendant::tei:monogr[count(tei:editor)=1]">
-                            <xsl:text>Ed. </xsl:text><xsl:value-of select="/tei:TEI/tei:teiHeader/descendant::tei:monogr/tei:editor/substring-after(text(),' ')"/><xsl:text>) </xsl:text>
-                        </xsl:if>-->
-                        
-                        <!-- If there is more than one editor, their names will be added together separated with a / sign. -->
-                        <xsl:choose>
-                            <xsl:when test="/tei:TEI/tei:teiHeader/descendant::tei:monogr[count(tei:editor)>1]">
-                                <xsl:text>Eds. </xsl:text>
-                            </xsl:when>
-                            <xsl:otherwise><xsl:text>Ed. </xsl:text></xsl:otherwise>
-                        </xsl:choose>
-                        <xsl:for-each select="/tei:TEI/tei:teiHeader/descendant::tei:monogr/tei:editor[position()!=last()]">
-                            <xsl:call-template name="makeEdName">
-                                <xsl:with-param name="element" select="current()"></xsl:with-param>
-                            </xsl:call-template>
-                            <xsl:text>/</xsl:text>
-                        </xsl:for-each>
-                        <xsl:call-template name="makeEdName">
-                            <xsl:with-param name="element" select="/tei:TEI/tei:teiHeader/descendant::tei:monogr/tei:editor[position()=last()]"></xsl:with-param>
-                        </xsl:call-template>
-                        <!--<xsl:value-of select="/tei:TEI/tei:teiHeader/descendant::tei:monogr/tei:editor[position()=last()]/substring-after(text(),' ')"/>-->
-                        <xsl:text>) </xsl:text>
-                        <xsl:value-of select="node()/descendant::tei:div[@subtype='urkundennummer']"/>
+                        <xsl:text>Nr. </xsl:text><xsl:value-of select="node()/descendant::tei:div[@subtype='urkundennummer']"/>
                     </xsl:element>
                    <xsl:element name="dc:type">cts:work</xsl:element>
                    <xsl:element name="members">
@@ -186,7 +160,8 @@
                                    </xsl:element>
                                    <xsl:element name="dct:bibliographicCitation">
                                        <xsl:value-of select="$bibliographicCitation"/>
-                                       <xsl:value-of select="normalize-space(current()/ancestor::tei:text[@xml:id]/tei:front/tei:div[@subtype='seiten']//text())"/><xsl:text>.</xsl:text>
+                                       <xsl:if test="current()/ancestor::tei:text[@xml:id]/tei:front/tei:div[@subtype='seiten']"><xsl:text>, S.</xsl:text><xsl:value-of select="normalize-space(current()/ancestor::tei:text[@xml:id]/tei:front/tei:div[@subtype='seiten']//text())"/><xsl:text>.</xsl:text></xsl:if>
+                                       <xsl:if test="current()/ancestor::tei:text[@xml:id]/tei:front/tei:div[@subtype='url']"><xsl:text> [</xsl:text><xsl:value-of select="normalize-space(current()/ancestor::tei:text[@xml:id]/tei:front/tei:div[@subtype='url']//text())"/><xsl:text>].</xsl:text></xsl:if>
                                    </xsl:element>
                                    <xsl:element name="dct:temporal"><xsl:value-of select="normalize-space(string-join(/tei:TEI/tei:text/tei:group/tei:text[@xml:id=$urn]/tei:front/tei:dateline//text(), ' '))"/></xsl:element>
                                    <xsl:element name="dct:spatial"><xsl:value-of select="/tei:TEI/tei:text/tei:group/tei:text[@xml:id=$urn]/tei:front/tei:div[@subtype='ausstellungsort']/tei:p/text()"/></xsl:element>

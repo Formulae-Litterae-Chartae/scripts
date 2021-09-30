@@ -8,7 +8,7 @@
     <xsl:template name="buildBibEntry">
         <xsl:param name="entry"/>
         <xsl:choose>
-            <xsl:when test="$entry[@type='book']">
+            <xsl:when test="$entry[@type='book' or @type='phdthesis']">
                 <!-- Skip "Der Neue Pauly" as a book -->
                 <xsl:if test="$entry/t:monogr/t:title[1]/text() != 'Der neue Pauly (Onlineversion)'">
                     <!-- THE AUTHOR(S) -->
@@ -67,10 +67,12 @@
             </xsl:when>
             <xsl:when test="$entry[@type='incollection']">
                     <!-- THE AUTHOR(S) -->
+                <xsl:if test="$entry/t:analytic/t:author">
                     <xsl:call-template name="makeAuthors">
                         <xsl:with-param name="pubElement" select="$entry/t:analytic/t:author"/>
                     </xsl:call-template>
                     <xsl:text>: </xsl:text>
+                </xsl:if>
                     <!-- THE ARTICLE TITLE -->
                     <xsl:element name="span">
                         <xsl:attribute name="class">sectionTitle</xsl:attribute>
@@ -106,26 +108,30 @@
                                 <xsl:attribute name="class">publicationYear</xsl:attribute>
                                 <xsl:value-of select="$entry/t:monogr/t:imprint/t:date[@type='publicationDate']"/>
                             </xsl:element>
-                            <xsl:text>, </xsl:text>
                             <!-- THE PUBLICATION SERIES -->
-                            <xsl:call-template name="makeSeries">
-                                <xsl:with-param name="pubElement" select="$entry"/>
-                                <xsl:with-param name="endPunct">, </xsl:with-param>
-                            </xsl:call-template>
+                            <xsl:if test="$entry/t:series">
+                                <xsl:text>, </xsl:text>
+                                <xsl:call-template name="makeSeries">
+                                    <xsl:with-param name="pubElement" select="$entry"/>
+                                </xsl:call-template>
+                            </xsl:if>
                             <!-- THE PAGES -->
-                            <xsl:element name="span">
-                                <xsl:attribute name="class">pubPages</xsl:attribute>
-                                <xsl:choose>
-                                    <xsl:when test="$entry/t:monogr/t:biblScope[@unit='column']">
-                                        <xsl:text>Sp. </xsl:text>
-                                        <xsl:value-of select="replace($entry/t:monogr/t:biblScope[@unit='column'], '--', '–')"/>
-                                    </xsl:when>
-                                    <xsl:when test="$entry/t:monogr/t:biblScope[@unit='page']">
-                                        <xsl:text>S. </xsl:text>
-                                        <xsl:value-of select="replace($entry/t:monogr/t:biblScope[@unit='page'], '--', '–')"/>
-                                    </xsl:when>
-                                </xsl:choose>
-                            </xsl:element>
+                            <xsl:if test="$entry/t:monogr/t:biblScope[@unit='column' or @unit='page']">
+                                <xsl:text>, </xsl:text>
+                                <xsl:element name="span">
+                                    <xsl:attribute name="class">pubPages</xsl:attribute>
+                                    <xsl:choose>
+                                        <xsl:when test="$entry/t:monogr/t:biblScope[@unit='column']">
+                                            <xsl:text>Sp. </xsl:text>
+                                            <xsl:value-of select="replace($entry/t:monogr/t:biblScope[@unit='column'], '--', '–')"/>
+                                        </xsl:when>
+                                        <xsl:when test="$entry/t:monogr/t:biblScope[@unit='page']">
+                                            <xsl:text>S. </xsl:text>
+                                            <xsl:value-of select="replace($entry/t:monogr/t:biblScope[@unit='page'], '--', '–')"/>
+                                        </xsl:when>
+                                    </xsl:choose>
+                                </xsl:element>
+                            </xsl:if>
                             <xsl:text>.</xsl:text>
                         </xsl:when>
                         <xsl:otherwise>
@@ -207,6 +213,41 @@
                     </xsl:element>
                     <xsl:text>).</xsl:text>
             </xsl:when>
+            <xsl:otherwise>
+                <!-- THE AUTHOR(S) -->
+                <xsl:call-template name="makeAuthors">
+                    <xsl:with-param name="pubElement" select="$entry/t:analytic/t:author"/>
+                </xsl:call-template>
+                <xsl:if test="$entry/t:analytic/t:author">
+                    <xsl:text>: </xsl:text>
+                </xsl:if>
+                <!-- THE ARTICLE TITLE -->
+                <xsl:element name="span">
+                    <xsl:attribute name="class">articleTitle</xsl:attribute>
+                    <xsl:value-of select="normalize-space($entry/t:analytic/t:title[not(@type='short')])"/>
+                </xsl:element>
+                <xsl:text>, </xsl:text>
+                <!-- THE PUBLICATION DATE -->
+                <xsl:element name="span">
+                    <xsl:attribute name="class">publicationYear</xsl:attribute>
+                    <xsl:value-of select="$entry/t:monogr/t:imprint/t:date[@type='publicationDate']"/>
+                </xsl:element>
+                <xsl:if test="$entry/t:ref[@type='url']">                    
+                    <xsl:text>, URL: </xsl:text>
+                    <!-- THE URL -->
+                    <xsl:element name="span">
+                        <xsl:attribute name="class">pubURL</xsl:attribute>
+                        <xsl:value-of select="$entry/t:ref[@type='url']"/>
+                    </xsl:element>
+                    <!-- The URL Date -->
+                    <xsl:text> (letzter Aufruf: </xsl:text>
+                    <xsl:element name="span">
+                        <xsl:attribute name="class">pubURLDate</xsl:attribute>
+                        <xsl:value-of select="$entry/t:monogr/t:imprint/t:date[@type='urldate']"/>
+                    </xsl:element>
+                    <xsl:text>).</xsl:text>
+                </xsl:if>
+            </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
     
@@ -266,7 +307,6 @@
                 </xsl:if>
             </xsl:element>
             <xsl:text>)</xsl:text>
-            <xsl:value-of select="$endPunct"/>
         </xsl:if>
     </xsl:template>
     

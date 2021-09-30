@@ -15,6 +15,8 @@
         <abbr full="Horst Lößlein">HL</abbr>
         <abbr full="Alexander Mueller">AM</abbr>
         <abbr full="BQ &amp; AJ">BQ &amp; AJ</abbr>
+        <abbr full="Franziska Quaas">FQ</abbr>
+        <abbr full="Marieke Röben">MR</abbr>
     </xsl:param>
     <xsl:param name="authorTags">
         <xsl:variable name="authorAbbr" select="normalize-space(/tei:TEI/tei:text/tei:body/tei:p[last()]//text())"/>
@@ -31,6 +33,12 @@
             <xsl:when test="$authorAbbr = 'BQ &amp; AJ'">
                 <xsl:element name="author" namespace="http://www.tei-c.org/ns/1.0">Alexandre Jeannin</xsl:element>
                 <xsl:element name="author" namespace="http://www.tei-c.org/ns/1.0">Bart Quintelier</xsl:element>
+            </xsl:when>
+            <xsl:when test="$authorAbbr = 'FQ'">
+                <xsl:element name="author" namespace="http://www.tei-c.org/ns/1.0">Franziska Quaas</xsl:element>
+            </xsl:when>
+            <xsl:when test="$authorAbbr = 'MR'">
+                <xsl:element name="author" namespace="http://www.tei-c.org/ns/1.0">Marieke Röben</xsl:element>
             </xsl:when>
         </xsl:choose>
     </xsl:param>
@@ -183,6 +191,12 @@
                     <xsl:apply-templates/>
                 </xsl:element>
             </xsl:when>
+            <xsl:when test="@rend = 'Intense_Emphasis' or @rend = 'Strong'">
+                <xsl:element name="seg" namespace="http://www.tei-c.org/ns/1.0">
+                    <xsl:attribute name="type">lex-keyword</xsl:attribute>
+                    <xsl:apply-templates/>
+                </xsl:element>
+            </xsl:when>
             <xsl:when test="@rend = 'Book_Title'">
                 <xsl:element name="bibl" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="n">
@@ -197,29 +211,39 @@
                     <xsl:apply-templates/>
                 </xsl:element>
             </xsl:when>
-            <xsl:otherwise>
+            <xsl:when test="ancestor-or-self::tei:note">
                 <xsl:element name="seg" namespace="http://www.tei-c.org/ns/1.0">
-                        <xsl:if test="@rend">
-                            <xsl:attribute name="type"><xsl:value-of select="lower-case(translate(@rend, ' ', '_'))"/></xsl:attribute>
-                        </xsl:if>
+                    <xsl:if test="@rend">
+                        <xsl:attribute name="type"><xsl:value-of select="lower-case(translate(@rend, ' ', '_'))"/></xsl:attribute>
+                    </xsl:if>
                     <xsl:apply-templates/>
                 </xsl:element>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:apply-templates/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
     
     <xsl:template name="buildNValue">
         <xsl:param name="xmlNodes"/>
-        <xsl:for-each select="$xmlNodes/node()">
-            <xsl:choose>
-                <xsl:when test="current()[@class='surname']">
-                    <xsl:text>&lt;span class="surname"&gt;</xsl:text><xsl:value-of select="current()"/><xsl:text>&lt;/span&gt;</xsl:text>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of select="current()"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:for-each>
+        <xsl:choose>
+            <xsl:when test="contains($xmlNodes/span[@class='pubURL'], 'werkstatt')">
+                <xsl:value-of select="$xmlNodes/span[@class='pubURL']"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:for-each select="$xmlNodes/node()">
+                    <xsl:choose>
+                        <xsl:when test="current()[@class='surname']">
+                            <xsl:text>&lt;span class="surname"&gt;</xsl:text><xsl:value-of select="current()"/><xsl:text>&lt;/span&gt;</xsl:text>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="current()"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:for-each>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
     
     <xsl:include href="../../bibliography/make_bib_entry.xsl"/>

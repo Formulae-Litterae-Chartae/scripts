@@ -31,6 +31,18 @@
         </xsl:choose>
     </xsl:template>-->
     
+    <!-- Get the title from the file name if it is not in the title element -->
+    <xsl:template match="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title">
+        <xsl:choose>
+            <xsl:when test="not(./text())">
+                <xsl:element name="title" namespace="http://www.tei-c.org/ns/1.0"><xsl:value-of select="replace(replace(tokenize(base-uri(), '/')[last()], '\.xml', ''), '%20', ' ')"/></xsl:element>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:element name="title" namespace="http://www.tei-c.org/ns/1.0"><xsl:apply-templates/></xsl:element>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
     <!-- Transform <head> elements to <p rendition="#rd-Title"> -->
     <xsl:template match="tei:head">
         <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">

@@ -127,8 +127,11 @@
             <xsl:when test="matches(lower-case($formTitle/tei:ref[@type='form-name']), 'marculf|markulf')">
                 <xsl:text>marculf</xsl:text>
             </xsl:when>
-            <xsl:otherwise>
+            <xsl:when test="matches(lower-case($formTitle/tei:ref[@type='form-name']), 'angers|andecavensis')">
                 <xsl:text>andecavensis</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="tokenize(lower-case($formTitle/tei:ref[@type='form-name']), '\s+')[1]"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:param>
@@ -140,8 +143,11 @@
             <xsl:when test="matches(lower-case($formTitle/tei:ref[@type='form-name']), 'marculf|markulf')">
                 <xsl:text>urn:cts:formulae:marculf.</xsl:text>
             </xsl:when>
-            <xsl:otherwise>
+            <xsl:when test="matches(lower-case($formTitle/tei:ref[@type='form-name']), 'angers|andecavensis')">
                 <xsl:text>urn:cts:formulae:andecavensis.</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:text>urn:cts:formulae:</xsl:text><xsl:value-of select="tokenize(lower-case($formTitle/tei:ref[@type='form-name']), '\s+')[1]"/><xsl:text>.</xsl:text>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:param>

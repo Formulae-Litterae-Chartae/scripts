@@ -36,9 +36,13 @@
                 <xsl:with-param name="fullRegest" select="document($metadataFile)/cpt:collection/cpt:members/cpt:collection[child::cpt:identifier/text()=$urn]/dc:description/text()"/>
             </xsl:call-template>
         </xsl:variable>
+        <xsl:variable name="keywords">
+            <xsl:value-of select="string-join(//tei:seg[@type='lex-keyword'], ' ')"/>
+        </xsl:variable>
         <xsl:variable name="partTags"></xsl:variable>
         <xml>
             <title><xsl:value-of select="normalize-space(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title/text())"/></title>
+            <keywords><xsl:value-of select="$keywords"/></keywords>
             <dateStr><xsl:value-of select="document($metadataFile)/cpt:collection/cpt:members/cpt:collection[child::cpt:identifier/text()=$urn]/cpt:structured-metadata/dct:temporal/text()"/></dateStr>
             <compositionPlace><xsl:value-of select="document($metadataFile)/cpt:collection/cpt:members/cpt:collection[child::cpt:identifier/text()=$urn]/cpt:structured-metadata/dct:spatial/text()"/></compositionPlace>
             <urn><xsl:value-of select="$urn"/></urn>
@@ -59,10 +63,10 @@
                 </xsl:otherwise>
             </xsl:choose>
             <!-- The outer replace function should include other text critical marks that should not get in the way of the search. -->
-            <inflected><xsl:value-of select="normalize-space(replace(replace(replace(replace($theText, '> ([\.,:;”])', '>$1'), '(\[|&lt;)\s+', ''), '\s+(\]|&gt;)', ''), '\[|&lt;|\]|&gt;|…', '$2'))"/></inflected>
+            <inflected><xsl:value-of select="translate(normalize-space(replace(replace(replace(replace(replace(replace($theText, 'Æ|æ|Ę|ę', 'ae'), 'Œ|œ', 'oe'), '> ([\.,:;”])', '>$1'), '(\[|&lt;)\s+', ''), '\s+(\]|&gt;)', ''), '\[|&lt;|\]|&gt;|…', '$2')), 'ÁáÀàÂâÉéÈèÊêÍíÌìÎîÓóÒòÔôÚúÙùÛûÇçŎŏ', 'AaAaAaEeEeEeIiIiIiOoOoOoUuUuUuCcOo')"/></inflected>
             <lemmatized><xsl:value-of select="normalize-space(replace($theLems, '\s+', ' '))"/></lemmatized>
             <regest><xsl:value-of select="$theRegest"/></regest>
-            <forgery><xsl:value-of select="boolean(/tei:TEI/tei:text/tei:front/tei:note[@type='echtheit'])"/></forgery>
+            <forgery><xsl:value-of select="boolean(/tei:TEI/tei:text/tei:front/tei:note[@type='echtheit']/@n = 'forgery')"/></forgery>
             <!-- A tag for each formulaic part -->
             <xsl:for-each select="distinct-values(//tei:seg/@function)">
                 <xsl:element name="part">

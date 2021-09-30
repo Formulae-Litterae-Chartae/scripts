@@ -25,6 +25,8 @@ for k, v in lex_dict.items():
 
 
 def test_text(lemmas, orig):
+    if len(lemmas) != len(orig):
+        return '\n{}\n{}'.format(' '.join([n.split('\t')[0] for n in lemmas]).lower(), ' '.join([''.join(x.xpath('.//text()')) for x in orig]).lower())
     not_found = []
     for i, word in enumerate(lemmas):
         inflected, lemma, display_lem = word.split('\t')[:3]
@@ -42,23 +44,26 @@ def test_text(lemmas, orig):
         if i > 0:
             prev_lem = lemmas[i-1].split('\t')[1]
         tried = []
-        try:
-            while inflected.lower().replace('v', 'u') != re.sub(r'[{}«»„“‚‘’”\[\]]'.format(punctuation), '', ''.join(orig[i].xpath('.//text()', namespaces=ns)).lower().replace('v', 'u')):
-                try:
-                    tried.append(re.sub(r'[{}«»„“‚‘’”\[\]]'.format(punctuation), '', ''.join(orig[i].xpath('.//text()', namespaces=ns)).lower().replace('v', 'u')))
-                    i += 1
-                    if i == len(orig):
-                        not_found.append((inflected, tried))
-                        continue
-                except IndexError:
-                    not_found.append((inflected, tried))
-                    continue
-        except IndexError as E:
-            print(i, inflected, lemma, len(orig), E)
+        if inflected.lower().replace('v', 'u') != re.sub(r'[{}«»„“‚‘’”\[\]]'.format(punctuation), '', ''.join(orig[i].xpath('.//text()', namespaces=ns)).lower().replace('v', 'u')):
+            not_found.append((inflected, tried))
             continue
-        except AttributeError as E:
-            print(prev_lem, next_lem, inflected, lemma, len(orig), E)
-            continue
+        #try:
+            #while inflected.lower().replace('v', 'u') != re.sub(r'[{}«»„“‚‘’”\[\]]'.format(punctuation), '', ''.join(orig[i].xpath('.//text()', namespaces=ns)).lower().replace('v', 'u')):
+                #try:
+                    #tried.append(re.sub(r'[{}«»„“‚‘’”\[\]]'.format(punctuation), '', ''.join(orig[i].xpath('.//text()', namespaces=ns)).lower().replace('v', 'u')))
+                    #i += 1
+                    #if i == len(orig):
+                        #not_found.append((inflected, tried))
+                        #continue
+                #except IndexError:
+                    #not_found.append((inflected, tried))
+                    #continue
+        #except IndexError as E:
+            #print(i, inflected, lemma, len(orig), E)
+            #continue
+        #except AttributeError as E:
+            #print(prev_lem, next_lem, inflected, lemma, len(orig), E)
+            #continue
         orig[i].set('lemma', lemma.lower())
         orig[i].set('n', display_lem)
         for lem in lemma.split('/'):
@@ -108,7 +113,7 @@ for xml_file in sorted(xmls):
         except FileNotFoundError:
             print(xml_file, lem_file)
             continue
-        not_found = test_text(lems, xml.xpath('//tei:w', namespaces=ns))
+        not_found = test_text(lems, xml.xpath('//tei:w[not(@type="no-search")]', namespaces=ns))
         if not_found:
             print(xml_file, not_found)
         elif xml.xpath('//tei:w[not(@lemma) and not(@type="no-search")]', namespaces=ns):

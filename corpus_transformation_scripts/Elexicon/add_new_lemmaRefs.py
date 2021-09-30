@@ -8,8 +8,8 @@ home_dir = environ.get('HOME', '')
 corpus_folder = sys.argv[1] if len(sys.argv) > 1 else home_dir + '/formulae-corpora/'
 scripts_folder = sys.argv[2] if len(sys.argv) > 2 else home_dir + '/scripts/'
 
-latins = [x for x in glob(corpus_folder + 'data/**/*lat*.xml', recursive=True) if re.search('marculf|andecavensis', x)]
-germans = [x for x in glob(corpus_folder + 'data/**/*deu*.xml', recursive=True) if re.search('marculf|andecavensis', x)]
+latins = [x for x in glob(corpus_folder + 'data/**/*lat*.xml', recursive=True) if re.search('marculf|andecavensis|auvergne', x)]
+germans = [x for x in glob(corpus_folder + 'data/**/*deu*.xml', recursive=True) if re.search('marculf|andecavensis|auvergne', x)]
 elexes = [x for x in glob(corpus_folder + 'data/elexicon/*/*.xml') if '__capitains__' not in x]
 lex_xml = etree.parse(scripts_folder + 'corpus_transformation_scripts/Elexicon/Begriffe_eLexikon.xml')
 
@@ -51,9 +51,6 @@ for l in latins:
         next_lem = words[i + 1].get('lemma') if len(words) > i + 1 else '' 
         prev_lem = words[i - 1].get('lemma') if i - 1 >= 0 else '' 
         if lemma in lex_dict.keys(): 
-            if lemma == 'notitia': 
-                print(l) 
-            print(prev_lem, lemma, next_lem) 
             if set_lemmaRef(w_tag, lemma, next_lem, prev_lem) is False: 
                 w_tag.set('lemmaRef', lex_dict[lemma]) 
         else: 
