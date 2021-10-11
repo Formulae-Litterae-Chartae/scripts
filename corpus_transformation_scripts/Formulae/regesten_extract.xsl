@@ -9,7 +9,7 @@
     
     <xsl:template match="/">
         <xml><xsl:for-each select="/tei:TEI/tei:text/tei:body/tei:table/tei:row">
-            <regest><xsl:attribute name="docId">urn:cts:formulae:andecavensis.form<xsl:number value="normalize-space(child::tei:cell[1]/.)" format="001"/></xsl:attribute>
+            <regest><xsl:attribute name="docId"><xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/><xsl:number value="normalize-space(child::tei:cell[1]/.)" format="001"/></xsl:attribute>
             <shortDesc><xsl:value-of select="normalize-space(child::tei:cell[2]/.)"/></shortDesc>
             <longDesc><xsl:value-of select="normalize-space(child::tei:cell[3]/.)"/></longDesc></regest>
         </xsl:for-each></xml>

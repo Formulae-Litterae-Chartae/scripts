@@ -14,7 +14,7 @@ corpus_name = sys.argv[2] or 'andecavensis' # Used to build the folder structure
 destination_folder = getcwd() # The base folder where the corpus folder structure should be built
 latins = glob(destination_folder + '/Latin/*.xml')
 germans = glob(destination_folder + '/Deutsch/*.xml')
-transcriptions = [] #glob(destination_folder + '/Transkripte/**/*.xml', recursive=True)
+transcriptions = glob(destination_folder + '/Transkripte/**/*.xml', recursive=True)
 temp_files = []
 
 def remove_space_before_note(filename):
@@ -30,6 +30,7 @@ def remove_tei_dtd_reference(filename):
     text = text.replace('<!DOCTYPE TEI PUBLIC "-//TEI//DTD TEI P5//EN" "tei.dtd" >', '')
     # Correct the TEI namespace URL
     text = text.replace('https://www.tei-c.org/ns/1.0', 'http://www.tei-c.org/ns/1.0')
+    text = text.replace('<title/>', '<title>{}</title>'.format(filename.split('/')[-1]))
     with open(filename, mode="w") as f:
         f.write(text)
 
@@ -43,8 +44,8 @@ for german in germans:
             form_num = '2_capitula'
         new_name = '{base_folder}/data/{corpus}/{form}/{corpus}.{form}.deu001.xml'.format(base_folder=destination_folder, corpus=corpus_name, form=form_num)
     else:
-        form_num = "{:03}".format(int(german.replace('.xml', '').split(' ')[1].split('.')[-1]))
-        if 'ii.' in german:
+        form_num = "{:03}".format(int(german.replace('.xml', '').split(' ')[1].split(',')[-1]))
+        if 'II,' in german:
             form_num = '2_' + form_num
         new_name = '{base_folder}/data/{corpus}/form{entry}/{corpus}.form{entry}.deu001.xml'.format(base_folder=destination_folder, corpus=corpus_name, entry=form_num)
     subprocess.run(['java', '-jar',  saxon_location, '{}'.format(german), text_transformation_xslt])
@@ -63,7 +64,11 @@ for transcription in sorted(transcriptions):
         if 'II,' in transcription:
             form_num = '2_' + form_num
         form_num = 'form' + form_num
-    manuscript = re.search(r'\((\w+)\)\Z', transcription.replace('.xml', '')).group(1).lower()
+    try:
+        manuscript = re.search(r'\((\w+)\)\Z', transcription.replace('.xml', '')).group(1).lower()
+    except:
+        print(transcription)
+        raise(AttributeError)
     transcript_folders = glob('{base_folder}/data/{manuscript}/*'.format(base_folder=destination_folder, manuscript=manuscript))
     subprocess.run(['java', '-jar',  saxon_location, '{}'.format(transcription), text_transformation_xslt])
     new_file = glob(destination_folder + '/temp/*.xml')[0]
