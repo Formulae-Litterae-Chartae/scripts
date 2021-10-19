@@ -47,9 +47,9 @@
                 </xsl:element>
                 <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="type">folia</xsl:attribute>
-                    <xsl:value-of select="normalize-space(translate(string-join($folia[1], ' '), '[]', ''))"/>
+                    <xsl:value-of select="normalize-space(translate(substring-before(string-join($folia[1], ' '), ']'), '[]', ''))"/>
                     <xsl:if test="count($folia) > 1">
-                        <xsl:text>-</xsl:text><xsl:value-of select="normalize-space(translate(string-join($folia[last()], ' '), '[]', ''))"/>
+                        <xsl:text>-</xsl:text><xsl:value-of select="normalize-space(translate(substring-before(string-join($folia[last()], ' '), ']'), '[]', ''))"/>
                     </xsl:if>
                 </xsl:element>
                 <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
@@ -70,7 +70,7 @@
                     </xsl:if>
                 </xsl:element>
             </xsl:when>
-            <xsl:when test="contains($tempTitle, 'Deutsch')">
+            <xsl:when test="matches($tempTitle, 'Deutsch|Übersetzung')">
                 <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="type">form-name</xsl:attribute>
                     <xsl:choose>
@@ -109,7 +109,7 @@
                 <xsl:text>computus</xsl:text>
             </xsl:when>
             <xsl:when test="contains($formTitle, 'Capitula')">
-                <xsl:if test="contains($formTitle/tei:ref[@type='form-name'], 'II')"><xsl:text>2_</xsl:text></xsl:if><xsl:text>capitula</xsl:text>
+                <xsl:choose><xsl:when test="contains($formTitle/tei:ref[@type='form-name'], 'II')"><xsl:text>2_</xsl:text></xsl:when><xsl:otherwise><xsl:text>1_</xsl:text></xsl:otherwise></xsl:choose><xsl:text>capitula</xsl:text>
             </xsl:when>
             <xsl:when test="matches(lower-case($formTitle/tei:ref[@type='form-name']), 'marculf|markulf')">
                 <xsl:choose>

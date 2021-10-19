@@ -83,5 +83,5 @@ with open(dest_file_3, mode="w") as f:
     dump(sorted(all_lems), f, ensure_ascii=False, sort_keys=True, indent='\t')
 
 for form, mapping in inflected_to_primary_lem.items():
-    with open(os.path.join(result_dir, form + '.txt'), mode="w") as f:
+    with open(os.path.join(result_dir, form.replace('.txt', '') + '.txt'), mode="w") as f:
         f.write('\n'.join(['{}\t{}\t{}'.format(x, y, z) for x, y, z in mapping]))
