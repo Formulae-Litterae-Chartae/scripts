@@ -52,6 +52,23 @@
                         <xsl:text>-</xsl:text><xsl:value-of select="normalize-space(translate(substring-before(string-join($folia[last()], ' '), ']'), '[]', ''))"/>
                     </xsl:if>
                 </xsl:element>
+                <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
+                    <xsl:variable name="firstFolio"><xsl:value-of select="normalize-space(translate(string-join($folia[1], ' '), '[]', ''))"/></xsl:variable>
+                    <xsl:variable name="lastFolio"><xsl:value-of select="normalize-space(translate(string-join($folia[last()], ' '), '[]', ''))"/></xsl:variable>
+                    <xsl:attribute name="type">markedUpFolia</xsl:attribute>
+                    <xsl:text>fol.</xsl:text>
+                    <xsl:value-of select="replace($firstFolio, '\D+(\d+)([rvab]+)', '$1')"/>
+                    <xsl:text>&lt;span class="verso-recto"&gt;</xsl:text>
+                    <xsl:value-of select="replace($firstFolio, '\D+(\d+)([rvab]+)', '$2')"/>
+                    <xsl:text>&lt;/span&gt;</xsl:text>
+                    <xsl:if test="count($folia) > 1">
+                        <xsl:text>-</xsl:text>
+                        <xsl:value-of select="replace($lastFolio, '\D+(\d+)([rvab]+)', '$1')"/>
+                        <xsl:text>&lt;span class="verso-recto"&gt;</xsl:text>
+                        <xsl:value-of select="replace($lastFolio, '\D+(\d+)([rvab]+)', '$2')"/>
+                        <xsl:text>&lt;/span&gt;</xsl:text>
+                    </xsl:if>
+                </xsl:element>
             </xsl:when>
             <xsl:when test="matches($tempTitle, 'Deutsch|Übersetzung')">
                 <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
@@ -181,7 +198,7 @@
                                     <xsl:value-of select="$formTitle/tei:ref[@type='manuscript-desc']"/>
                                     <xsl:text> </xsl:text>
                                     <xsl:text>[</xsl:text>
-                                    <xsl:value-of select="$formTitle/tei:ref[@type='folia']"/>
+                                    <xsl:value-of select="$formTitle/tei:ref[@type='markedUpFolia']"/>
                                     <xsl:text>]</xsl:text>
                                 </xsl:element>
                             </xsl:when>
@@ -197,7 +214,7 @@
                     <xsl:element name="editionStmt" namespace="http://www.tei-c.org/ns/1.0">
                         <xsl:choose>
                             <xsl:when test="$formTitle/tei:ref[@type='manuscript-desc']">
-                                <xsl:element name="edition" namespace="http://www.tei-c.org/ns/1.0">Digitale Transkription von <xsl:value-of select="$formTitle/tei:ref[@type='manuscript-desc']"/> [<xsl:value-of select="$formTitle/tei:ref[@type='folia']"/>]</xsl:element>
+                                <xsl:element name="edition" namespace="http://www.tei-c.org/ns/1.0">Digitale Transkription von <xsl:value-of select="$formTitle/tei:ref[@type='manuscript-desc']"/> [<xsl:value-of select="$formTitle/tei:ref[@type='markedUpFolia']"/>]</xsl:element>
                             </xsl:when>
                             <xsl:when test="$manuscript = 'lat001'">
                                 <xsl:element name="edition" namespace="http://www.tei-c.org/ns/1.0">Digitale Edition von <xsl:value-of select="$formTitle/tei:ref[@type='form-name']"/></xsl:element>

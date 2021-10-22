@@ -12,7 +12,7 @@ import re
 
 # to rstrip any punctuation that is not a closing square bracket
 punct = punctuation.replace(']', '')
-baseline_sigla = 'Ko2'
+baseline_sigla = 'P12'
 
 # This is the function to produce the lines in the CSV file 
 def make_lines(json):
