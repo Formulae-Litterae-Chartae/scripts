@@ -9,7 +9,7 @@ import sys
 basedir = os.path.abspath(os.path.dirname(__file__))
 corpus_dir = sys.argv[1] if len(sys.argv) > 1 else '/home/matt/formulae-corpora/'
 
-forms = sorted([x for x in glob(corpus_dir + 'data/**/*.xml', recursive=True) if re.search(r'marculf|andecavensis|auvergne', x) and '__capitains__' not in x])
+forms = sorted([x for x in glob(corpus_dir + 'data/**/*.xml', recursive=True) if '__capitains__' not in x])
 ns = {'tei': 'http://www.tei-c.org/ns/1.0'}
 mapping = defaultdict(dict)
 print(corpus_dir)
