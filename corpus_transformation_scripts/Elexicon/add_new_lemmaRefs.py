@@ -8,8 +8,8 @@ home_dir = environ.get('HOME', '')
 corpus_folder = sys.argv[1] if len(sys.argv) > 1 else home_dir + '/formulae-corpora/'
 scripts_folder = sys.argv[2] if len(sys.argv) > 2 else home_dir + '/scripts/'
 
-latins = [x for x in glob(corpus_folder + 'data/**/*lat*.xml', recursive=True) if re.search('marculf|andecavensis|auvergne', x)]
-germans = [x for x in glob(corpus_folder + 'data/**/*deu*.xml', recursive=True) if re.search('marculf|andecavensis|auvergne', x)]
+latins = [x for x in glob(corpus_folder + 'data/**/*lat*.xml', recursive=True) if 'elexicon' not in x]
+germans = [x for x in glob(corpus_folder + 'data/**/*deu*.xml', recursive=True) if 'elexicon' not in x]
 elexes = [x for x in glob(corpus_folder + 'data/elexicon/*/*.xml') if '__capitains__' not in x]
 lex_xml = etree.parse(scripts_folder + 'corpus_transformation_scripts/Elexicon/Begriffe_eLexikon.xml')
 

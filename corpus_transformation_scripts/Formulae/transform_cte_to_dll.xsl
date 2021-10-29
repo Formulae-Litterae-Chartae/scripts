@@ -459,11 +459,26 @@
     
     <!-- Replace all <hi> elements with <seg> and transfer the @rendition attribute to @type -->
     <xsl:template match="tei:hi">
+        <xsl:param name="punct">[„“"'’]</xsl:param>
         <xsl:variable name="rends" select="string-join((@style, @rendition, @rend), ' ')"/>
         <xsl:choose>
             <!--<xsl:when test="child::*[1] = tei:note">
                 <xsl:apply-templates/>
             </xsl:when>-->
+            <xsl:when test="@rend = 'Book_Title'">
+                <xsl:element name="bibl" namespace="http://www.tei-c.org/ns/1.0">
+                    <xsl:attribute name="n">
+                        <xsl:call-template name="buildNValue">
+                            <xsl:with-param name="xmlNodes">
+                                <xsl:call-template name="buildBibEntry">
+                                    <xsl:with-param name="entry" select="document($biblFile)/tei:TEI/tei:text/tei:body/tei:listBibl/tei:biblStruct[*/tei:title[@type='short']/replace(normalize-space(text()), $punct, '') = replace(normalize-space(string-join(current()//text(), '')), $punct, '')]"/>
+                                </xsl:call-template>
+                            </xsl:with-param>
+                        </xsl:call-template>
+                    </xsl:attribute>
+                    <xsl:apply-templates/>
+                </xsl:element>
+            </xsl:when>
             <xsl:when test="not(parent::tei:locus) and (contains($rends, 'font-style:italic;') or contains($rends, 'bold') or contains($rends, 'font-variant:small-caps;') or contains($rends, 'vertical-align:super;') or contains($rends, 'vertical-align:sub;') or contains($rends, 'text-decoration:line-through;'))">
                 <xsl:element name="seg" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="type">
