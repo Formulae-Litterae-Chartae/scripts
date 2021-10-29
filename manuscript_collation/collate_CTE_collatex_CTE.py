@@ -9,10 +9,10 @@ import os
 import json
 from string import punctuation
 import re
+import argparse
 
 # to rstrip any punctuation that is not a closing square bracket
 punct = punctuation.replace(']', '')
-baseline_sigla = 'P12'
 
 # This is the function to produce the lines in the CSV file 
 def make_lines(json):
@@ -34,11 +34,11 @@ def make_lower(word):
     else:
         return word.lower()
 
-def collate_to_csv(formula, hauptquellen=''):
+def collate_to_csv(formula, work_folder, baseline_sigla, collatex_location, hauptquellen=''):
     # create collatex json input file 
-    txt_inputs = glob('/home/matt/results/collation/marculf/txt_from_XML/{}{}_*_input.txt'.format(hauptquellen + '/' if hauptquellen else '', formula))
+    txt_inputs = glob(os.path.join(work_folder, 'txt_from_XML', hauptquellen, '{}_*_input.txt'.format(formula)))
     print(txt_inputs)
-    json_input_filename = '/home/matt/results/collation/marculf/collatex_json_input/{}{}_input.json'.format(formula, '_' + hauptquellen if hauptquellen else '')
+    json_input_filename = os.path.join(work_folder, 'collatex_json_input', '{}{}_input.json'.format(formula, '_' + hauptquellen if hauptquellen else ''))
 
     wits = []
     for i in sorted(txt_inputs):
@@ -53,8 +53,8 @@ def collate_to_csv(formula, hauptquellen=''):
         json.dump({'witnesses': wits}, f)
 
     # Run collatex on json input file 
-    json_output_filename = '/home/matt/results/collation/marculf/collatex_output/' + os.path.basename(json_input_filename).replace('_input', '_output')
-    os.system('java -jar /home/matt/Downloads/collateX/collatex-tools-1.7.1.jar -f json -t -o {} {}'.format(json_output_filename, json_input_filename))
+    json_output_filename = os.path.join(work_folder, 'collatex_output', os.path.basename(json_input_filename).replace('_input', '_output'))
+    os.system('java -jar {collatex} -f json -t -o {output} {input}'.format(collatex=collatex_location, output=json_output_filename, input=json_input_filename))
 
     # Produce the CSV file with the results 
     csv_output_filename = json_output_filename.replace('.json', '.csv')
@@ -65,12 +65,12 @@ def collate_to_csv(formula, hauptquellen=''):
     return base_text, json_output_filename
 
     
-def produce_cte_xml(base_text, json_output_filename):
+def produce_cte_xml(base_text, json_output_filename, script_dir, baseline_sigla):
     # Produce the XML input files for CTE 
     with open(json_output_filename) as f:                  
         output = json.load(f)
 
-    with open('/home/matt/results/collation/marculf/Markulf_1_output_transformed.xml') as f:
+    with open(os.path.join(script_dir, 'CTE_XML_stub.xml')) as f:
         xml_output = f.read()
 
     note_num = 1
@@ -116,8 +116,21 @@ def produce_cte_xml(base_text, json_output_filename):
     with open(json_output_filename.replace('.json', '_finished.xml'), mode="w") as f:
         f.write(xml_output)
         
-def run_process(formula, with_hauptquellen=True):
-    base_text, json_output_filename = collate_to_csv(formula)
-    produce_cte_xml(base_text, json_output_filename)
+def run_process(formula, baseline, folder, collatex, script_dir, with_hauptquellen=True):
+    base_text, json_output_filename = collate_to_csv(formula=formula, work_folder=folder, hauptquellen='', baseline_sigla=baseline, collatex_location=collatex)
+    produce_cte_xml(base_text=base_text, json_output_filename=json_output_filename, script_dir=script_dir, baseline_sigla=baseline)
     if with_hauptquellen:
-        collate_to_csv(formula, hauptquellen='hauptquellen')
+        collate_to_csv(formula=formula, work_folder=folder, hauptquellen='hauptquellen', baseline_sigla=baseline, collatex_location=collatex)
+        
+if __name__ == "__main__":
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    parser = argparse.ArgumentParser(prog="collate_CTE_collatex_CTE.py")
+    parser.add_argument('--prefix', help="The filename prefix for the .txt input files. For example, to collate the files 'marculf_2_P12_input.txt' and 'marculf_2_P16_input.txt' together, the prefix would be 'marculf_2'.")
+    parser.add_argument('--baseline', help="The siglum of the manuscript to use as the baseline text for the resulting CTE XML file.")
+    parser.add_argument('--folder', help="The folder that contains the 'txt_from_XML', the 'collatex_json_input' and the 'collatex_output' folders.")
+    parser.add_argument('--collatex', help="The complete path to your collatex .jar file")
+    parser.add_argument('--primaries', help="Add the --primaries flag if you have primary manuscript collations in the 'txt_from_XML/hauptquellen' folder that should be collated together separately. This will produce a separate .csv file that contains only these primary manuscripts.", action="store_true")
+    input_args = vars(parser.parse_args())
+    run_process(formula=input_args['prefix'], baseline=input_args['baseline'], folder=input_args['folder'], collatex=input_args['collatex'], with_hauptquellen=input_args['primaries'], script_dir=script_dir)
+    
+    
