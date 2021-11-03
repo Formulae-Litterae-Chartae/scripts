@@ -14,7 +14,7 @@ python ~/scripts/corpus_transformation_scripts/Elexicon/transform_elex_to_dll.py
 
 Then run the following script to check the bibliographical short titles:
 
-python /home/matt/scripts/corpus_transformation_scripts/check_short_entries.py <FORMULAE CORPUS FOLDER>
+python /home/matt/scripts/corpus_transformation_scripts/check_short_entries.py <FORMULAE CORPUS FOLDER> <PATH TO SAXON JAR>
 
 Then run the following to add new lemmaRef attributes to the appropriate words:
 
