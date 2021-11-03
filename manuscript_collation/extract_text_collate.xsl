@@ -14,7 +14,7 @@
     <xsl:template match="/">
         <xsl:variable name="theText">
             <xsl:call-template name="extractText">
-                <xsl:with-param name="text" select="/tei:TEI/tei:text/tei:body/tei:p"/>
+                <xsl:with-param name="text" select="/tei:TEI/tei:text/tei:body//tei:p"/>
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="theLems">
