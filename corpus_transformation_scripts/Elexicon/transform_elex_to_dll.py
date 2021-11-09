@@ -14,9 +14,17 @@ saxon_path = str(sys.argv[2]) if len(sys.argv) > 2 else os.path.join(home_dir, '
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 lexes = glob('/home/matt/results/oxgarage_results/elex/*.xml')
+elex_translations = dict()
 with open(os.path.join(basedir, 'formulae_elexicon_mapping.json')) as f:
     form_elex_mapping = load(f)
-ns = {"ti": "http://chs.harvard.edu/xmlns/cts", "dct": "http://purl.org/dc/terms/", "dc": "http://purl.org/dc/elements/1.1/", "cpt": "http://purl.org/capitains/ns/1.0#", "owl": "http://www.w3.org/2002/07/owl#", "bib": "http://bibliotek-o.org/1.0/ontology/", "cts": "http://chs.harvard.edu/xmlns/cts", "foaf": "http://xmlns.com/foaf/0.1/", "tei": "http://www.tei-c.org/ns/1.0"}
+with open(os.path.join(basedir, 'elex_translations.csv')) as f:
+    lines = f.readlines()
+    for line in lines:
+        if line.strip():
+            k, v = line.split('\t')
+            elex_translations[k.strip()] = v.strip()
+ns = {"ti": "http://chs.harvard.edu/xmlns/cts", "dct": "http://purl.org/dc/terms/", "dc": "http://purl.org/dc/elements/1.1/", "cpt": "http://purl.org/capitains/ns/1.0#", "owl": "http://www.w3.org/2002/07/owl#", "bib": "http://bibliotek-o.org/1.0/ontology/", "cts": "http://chs.harvard.edu/xmlns/cts", "foaf": "http://xmlns.com/foaf/0.1/"}
+tei_ns = {"tei": "http://www.tei-c.org/ns/1.0"}
 E = ElementMaker(namespace=ns['dct'] , nsmap=ns)
 
 def remove_space_before_note(filename):
@@ -35,6 +43,7 @@ def add_inRefs_to_cts(filename):
         md = readable.xpath('cpt:structured-metadata', namespaces=ns)[0]
         for ref, cit in form_elex_mapping[key].items():
             md.append(E.isReferencedBy('%' + ref + '%' + '%'.join(cit)))
+        md.append(E.alternative(elex_translations[key]))
     xml.write(filename, encoding='utf-8', pretty_print=True)
 
 for lex in lexes:
@@ -45,7 +54,7 @@ for lex in lexes:
         new_name = dest + '/data/elexicon/{entry}/elexicon.{entry}.deu001.xml'.format(entry=entry_name)
         subprocess.run(['java', '-jar',  saxon_path, '{}'.format(lex), os.path.join(basedir, 'transform_elex_to_dll.xsl'), '-o:{}'.format(new_name)])
         xml = etree.parse(new_name)
-        for d in xml.xpath('/tei:TEI/tei:text/tei:body/tei:div', namespaces=ns):
+        for d in xml.xpath('/tei:TEI/tei:text/tei:body/tei:div', namespaces=tei_ns):
             d.set('n', 'urn:cts:formulae:elexicon.{entry_name}.deu001'.format(entry_name=entry_name))
         xml.write(new_name, encoding='utf-8', pretty_print=True)
         subprocess.run(['java', '-jar',  saxon_path, '{}'.format(new_name), os.path.join(basedir, 'create_capitains_files_elex.xsl'), '-o:{dest}/data/elexicon/{entry}/__capitains__.xml'.format(dest=dest, entry=entry_name)])
