@@ -9,7 +9,7 @@ import re
 bib_source = sys.argv[1] if len(sys.argv) > 1 else '/home/matt/results/Bibliographie_E-Lexikon.bib'
 
 with open(bib_source) as f:
-    parser = BibTexParser()
+    parser = BibTexParser(common_strings=True)
     parser.customization = convert_to_unicode
     bib_database = bibtexparser.load(f, parser=parser)
 
@@ -156,7 +156,10 @@ for e in sorted(bib_database.entries, key=author_year_sort):
             analytic.append(a)
         analytic.append(title)
         analytic.append(kurztitel)
-        monogr = E.monogr(E.title(e['journal'].replace(r'\textquotedbl', '"'), {'level': 'j'}), imprint, volume, pages)
+        try:
+            monogr = E.monogr(E.title(e['journal'].replace(r'\textquotedbl', '"'), {'level': 'j'}), imprint, volume, pages)
+        except:
+            print(e)
         entry = E.biblStruct(analytic, monogr, url, {'type': e['ENTRYTYPE']})
     elif e['ENTRYTYPE'] == 'misc':
         analytic = E.analytic() #author, title)
