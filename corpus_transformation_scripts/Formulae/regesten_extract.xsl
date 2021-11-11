@@ -9,9 +9,19 @@
     
     <xsl:template match="/">
         <xml><xsl:for-each select="/tei:TEI/tei:text/tei:body/tei:table/tei:row">
-            <regest><xsl:attribute name="docId"><xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/><xsl:number value="normalize-space(child::tei:cell[1]/.)" format="001"/></xsl:attribute>
-            <shortDesc><xsl:value-of select="normalize-space(child::tei:cell[2]/.)"/></shortDesc>
-            <longDesc><xsl:value-of select="normalize-space(child::tei:cell[3]/.)"/></longDesc></regest>
+            <regest>
+                <xsl:attribute name="docId">
+                    <xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>
+                    <xsl:choose>
+                        <xsl:when test="contains(child::tei:cell[1]/., ',')">
+                            <xsl:value-of select="replace(child::tei:cell[1]/., '.*(\d),.*', '$1')"/><xsl:text>_</xsl:text><xsl:number value="replace(child::tei:cell[1]/., '.*,(\d).*', '$1')" format="001"/>
+                        </xsl:when>
+                        <xsl:otherwise><xsl:number value="normalize-space(child::tei:cell[1]/.)" format="001"/></xsl:otherwise>
+                    </xsl:choose>
+                </xsl:attribute>
+                <shortDesc><xsl:value-of select="normalize-space(child::tei:cell[2]/.)"/></shortDesc>
+                <longDesc><xsl:value-of select="normalize-space(child::tei:cell[3]/.)"/></longDesc>
+            </regest>
         </xsl:for-each></xml>
     </xsl:template>
     

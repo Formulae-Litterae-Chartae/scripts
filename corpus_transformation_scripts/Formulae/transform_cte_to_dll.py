@@ -12,9 +12,9 @@ metadata_transformation_xslt = home_dir + '/scripts/corpus_transformation_script
 collection_metadata_xslt = home_dir + '/scripts/corpus_transformation_scripts/Formulae/create_collection_capitains_files.xsl'
 corpus_name = sys.argv[2] or 'andecavensis' # Used to build the folder structure
 destination_folder = getcwd() # The base folder where the corpus folder structure should be built
-latins = [] #glob(destination_folder + '/Latin/*.xml')
+latins = glob(destination_folder + '/Latin/*.xml')
 germans = glob(destination_folder + '/Deutsch/*.xml')
-transcriptions = [] #glob(destination_folder + '/Transkripte/**/*.xml', recursive=True)
+transcriptions = glob(destination_folder + '/Transkripte/**/*.xml', recursive=True)
 temp_files = []
 
 def remove_space_before_note(filename):
@@ -35,6 +35,7 @@ def remove_tei_dtd_reference(filename):
         f.write(text)
 
 for german in germans:
+    print(german)
     remove_tei_dtd_reference(german)
     if 'Weltzeitalter' in german:
         new_name = '{base_folder}/data/{corpus}/computus/{corpus}.computus.deu001.xml'.format(base_folder=destination_folder, corpus=corpus_name)
@@ -43,15 +44,34 @@ for german in germans:
         if 'II' in german:
             form_num = '2_capitula'
         new_name = '{base_folder}/data/{corpus}/{form}/{corpus}.{form}.deu001.xml'.format(base_folder=destination_folder, corpus=corpus_name, form=form_num)
+    elif 'Incipit' in german:
+        form_num = '1_incipit'
+        if 'II' in german:
+            form_num = '2_incipit'
+        new_name = '{base_folder}/data/{corpus}/{form}/{corpus}.{form}.deu001.xml'.format(base_folder=destination_folder, corpus=corpus_name, form=form_num)
+    elif 'Praefatio' in german:
+        form_num = 'form000'
+        new_name = '{base_folder}/data/{corpus}/{form}/{corpus}.{form}.deu001.xml'.format(base_folder=destination_folder, corpus=corpus_name, form=form_num)
+    elif 'Ergänzungen' in german:
+        form_num = 'form3_'
+        if ',' in german:
+            form_num = form_num + re.sub(r'.*(\d),(\d).*', r'\1', german)
+            form_num = form_num + '_{:03}'.format(int(re.sub(r'.*(\d),(\d).*', r'\2', german)))
+        else:
+            form_num = 'form3_2_001'
+        new_name = '{base_folder}/data/{corpus}/{form}/{corpus}.{form}.deu001.xml'.format(base_folder=destination_folder, corpus=corpus_name, form=form_num)
     else:
         form_num = "{:03}".format(int(german.replace('.xml', '').split(' ')[1].split(',')[-1]))
         if 'II,' in german:
             form_num = '2_' + form_num
+        elif 'I,' in german:
+            form_num = '1_' + form_num
         new_name = '{base_folder}/data/{corpus}/form{entry}/{corpus}.form{entry}.deu001.xml'.format(base_folder=destination_folder, corpus=corpus_name, entry=form_num)
     subprocess.run(['java', '-jar',  saxon_location, '{}'.format(german), text_transformation_xslt])
     remove_space_before_note(new_name)
     
 for transcription in sorted(transcriptions):
+    print(transcription)
     remove_tei_dtd_reference(transcription)
     if 'Weltzeitalter' in transcription:
         form_num = 'computus'
@@ -59,6 +79,19 @@ for transcription in sorted(transcriptions):
         form_num = '1_capitula'
         if 'II' in transcription:
             form_num = '2_capitula'
+    elif 'Incipit' in transcription:
+        form_num = '1_incipit'
+        if 'II' in transcription:
+            form_num = '2_incipit'
+        new_name = '{base_folder}/data/{corpus}/{form}/{corpus}.{form}.deu001.xml'.format(base_folder=destination_folder, corpus=corpus_name, form=form_num)
+    elif 'Praefatio' in transcription:
+        form_num = 'form000'
+        new_name = '{base_folder}/data/{corpus}/{form}/{corpus}.{form}.deu001.xml'.format(base_folder=destination_folder, corpus=corpus_name, form=form_num)
+    elif 'Ergänzungen' in transcription:
+        form_num = 'form3_'
+        if ',' in transcription:
+            form_num = form_num + re.sub(r'.*(\d),(\d).*', r'\1', transcription) + '_{:03}'.format(int(re.sub(r'.*(\d),(\d).*', r'\2',  transcription)))
+        new_name = '{base_folder}/data/{corpus}/{form}/{corpus}.{form}.deu001.xml'.format(base_folder=destination_folder, corpus=corpus_name, form=form_num)
     else:
         form_num = "{:03}".format(int(os.path.basename(transcription).replace('.xml', '').split(' ')[1].split(',')[-1]))
         if 'II,' in transcription:
@@ -90,6 +123,7 @@ for transcription in sorted(transcriptions):
     remove_space_before_note(new_name)
 
 for latin in latins:
+    print(latin)
     remove_tei_dtd_reference(latin)
     if 'Weltzeitalter' in latin:
         form_num = "computus"
@@ -97,10 +131,27 @@ for latin in latins:
         form_num = '1_capitula'
         if 'II' in latin:
             form_num = '2_capitula'
+    elif 'Incipit' in latin:
+        form_num = '1_incipit'
+        if 'II' in latin:
+            form_num = '2_incipit'
+        new_name = '{base_folder}/data/{corpus}/{form}/{corpus}.{form}.deu001.xml'.format(base_folder=destination_folder, corpus=corpus_name, form=form_num)
+    elif 'Praefatio' in latin:
+        form_num = 'form000'
+        new_name = '{base_folder}/data/{corpus}/{form}/{corpus}.{form}.deu001.xml'.format(base_folder=destination_folder, corpus=corpus_name, form=form_num)
+    elif 'Ergänzungen' in latin:
+        form_num = 'form3_'
+        if ',' in latin:
+            form_num = form_num + re.sub(r'.*(\d),(\d).*', r'\1', latin) + '_{:03}'.format(int(re.sub(r'.*(\d),(\d).*', r'\2', latin)))
+        else:
+            form_num = 'form3_2_001'
+        new_name = '{base_folder}/data/{corpus}/{form}/{corpus}.{form}.deu001.xml'.format(base_folder=destination_folder, corpus=corpus_name, form=form_num)    
     else:
         form_num = "{:03}".format(int(latin.replace('.xml', '').split(' ')[1].split(',')[-1]))
         if 'II,' in latin:
             form_num = '2_' + form_num
+        elif 'I,' in latin:
+            form_num = '1_' + form_num
         form_num = 'form' + form_num
     new_name = '{base_folder}/data/{corpus}/{entry}/{corpus}.{entry}.lat001.xml'.format(base_folder=destination_folder, corpus=corpus_name, entry=form_num)
     subprocess.run(['java', '-jar',  saxon_location, '{}'.format(latin), text_transformation_xslt])
