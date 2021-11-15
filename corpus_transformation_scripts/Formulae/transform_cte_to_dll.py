@@ -52,16 +52,20 @@ for german in germans:
     elif 'Praefatio' in german:
         form_num = 'form000'
         new_name = '{base_folder}/data/{corpus}/{form}/{corpus}.{form}.deu001.xml'.format(base_folder=destination_folder, corpus=corpus_name, form=form_num)
-    elif 'Ergänzungen' in german:
-        form_num = 'form3_'
-        if ',' in german:
-            form_num = form_num + re.sub(r'.*(\d),(\d).*', r'\1', german)
-            form_num = form_num + '_{:03}'.format(int(re.sub(r'.*(\d),(\d).*', r'\2', german)))
+    elif 'Ergänzung' in german:
+        if re.search(r'mar[ck]ulf', german):
+            form_num = 'form3_'
+            if ',' in german:
+                form_num = form_num + re.sub(r'.*(\d),(\d).*', r'\1', german)
+                form_num = form_num + '_{:03}'.format(int(re.sub(r'.*(\d),(\d).*', r'\2', german)))
+            else:
+                form_num = 'form3_2_001'
         else:
-            form_num = 'form3_2_001'
+            form_num = 'form2_' + '{:03}'.format(int(re.sub(r'.*?(\d).*', r'\1', german)))
         new_name = '{base_folder}/data/{corpus}/{form}/{corpus}.{form}.deu001.xml'.format(base_folder=destination_folder, corpus=corpus_name, form=form_num)
     else:
-        form_num = "{:03}".format(int(german.replace('.xml', '').split(' ')[1].split(',')[-1]))
+        num_match = re.search(r',?([\d]+)(\w?)', german)
+        form_num = "{:03}".format(int(num_match[1])) + num_match[2]
         if 'II,' in german:
             form_num = '2_' + form_num
         elif 'I,' in german:
@@ -87,7 +91,7 @@ for transcription in sorted(transcriptions):
     elif 'Praefatio' in transcription:
         form_num = 'form000'
         new_name = '{base_folder}/data/{corpus}/{form}/{corpus}.{form}.deu001.xml'.format(base_folder=destination_folder, corpus=corpus_name, form=form_num)
-    elif 'Ergänzungen' in transcription:
+    elif 'Ergänzung' in transcription:
         form_num = 'form3_'
         if ',' in transcription:
             form_num = form_num + re.sub(r'.*(\d),(\d).*', r'\1', transcription) + '_{:03}'.format(int(re.sub(r'.*(\d),(\d).*', r'\2',  transcription)))
@@ -139,15 +143,20 @@ for latin in latins:
     elif 'Praefatio' in latin:
         form_num = 'form000'
         new_name = '{base_folder}/data/{corpus}/{form}/{corpus}.{form}.deu001.xml'.format(base_folder=destination_folder, corpus=corpus_name, form=form_num)
-    elif 'Ergänzungen' in latin:
-        form_num = 'form3_'
-        if ',' in latin:
-            form_num = form_num + re.sub(r'.*(\d),(\d).*', r'\1', latin) + '_{:03}'.format(int(re.sub(r'.*(\d),(\d).*', r'\2', latin)))
+    elif 'Ergänzung' in latin:
+        if re.search(r'mar[ck]ulf', latin):
+            form_num = 'form3_'
+            if ',' in latin:
+                form_num = form_num + re.sub(r'.*(\d),(\d).*', r'\1', latin)
+                form_num = form_num + '_{:03}'.format(int(re.sub(r'.*(\d),(\d).*', r'\2', latin)))
+            else:
+                form_num = 'form3_2_001'
         else:
-            form_num = 'form3_2_001'
+            form_num = 'form2_' + '{:03}'.format(int(re.sub(r'.*?(\d).*', r'\1', latin)))
         new_name = '{base_folder}/data/{corpus}/{form}/{corpus}.{form}.deu001.xml'.format(base_folder=destination_folder, corpus=corpus_name, form=form_num)    
     else:
-        form_num = "{:03}".format(int(latin.replace('.xml', '').split(' ')[1].split(',')[-1]))
+        num_match = re.search(r',?([\d]+)(\w?)', latin)
+        form_num = "{:03}".format(int(num_match[1])) + num_match[2]
         if 'II,' in latin:
             form_num = '2_' + form_num
         elif 'I,' in latin:

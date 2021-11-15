@@ -22,9 +22,9 @@ for form in forms:
     for i, ref in enumerate(words):
         if ref.get('lemmaRef'):
             elex = ref.get('lemmaRef')
-            context = words[i - 2:i + 3]
+            context = words[max(i - 2, 0):min(i + 3, len(words))]
             if elex == "habere_tenere_possidere":
-                context = words[i - 2:i + 7]
+                context = words[max(i - 2, 0):min(i + 7, len(words))]
             if prev_ref in context and prev_ref.get('lemmaRef') == elex:
                 prev_ref = ref
                 continue

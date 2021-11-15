@@ -16,7 +16,9 @@
                         <xsl:when test="contains(child::tei:cell[1]/., ',')">
                             <xsl:value-of select="replace(child::tei:cell[1]/., '.*(\d),.*', '$1')"/><xsl:text>_</xsl:text><xsl:number value="replace(child::tei:cell[1]/., '.*,(\d).*', '$1')" format="001"/>
                         </xsl:when>
-                        <xsl:otherwise><xsl:number value="normalize-space(child::tei:cell[1]/.)" format="001"/></xsl:otherwise>
+                        <xsl:otherwise>
+                            <xsl:number value="replace(child::tei:cell[1]/., '.*?(\d+)(\w?)$', '$1')" format="001"/><xsl:value-of select="replace(child::tei:cell[1]/., '.*?(\d+)(\w?)$', '$2')"/>
+                        </xsl:otherwise>
                     </xsl:choose>
                 </xsl:attribute>
                 <shortDesc><xsl:value-of select="normalize-space(child::tei:cell[2]/.)"/></shortDesc>

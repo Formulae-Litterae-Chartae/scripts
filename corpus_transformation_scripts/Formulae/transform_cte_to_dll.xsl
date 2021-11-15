@@ -22,7 +22,7 @@
                 <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="type">form-name</xsl:attribute>
                     <xsl:choose>
-                        <xsl:when test="matches($tempTitle, 'Weltzeitalter|Capitula|Incipit|Praefation|Ergänzungen')">
+                        <xsl:when test="matches($tempTitle, 'Weltzeitalter|Capitula|Incipit|Praefation|Ergänzung')">
                             <xsl:value-of select="normalize-space(substring-before($tempTitle, '('))"/>
                         </xsl:when>
                         <xsl:otherwise>
@@ -74,7 +74,7 @@
                 <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="type">form-name</xsl:attribute>
                     <xsl:choose>
-                        <xsl:when test="matches($tempTitle, 'Weltzeitalter|Capitula|Incipit|Praefatio|Ergänzungen')">
+                        <xsl:when test="matches($tempTitle, 'Weltzeitalter|Capitula|Incipit|Praefatio|Ergänzung')">
                             <xsl:value-of select="replace($tempTitle, ' Deutsch| Übersetzung', '')"/>
                         </xsl:when>
                         <xsl:otherwise>
@@ -125,8 +125,11 @@
                     </xsl:when>
                 </xsl:choose>
             </xsl:when>
+            <xsl:when test="contains($formTitle/tei:ref[@type='form-name'], 'Ergänzung')">
+                <xsl:text>form2_</xsl:text><xsl:number value="replace($formTitle/tei:ref[@type='form-name'], '.*?(\d+).*', '$1')" format="001"/>
+            </xsl:when>
             <xsl:otherwise>
-                <xsl:text>form</xsl:text><xsl:number value="subsequence(tokenize($formTitle/tei:ref[@type='form-name'], '\s+'), 2, 1)" format="001"/>
+                <xsl:text>form</xsl:text><xsl:number value="replace($formTitle/tei:ref[@type='form-name'], '.*?(\d+)(\w?).*', '$1')" format="001"/><xsl:value-of select="replace($formTitle/tei:ref[@type='form-name'], '.*?(\d+)(\w?).*', '$2')"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:param>
