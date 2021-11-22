@@ -17,7 +17,14 @@
         <xsl:param name="folderName"><xsl:value-of select="replace(base-uri(), tokenize(base-uri(), '/')[last()], '')"/></xsl:param>
         <xsl:param name="urn" select="tokenize(/tei:TEI/tei:text/tei:body/tei:div/@n, '\.')"/>
         <xsl:param name="title">
-            <xsl:value-of select="replace(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title, '.*?(\d+\w?)$', '$1')"/>
+            <xsl:choose>
+                <xsl:when test="contains(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title, 'Marculf')">
+                    <xsl:value-of select="replace(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title, 'Marculf ', '')"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="replace(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title, '.*?(\d+\w?)$', '$1')"/>
+                </xsl:otherwise>
+            </xsl:choose>
         </xsl:param>
         <xsl:param name="parentUrn">
             <xsl:choose>

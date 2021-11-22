@@ -22,7 +22,7 @@
                 <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="type">form-name</xsl:attribute>
                     <xsl:choose>
-                        <xsl:when test="matches($tempTitle, 'Weltzeitalter|Capitula|Incipit|Praefation|Ergänzung')">
+                        <xsl:when test="matches($tempTitle, 'Weltzeitalter|Capitula|Incipit|Praefatio|Ergänzung')">
                             <xsl:value-of select="normalize-space(substring-before($tempTitle, '('))"/>
                         </xsl:when>
                         <xsl:otherwise>
@@ -74,8 +74,11 @@
                 <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="type">form-name</xsl:attribute>
                     <xsl:choose>
+                        <xsl:when test="matches($tempTitle, 'Mar[ck]ulf 0 Praefatio')">
+                            <xsl:text>Marculf Praefatio</xsl:text>
+                        </xsl:when>
                         <xsl:when test="matches($tempTitle, 'Weltzeitalter|Capitula|Incipit|Praefatio|Ergänzung')">
-                            <xsl:value-of select="replace($tempTitle, ' Deutsch| Übersetzung', '')"/>
+                            <xsl:value-of select="replace($tempTitle, ' Deutsch| Übersetzung|\.xml', '')"/>
                         </xsl:when>
                         <xsl:otherwise>
                             <xsl:value-of select="replace(string-join(subsequence(tokenize($tempTitle, '\s+'), 1, 2), ' '), ',$', '')"/>
@@ -394,6 +397,9 @@
                     </xsl:when>
                     <xsl:when test="ancestor::tei:label">
                         <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:value-of select="upper-case($pString)"/></xsl:element>
+                    </xsl:when>
+                    <xsl:when test="ancestor::tei:hi[@style = 'font-size:14pt;']">
+                        <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="type">no-search</xsl:attribute><xsl:value-of select="$pString"/></xsl:element>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:value-of select="$pString"/></xsl:element>
