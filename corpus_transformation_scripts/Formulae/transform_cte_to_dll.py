@@ -38,6 +38,7 @@ for german in germans:
     print(german)
     remove_tei_dtd_reference(german)
     if 'Weltzeitalter' in german:
+        form_num = 'computus'
         new_name = '{base_folder}/data/{corpus}/computus/{corpus}.computus.deu001.xml'.format(base_folder=destination_folder, corpus=corpus_name)
     elif 'Capitula' in german:
         form_num = '1_capitula'

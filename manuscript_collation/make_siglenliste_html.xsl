@@ -5,7 +5,7 @@
     exclude-result-prefixes="xs t"
     version="2.0">
     
-    <xsl:output omit-xml-declaration="yes" indent="yes"/>
+    <xsl:output omit-xml-declaration="yes" indent="no"/>
     <xsl:param name="navLetters">
         <xsl:for-each select="//@xml:id">
             <xsl:value-of select="replace(., 'BL-', '')"/>
@@ -25,7 +25,7 @@
             <xsl:element name="h3">
                 <xsl:value-of select="//text()[contains(., '(Stand')]"/>
             </xsl:element>
-            <xsl:apply-templates select="@*|node()|comment()"/>
+            <xsl:apply-templates select="node()|comment()"/>
         </xsl:element>
         <xsl:text>{% endblock %}</xsl:text>
     </xsl:template>
@@ -37,12 +37,12 @@
             <xsl:when test="contains(string-join(.//text(), ''), 'Liste der Formelhandschriften')"></xsl:when>
             <xsl:when test="contains(string-join(.//text(), ''), '(Stand')"></xsl:when>
             <xsl:when test="contains(string-join(.//text(), ''), 'Lit.')">
-                <p class="smallfont">
+                <p class="smallfont text-justify">
                     <xsl:apply-templates/>
                 </p>
             </xsl:when>
             <xsl:otherwise>
-                <p><xsl:apply-templates/></p>
+                <p class="text-justify"><xsl:apply-templates/></p>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
@@ -59,13 +59,11 @@
         <strong><xsl:value-of select="."/></strong>
     </xsl:template>
     
-    <xsl:template match="t:hi[@rend='bold subscript']" mode="siglen">
-        <span class="manuscript-number"><xsl:value-of select="."/></span>
-    </xsl:template>
+    <xsl:template match="t:hi[@rend='bold subscript']" mode="siglen"><xsl:element name="span"><xsl:attribute name="class">manuscript-number</xsl:attribute><xsl:value-of select="."/></xsl:element></xsl:template>
     
-    <xsl:template match="t:hi[@rend='superscript']">
-        <span class="small superscript"><xsl:value-of select="."/></span>
-    </xsl:template>
+    <xsl:template match="t:hi[@rend='superscript']"><span class="small superscript"><xsl:value-of select="."/></span></xsl:template>
+    
+    <xsl:template match="t:hi[@rend='bold superscript']" mode="siglen"><xsl:element name="span"><xsl:attribute name="class">small font-weight-bold</xsl:attribute><xsl:value-of select="."/></xsl:element></xsl:template>
     
     <xsl:template match="t:table">
         <div class="card" id="manuscript-table" width="60%">
@@ -82,7 +80,7 @@
             <xsl:otherwise>
                 <dl class="row">
                     <dt class="col-10"><xsl:apply-templates select="./t:cell[1]/t:hi"/></dt>
-                    <dd class="col"><strong><xsl:apply-templates select="./t:cell[2]/t:hi" mode="siglen"/></strong></dd>
+                    <xsl:element name="dd"><xsl:attribute name="class">col font-weight-bold</xsl:attribute><xsl:apply-templates select="./t:cell[2]/t:hi" mode="siglen"/></xsl:element>
                 </dl>
             </xsl:otherwise>
         </xsl:choose>
