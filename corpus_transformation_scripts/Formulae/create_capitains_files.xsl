@@ -17,7 +17,7 @@
         <xsl:param name="folderName"><xsl:value-of select="replace(base-uri(), tokenize(base-uri(), '/')[last()], '')"/></xsl:param>
         <xsl:param name="urn" select="tokenize(/tei:TEI/tei:text/tei:body/tei:div/@n, '\.')"/>
         <xsl:param name="title">
-            <xsl:copy-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>
+            <xsl:value-of select="replace(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title, '.*?(\d+\w?)$', '$1')"/>
         </xsl:param>
         <xsl:param name="parentUrn">
             <xsl:choose>
@@ -110,6 +110,7 @@
             <xsl:value-of select="$textFile/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>
         </xsl:param>
         <xsl:param name="isManuscript"><xsl:value-of select="boolean($textFile/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:msDesc)"/></xsl:param>
+        <xsl:param name="isFormula"><xsl:value-of select="matches($textURI, 'form\d\d\d')"/></xsl:param>
         <xsl:param name="docSource">
             <xsl:choose>
                 <xsl:when test="$isManuscript = true()">
@@ -132,7 +133,7 @@
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="string-join($title//text(), '')"/>
-                    <xsl:if test="matches($textURI, 'andecavensis|marculf')">
+                    <xsl:if test="$isFormula">
                         <xsl:text> (</xsl:text>
                         <xsl:value-of select="$lang"/>
                         <xsl:text>)</xsl:text>
@@ -143,7 +144,7 @@
         
         <xsl:param name="dateCopyrighted">
             <xsl:choose>
-                <xsl:when test="matches($textURI, 'andecavensis|marculf') or $isManuscript = true()">
+                <xsl:when test="$isFormula or $isManuscript = true()">
                     <xsl:value-of select="$textFile/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:date/@when"/>
                 </xsl:when>
                 <xsl:otherwise>
@@ -153,7 +154,7 @@
         </xsl:param>
         <xsl:param name="allEds">
             <xsl:choose>
-                <xsl:when test="matches($textURI, 'andecavensis|marculf') or $isManuscript = true()">
+                <xsl:when test="$isFormula or $isManuscript = true()">
                     <xsl:value-of select="$textFile/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:editor/text()"/>
                 </xsl:when>
                 <xsl:otherwise>
@@ -163,7 +164,7 @@
         </xsl:param>
         <xsl:param name="bibliographicCitation">
             <xsl:choose>
-                <xsl:when test="matches($textURI, 'andecavensis|marculf') or $isManuscript = true()">
+                <xsl:when test="$isFormula or $isManuscript = true()">
                     <xsl:value-of select="$markedUpTitle"/>
                     <xsl:text>, </xsl:text>
                     <xsl:value-of select="$textFile/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:publisher/text()"/><xsl:text>. </xsl:text>
@@ -226,7 +227,7 @@
             <dc:format>application/tei+xml</dc:format>
             <dc:source>
                 <xsl:choose>
-                    <xsl:when test="matches($textURI, 'andecavensis|marculf')">
+                    <xsl:when test="$isFormula">
                         <xsl:value-of select="$docSource"/>
                     </xsl:when>
                     <xsl:when test="$isManuscript = true()">
@@ -247,7 +248,7 @@
                     <bib:editor><xsl:value-of select="."/></bib:editor>
                 </xsl:for-each>
                 <xsl:choose>
-                    <xsl:when test="not(matches($textURI, 'andecavensis|marculf') or $isManuscript = true())">
+                    <xsl:when test="not($isFormula or $isManuscript = true())">
                         <dct:dateCopyrighted><xsl:value-of select="$dateCopyrighted"/></dct:dateCopyrighted>
                         <dct:created><xsl:value-of select="$textFile/tei:TEI/tei:teiHeader/tei:fileDesc/tei:publicationStmt/tei:date/text()"/></dct:created>
                     </xsl:when>
