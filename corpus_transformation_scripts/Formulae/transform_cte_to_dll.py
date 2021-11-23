@@ -41,9 +41,11 @@ for german in germans:
         form_num = 'computus'
         new_name = '{base_folder}/data/{corpus}/computus/{corpus}.computus.deu001.xml'.format(base_folder=destination_folder, corpus=corpus_name)
     elif 'Capitula' in german:
-        form_num = '1_capitula'
+        form_num = '0_capitula'
         if 'II' in german:
             form_num = '2_capitula'
+        elif 'I' in german:
+            form_num = '1_capitula'
         new_name = '{base_folder}/data/{corpus}/{form}/{corpus}.{form}.deu001.xml'.format(base_folder=destination_folder, corpus=corpus_name, form=form_num)
     elif 'Incipit' in german:
         form_num = '1_incipit'
@@ -81,9 +83,11 @@ for transcription in sorted(transcriptions):
     if 'Weltzeitalter' in transcription:
         new_name = '{base_folder}/data/{corpus}/computus/{corpus}.computus.deu001.xml'.format(base_folder=destination_folder, corpus=corpus_name)
     elif 'Capitula' in transcription:
-        form_num = '1_capitula'
+        form_num = '0_capitula'
         if 'II' in transcription:
             form_num = '2_capitula'
+        elif 'I' in transcription:
+            form_num = '1_capitula'
         new_name = '{base_folder}/data/{corpus}/{form}/{corpus}.{form}.deu001.xml'.format(base_folder=destination_folder, corpus=corpus_name, form=form_num)
     elif 'Incipit' in transcription:
         form_num = '1_incipit'
@@ -144,9 +148,11 @@ for latin in latins:
     if 'Weltzeitalter' in latin:
         form_num = "computus"
     elif 'Capitula' in latin:
-        form_num = '1_capitula'
+        form_num = '0_capitula'
         if 'II' in latin:
             form_num = '2_capitula'
+        elif 'I' in latin:
+            form_num = '1_capitula'
     elif 'Incipit' in latin:
         form_num = '1_incipit'
         if 'II' in latin:

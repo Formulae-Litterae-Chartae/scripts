@@ -74,8 +74,8 @@
                 <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="type">form-name</xsl:attribute>
                     <xsl:choose>
-                        <xsl:when test="matches($tempTitle, 'Mar[ck]ulf 0 Praefatio')">
-                            <xsl:text>Marculf Praefatio</xsl:text>
+                        <xsl:when test="matches($tempTitle, ' 0 ')">
+                            <xsl:value-of select="replace($tempTitle, ' Deutsch| Übersetzung|\.xml| 0', '')"/>
                         </xsl:when>
                         <xsl:when test="matches($tempTitle, 'Weltzeitalter|Capitula|Incipit|Praefatio|Ergänzung')">
                             <xsl:value-of select="replace($tempTitle, ' Deutsch| Übersetzung|\.xml', '')"/>
@@ -101,7 +101,12 @@
                 <xsl:text>computus</xsl:text>
             </xsl:when>
             <xsl:when test="contains($formTitle, 'Capitula')">
-                <xsl:choose><xsl:when test="contains($formTitle/tei:ref[@type='form-name'], 'II')"><xsl:text>2_</xsl:text></xsl:when><xsl:otherwise><xsl:text>1_</xsl:text></xsl:otherwise></xsl:choose><xsl:text>capitula</xsl:text>
+                <xsl:choose>
+                    <xsl:when test="contains($formTitle/tei:ref[@type='form-name'], 'II')"><xsl:text>2_</xsl:text></xsl:when>
+                    <xsl:when test="contains($formTitle/tei:ref[@type='form-name'], 'I')"><xsl:text>1_</xsl:text></xsl:when>
+                    <xsl:otherwise><xsl:text>0_</xsl:text></xsl:otherwise>
+                </xsl:choose>
+                <xsl:text>capitula</xsl:text>
             </xsl:when>
             <xsl:when test="contains($formTitle, 'Incipit')">
                 <xsl:choose><xsl:when test="contains($formTitle/tei:ref[@type='form-name'], 'II')"><xsl:text>2_</xsl:text></xsl:when><xsl:otherwise><xsl:text>1_</xsl:text></xsl:otherwise></xsl:choose><xsl:text>incipit</xsl:text>
