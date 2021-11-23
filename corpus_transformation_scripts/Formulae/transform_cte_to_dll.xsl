@@ -17,6 +17,16 @@
     <xsl:param name="formTitle">
         <xsl:variable name="tempTitle"><xsl:value-of select="normalize-space(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title/text())"/></xsl:variable>
         <xsl:choose>
+            <xsl:when test="contains($tempTitle, 'Tours 40')">
+                <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
+                    <xsl:attribute name="type">form-name</xsl:attribute>
+                    <xsl:value-of select="replace($tempTitle, ' Deutsch| Übersetzung|\.xml', '')"/>
+                </xsl:element>
+                <xsl:choose>
+                    <xsl:when test="matches($tempTitle, 'Deutsch|Übersetzung')"><xsl:element name="xml:lang">deu</xsl:element></xsl:when>
+                    <xsl:otherwise><xsl:element name="xml:lang">lat</xsl:element></xsl:otherwise>
+                </xsl:choose>
+            </xsl:when>
             <xsl:when test="contains($tempTitle, '(')">
                 <xsl:variable name="folia" select="/tei:TEI/tei:text/tei:body/tei:p[starts-with(., '[fol.')]"/>
                 <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
@@ -96,6 +106,9 @@
         <xsl:choose>
             <xsl:when test="$formTitle/tei:ref[@type='folia']">
                 <xsl:value-of select="normalize-space(replace($formTitle/tei:ref[@type='folia'], 'fol\.\s*|-', ''))"/>
+            </xsl:when>
+            <xsl:when test="contains($formTitle, 'Tours 40')">
+                <xsl:text>form040_</xsl:text><xsl:value-of select="replace($formTitle/tei:ref[@type='form-name'], 'Tours 40\((.)\)', '$1')"/>
             </xsl:when>
             <xsl:when test="contains($formTitle, 'Weltzeitalter')">
                 <xsl:text>computus</xsl:text>
