@@ -12,7 +12,7 @@ add_bibl_xslt = "/home/matt/scripts/corpus_transformation_scripts/Formulae/add_m
 
 kurz = [re.sub('[„“"\'’]', '', x) for x in etree.parse('/home/matt/results/Bibliographie_E-Lexikon.xml').xpath('//tei:title[@type="short"]/text()', namespaces={'tei': 'http://www.tei-c.org/ns/1.0'})]
 
-texts = [x for x in glob(orig + '/data/**/*.xml', recursive=True) if re.search('andecavensis|elexicon|marculf|auvergne', x) and '__capitains__' not in x]
+texts = [x for x in glob(orig + '/data/**/*.xml', recursive=True) if re.search('andecavensis|elexicon|marculf|auvergne|tours', x) and '__capitains__' not in x]
 
 problems = []
 

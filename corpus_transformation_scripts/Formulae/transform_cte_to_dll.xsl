@@ -20,12 +20,47 @@
             <xsl:when test="contains($tempTitle, 'Tours 40')">
                 <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="type">form-name</xsl:attribute>
-                    <xsl:value-of select="replace($tempTitle, ' Deutsch| Übersetzung|\.xml', '')"/>
+                    <xsl:value-of select="replace($tempTitle, '(Tours 40\(.\)).*', '$1')"/>
                 </xsl:element>
                 <xsl:choose>
                     <xsl:when test="matches($tempTitle, 'Deutsch|Übersetzung')"><xsl:element name="xml:lang">deu</xsl:element></xsl:when>
                     <xsl:otherwise><xsl:element name="xml:lang">lat</xsl:element></xsl:otherwise>
                 </xsl:choose>
+                <xsl:if test="contains($tempTitle, '(Wa1)')">
+                    <xsl:variable name="folia" select="/tei:TEI/tei:text/tei:body/tei:p[starts-with(., '[fol.')]"/>
+                    <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
+                        <xsl:attribute name="type">siglum</xsl:attribute>
+                        <xsl:text>Wa1</xsl:text>
+                    </xsl:element>
+                    <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
+                        <xsl:attribute name="type">manuscript-desc</xsl:attribute>
+                        <xsl:text>Warschau UB 1</xsl:text>
+                    </xsl:element>
+                    <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
+                        <xsl:attribute name="type">folia</xsl:attribute>
+                        <xsl:value-of select="normalize-space(translate(substring-before(string-join($folia[1], ' '), ']'), '[]', ''))"/>
+                        <xsl:if test="count($folia) > 1">
+                            <xsl:text>-</xsl:text><xsl:value-of select="normalize-space(translate(substring-before(string-join($folia[last()], ' '), ']'), '[]', ''))"/>
+                        </xsl:if>
+                    </xsl:element>
+                    <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
+                        <xsl:variable name="firstFolio"><xsl:value-of select="normalize-space(translate(string-join($folia[1], ' '), '[]', ''))"/></xsl:variable>
+                        <xsl:variable name="lastFolio"><xsl:value-of select="normalize-space(translate(string-join($folia[last()], ' '), '[]', ''))"/></xsl:variable>
+                        <xsl:attribute name="type">markedUpFolia</xsl:attribute>
+                        <xsl:text>fol.</xsl:text>
+                        <xsl:value-of select="replace($firstFolio, '\D+(\d+)([rvab]+)', '$1')"/>
+                        <xsl:text>&lt;span class="verso-recto"&gt;</xsl:text>
+                        <xsl:value-of select="replace($firstFolio, '\D+(\d+)([rvab]+)', '$2')"/>
+                        <xsl:text>&lt;/span&gt;</xsl:text>
+                        <xsl:if test="count($folia) > 1">
+                            <xsl:text>-</xsl:text>
+                            <xsl:value-of select="replace($lastFolio, '\D+(\d+)([rvab]+)', '$1')"/>
+                            <xsl:text>&lt;span class="verso-recto"&gt;</xsl:text>
+                            <xsl:value-of select="replace($lastFolio, '\D+(\d+)([rvab]+)', '$2')"/>
+                            <xsl:text>&lt;/span&gt;</xsl:text>
+                        </xsl:if>
+                    </xsl:element>
+                </xsl:if>
             </xsl:when>
             <xsl:when test="contains($tempTitle, '(')">
                 <xsl:variable name="folia" select="/tei:TEI/tei:text/tei:body/tei:p[starts-with(., '[fol.')]"/>

@@ -17,10 +17,13 @@ print(corpus_dir)
 for form in forms:
     xml = etree.parse(form)
     urn = 'urn:cts:formulae:' + form.split('/')[-1].replace('.xml', '')
+    form_title = xml.xpath('/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title', namespaces=ns)[0].text or ''
     prev_ref = None
     words = xml.xpath('//tei:w', namespaces=ns)
     for i, ref in enumerate(words):
         if ref.get('lemmaRef'):
+            if 'elexicon' in form and ref.get('lemmaRef') in form_title.lower():
+                continue
             elex = ref.get('lemmaRef')
             context = words[max(i - 2, 0):min(i + 3, len(words))]
             if elex == "habere_tenere_possidere":

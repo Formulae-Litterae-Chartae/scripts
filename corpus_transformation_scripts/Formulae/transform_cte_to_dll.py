@@ -67,7 +67,7 @@ for german in germans:
             form_num = 'form2_' + '{:03}'.format(int(re.sub(r'.*?(\d).*', r'\1', german)))
         new_name = '{base_folder}/data/{corpus}/{form}/{corpus}.{form}.deu001.xml'.format(base_folder=destination_folder, corpus=corpus_name, form=form_num)
     elif 'Tours 40' in german:
-        form_num = 'form040_' + re.sub(r'Tours 40\((.)\).*', r'\1', german)
+        form_num = 'form040_' + re.sub(r'.*Tours 40\((.)\).*', r'\1', german)
     else:
         num_match = re.search(r',?([\d]+)(\w?)', german)
         form_num = "{:03}".format(int(num_match[1])) + num_match[2]
@@ -111,7 +111,9 @@ for transcription in sorted(transcriptions):
             form_num = 'form2_' + '{:03}'.format(int(re.sub(r'.*?(\d).*', r'\1', transcription)))
         new_name = '{base_folder}/data/{corpus}/{form}/{corpus}.{form}.deu001.xml'.format(base_folder=destination_folder, corpus=corpus_name, form=form_num)
     elif 'Tours 40' in transcription:
-        form_num = 'form040_' + re.sub(r'Tours 40\((.)\).*', r'\1', transcription)
+        print(transcription)
+        form_num = 'form040_' + re.sub(r'.*?Tours 40\((.)\).*', r'\1', transcription)
+        print(form_num)
     else:
         num_match = re.search(r',?([\d]+)(\w?)', transcription)
         form_num = "{:03}".format(int(num_match[1])) + num_match[2]
@@ -177,7 +179,7 @@ for latin in latins:
             form_num = 'form2_' + '{:03}'.format(int(re.sub(r'.*?(\d).*', r'\1', latin)))
         new_name = '{base_folder}/data/{corpus}/{form}/{corpus}.{form}.deu001.xml'.format(base_folder=destination_folder, corpus=corpus_name, form=form_num)    
     elif 'Tours 40' in latin:
-        form_num = 'form040_' + re.sub(r'Tours 40\((.)\).*', r'\1', latin)
+        form_num = 'form040_' + re.sub(r'.*Tours 40\((.)\).*', r'\1', latin)
     else:
         num_match = re.search(r',?([\d]+)(\w?)', latin)
         form_num = "{:03}".format(int(num_match[1])) + num_match[2]
