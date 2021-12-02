@@ -168,7 +168,10 @@ for e in sorted(bib_database.entries, key=author_year_sort):
         analytic.append(title)
         analytic.append(kurztitel)
         monogr = E.monogr(imprint)
-        entry = E.biblStruct(analytic, monogr, url, {'type': e['ENTRYTYPE']})
+        if 'url' in e and 'urn:cts:formulae:' in e['url']:
+            entry = E.biblStruct(analytic, monogr, url, {'type': 'formula'})
+        else:
+            entry = E.biblStruct(analytic, monogr, url, {'type': e['ENTRYTYPE']})
     elif e['ENTRYTYPE'] == 'phdthesis':
         school = '' #E.publisher(E.orgName(e['type'].replace('Zugleich: ', '').replace('Zugl.: ', ''), {'type': 'school'}))
         publisher = E.publisher(e['school'])

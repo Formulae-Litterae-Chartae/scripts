@@ -120,7 +120,7 @@
                     <xsl:attribute name="type">form-name</xsl:attribute>
                     <xsl:choose>
                         <xsl:when test="matches($tempTitle, ' 0 ')">
-                            <xsl:value-of select="replace($tempTitle, ' Deutsch| Übersetzung|\.xml| 0', '')"/>
+                            <xsl:value-of select="replace($tempTitle, ' Deutsch| Übersetzung|\.xml| 0|\[|\]', '')"/>
                         </xsl:when>
                         <xsl:when test="matches($tempTitle, 'Weltzeitalter|Capitula|Incipit|Praefatio|Ergänzung')">
                             <xsl:value-of select="replace($tempTitle, ' Deutsch| Übersetzung|\.xml', '')"/>
@@ -183,6 +183,9 @@
             </xsl:when>
             <xsl:when test="contains($formTitle/tei:ref[@type='form-name'], 'Ergänzung')">
                 <xsl:text>form2_</xsl:text><xsl:number value="replace($formTitle/tei:ref[@type='form-name'], '.*?(\d+).*', '$1')" format="001"/>
+            </xsl:when>
+            <xsl:when test="contains($formTitle/tei:ref[@type='form-name'], 'Titel')">
+                <xsl:text>form000</xsl:text>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:text>form</xsl:text><xsl:number value="replace($formTitle/tei:ref[@type='form-name'], '.*?(\d+)(\w?).*', '$1')" format="001"/><xsl:value-of select="replace($formTitle/tei:ref[@type='form-name'], '.*?(\d+)(\w?).*', '$2')"/>

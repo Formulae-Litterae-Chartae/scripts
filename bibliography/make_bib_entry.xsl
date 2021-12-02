@@ -213,6 +213,10 @@
                     </xsl:element>
                     <xsl:text>).</xsl:text>
             </xsl:when>
+            <xsl:when test="$entry[@type='formula']">
+                <!-- THE URL -->
+                <xsl:value-of select="$entry/t:ref[@type='url']"/>
+            </xsl:when>
             <xsl:otherwise>
                 <!-- THE AUTHOR(S) -->
                 <xsl:call-template name="makeAuthors">

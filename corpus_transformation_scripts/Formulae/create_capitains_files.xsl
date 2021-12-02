@@ -49,7 +49,7 @@
         </xsl:param>
         <xsl:param name="long-regest">
             <xsl:choose>
-                <xsl:when test="matches(string-join($urn, '.'), 'andecavensis|marculf')">
+                <xsl:when test="matches(string-join($urn, '.'), 'form0')">
                     <xsl:value-of select="document(concat(replace($folderName, '/data/.*', '/regesten/'), $urn[1], '_regesten.xml'))/xml/regest[@docId=concat($urn[1], '.', $urn[2])]/longDesc/text()"/>
                 </xsl:when>
                 <xsl:otherwise>
