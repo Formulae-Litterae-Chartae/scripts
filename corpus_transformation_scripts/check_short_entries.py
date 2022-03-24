@@ -21,7 +21,7 @@ for text in sorted(texts):
         whole_title = ''.join(title.xpath('.//text()'))
         if re.sub('[„“"\'’]', '', whole_title.strip()) not in kurz:
             closest = get_close_matches(whole_title, kurz, n=1, cutoff=0.8)          
-            print(text, whole_title, closest)                                                       
+            print(text, re.sub('[„“"\'’]', '', whole_title.strip()), closest)                                                       
             problems.append((text.split('/')[-1], whole_title, closest[0] if closest else 'FEHLT'))
         elif title.get('n').strip() in ('', ','):
             subprocess.run(['java', '-jar',  saxon_location, '{}'.format(text), add_bibl_xslt, '-o:{}'.format(text)])

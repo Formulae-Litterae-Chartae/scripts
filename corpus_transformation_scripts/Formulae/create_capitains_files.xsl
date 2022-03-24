@@ -18,11 +18,19 @@
         <xsl:param name="urn" select="tokenize(/tei:TEI/tei:text/tei:body/tei:div/@n, '\.')"/>
         <xsl:param name="title">
             <xsl:choose>
-                <xsl:when test="contains(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title, 'Marculf')">
-                    <xsl:value-of select="replace(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title, 'Marculf ', '')"/>
+                <xsl:when test="matches(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)], 'Marculf|Tours')">
+                    <xsl:choose>
+                        <xsl:when test="matches(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)], '(I+) (Incipit|Capitulatio)')">
+                            <xsl:value-of select="replace(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)], '.*?(I+) (Incipit|Capitulatio)', '$2 $1')"/>
+                        </xsl:when>
+                        <xsl:otherwise><xsl:value-of select="replace(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)], 'Marculf |Tours ', '')"/></xsl:otherwise>
+                    </xsl:choose>
+                </xsl:when>
+                <xsl:when test="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:msDesc">
+                    <xsl:value-of select="replace(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)], '.*\[(.*)\]$', '$1')"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="replace(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title, '.*?(\d+\w?)$', '$1')"/>
+                    <xsl:value-of select="replace(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)], '.*?(\d+\w?)$', '$1')"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:param>
@@ -49,7 +57,7 @@
         </xsl:param>
         <xsl:param name="long-regest">
             <xsl:choose>
-                <xsl:when test="matches(string-join($urn, '.'), 'form0')">
+                <xsl:when test="matches(string-join($urn, '.'), 'form\d')">
                     <xsl:value-of select="document(concat(replace($folderName, '/data/.*', '/regesten/'), $urn[1], '_regesten.xml'))/xml/regest[@docId=concat($urn[1], '.', $urn[2])]/longDesc/text()"/>
                 </xsl:when>
                 <xsl:otherwise>
@@ -114,17 +122,15 @@
         <xsl:param name="urn" select="tokenize($textFile/tei:TEI/tei:text/tei:body/tei:div/@n, '\.')"/>
         <xsl:param name="lang" select="$textFile/tei:TEI/tei:text/tei:body/tei:div/@xml:lang"/>
         <xsl:param name="title">
-            <xsl:value-of select="$textFile/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>
+            <xsl:value-of select="$textFile/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)]"/>
         </xsl:param>
         <xsl:param name="isManuscript"><xsl:value-of select="boolean($textFile/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:msDesc)"/></xsl:param>
         <xsl:param name="isFormula"><xsl:value-of select="matches($textURI, 'form\d\d\d')"/></xsl:param>
         <xsl:param name="docSource">
             <xsl:choose>
                 <xsl:when test="$isManuscript = true()">
-                    <xsl:value-of select="replace($textFile/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:msDesc/tei:msIdentifier/tei:idno, '\d+', '')"/>
-                    <xsl:text>&lt;span class="manuscript-number"&gt;</xsl:text>
-                    <xsl:value-of select="replace($textFile/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:msDesc/tei:msIdentifier/tei:idno, '\D+', '')"/>
-                    <xsl:text>&lt;/span&gt; (</xsl:text>
+                    <xsl:value-of select="replace($textFile/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:msDesc/tei:msIdentifier/tei:idno, '(\D+)(\d+)(\D*)', '$1&lt;span class=&quot;manuscript-number&quot;&gt;$2&lt;/span&gt;&lt;span class=&quot;verso-recto&quot;&gt;$3&lt;/span&gt;')"/>
+                    <xsl:text> (</xsl:text>
                     <xsl:value-of select="$textFile/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:msDesc/tei:msIdentifier/tei:msName"/>
                     <xsl:text>)</xsl:text>
                 </xsl:when>
@@ -268,6 +274,9 @@
                     <xsl:attribute name="xml:lang"><xsl:value-of select="$pubLang"/></xsl:attribute>
                     <xsl:value-of select="$shortRegest"/>
                 </dct:abstract>
+                <xsl:if test="$isManuscript">
+                    <dct:isVersionOf><xsl:value-of select="$textFile/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='subtitle']"/></dct:isVersionOf>
+                </xsl:if>
             </structured-metadata>
         </xsl:param>
         

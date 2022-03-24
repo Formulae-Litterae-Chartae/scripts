@@ -21,8 +21,8 @@
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:attribute>
-                <shortDesc><xsl:value-of select="normalize-space(child::tei:cell[2]/.)"/></shortDesc>
-                <longDesc><xsl:value-of select="normalize-space(child::tei:cell[3]/.)"/></longDesc>
+                <shortDesc><xsl:apply-templates select="child::tei:cell[2]/node()"></xsl:apply-templates></shortDesc>
+                <longDesc><xsl:apply-templates select="child::tei:cell[3]/node()"></xsl:apply-templates></longDesc>
             </regest>
         </xsl:for-each></xml>
     </xsl:template>
@@ -34,6 +34,10 @@
         <p><xsl:value-of select="$docNum"/><xsl:text>&#13;</xsl:text>
         <xsl:value-of select="$short"/><xsl:text>&#13;</xsl:text>
         <xsl:value-of select="$long"/><xsl:text>&#13;</xsl:text></p>
+    </xsl:template>
+    
+    <xsl:template match="tei:hi[@rend='italic']">
+        <xsl:text>&lt;seg class="latin-word"&gt;</xsl:text><xsl:value-of select="."/><xsl:text>&lt;/seg&gt;</xsl:text>
     </xsl:template>
     
 </xsl:stylesheet>

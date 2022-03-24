@@ -56,6 +56,7 @@
 	<lem elex="confirmatio">confirmatio</lem>
 	<lem elex="congregatio">congregatio</lem>
 	<lem elex="coniugium">coniugium</lem>
+	<lem elex="coniugium">coniux</lem>
 	<lem elex="consensus">consensus</lem>
 	<lem elex="consuetudo">consuetudo</lem>
 	<lem elex="contractus">contractus</lem>
@@ -171,7 +172,9 @@
 	<lem elex="potestas">potestas</lem>
 	<lem elex="praeceptum">praeceptum</lem>
 	<lem elex="praepositus">praepositus</lem>
+	<lem elex="precarium">praecaria</lem>
 	<lem elex="precarium">precarium</lem>
+	<lem elex="precarium">praecarium</lem>
 	<lem elex="presbyter">presbyter</lem>
 	<lem elex="privilegium">privilegium</lem>
 	<lem elex="privilegium_libertatis">privilegium libertatis</lem>

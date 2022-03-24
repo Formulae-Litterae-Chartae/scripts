@@ -13,9 +13,9 @@
     
     <xsl:output omit-xml-declaration="yes" indent="yes"/>
     
-    <xsl:param name="pSeparators">&#xA;&#x9;&#x20;&#8230;&#8221;,.;:?!()'"„“‚‘</xsl:param>
+    <xsl:param name="pSeparators">&#xA;&#x9;&#x20;&#8230;&#8221;,.;:?!()'"„“‚‘|</xsl:param>
     <xsl:param name="formTitle">
-        <xsl:variable name="tempTitle"><xsl:value-of select="normalize-space(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title/text())"/></xsl:variable>
+        <xsl:variable name="tempTitle"><xsl:value-of select="replace(replace(normalize-space(replace(replace(tokenize(base-uri(), '/')[last()], '%20', ' '), '.xml', '')), 'Paris,? BNF (\d)', 'Paris BnF Lat. $1'), 'Markulf', 'Marculf')"/></xsl:variable>
         <xsl:choose>
             <xsl:when test="contains($tempTitle, 'Tours 40')">
                 <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
@@ -44,8 +44,8 @@
                         </xsl:if>
                     </xsl:element>
                     <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
-                        <xsl:variable name="firstFolio"><xsl:value-of select="normalize-space(translate(string-join($folia[1], ' '), '[]', ''))"/></xsl:variable>
-                        <xsl:variable name="lastFolio"><xsl:value-of select="normalize-space(translate(string-join($folia[last()], ' '), '[]', ''))"/></xsl:variable>
+                        <xsl:variable name="firstFolio"><xsl:value-of select="normalize-space(translate(string-join($folia[1], ' '), '[] ', ''))"/></xsl:variable>
+                        <xsl:variable name="lastFolio"><xsl:value-of select="normalize-space(translate(string-join($folia[last()], ' '), '[] ', ''))"/></xsl:variable>
                         <xsl:attribute name="type">markedUpFolia</xsl:attribute>
                         <xsl:text>fol.</xsl:text>
                         <xsl:value-of select="replace($firstFolio, '\D+(\d+)([rvab]+)', '$1')"/>
@@ -63,7 +63,7 @@
                 </xsl:if>
             </xsl:when>
             <xsl:when test="contains($tempTitle, '(')">
-                <xsl:variable name="folia" select="/tei:TEI/tei:text/tei:body/tei:p[starts-with(., '[fol.')]"/>
+                <xsl:variable name="folia" select="/tei:TEI/tei:text/tei:body/tei:p[starts-with(., '[p.') or starts-with(., '[fol.')]"/>
                 <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="type">form-name</xsl:attribute>
                     <xsl:choose>
@@ -77,13 +77,21 @@
                 </xsl:element>
                 <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="type">siglum</xsl:attribute>
-                    <xsl:value-of select="replace($tempTitle, '.*\((\w+)\)$', '$1')"/>
+                    <xsl:choose>
+                        <xsl:when test="contains($tempTitle, 'P12s')">
+                            <xsl:text>P12</xsl:text>
+                        </xsl:when>
+                        <xsl:otherwise><xsl:value-of select="replace($tempTitle, '.*\((\w+)\)$', '$1')"/></xsl:otherwise>
+                    </xsl:choose>
                 </xsl:element>
                 <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="type">manuscript-desc</xsl:attribute>
                     <xsl:choose>
                         <xsl:when test="contains($tempTitle, 'Fu2')">
                             <xsl:text>Fulda, Hessische Landesbibliothek, D1</xsl:text>
+                        </xsl:when>
+                        <xsl:when test="matches($tempTitle, 'Mar[ck]ulf I* ?(Ergänzungen|Capitula|Incipit)')">
+                            <xsl:value-of select="normalize-space(string-join(subsequence(tokenize(substring-before($tempTitle, '('), '\s+'), 4), ' '))"/>
                         </xsl:when>
                         <xsl:otherwise>
                             <xsl:value-of select="normalize-space(string-join(subsequence(tokenize(substring-before($tempTitle, '('), '\s+'), 3), ' '))"/>
@@ -92,27 +100,43 @@
                 </xsl:element>
                 <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="type">folia</xsl:attribute>
-                    <xsl:value-of select="normalize-space(translate(substring-before(string-join($folia[1], ' '), ']'), '[]', ''))"/>
+                    <!--<xsl:value-of select="normalize-space(translate(substring-before(string-join($folia[1], ' '), ']'), '[]', ''))"/>-->
+                    <xsl:value-of select="normalize-space(replace($folia[1], '.*?\[((fol|p).[^\]]+).*', '$1'))"/>
                     <xsl:if test="count($folia) > 1">
-                        <xsl:text>-</xsl:text><xsl:value-of select="normalize-space(translate(substring-before(string-join($folia[last()], ' '), ']'), '[]', ''))"/>
+                        <xsl:text>-</xsl:text><xsl:value-of select="normalize-space(replace($folia[last()], '.*?\[((fol|p).[^\]]+).*', '$1'))"/>
                     </xsl:if>
                 </xsl:element>
                 <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
-                    <xsl:variable name="firstFolio"><xsl:value-of select="normalize-space(translate(string-join($folia[1], ' '), '[]', ''))"/></xsl:variable>
-                    <xsl:variable name="lastFolio"><xsl:value-of select="normalize-space(translate(string-join($folia[last()], ' '), '[]', ''))"/></xsl:variable>
+                    <xsl:variable name="firstFolio"><xsl:value-of select="normalize-space(replace($folia[1], '.*?\[((fol|p).[^\]]+).*', '$1'))"/></xsl:variable>
+                    <xsl:variable name="lastFolio"><xsl:value-of select="normalize-space(replace($folia[last()], '.*?\[((fol|p).[^\]]+).*', '$1'))"/></xsl:variable>
+                    <xsl:variable name="bindingFirst"><xsl:value-of select="replace($folia[1], '.*?\[fol.[^\]]+\]\s*', ' ')"/></xsl:variable>
+                    <xsl:variable name="bindingLast"><xsl:value-of select="replace($folia[last()], '.*?\[fol.[^\]]+\]\s*', ' ')"/></xsl:variable>
                     <xsl:attribute name="type">markedUpFolia</xsl:attribute>
-                    <xsl:text>fol.</xsl:text>
-                    <xsl:value-of select="replace($firstFolio, '\D+(\d+)([rvab]+)', '$1')"/>
-                    <xsl:text>&lt;span class="verso-recto"&gt;</xsl:text>
-                    <xsl:value-of select="replace($firstFolio, '\D+(\d+)([rvab]+)', '$2')"/>
-                    <xsl:text>&lt;/span&gt;</xsl:text>
-                    <xsl:if test="count($folia) > 1">
-                        <xsl:text>-</xsl:text>
-                        <xsl:value-of select="replace($lastFolio, '\D+(\d+)([rvab]+)', '$1')"/>
-                        <xsl:text>&lt;span class="verso-recto"&gt;</xsl:text>
-                        <xsl:value-of select="replace($lastFolio, '\D+(\d+)([rvab]+)', '$2')"/>
-                        <xsl:text>&lt;/span&gt;</xsl:text>
-                    </xsl:if>
+                    <xsl:choose>
+                        <xsl:when  test="contains($tempTitle, 'Sg2')">
+                            <xsl:value-of select="$firstFolio"/>
+                            <xsl:if test="count($folia) > 1">
+                                <xsl:text>-</xsl:text>
+                                <xsl:value-of select="replace($lastFolio, '\D+(\d+)', '$1')"/>
+                            </xsl:if>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:text>fol.</xsl:text>
+                            <xsl:value-of select="replace($firstFolio, '\D+(\d+)([rvab]+)', '$1')"/>
+                            <xsl:text>&lt;span class="verso-recto"&gt;</xsl:text>
+                            <xsl:value-of select="replace($firstFolio, '\D+(\d+)([rvab]+)', '$2')"/>
+                            <xsl:value-of select="normalize-space($bindingFirst)"/>
+                            <xsl:text>&lt;/span&gt;</xsl:text>
+                            <xsl:if test="count($folia) > 1">
+                                <xsl:text>-</xsl:text>
+                                <xsl:value-of select="replace($lastFolio, '\D+(\d+)([rvab]+)', '$1')"/>
+                                <xsl:text>&lt;span class="verso-recto"&gt;</xsl:text>
+                                <xsl:value-of select="replace($lastFolio, '\D+(\d+)([rvab]+)', '$2')"/>
+                                <xsl:value-of select="normalize-space($bindingLast)"/>
+                                <xsl:text>&lt;/span&gt;</xsl:text>
+                            </xsl:if>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </xsl:element>
             </xsl:when>
             <xsl:otherwise>
@@ -140,7 +164,7 @@
     <xsl:param name="formNumber">
         <xsl:choose>
             <xsl:when test="$formTitle/tei:ref[@type='folia']">
-                <xsl:value-of select="normalize-space(replace($formTitle/tei:ref[@type='folia'], 'fol\.\s*|-', ''))"/>
+                <xsl:value-of select="normalize-space(replace($formTitle/tei:ref[@type='folia'], '(fol|p)\.\s*|-', ''))"/>
             </xsl:when>
             <xsl:when test="contains($formTitle, 'Tours 40')">
                 <xsl:text>form040_</xsl:text><xsl:value-of select="replace($formTitle/tei:ref[@type='form-name'], 'Tours 40\((.)\)', '$1')"/>
@@ -266,6 +290,10 @@
                                     <xsl:text>[</xsl:text>
                                     <xsl:value-of select="$formTitle/tei:ref[@type='markedUpFolia']"/>
                                     <xsl:text>]</xsl:text>
+                                </xsl:element>
+                                <xsl:element name="title" namespace="http://www.tei-c.org/ns/1.0">
+                                    <xsl:attribute name="type">subtitle</xsl:attribute>
+                                    <xsl:value-of select="normalize-space(replace($formTitle/tei:ref[@type='form-name'], $formTitle/tei:ref[@type='manuscript-desc'], ''))"/>
                                 </xsl:element>
                             </xsl:when>
                             <xsl:otherwise>
@@ -411,7 +439,59 @@
                     <xsl:attribute name="type">textpart</xsl:attribute>
                     <xsl:attribute name="subtype">formula</xsl:attribute>
                     <xsl:attribute name="n">1</xsl:attribute>
-                    <xsl:apply-templates select="@*|node()|comment()"/>
+                    <xsl:choose>
+                        <xsl:when test="contains($formTitle/tei:ref[@type='form-name'], 'Tours Capitulatio') and contains($manuscript, 'lat0')">
+                            <xsl:variable name="end">
+                                <xsl:for-each select="./tei:p">
+                                    <xsl:if test=".//tei:milestone[@n='Capitulatio Ende Einspaltig'] or ./preceding::tei:milestone[@n='Capitulatio Ende Einspaltig']">
+                                        <xsl:element name="row" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="style">text-center</xsl:attribute><xsl:element name="cell" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="cols">2</xsl:attribute><xsl:attribute name="xml:space">preserve</xsl:attribute><xsl:apply-templates select="node()|comment()"/></xsl:element></xsl:element>
+                                    </xsl:if>
+                                </xsl:for-each>
+                            </xsl:variable>
+                            <xsl:variable name="rightColumn">
+                                <xsl:for-each select="./tei:p">
+                                    <xsl:if test="(.//tei:milestone[@n='Capitula Zweispaltig P16 rechts'] or ./preceding::tei:milestone[@n='Capitula Zweispaltig P16 rechts']) and not(./preceding::tei:milestone[@n='Capitulatio Ende Einspaltig'] or .//tei:milestone[@n='Capitulatio Ende Einspaltig'])">
+                                        <xsl:element name="cell" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="xml:space">preserve</xsl:attribute><xsl:apply-templates select="node()|comment()"/></xsl:element>
+                                    </xsl:if>
+                                </xsl:for-each>
+                            </xsl:variable>
+                            <xsl:variable name="leftColumn">
+                                <xsl:for-each select="./tei:p">
+                                    <xsl:if test="(.//tei:milestone[@n='Capitula Zweispaltig Wa1 links'] or ./preceding::tei:milestone[@n='Capitula Zweispaltig Wa1 links']) and not(./preceding::tei:milestone[@n='Capitula Zweispaltig P16 rechts'] or .//tei:milestone[@n='Capitula Zweispaltig P16 rechts'])">
+                                        <xsl:element name="cell" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="xml:space">preserve</xsl:attribute><xsl:apply-templates select="node()|comment()"/></xsl:element>
+                                    </xsl:if>
+                                </xsl:for-each>
+                            </xsl:variable>
+                            <xsl:variable name="beginning">
+                                <xsl:for-each select="./tei:p">
+                                    <xsl:if test="not(./preceding::tei:milestone[@n='Capitula Zweispaltig Wa1 links'] or .//tei:milestone[@n='Capitula Zweispaltig Wa1 links'])">
+                                        <xsl:element name="row" namespace="http://www.tei-c.org/ns/1.0"><xsl:element name="cell" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="xml:space">preserve</xsl:attribute><xsl:apply-templates select="node()|comment()"/></xsl:element></xsl:element>
+                                    </xsl:if>
+                                </xsl:for-each>
+                            </xsl:variable>
+                            <xsl:element name="table" namespace="http://www.tei-c.org/ns/1.0">
+                                <xsl:attribute name="xml:id">capitula-table</xsl:attribute>
+                                <xsl:copy-of select="$beginning"></xsl:copy-of>
+                                <xsl:for-each select="$rightColumn/tei:cell">
+                                    <xsl:variable name="rightPosition" select="position()"/>
+                                    <xsl:element name="row" namespace="http://www.tei-c.org/ns/1.0">
+                                        <xsl:if test="$rightPosition = 1">
+                                            <xsl:attribute name="style">text-center</xsl:attribute>
+                                        </xsl:if>
+                                        <xsl:choose>
+                                            <xsl:when test="exists($leftColumn/tei:cell[$rightPosition])">
+                                                <xsl:copy-of select="$leftColumn/tei:cell[$rightPosition]"></xsl:copy-of>
+                                            </xsl:when>
+                                            <xsl:otherwise><xsl:element name="cell" namespace="http://www.tei-c.org/ns/1.0"/></xsl:otherwise>
+                                        </xsl:choose>
+                                        <xsl:copy-of select="."></xsl:copy-of>
+                                    </xsl:element>
+                                </xsl:for-each>
+                                <xsl:copy-of select="$end"></xsl:copy-of>
+                            </xsl:element>                            
+                        </xsl:when>
+                        <xsl:otherwise><xsl:apply-templates select="@*|node()|comment()"/></xsl:otherwise>
+                    </xsl:choose>
                 </xsl:element>
             </xsl:element>
         </xsl:copy>
@@ -454,7 +534,7 @@
                     <xsl:when test="ancestor::tei:label">
                         <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:value-of select="upper-case($pString)"/></xsl:element>
                     </xsl:when>
-                    <xsl:when test="ancestor::tei:hi[@style = 'font-size:14pt;']">
+                    <xsl:when test="ancestor::tei:hi[@style='font-size:14pt;' or @rend='font-size:14pt;']">
                         <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="type">no-search</xsl:attribute><xsl:value-of select="$pString"/></xsl:element>
                     </xsl:when>
                     <xsl:otherwise>
@@ -534,6 +614,7 @@
             <!--<xsl:when test="child::*[1] = tei:note">
                 <xsl:apply-templates/>
             </xsl:when>-->
+            <xsl:when test="contains(@style, 'display:none;') or contains(@rend, 'display:none;')"/>
             <xsl:when test="@rend = 'Book_Title'">
                 <xsl:element name="bibl" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="n">
@@ -548,13 +629,13 @@
                     <xsl:apply-templates/>
                 </xsl:element>
             </xsl:when>
-            <xsl:when test="not(parent::tei:locus) and (contains($rends, 'font-style:italic;') or contains($rends, 'bold') or contains($rends, 'font-variant:small-caps;') or contains($rends, 'vertical-align:super;') or contains($rends, 'vertical-align:sub;') or contains($rends, 'text-decoration:line-through;'))">
+            <xsl:when test="not(parent::tei:locus) and (contains($rends, 'font-style:italic;') or contains($rends, 'italic') or contains($rends, 'bold') or contains($rends, 'font-variant:small-caps;') or contains($rends, 'vertical-align:super;') or contains($rends, 'vertical-align:sub;') or contains($rends, 'text-decoration:line-through;'))">
                 <xsl:element name="seg" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="type">
                         <xsl:if test="contains($rends, 'bold')">
                             <xsl:text>platzhalter;</xsl:text>
                         </xsl:if>
-                        <xsl:if test="contains($rends, 'font-style:italic;')">
+                        <xsl:if test="contains($rends, 'font-style:italic;') or contains($rends, 'italic')">
                             <xsl:choose>
                                 <xsl:when test="ancestor-or-self::tei:note">
                                     <xsl:text>italic;</xsl:text>
@@ -634,7 +715,7 @@
             </xsl:if>
             <xsl:if test="contains(@style, 'margin-left:5mm;')"><xsl:attribute name="style">subparagraph</xsl:attribute></xsl:if>
             <xsl:apply-templates select="node()|comment()"/>
-        </xsl:element>
+        </xsl:element>        
     </xsl:template>
     
     <xsl:template match="tei:s">
@@ -705,6 +786,25 @@
     <xsl:template match="/tei:TEI/tei:text/tei:body/tei:div/tei:div/tei:p/tei:title" />
 
     <xsl:template match="/tei:TEI/tei:text/tei:body/tei:div/tei:div/tei:p/tei:locus" />
+    
+    <xsl:template match="tei:table">
+        <xsl:copy>
+            <xsl:apply-templates/>
+        </xsl:copy>
+    </xsl:template>
+    
+    <xsl:template match="tei:row">
+        <xsl:copy>
+            <xsl:apply-templates/>
+        </xsl:copy>
+    </xsl:template>
+    
+    <xsl:template match="tei:cell">
+        <xsl:copy>
+            <xsl:attribute name="xml:space">preserve</xsl:attribute>
+            <xsl:apply-templates/>
+        </xsl:copy>
+    </xsl:template>
     
     <!-- Remove the xml-stylesheet declaration that CTE sometimes has -->
     <xsl:template match="processing-instruction('xml-stylesheet')"/>

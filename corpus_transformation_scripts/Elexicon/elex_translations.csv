@@ -1,9 +1,12 @@
 abbas	Abt
 abbatissa	Äbtissin
+adoptio	Adoption
+aerarium	Staatskasse, Schatz
 agnatio	Verwandtschaft väterlicherseits
 agrarium	Ackerzins
 allodium	Besitz, volleigen
 amanuensis	Schreiber, Notar
+amicitia	Freundschaft, Verbundenheit, Bündnis
 anathema	Fluch, Bann
 ancilla	Sklavin, Unfreie
 antrustio	Gefolgsmann
@@ -16,6 +19,7 @@ basilica	Basilika, Kirche, Königshalle
 benedictio	Segen
 beneficium	Guttat, Verdienst, Wohltat
 boni_homines	Männer guten Leumunds
+Burgundi	Burgunder
 caespitaticum	Rasengeld
 camerarius	Kämmerer
 cancellarius	Schreiber, Notar
@@ -29,6 +33,7 @@ cautio	Schuldverschreibung
 cella	Zelle, Kammer, Raum
 cellula	Zelle, Kammer, Raum
 census	Steuer, Geldrente Abschätzung der Vermögensverhältnisse
+cessio	Übereignung, Abtretung
 chrisam	Salböl
 civis	Bürger, Bürgerin
 civitas	Gemeinde
@@ -42,6 +47,7 @@ commutatio	Tausch, Transformation
 compositio	Buße, Wiedergutmachung
 congregatio	Versammlung, Kongregation
 coniugium	Ehe
+consensus	Konsens
 consuetudo	Gewohnheit, Herkommen, Brauch
 contractus	Übereinkunft, Vertrag
 contulitio	Verleihung, Schenkung
@@ -56,6 +62,7 @@ diaconus	Diakon
 domesticus	Verwalter
 dominium	Herrschaft
 dominus	Herr
+donatio	Schenkung
 dos	Mitgift, Brautgabe
 dux	Heerführer, Herzog
 episcopus	Bischof
@@ -63,10 +70,15 @@ evacuaria	Ungültigkeitserklärung
 evacuaturia	Ungültigkeitserklärung
 evangelium	
 exceptor	Schreiber, Notar
+familia	Familie, Hausgemeinschaft
 festuca	Halm, Rute, Stäbchen
 fideiussor	Bürge, Erfüllungsgarant
+fidelis	Gläubiger, Getreuer
+fidelitas	Glaube, Treue
+fides	Glaube, Treue
 fiscus	Kasse, Fiskus
 forum	Marktplatz, Markt
+Franci	Franken
 frater	Bruder
 fredus	Bußzahlung, Friedensgeld
 gasindus	Gefolgsmann
@@ -83,6 +95,8 @@ ingenuus	Freigeborener, Freier
 iudex	Amtsträger, Richter
 ius	Recht
 lex	Gesetz
+Lex Romana	
+Lex Salica	
 liber	Freigeborener, Freier
 libertus	Freigelassener
 libra	Pfund
@@ -91,9 +105,11 @@ magister_militum	Heermeister
 maior	groß, weit, älter, mächtig, reich
 maior_domus	Hausmeier
 maleficium	Übeltat, Schaden, Zauberei
+mallus	Gerichtsversammlung, Gerichtsstätte, Gericht
 mancipium	Ding, Unfrei
 mandatus	Auftrag, Mandat
 mansus	Hofstatt, Hufe
+manumissio	Freilassung
 manumissio_per_denarium	Freilassung per Schatzwurf
 martyrarius	Hüter, Reliquienhüter
 matricula	Verzeichnis, Liste, Klerikermatrikel
@@ -125,10 +141,14 @@ patrocinium	Schutz, Schirm
 peccatum	Sünde
 peculium	Sondergut, Vermögen
 pietas	Pflichtgefühl, Frömmigkeit
+pignus	Pfand
 placitum	Versammlung, Gerichtsversammlung, Termin
+plebs	Volk
 polyptychon	Güterverzeichnis
 pondus	Pfund
 pontaticum	Brückenzoll
+populus	Volk
+possessio	Besitz
 potestas	Macht
 praepositus	Vorsteher, Oberer
 precarium	Präkarie, Landleihe
@@ -139,10 +159,12 @@ proprietas	Eigentum
 provincia	Provinz
 pulveraticum	Wegezoll, Staubgeld
 rachinburgus	Rachinbürge
+raptus	Frauenraub
 referendarius	Referendar
 regnum	Königsherrschaft, Königtum, Reich, Königreich
 res_publica	öffentliche Sache, Gemeinwesen, Staatswesen
 riga	Pflugdienst
+Romani	Römer
 rotaticum	Wagenzoll
 sacer	heilig, geheiligt, geweiht, sakral, verflucht
 sacramentum	Eid, Sakrament
@@ -159,13 +181,18 @@ stipulatio
 tabellio	Schreiber, Notar
 tabularius	Schreiber, Notar
 tagesbezeichungen_nach_dem_römischen_kalender	Kalenden, Nonen, Iden
+tanodono	Hochzeitsgabe
 teloneum	Zoll
+testamentum	Testament
+thesaurus	Schatz
 tonsur	Tonsur
 tonsurare	
 tractoria	Berechtigungsschreiben, Traktierbrief
+traditio	Übergabe
 uncia	Unze
 ususfructus	Fruchtgenuss, Nießbrauch
 vacuaturia	Ungültigkeitserklärung
+vassus	Vasall
 venditio	Kauf, Verkauf
 via_publica	öffentliche Straße
 villa	Landhaus, Landgut
@@ -174,6 +201,7 @@ vir_illustris	vornehmer Mann
 vir_laudabilis	lobenswerter Mann
 vir_magnificus	prächtiger, großartiger Mann
 vir_venerabilis	ehrwürdiger Mann
+wadium	Pfand, Wette
 weregeldus	Wergeld, Sühne, Bußgeld, Manngeld
 wirigeldus	Wergeld, Sühne, Bußgeld, Manngeld
 xenodochium	
@@ -184,4 +212,3 @@ signaculum	Zeichen, Siegel
 privilegium	Privileg, Sonderrecht, Urkunde
 confirmatio	Befestigen, stärken, bestätigen, gültig machen
 litterae_commendatitiae	Empfehlungsschreiben
-
