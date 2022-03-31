@@ -33,6 +33,7 @@
 	<lem elex="caritas">caritas</lem>
 	<lem elex="carropera">carropera</lem>
 	<lem elex="carta">carta</lem>
+	<lem elex="carta">charta</lem>
 	<lem elex="cathedra">cathedra</lem>
 	<lem elex="causa">causa</lem>
 	<lem elex="cautio">cautio</lem>
@@ -113,6 +114,7 @@
 	<lem elex="leudes">leudes</lem>
 	<lem elex="lex">lex</lem>
 	<lem elex="lex_romana">lex romana</lem>
+	<lem elex="lex_romana">lex romanus</lem>
 	<lem elex="lex_salica">lex salica</lem>
 	<lem elex="liber">liber</lem>
 	<lem elex="libertus">libertus</lem>
@@ -126,9 +128,10 @@
 	<lem elex="maleficium">maleficium</lem>
 	<lem elex="mallus">mallus</lem>
 	<lem elex="mancipium">mancipium</lem>
-	<lem elex="mandatus">mandatus</lem>
+	<lem elex="mandatum">mandatum</lem>
 	<lem elex="mansus">mansus</lem>
 	<lem elex="manumissio">manumissio</lem>
+	<lem elex="manumissio">ingenuitas</lem>
 	<lem elex="manumissio_per_denarium">manumissio</lem>
 	<lem elex="martyrarius">martyrarius</lem>
 	<lem elex="matricula">matricula</lem>
