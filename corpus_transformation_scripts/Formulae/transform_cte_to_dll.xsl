@@ -451,21 +451,21 @@
                             <xsl:variable name="rightColumn">
                                 <xsl:for-each select="./tei:p">
                                     <xsl:if test="(.//tei:milestone[@n='Capitula Zweispaltig P16 rechts'] or ./preceding::tei:milestone[@n='Capitula Zweispaltig P16 rechts']) and not(./preceding::tei:milestone[@n='Capitulatio Ende Einspaltig'] or .//tei:milestone[@n='Capitulatio Ende Einspaltig'])">
-                                        <xsl:element name="cell" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="xml:space">preserve</xsl:attribute><xsl:apply-templates select="node()|comment()"/></xsl:element>
+                                        <xsl:element name="cell" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="xml:space">preserve</xsl:attribute><xsl:attribute name="cols">1</xsl:attribute><xsl:apply-templates select="node()|comment()"/></xsl:element>
                                     </xsl:if>
                                 </xsl:for-each>
                             </xsl:variable>
                             <xsl:variable name="leftColumn">
                                 <xsl:for-each select="./tei:p">
                                     <xsl:if test="(.//tei:milestone[@n='Capitula Zweispaltig Wa1 links'] or ./preceding::tei:milestone[@n='Capitula Zweispaltig Wa1 links']) and not(./preceding::tei:milestone[@n='Capitula Zweispaltig P16 rechts'] or .//tei:milestone[@n='Capitula Zweispaltig P16 rechts'])">
-                                        <xsl:element name="cell" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="xml:space">preserve</xsl:attribute><xsl:apply-templates select="node()|comment()"/></xsl:element>
+                                        <xsl:element name="cell" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="xml:space">preserve</xsl:attribute><xsl:attribute name="cols">1</xsl:attribute><xsl:apply-templates select="node()|comment()"/></xsl:element>
                                     </xsl:if>
                                 </xsl:for-each>
                             </xsl:variable>
                             <xsl:variable name="beginning">
                                 <xsl:for-each select="./tei:p">
                                     <xsl:if test="not(./preceding::tei:milestone[@n='Capitula Zweispaltig Wa1 links'] or .//tei:milestone[@n='Capitula Zweispaltig Wa1 links'])">
-                                        <xsl:element name="row" namespace="http://www.tei-c.org/ns/1.0"><xsl:element name="cell" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="xml:space">preserve</xsl:attribute><xsl:apply-templates select="node()|comment()"/></xsl:element></xsl:element>
+                                        <xsl:element name="row" namespace="http://www.tei-c.org/ns/1.0"><xsl:element name="cell" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="xml:space">preserve</xsl:attribute><xsl:attribute name="cols">2</xsl:attribute><xsl:apply-templates select="node()|comment()"/></xsl:element></xsl:element>
                                     </xsl:if>
                                 </xsl:for-each>
                             </xsl:variable>
@@ -475,9 +475,15 @@
                                 <xsl:for-each select="$rightColumn/tei:cell">
                                     <xsl:variable name="rightPosition" select="position()"/>
                                     <xsl:element name="row" namespace="http://www.tei-c.org/ns/1.0">
-                                        <xsl:if test="$rightPosition = 1">
-                                            <xsl:attribute name="style">text-center</xsl:attribute>
-                                        </xsl:if>
+                                        <xsl:choose>
+                                            <xsl:when test="$rightPosition = 1">
+                                                <xsl:attribute name="style">text-center</xsl:attribute>
+                                                <xsl:attribute name="n">siglen-row</xsl:attribute>
+                                            </xsl:when>
+                                            <xsl:otherwise>
+                                                <xsl:attribute name="n">small-text-row</xsl:attribute>
+                                            </xsl:otherwise>
+                                        </xsl:choose>
                                         <xsl:choose>
                                             <xsl:when test="exists($leftColumn/tei:cell[$rightPosition])">
                                                 <xsl:copy-of select="$leftColumn/tei:cell[$rightPosition]"></xsl:copy-of>
@@ -546,35 +552,23 @@
     </xsl:template>
     
     <!-- Clean up the unnecessary attributes on the note elements. -->
-    <xsl:template match="tei:note">
+    <xsl:template match="tei:note" name="buildNotes">
         <xsl:variable name="previous_get_id" select="concat('#', preceding::tei:seg[position()=1]/@xml:id)"/>
-        <xsl:choose>
-            <xsl:when test="@targetEnd=$previous_get_id">
-                <xsl:copy>
-                    <xsl:attribute name="target" select="@targetEnd"/>
-                    <xsl:attribute name="type" select="@type"/>
-                    <xsl:if test="@n"><xsl:attribute name="n" select="@n"/></xsl:if>
-                    <xsl:apply-templates select="node()|comment()"/>
-                </xsl:copy>
-            </xsl:when>
-            <!-- The notes without @targetEnd are the marginal notes referring to sources. -->
-            <xsl:when test="not(@targetEnd)">
-                <xsl:copy>
-                    <xsl:attribute name="type">n1</xsl:attribute>
-                    <xsl:if test="@n"><xsl:attribute name="n" select="@n"/></xsl:if>
-                    <xsl:apply-templates select="node()|comment()"/>
-                </xsl:copy>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:copy>
-                    <xsl:attribute name="targetEnd" select="@targetEnd"/>
-                    <xsl:attribute name="type" select="@type"/>
-                    <xsl:if test="@n"><xsl:attribute name="n" select="@n"/></xsl:if>
-                    <xsl:apply-templates select="node()|comment()"/>
-                </xsl:copy>
-            </xsl:otherwise>
-        </xsl:choose>
+        <xsl:variable name="inner_note" select=".//tei:note"/>
+        <xsl:copy>
+            <xsl:if test="@targetEnd"><xsl:attribute name="targetEnd" select="@targetEnd"/></xsl:if>
+            <xsl:if test="@type"><xsl:attribute name="type" select="@type"/></xsl:if>
+            <xsl:attribute name="place" select="@place"/>
+            <xsl:if test="@n"><xsl:attribute name="n" select="@n"/></xsl:if>
+            <xsl:apply-templates select="node()|comment()"/>
+        </xsl:copy>
+        <xsl:for-each select=".//tei:note">
+            <xsl:call-template name="buildNotes"></xsl:call-template>
+        </xsl:for-each>
     </xsl:template>
+    
+    <!-- Delete note elements that are inside other note elements -->
+    <xsl:template match="tei:note//tei:note" />
     
     <!-- In the CTE output, when a note element immediately follows a hi element, the hi element is repeated and encloses the note -->
     <!--<xsl:template match="tei:hi[tei:note]">
@@ -786,6 +780,9 @@
     <xsl:template match="/tei:TEI/tei:text/tei:body/tei:div/tei:div/tei:p/tei:title" />
 
     <xsl:template match="/tei:TEI/tei:text/tei:body/tei:div/tei:div/tei:p/tei:locus" />
+    
+    <!-- This is to take out the formula numbers in Auvergne -->
+    <xsl:template match="tei:p[contains(@rend, '-cte-text-align:justify-center;')]" />
     
     <xsl:template match="tei:table">
         <xsl:copy>
