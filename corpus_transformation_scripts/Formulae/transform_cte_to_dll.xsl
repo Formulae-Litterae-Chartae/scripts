@@ -521,7 +521,16 @@
                     <xsl:with-param name="pMask"/>
     <!--                    <xsl:with-param name="pCount" select="$pCount"/>-->
                 </xsl:call-template>
-                <xsl:value-of select="$vSeparator"/>
+                <xsl:choose>
+                    <xsl:when test="normalize-space($vSeparator)">
+                        <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0">
+                            <xsl:attribute name="pos">punct</xsl:attribute>
+                            <xsl:attribute name="type">no-search</xsl:attribute>
+                            <xsl:value-of select="$vSeparator"/>
+                        </xsl:element>
+                    </xsl:when>
+                    <xsl:otherwise><xsl:value-of select="$vSeparator"/></xsl:otherwise>
+                </xsl:choose>
                 <xsl:call-template name="tokenize">
                     <xsl:with-param name="pString"
                         select="substring-after($pString,$vSeparator)"/>
@@ -554,7 +563,6 @@
     <!-- Clean up the unnecessary attributes on the note elements. -->
     <xsl:template match="tei:note" name="buildNotes">
         <xsl:variable name="previous_get_id" select="concat('#', preceding::tei:seg[position()=1]/@xml:id)"/>
-        <xsl:variable name="inner_note" select=".//tei:note"/>
         <xsl:copy>
             <xsl:if test="@targetEnd"><xsl:attribute name="targetEnd" select="@targetEnd"/></xsl:if>
             <xsl:if test="@type"><xsl:attribute name="type" select="@type"/></xsl:if>
