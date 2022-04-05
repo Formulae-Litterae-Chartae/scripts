@@ -521,16 +521,7 @@
                     <xsl:with-param name="pMask"/>
     <!--                    <xsl:with-param name="pCount" select="$pCount"/>-->
                 </xsl:call-template>
-                <xsl:choose>
-                    <xsl:when test="normalize-space($vSeparator)">
-                        <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0">
-                            <xsl:attribute name="pos">punct</xsl:attribute>
-                            <xsl:attribute name="type">no-search</xsl:attribute>
-                            <xsl:value-of select="$vSeparator"/>
-                        </xsl:element>
-                    </xsl:when>
-                    <xsl:otherwise><xsl:value-of select="$vSeparator"/></xsl:otherwise>
-                </xsl:choose>
+                <xsl:value-of select="$vSeparator"/>
                 <xsl:call-template name="tokenize">
                     <xsl:with-param name="pString"
                         select="substring-after($pString,$vSeparator)"/>
