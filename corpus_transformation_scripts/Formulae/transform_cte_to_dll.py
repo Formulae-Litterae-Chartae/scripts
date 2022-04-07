@@ -13,9 +13,9 @@ metadata_transformation_xslt = home_dir + '/scripts/corpus_transformation_script
 collection_metadata_xslt = home_dir + '/scripts/corpus_transformation_scripts/Formulae/create_collection_capitains_files.xsl'
 corpus_name = sys.argv[2] or 'andecavensis' # Used to build the folder structure
 destination_folder = getcwd() # The base folder where the corpus folder structure should be built
-latins = [] #glob(destination_folder + '/Latin/*.xml')
+latins = glob(destination_folder + '/Latin/*.xml')
 germans = glob(destination_folder + '/Deutsch/*.xml')
-transcriptions = [] #glob(destination_folder + '/Transkripte/**/*.xml', recursive=True)
+transcriptions = glob(destination_folder + '/Transkripte/**/*.xml', recursive=True)
 temp_files = []
 
 def remove_space_before_note(filename):
