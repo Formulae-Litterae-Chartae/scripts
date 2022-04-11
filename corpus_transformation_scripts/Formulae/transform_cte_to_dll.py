@@ -89,6 +89,7 @@ for transcription in sorted(transcriptions):
     remove_tei_dtd_reference(transcription)
     if 'Weltzeitalter' in transcription:
         new_name = '{base_folder}/data/{corpus}/computus/{corpus}.computus.deu001.xml'.format(base_folder=destination_folder, corpus=corpus_name)
+        form_num = 'computus'
     elif 'Capitula' in transcription:
         form_num = '0_capitula'
         if 'II' in transcription:
