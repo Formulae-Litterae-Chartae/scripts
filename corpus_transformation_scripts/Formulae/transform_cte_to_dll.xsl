@@ -521,16 +521,7 @@
                     <xsl:with-param name="pMask"/>
     <!--                    <xsl:with-param name="pCount" select="$pCount"/>-->
                 </xsl:call-template>
-                <xsl:choose>
-                    <xsl:when test="normalize-space($vSeparator)">
-                        <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0">
-                            <xsl:attribute name="pos">punct</xsl:attribute>
-                            <xsl:attribute name="type">no-search</xsl:attribute>
-                            <xsl:value-of select="$vSeparator"/>
-                        </xsl:element>
-                    </xsl:when>
-                    <xsl:otherwise><xsl:value-of select="$vSeparator"/></xsl:otherwise>
-                </xsl:choose>
+                <xsl:value-of select="$vSeparator"/>
                 <xsl:call-template name="tokenize">
                     <xsl:with-param name="pString"
                         select="substring-after($pString,$vSeparator)"/>
@@ -656,8 +647,16 @@
                         <xsl:if test="contains($rends, 'vertical-align:super;')">
                             <xsl:text>superscript;</xsl:text>
                         </xsl:if>                        
+                        <xsl:if test="contains($rends, 'superscript')">
+                            <xsl:text>superscript;</xsl:text>
+                            <xsl:text>smaller-text;</xsl:text>
+                        </xsl:if>
                         <xsl:if test="contains($rends, 'vertical-align:sub;')">
                             <xsl:text>subscript;</xsl:text>
+                        </xsl:if>
+                        <xsl:if test="contains($rends, 'subscript')">
+                            <xsl:text>subscript;</xsl:text>
+                            <xsl:text>smaller-text;</xsl:text>
                         </xsl:if>
                         <xsl:if test="contains($rends, 'font-size:smaller;')">
                             <xsl:text>smaller-text;</xsl:text>
@@ -716,6 +715,7 @@
                 </xsl:choose>
             </xsl:if>
             <xsl:if test="contains(@style, 'margin-left:5mm;')"><xsl:attribute name="style">subparagraph</xsl:attribute></xsl:if>
+            <xsl:if test="contains(@style, 'text-align: center;')"><xsl:attribute name="style">text-center</xsl:attribute></xsl:if>
             <xsl:apply-templates select="node()|comment()"/>
         </xsl:element>        
     </xsl:template>
@@ -801,6 +801,17 @@
     
     <xsl:template match="tei:row">
         <xsl:copy>
+            <xsl:if test="contains($formTitle/tei:ref[@type='form-name'], 'Tours Capitulatio')">
+                <xsl:choose>
+                    <xsl:when test="position() = 1">
+                        <xsl:attribute name="style">text-center</xsl:attribute>
+                        <xsl:attribute name="n">siglen-row</xsl:attribute>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:attribute name="n">small-text-row</xsl:attribute>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:if>
             <xsl:apply-templates/>
         </xsl:copy>
     </xsl:template>

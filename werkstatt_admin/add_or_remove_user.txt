@@ -1,14 +1,14 @@
 In [1]: from formulae.app import nemo (Not needed for Coenotur)
 
-In [2]: from formulae import create_app, db (Coenotur: from app import create_app, db)
+In [2]: from formulae import create_app, db (Coenotur: from app import create_app, db; FrontendCorrect: from app import app, db)
 
-In [3]: from formulae.models import User (Coenotur: from app.models import User)
+In [3]: from formulae.models import User (Coenotur/FrontendCorrect: from app.models import User)
 
-In [4]: app = create_app()
+In [4]: app = create_app() (Not needed in FrontendCorrect)
 
 In [5]: app.app_context().push()
 
-In [6]: u = User(username="USERNAME", email="EMAIL", project_team=???, default_locale="de")
+In [6]: u = User(username="USERNAME", email="EMAIL", project_team=???, default_locale="de") (FrontendCorrect: User(username="USERNAME", email="EMAIL", super_user=True/False))
 
 In [7]: u.set_password('PASSWORD')
 

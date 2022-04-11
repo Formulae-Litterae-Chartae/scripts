@@ -7,7 +7,7 @@ import os
 
 ns = {'tei': "http://www.tei-c.org/ns/1.0"}
 xmls = list()
-for corpus in ['auvergne', 'tours']: #['andecavensis', 'marculf', 'marmoutier_serfs', 'auvergne', 'marmoutier_vendomois', 'marmoutier_vendomois_appendix', 'marmoutier_dunois', 'telma_cormery', 'telma_marmoutier', 'telma_martin_tours', 'tours']:
+for corpus in ['andecavensis']: #['andecavensis', 'marculf', 'marmoutier_serfs', 'auvergne', 'marmoutier_vendomois', 'marmoutier_vendomois_appendix', 'marmoutier_dunois', 'telma_cormery', 'telma_marmoutier', 'telma_martin_tours', 'tours']:
     xmls += glob('/home/matt/formulae-corpora/data/{}/**/*.lat00*.xml'.format(corpus), recursive=True)
     xmls += glob('/home/matt/formulae-corpora/data/{}/**/*.deu001.xml'.format(corpus), recursive=True)
 lex_xml = etree.parse('/home/matt/scripts/corpus_transformation_scripts/Elexicon/Begriffe_eLexikon.xml')
@@ -119,7 +119,7 @@ for xml_file in sorted(xmls):
         elif xml.xpath('//tei:w[not(@lemma) and not(@type="no-search")]', namespaces=ns):
             print(xml_file, '\n\t', '; '.join(x.text for x in xml.xpath('//tei:w[not(@lemma)]', namespaces=ns)))
         else:
-            xml.getroottree().write(xml_file)
+            xml.getroottree().write(xml_file, encoding='utf-8')
             #subprocess.run(['java', '-jar',  '/home/matt/Downloads/SaxonHE9-8-0-11J/saxon9he.jar', '{}'.format(xml_file), '/home/matt/docx_tei_cte_conversion/ElasticSearch/extract_text_search_to_xml.xsl', '-o:/home/matt/results/formulae/search/{}'.format(xml_file.split('/')[-1].replace('xml', 'txt'))])
     else:
         latin_words = xml.xpath('//tei:seg[@type="latin-word;"]/tei:w', namespaces=ns)
@@ -129,7 +129,7 @@ for xml_file in sorted(xmls):
                     w.set('lemmaRef', lex_dict[w.text.lower()])
             else:
                 set_lemmaRef(w, w.text.lower(), latin_words[i + 1].text.lower() if len(latin_words) > i + 1 else ' ', latin_words[i - 1].text.lower() if i > 0 else ' ')
-        xml.getroottree().write(xml_file)
+        xml.getroottree().write(xml_file, encoding='utf-8')
 
 # TO RECREATE THE TEXT FILES USED TO POPULATE THE ELASTICSEARCH INDEX
 
