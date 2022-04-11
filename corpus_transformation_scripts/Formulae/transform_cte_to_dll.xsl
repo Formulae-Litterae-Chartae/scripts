@@ -465,7 +465,7 @@
                             <xsl:variable name="beginning">
                                 <xsl:for-each select="./tei:p">
                                     <xsl:if test="not(./preceding::tei:milestone[@n='Capitula Zweispaltig Wa1 links'] or .//tei:milestone[@n='Capitula Zweispaltig Wa1 links'])">
-                                        <xsl:element name="row" namespace="http://www.tei-c.org/ns/1.0"><xsl:element name="cell" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="xml:space">preserve</xsl:attribute><xsl:attribute name="cols">2</xsl:attribute><xsl:apply-templates select="node()|comment()"/></xsl:element></xsl:element>
+                                        <xsl:element name="row" namespace="http://www.tei-c.org/ns/1.0"><xsl:if test="position() = 1"><xsl:attribute name="style">text-center</xsl:attribute></xsl:if><xsl:element name="cell" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="xml:space">preserve</xsl:attribute><xsl:attribute name="cols">2</xsl:attribute><xsl:apply-templates select="node()|comment()"/></xsl:element></xsl:element>
                                     </xsl:if>
                                 </xsl:for-each>
                             </xsl:variable>
@@ -794,6 +794,7 @@
     
     <xsl:template match="tei:table">
         <xsl:copy>
+            <xsl:if test="contains($formTitle/tei:ref[@type='form-name'], 'Tours Capitulatio') and contains($manuscript, 'deu0')"><xsl:attribute name="xml:id">capitula-table</xsl:attribute></xsl:if>
             <xsl:apply-templates/>
         </xsl:copy>
     </xsl:template>

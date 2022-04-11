@@ -37,7 +37,7 @@
         <xsl:param name="parentUrn">
             <xsl:choose>
                 <xsl:when test="matches(string-join($urn, '.'), 'andecavensis.form\d\d\d.fu2|andecavensis.computus.fu2')">
-                    <xsl:text>urn:cts:formulae:fu2.</xsl:text><xsl:value-of select="normalize-space(replace(substring-before(substring-after($title, '['), ']'), 'fol\.\s*|-', ''))"/>
+                    <xsl:text>urn:cts:formulae:fu2.</xsl:text><xsl:value-of select="normalize-space(replace($title, 'fol\.\s*|-|&lt;span class=&quot;verso-recto&quot;&gt;|&lt;/span&gt;', ''))"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="concat($urn[1], '.', $urn[2])"/>
