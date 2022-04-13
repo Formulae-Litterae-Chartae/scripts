@@ -727,7 +727,7 @@
     <!-- Removes the @rend attribute from the <mentioned> elements in the apparatus notes. -->
     <xsl:template match="tei:mentioned">
         <xsl:copy>
-            <xsl:apply-templates select="node()|comment()"/>
+            <xsl:value-of select="replace(string-join(.//text(), ''), '\d', '')"/>
         </xsl:copy>
     </xsl:template>
     

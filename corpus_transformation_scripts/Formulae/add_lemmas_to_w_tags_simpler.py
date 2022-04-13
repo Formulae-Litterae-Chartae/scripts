@@ -7,7 +7,7 @@ import os
 
 ns = {'tei': "http://www.tei-c.org/ns/1.0"}
 xmls = list()
-for corpus in ['andecavensis']: #['andecavensis', 'marculf', 'marmoutier_serfs', 'auvergne', 'marmoutier_vendomois', 'marmoutier_vendomois_appendix', 'marmoutier_dunois', 'telma_cormery', 'telma_marmoutier', 'telma_martin_tours', 'tours']:
+for corpus in ['marculf']: #['andecavensis', 'marculf', 'marmoutier_serfs', 'auvergne', 'marmoutier_vendomois', 'marmoutier_vendomois_appendix', 'marmoutier_dunois', 'telma_cormery', 'telma_marmoutier', 'telma_martin_tours', 'tours']:
     xmls += glob('/home/matt/formulae-corpora/data/{}/**/*.lat00*.xml'.format(corpus), recursive=True)
     xmls += glob('/home/matt/formulae-corpora/data/{}/**/*.deu001.xml'.format(corpus), recursive=True)
 lex_xml = etree.parse('/home/matt/scripts/corpus_transformation_scripts/Elexicon/Begriffe_eLexikon.xml')
