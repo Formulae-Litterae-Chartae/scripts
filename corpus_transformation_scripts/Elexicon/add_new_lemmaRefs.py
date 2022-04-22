@@ -53,8 +53,8 @@ for l in latins:
         if lemma in lex_dict.keys(): 
             if set_lemmaRef(w_tag, lemma, next_lem, prev_lem) is False: 
                 w_tag.set('lemmaRef', lex_dict[lemma]) 
-        else: 
-            set_lemmaRef(w_tag, lemma, next_lem, prev_lem) 
+        elif set_lemmaRef(w_tag, lemma, next_lem, prev_lem) is False:
+            w_tag.attrib.pop('lemmaRef', None)
     xml.write(l, encoding="utf-8", pretty_print=True) 
     
 for g in germans: 
