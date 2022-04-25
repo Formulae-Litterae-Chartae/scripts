@@ -26,6 +26,7 @@
 	<lem elex="boni_homines">boni homines</lem>
 	<lem elex="boni_homines">bonus homo</lem>
 	<lem elex="burgundi">burgundi</lem>
+	<lem elex="burgundi">burgundio</lem>
 	<lem elex="caespitaticum">caespitaticum</lem>
 	<lem elex="camerarius">camerarius</lem>
 	<lem elex="cancellarius">cancellarius</lem>
@@ -92,6 +93,7 @@
 	<lem elex="fiscus">fiscus</lem>
 	<lem elex="forum">forum</lem>
 	<lem elex="franci">franci</lem>
+	<lem elex="franci">francus</lem>
 	<lem elex="frater">frater</lem>
 	<lem elex="fredus">fredus</lem>
 	<lem elex="gasindus">gasindus</lem>
@@ -193,6 +195,7 @@
 	<lem elex="res_publica">res publicus</lem>
 	<lem elex="riga">riga</lem>
 	<lem elex="romani">romani</lem>
+	<lem elex="romani">romanus</lem>
 	<lem elex="rotaticum">rotaticum</lem>
 	<lem elex="sacer">sacer</lem>
 	<lem elex="sacramentum">sacramentum</lem>
