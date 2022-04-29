@@ -62,6 +62,16 @@
                     </xsl:element>
                 </xsl:if>
             </xsl:when>
+            <xsl:when test="matches($tempTitle, 'Flavigny') and matches($tempTitle, 'Paris|Kopenhagen')">                    
+                <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
+                    <xsl:attribute name="type">form-name</xsl:attribute>
+                    <xsl:value-of select="replace($tempTitle, ' Deutsch| Übersetzung|\.xml', '')"/>
+                </xsl:element>
+                <xsl:choose>
+                    <xsl:when test="matches($tempTitle, 'Deutsch|Übersetzung')"><xsl:element name="xml:lang">deu</xsl:element></xsl:when>
+                    <xsl:otherwise><xsl:element name="xml:lang">lat</xsl:element></xsl:otherwise>
+                </xsl:choose>
+            </xsl:when>
             <xsl:when test="contains($tempTitle, '(')">
                 <xsl:variable name="folia" select="/tei:TEI/tei:text/tei:body/tei:p[starts-with(., '[p.') or starts-with(., '[fol.')]"/>
                 <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
@@ -176,6 +186,8 @@
                 <xsl:choose>
                     <xsl:when test="contains($formTitle/tei:ref[@type='form-name'], 'II')"><xsl:text>2_</xsl:text></xsl:when>
                     <xsl:when test="contains($formTitle/tei:ref[@type='form-name'], 'I')"><xsl:text>1_</xsl:text></xsl:when>
+                    <xsl:when test="contains($formTitle/tei:ref[@type='form-name'], '(Paris)')"><xsl:text>2_</xsl:text></xsl:when>
+                    <xsl:when test="contains($formTitle/tei:ref[@type='form-name'], '(Kopenhagen)')"><xsl:text>3_</xsl:text></xsl:when>
                     <xsl:otherwise><xsl:text>0_</xsl:text></xsl:otherwise>
                 </xsl:choose>
                 <xsl:text>capitula</xsl:text>
@@ -210,6 +222,19 @@
             </xsl:when>
             <xsl:when test="contains($formTitle/tei:ref[@type='form-name'], 'Titel')">
                 <xsl:text>form000</xsl:text>
+            </xsl:when>
+            <xsl:when test="contains($formTitle/tei:ref[@type='form-name'], 'Flavigny')">
+                <xsl:choose>
+                    <xsl:when test="contains($formTitle/tei:ref[@type='form-name'], '(Paris)')">
+                        <xsl:text>form2_</xsl:text><xsl:number value="replace($formTitle/tei:ref[@type='form-name'], '.*?(\d+)(\w?).*', '$1')" format="001"/><xsl:value-of select="replace($formTitle/tei:ref[@type='form-name'], '.*?(\d+)(\w?).*', '$2')"/>
+                    </xsl:when>
+                    <xsl:when test="contains($formTitle/tei:ref[@type='form-name'], '(Kopenhagen)')">
+                        <xsl:text>form3_</xsl:text><xsl:number value="replace($formTitle/tei:ref[@type='form-name'], '.*?(\d+)(\w?).*', '$1')" format="001"/><xsl:value-of select="replace($formTitle/tei:ref[@type='form-name'], '.*?(\d+)(\w?).*', '$2')"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>form1_</xsl:text><xsl:number value="replace($formTitle/tei:ref[@type='form-name'], '.*?(\d+)(\w?).*', '$1')" format="001"/><xsl:value-of select="replace($formTitle/tei:ref[@type='form-name'], '.*?(\d+)(\w?).*', '$2')"/>
+                    </xsl:otherwise>
+                </xsl:choose>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:text>form</xsl:text><xsl:number value="replace($formTitle/tei:ref[@type='form-name'], '.*?(\d+)(\w?).*', '$1')" format="001"/><xsl:value-of select="replace($formTitle/tei:ref[@type='form-name'], '.*?(\d+)(\w?).*', '$2')"/>
