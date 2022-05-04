@@ -62,7 +62,7 @@
                     </xsl:element>
                 </xsl:if>
             </xsl:when>
-            <xsl:when test="matches($tempTitle, 'Flavigny') and matches($tempTitle, 'Paris|Kopenhagen')">                    
+            <xsl:when test="matches($tempTitle, 'Flavigny') and matches($tempTitle, '\(Paris\)|\(Kopenhagen\)')">                    
                 <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="type">form-name</xsl:attribute>
                     <xsl:value-of select="replace($tempTitle, ' Deutsch| Übersetzung|\.xml', '')"/>
@@ -77,7 +77,7 @@
                 <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="type">form-name</xsl:attribute>
                     <xsl:choose>
-                        <xsl:when test="matches($tempTitle, 'Weltzeitalter|Capitula|Incipit|Praefatio|Ergänzung')">
+                        <xsl:when test="matches($tempTitle, 'Weltzeitalter|Capitula|Incipit|Praefatio|Ergänzung|Flavigny')">
                             <xsl:value-of select="normalize-space(substring-before($tempTitle, '('))"/>
                         </xsl:when>
                         <xsl:otherwise>
@@ -101,6 +101,9 @@
                             <xsl:text>Fulda, Hessische Landesbibliothek, D1</xsl:text>
                         </xsl:when>
                         <xsl:when test="matches($tempTitle, 'Mar[ck]ulf I* ?(Ergänzungen|Capitula|Incipit)')">
+                            <xsl:value-of select="normalize-space(string-join(subsequence(tokenize(substring-before($tempTitle, '('), '\s+'), 4), ' '))"/>
+                        </xsl:when>
+                        <xsl:when test="matches($tempTitle, 'Flavigny.*(Paris|Kopenhagen)')">
                             <xsl:value-of select="normalize-space(string-join(subsequence(tokenize(substring-before($tempTitle, '('), '\s+'), 4), ' '))"/>
                         </xsl:when>
                         <xsl:otherwise>
@@ -318,7 +321,7 @@
                                 </xsl:element>
                                 <xsl:element name="title" namespace="http://www.tei-c.org/ns/1.0">
                                     <xsl:attribute name="type">subtitle</xsl:attribute>
-                                    <xsl:value-of select="normalize-space(replace($formTitle/tei:ref[@type='form-name'], $formTitle/tei:ref[@type='manuscript-desc'], ''))"/>
+                                    <xsl:value-of select="replace(normalize-space(replace($formTitle/tei:ref[@type='form-name'], $formTitle/tei:ref[@type='manuscript-desc'], '')), ',$', '')"/>
                                 </xsl:element>
                             </xsl:when>
                             <xsl:otherwise>
@@ -581,7 +584,10 @@
         <xsl:variable name="previous_get_id" select="concat('#', preceding::tei:seg[position()=1]/@xml:id)"/>
         <xsl:copy>
             <xsl:if test="@targetEnd"><xsl:attribute name="targetEnd" select="@targetEnd"/></xsl:if>
-            <xsl:if test="@type"><xsl:attribute name="type" select="@type"/></xsl:if>
+            <xsl:choose>
+                <xsl:when test="@type"><xsl:attribute name="type" select="@type"/></xsl:when>
+                <xsl:otherwise><xsl:attribute name="type">n1</xsl:attribute></xsl:otherwise>
+            </xsl:choose>
             <xsl:attribute name="place" select="@place"/>
             <xsl:if test="@n"><xsl:attribute name="n" select="@n"/></xsl:if>
             <xsl:apply-templates select="node()|comment()"/>

@@ -13,9 +13,9 @@ metadata_transformation_xslt = home_dir + '/scripts/corpus_transformation_script
 collection_metadata_xslt = home_dir + '/scripts/corpus_transformation_scripts/Formulae/create_collection_capitains_files.xsl'
 corpus_name = sys.argv[2] or 'andecavensis' # Used to build the folder structure
 destination_folder = getcwd() # The base folder where the corpus folder structure should be built
-latins = []#glob(destination_folder + '/Latin/*.xml')
+latins = glob(destination_folder + '/Latin/*.xml')
 germans = glob(destination_folder + '/Deutsch/*.xml')
-transcriptions = []#glob(destination_folder + '/Transkripte/**/*.xml', recursive=True)
+transcriptions = glob(destination_folder + '/Transkripte/**/*.xml', recursive=True)
 temp_files = []
 
 def remove_space_before_note(filename):
@@ -47,9 +47,9 @@ def produce_form_num(filename):
             form_num = '2_capitula'
         elif 'I' in filename:
             form_num = '1_capitula'
-        elif '(Paris)' in filename:
+        elif 'Paris' in filename:
             form_num = '2_capitula'
-        elif '(Kopenhagen)' in filename:
+        elif 'Kopenhagen' in filename:
             form_num = '3_capitula'
     elif 'Incipit' in filename:
         form_num = '1_incipit'
@@ -72,9 +72,9 @@ def produce_form_num(filename):
     else:
         num_match = re.search(r',?([\d]+)(\w?)', filename)
         form_num = "{:03}".format(int(num_match[1])) + num_match[2]
-        if re.search('II,|Flavigny.*\(Paris\)', filename):
+        if re.search('II,|Flavigny.*Paris', filename):
             form_num = 'form2_' + form_num
-        elif re.search('Flavigny.*\(Kopenhagen\)', filename):
+        elif re.search('Flavigny.*Kopenhagen', filename):
             form_num = 'form3_' + form_num
         elif re.search('I,|Flavigny', german):
             form_num = 'form1_' + form_num
@@ -91,48 +91,7 @@ for german in germans:
 for transcription in sorted(transcriptions):
     print(transcription)
     remove_tei_dtd_reference(transcription)
-    if 'Weltzeitalter' in transcription:
-        new_name = '{base_folder}/data/{corpus}/computus/{corpus}.computus.deu001.xml'.format(base_folder=destination_folder, corpus=corpus_name)
-        form_num = 'computus'
-    elif 'Capitula' in transcription:
-        form_num = '0_capitula'
-        if 'II' in transcription:
-            form_num = '2_capitula'
-        elif 'I' in transcription:
-            form_num = '1_capitula'
-        new_name = '{base_folder}/data/{corpus}/{form}/{corpus}.{form}.deu001.xml'.format(base_folder=destination_folder, corpus=corpus_name, form=form_num)
-    elif 'Incipit' in transcription:
-        form_num = '1_incipit'
-        if 'II' in transcription:
-            form_num = '2_incipit'
-        new_name = '{base_folder}/data/{corpus}/{form}/{corpus}.{form}.deu001.xml'.format(base_folder=destination_folder, corpus=corpus_name, form=form_num)
-    elif 'Praefatio' in transcription:
-        form_num = 'form000'
-        new_name = '{base_folder}/data/{corpus}/{form}/{corpus}.{form}.deu001.xml'.format(base_folder=destination_folder, corpus=corpus_name, form=form_num)
-    elif 'Ergänzung' in transcription:
-        if re.search(r'mar[ck]ulf', transcription):
-            form_num = 'form3_'
-            if ',' in transcription:
-                form_num = form_num + re.sub(r'.*(\d),(\d).*', r'\1', transcription)
-                form_num = form_num + '_{:03}'.format(int(re.sub(r'.*(\d),(\d).*', r'\2', transcription)))
-            else:
-                form_num = 'form3_2_001'
-        else:
-            form_num = 'form2_' + '{:03}'.format(int(re.sub(r'.*?(\d).*', r'\1', transcription)))
-        new_name = '{base_folder}/data/{corpus}/{form}/{corpus}.{form}.deu001.xml'.format(base_folder=destination_folder, corpus=corpus_name, form=form_num)
-    elif 'Tours 40' in transcription:
-        print(transcription)
-        form_num = 'form040_' + re.sub(r'.*?Tours 40\((.)\).*', r'\1', transcription)
-        print(form_num)
-    else:
-        num_match = re.search(r',?([\d]+)(\w?)', transcription)
-        form_num = "{:03}".format(int(num_match[1])) + num_match[2]
-        if 'II,' in transcription:
-            form_num = '2_' + form_num
-        elif 'I,' in transcription:
-            form_num = '1_' + form_num
-        form_num = 'form' + form_num
-        new_name = '{base_folder}/data/{corpus}/form{entry}/{corpus}.form{entry}.deu001.xml'.format(base_folder=destination_folder, corpus=corpus_name, entry=form_num)
+    form_num = produce_form_num(transcription)
     try:
         manuscript = re.search(r'\((\w+)\)\Z', transcription.replace('.xml', '')).group(1).lower()
     except:

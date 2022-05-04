@@ -26,6 +26,14 @@
                         <xsl:otherwise><xsl:value-of select="replace(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)], 'Marculf |Tours ', '')"/></xsl:otherwise>
                     </xsl:choose>
                 </xsl:when>
+                <xsl:when test="matches(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)], 'Flavigny')">
+                    <xsl:choose>
+                        <xsl:when test="matches(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)], 'Capitulatio')">
+                            <xsl:value-of select="replace(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)], 'Flavigny ', '')"/>
+                        </xsl:when>
+                        <xsl:otherwise><xsl:value-of select="normalize-space(replace(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)], 'Flavigny ?(\(Paris\)|\(Kopenhagen\))? (\d+\w?)', '$2 $1'))"/></xsl:otherwise>
+                    </xsl:choose>
+                </xsl:when>
                 <xsl:when test="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:msDesc">
                     <xsl:value-of select="replace(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)], '.*\[(.*)\]$', '$1')"/>
                 </xsl:when>
