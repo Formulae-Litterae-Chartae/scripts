@@ -135,7 +135,7 @@ for e in sorted(bib_database.entries, key=author_year_sort):
             monogr.append(edition)
         monogr.append(imprint)
         entry = E.biblStruct(monogr, series, url, {'type': e['ENTRYTYPE']})
-    elif e['ENTRYTYPE'] == 'incollection':
+    elif e['ENTRYTYPE'] in ['incollection', 'inproceedings']:
         analytic = E.analytic() #author, title)
         for a in author:
             analytic.append(a)
@@ -161,7 +161,7 @@ for e in sorted(bib_database.entries, key=author_year_sort):
         except:
             print(e)
         entry = E.biblStruct(analytic, monogr, url, {'type': e['ENTRYTYPE']})
-    elif e['ENTRYTYPE'] == 'misc':
+    elif e['ENTRYTYPE'] in ['misc', 'techreport']:
         analytic = E.analytic() #author, title)
         for a in author:
             analytic.append(a)
