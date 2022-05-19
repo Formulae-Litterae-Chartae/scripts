@@ -688,9 +688,7 @@
             <xsl:if test="$currentNode/child::tei:cell[position()=7]//text()">
                 <xsl:element name="note" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="type">echtheit</xsl:attribute>
-                    <xsl:if test="boolean(index-of(('Acte faux'), $currentNode/child::tei:cell[position()=7]))">
-                        <xsl:attribute name="n">forgery</xsl:attribute>
-                    </xsl:if>
+                    <xsl:attribute name="n">forgery</xsl:attribute>
                     <xsl:value-of select="$currentNode/child::tei:cell[position()=7]"/>
                 </xsl:element>
             </xsl:if>
