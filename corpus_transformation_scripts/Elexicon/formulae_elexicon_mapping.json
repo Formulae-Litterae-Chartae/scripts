@@ -1561,6 +1561,10 @@
 		"urn:cts:formulae:andecavensis.form034.lat001": [
 			"Annu iiii <span class='elex-word'>re[g]num</span> domni nostri"
 		],
+		"urn:cts:formulae:elexicon.franci.deu001": [
+			"Führungsschicht des <span class='elex-word'>regnum</span> Francorum, des",
+			"das gesamte <span class='elex-word'>regnum</span> Francorum oder,"
+		],
 		"urn:cts:formulae:elexicon.res_publica.deu001": [
 			"dem monarchischen <span class='elex-word'>regnum</span> gegenüber In",
 			"Konkurrenz zu <span class='elex-word'>regnum</span>. Betonte letzterer"
@@ -1733,8 +1737,18 @@
 			"defensor, vel <span class='elex-word'>cur[i]a</span> pubplica ipsius",
 			"et ordo <span class='elex-word'>curie</span> dixerunt: Et"
 		],
+		"urn:cts:formulae:elexicon.consilium.deu001": [
+			"conventus und <span class='elex-word'>curia</span> einer der"
+		],
 		"urn:cts:formulae:elexicon.episcopus.deu001": [
 			"der städtischen <span class='elex-word'>curia</span> und konnten"
+		],
+		"urn:cts:formulae:flavigny.form1_003.deu001": [
+			"mit der <span class='elex-word'>curia</span> publica und"
+		],
+		"urn:cts:formulae:flavigny.form1_004.deu001": [
+			"der ganzen <span class='elex-word'>curia</span> publica Ich",
+			"mit der <span class='elex-word'>curia</span> publica und"
 		],
 		"urn:cts:formulae:marculf.form2_037.deu001": [
 			"der ganzen <span class='elex-word'>curia</span> dieser Stadt:"
@@ -2034,6 +2048,9 @@
 			"die des  <span class='elex-word'>vir</span> <span class='elex-word'>magnificus</span> Bis",
 			"erscheint der <span class='elex-word'>vir</span> <span class='elex-word'>magnificus</span> bis"
 		],
+		"urn:cts:formulae:flavigny.form1_004.deu001": [
+			"sprach der <span class='elex-word'>vir</span> <span class='elex-word'>magnificus</span> Soundso"
+		],
 		"urn:cts:formulae:marculf.form1_010.deu001": [
 			"durch die <span class='elex-word'>viri</span> <span class='elex-word'>magnifici</span> und"
 		],
@@ -2081,6 +2098,10 @@
 			"lobenswerter Mann <span class='elex-word'>Vir</span> <span class='elex-word'>laudabilis</span> erscheint",
 			"Mittelalter ist <span class='elex-word'>vir</span> <span class='elex-word'>laudabilis</span> hingegen"
 		],
+		"urn:cts:formulae:flavigny.form1_004.deu001": [
+			"zum anwesenden <span class='elex-word'>vir</span> <span class='elex-word'>laudabilis</span>, defensor",
+			"nehme.“Der <span class='elex-word'>vir</span> <span class='elex-word'>laudabilis</span> defensor"
+		],
 		"urn:cts:formulae:marculf.form2_037.deu001": [
 			"zum anwesenden <span class='elex-word'>vir</span> <span class='elex-word'>laudabilis</span>, defensor"
 		],
@@ -2124,6 +2145,19 @@
 		],
 		"urn:cts:formulae:elexicon.curator.deu001": [
 			"Amt des <span class='elex-word'>defensor</span> civitatis an"
+		],
+		"urn:cts:formulae:flavigny.form1_003.deu001": [
+			"und dem <span class='elex-word'>defensor</span> zur Ausführung"
+		],
+		"urn:cts:formulae:flavigny.form1_004.deu001": [
+			"vir laudabilis, <span class='elex-word'>defensor</span> Soundso, und",
+			"oh tüchtiger <span class='elex-word'>defensor</span> und Euch,",
+			"und dem <span class='elex-word'>defensor</span> zur Ausführung",
+			"vir honestus <span class='elex-word'>defensor</span> Soundso sprach:",
+			"vir honestus <span class='elex-word'>defensor</span> Soundso: Die",
+			"vir laudabilis <span class='elex-word'>defensor</span> Soundso und",
+			"oh Guter <span class='elex-word'>defensor</span> dass es",
+			"vir venerabilis <span class='elex-word'>defensor</span> Soundso und"
 		],
 		"urn:cts:formulae:marculf.form1_008.lat001": [
 			"pupillis maximus <span class='elex-word'>defensor</span> appareas,latronum"
@@ -2270,6 +2304,16 @@
 		"urn:cts:formulae:elexicon.signaculum.deu001": [
 			"öffentlichen Bücher (<span class='elex-word'>gesta</span> <span class='elex-word'>municipalia</span>) gebunden"
 		],
+		"urn:cts:formulae:flavigny.form1_002.deu001": [
+			"bei den <span class='elex-word'>gesta</span> <span class='elex-word'>municipalia</span> des"
+		],
+		"urn:cts:formulae:flavigny.form1_003.deu001": [
+			"und den  <span class='elex-word'>gesta</span> <span class='elex-word'>municipalia</span> anfügst."
+		],
+		"urn:cts:formulae:flavigny.form1_004.deu001": [
+			"und den <span class='elex-word'>gesta</span> <span class='elex-word'>municipalia</span> anfügen",
+			"in den  <span class='elex-word'>gesta</span> <span class='elex-word'>municipalia</span> bewahren.“"
+		],
 		"urn:cts:formulae:marculf.form2_003.deu001": [
 			"Kurialen – den <span class='elex-word'>gesta</span> <span class='elex-word'>municipalia</span> hinzufügen"
 		],
@@ -2343,6 +2387,19 @@
 		"urn:cts:formulae:elexicon.vir_venerabilis.deu001": [
 			"Ehrentitel des  <span class='elex-word'>vir</span> <span class='elex-word'>venerabilis</span> in",
 			"Kleriker als  <span class='elex-word'>viri</span> <span class='elex-word'>venerabiles</span> bezeichnet"
+		],
+		"urn:cts:formulae:flavigny.form1_001.deu001": [
+			"dem der <span class='elex-word'>vir</span> <span class='elex-word'>venerabilis</span> Abt"
+		],
+		"urn:cts:formulae:flavigny.form1_004.deu001": [
+			"sprachen der <span class='elex-word'>vir</span> <span class='elex-word'>venerabilis</span> defensor"
+		],
+		"urn:cts:formulae:flavigny.form1_009.deu001": [
+			"erfahren: Der <span class='elex-word'>vir</span> <span class='elex-word'>venerabilis</span> Soundso,",
+			"daraufhin denselben    <span class='elex-word'>vir</span> <span class='elex-word'>venerabilis</span> Abt"
+		],
+		"urn:cts:formulae:flavigny.form3_001.deu001": [
+			"dem der <span class='elex-word'>vir</span> <span class='elex-word'>venerabilis</span> Bischof"
 		],
 		"urn:cts:formulae:marculf.form1_006.deu001": [
 			"oder dem <span class='elex-word'>vir</span> <span class='elex-word'>venerabilis</span> Soundso"
@@ -2648,6 +2705,9 @@
 		],
 		"urn:cts:formulae:elexicon.uncia.deu001": [
 			"Drittel eines <span class='elex-word'>solidus</span> (als Gewichtseinheit)"
+		],
+		"urn:cts:formulae:flavigny.form3_003.deu001": [
+			"von soundsovielen <span class='elex-word'>solidi</span> auf dass"
 		],
 		"urn:cts:formulae:marculf.form1_018.deu001": [
 			"Wergeld 600 <span class='elex-word'>solidi</span> für ihn"
@@ -4680,8 +4740,16 @@
 		"urn:cts:formulae:auvergne.form003.lat001": [
 			"secreto, Arvernis <span class='elex-word'>civitatis</span>, domum matris"
 		],
+		"urn:cts:formulae:elexicon.burgus.deu001": [
+			"etwa einer <span class='elex-word'>civitas</span> vorgelagerten Ansiedlung",
+			"auch zu <span class='elex-word'>civitas</span> Abgeleitet von",
+			"Bewohner der <span class='elex-word'>civitas</span> bzw. den"
+		],
 		"urn:cts:formulae:elexicon.comes.deu001": [
 			"dem einer <span class='elex-word'>civitas</span>, die königlichen"
+		],
+		"urn:cts:formulae:elexicon.condita.deu001": [
+			"Teilgebiet einer <span class='elex-word'>civitas</span> oder eines"
 		],
 		"urn:cts:formulae:elexicon.curiales.deu001": [
 			"Bürgern einer <span class='elex-word'>civitas</span> jedoch ohne",
@@ -5050,6 +5118,12 @@
 		],
 		"urn:cts:formulae:auvergne.form006.lat001": [
 			"nostro in <span class='elex-word'>pago</span> Arvernico, in"
+		],
+		"urn:cts:formulae:elexicon.condita.deu001": [
+			"oder eines <span class='elex-word'>pagus</span> gehandelt zu"
+		],
+		"urn:cts:formulae:elexicon.vicus.deu001": [
+			"Innerhalb eines <span class='elex-word'>pagus</span> konnten vici"
 		],
 		"urn:cts:formulae:marculf.form000.lat001": [
 			"quam in <span class='elex-word'>pago</span>, quod scribere"
@@ -6472,6 +6546,9 @@
 			"INCIPIT <span class='elex-word'>DOTIS</span> Annu iiii",
 			"cartole libelli <span class='elex-word'>dotes</span> casa. Iam"
 		],
+		"urn:cts:formulae:elexicon.osculum.deu001": [
+			"ausgehandelte Hochzeitsgabe (<span class='elex-word'>dos</span>)Der Kuss"
+		],
 		"urn:cts:formulae:elexicon.tanodono.deu001": [
 			"zu libellum <span class='elex-word'>dotis</span> verwendet HL"
 		],
@@ -6537,6 +6614,407 @@
 		"urn:cts:formulae:tours.form014.lat001": [
 			"titulum libelli <span class='elex-word'>dotis</span> ante dies",
 			"titulum libelli <span class='elex-word'>dotis</span> diebus nuptiarum"
+		]
+	},
+	"gratia": {
+		"urn:cts:formulae:andecavensis.form001.lat001": [
+			"supplico dulcissima <span class='elex-word'>gracia</span> vestra, ut",
+			"prosecutor dixit: „<span class='elex-word'>Gracias</span> agerem [m]agnitudine"
+		],
+		"urn:cts:formulae:auvergne.form001.lat001": [
+			"ex hoc <span class='elex-word'>gratias</span> agere valeamus."
+		],
+		"urn:cts:formulae:auvergne.form002.lat001": [
+			"vel suplico <span class='elex-word'>gratias</span> vestras, ut"
+		],
+		"urn:cts:formulae:elexicon.beneficium.deu001": [
+			"Unterschied zu <span class='elex-word'>gratia</span>, der kontinuierlich"
+		],
+		"urn:cts:formulae:elexicon.clementia.deu001": [
+			"misericordia, der <span class='elex-word'>gratia</span> und der"
+		],
+		"urn:cts:formulae:marculf.form1_002.lat001": [
+			"ad altissimi <span class='elex-word'>gratiam</span> pertinere, quod"
+		],
+		"urn:cts:formulae:marculf.form1_011.lat001": [
+			"perferant,se <span class='elex-word'>gratia</span> nostra optatis"
+		],
+		"urn:cts:formulae:marculf.form1_012.lat001": [
+			"et nostra <span class='elex-word'>gratia</span> debeat perdurare,"
+		],
+		"urn:cts:formulae:marculf.form1_013.lat001": [
+			"illo plena <span class='elex-word'>gratia</span> visi fuimus"
+		],
+		"urn:cts:formulae:marculf.form1_022.lat001": [
+			"et nostra <span class='elex-word'>gratia</span> valeat permanere"
+		],
+		"urn:cts:formulae:marculf.form1_031.lat001": [
+			"et nostra <span class='elex-word'>gratia</span> in integritate"
+		],
+		"urn:cts:formulae:marculf.form1_035.lat001": [
+			"hoc ad <span class='elex-word'>gratiam</span> nostram debeat"
+		],
+		"urn:cts:formulae:marculf.form2_040.lat001": [
+			"illis ille <span class='elex-word'>gratia</span> Dei episcopus."
+		],
+		"urn:cts:formulae:marculf.form2_042.lat001": [
+			"episcopo ille,<span class='elex-word'>gratia</span> Dei acsi"
+		],
+		"urn:cts:formulae:marculf.form2_043.lat001": [
+			"dignati infimo,<span class='elex-word'>gratias</span> agimus, in"
+		],
+		"urn:cts:formulae:marculf.form2_045.lat001": [
+			"Iocunditatis mutuae <span class='elex-word'>gratiam</span> cognoscere cupientes"
+		],
+		"urn:cts:formulae:marculf.form3_3_004.lat001": [
+			"superna largiente <span class='elex-word'>gracia</span> officium pastorale"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0021.lat001": [
+			"fideli studio <span class='elex-word'>gratia</span> Dei cooperante"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0025.lat001": [
+			"hoc donum, <span class='elex-word'>gratia</span> reservandae nobis"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0039.lat001": [
+			"sub fidei <span class='elex-word'>gratia</span> christianae seculari"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0066.lat001": [
+			"placuit memoriae <span class='elex-word'>gratia</span> distribuit. Huius"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0069.lat001": [
+			"rei tamen <span class='elex-word'>gracia</span> ipse Gausbertus"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0070.lat001": [
+			"rei tamen <span class='elex-word'>gratia</span> domnus Gausbertus"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0076b.lat001": [
+			"huius rei <span class='elex-word'>gratia</span>, XV cim"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0077.lat001": [
+			"per Dei <span class='elex-word'>gratiam</span> liberari, ita"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0092.lat001": [
+			"ullam rem, <span class='elex-word'>gracia</span> nocendi vel",
+			"preceptum tuitionis <span class='elex-word'>gratia</span> immunitatisque impressione"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0096.lat001": [
+			"meritis sed <span class='elex-word'>gratia</span> praeveniente Redemptoris"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0100.lat001": [
+			"fideli studio <span class='elex-word'>gratia</span> Dei cooperante"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0107.lat001": [
+			"caritatis, potius <span class='elex-word'>gratiae</span> quam precii,"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0109.lat001": [
+			"Aivertus, Dei <span class='elex-word'>gratia</span> Carnotensium episcopus,"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0135.lat001": [
+			"Ego Philippus, <span class='elex-word'>gratia</span> Dei Francorum"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0139.lat001": [
+			"concessionis suae <span class='elex-word'>gratia</span> confirmaret, magnis",
+			"uxore sua <span class='elex-word'>gratias</span> agens, ad"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0162.lat001": [
+			"Cuius concessionis <span class='elex-word'>gratia</span> domnus Gausbertus"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0169.lat001": [
+			"Carnotensium Dei <span class='elex-word'>gratia</span> humilis episcopus,"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0175.lat001": [
+			"Goffridus, Dei <span class='elex-word'>gratia</span> Carnotensis ecclesiae"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0179.lat001": [
+			"Gaufredus Dei <span class='elex-word'>gratia</span> Carnotensium episcopus"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0196.lat001": [
+			"R. Dei <span class='elex-word'>gratia</span> Carnotensis episcopus",
+			"Data anno <span class='elex-word'>gratiae</span> M C"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0197.lat001": [
+			"Vallem, anno <span class='elex-word'>gratiae</span> M C"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0198.lat001": [
+			"Raginaudus Dei <span class='elex-word'>gratia</span> Carnotensis electus",
+			"Carnoti, anno <span class='elex-word'>gratiae</span> M C"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0200.lat001": [
+			"anno vero <span class='elex-word'>gratiae</span> M C"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0201.lat001": [
+			"Actum anno <span class='elex-word'>gratie</span> M° C"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0204.lat001": [
+			"plurium, anno <span class='elex-word'>gratiae</span> M C"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0206.lat001": [
+			"Actum anno <span class='elex-word'>gratiae</span> M o"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0207.lat001": [
+			"R. Dei <span class='elex-word'>gratia</span> Carnotensis episcopus."
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0208.lat001": [
+			"R. Dei <span class='elex-word'>gratia</span> Carnotensis episcopus",
+			"Carnotum anno <span class='elex-word'>gratiae</span> M o"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0209.lat001": [
+			"Parisius, anno <span class='elex-word'>gratie</span> M o"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0210.lat001": [
+			"Gaufredus Dei <span class='elex-word'>gratia</span> Maioris Monasterii",
+			"Monasterium anno <span class='elex-word'>gratiae</span> M o"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0211.lat001": [
+			"Carnoti anno <span class='elex-word'>gratiae</span> M o"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0213.lat001": [
+			"Actum anno <span class='elex-word'>gratiae</span> millesimo ducentesimo"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0214.lat001": [
+			"Hugo Dei <span class='elex-word'>gratia</span> Lingonensis episcopus"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0216.lat001": [
+			"Montiniacum anno <span class='elex-word'>gratie</span> M o"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0217.lat001": [
+			"Actum anno <span class='elex-word'>gratie</span> millesimo ducentesimo"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0218.lat001": [
+			"Actum anno <span class='elex-word'>gracie</span> millesimo ducentesimo"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0219.lat001": [
+			"Actum anno <span class='elex-word'>gratie</span> millesimo ducentesimo"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0220.lat001": [
+			"Montigniacum anno <span class='elex-word'>gratie</span> M o"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0223.lat001": [
+			"Raginaldus Dei <span class='elex-word'>gratia</span> Carnotensis episcopus",
+			"Carnotum anno <span class='elex-word'>gratie</span> millesimo ducentesimo"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0224.lat001": [
+			"Marches, anno <span class='elex-word'>gratie</span> M CC"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0226.lat001": [
+			"Actum anno <span class='elex-word'>gratiae</span> M o"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0227.lat001": [
+			"Hugo, Dei <span class='elex-word'>gratia</span> Maioris Monasterii"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0228.lat001": [
+			"Actum anno <span class='elex-word'>gratie</span> millesimo ducentesimo"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0230.lat001": [
+			"M. Dei <span class='elex-word'>gratia</span> episcopus et",
+			"monachorum et <span class='elex-word'>gratia</span> hospitari. Nec",
+			"Actum anno <span class='elex-word'>gratie</span> M o"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0233.lat001": [
+			"Actum anno <span class='elex-word'>gratiae</span> M CC"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0236.lat001": [
+			"Actum anno <span class='elex-word'>gratie</span> millesimo ducentesimo"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0239.lat001": [
+			"Actum anno <span class='elex-word'>graciae</span> M o",
+			"Actum anno <span class='elex-word'>gratiae</span> M o"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0241.lat001": [
+			"Actum anno <span class='elex-word'>gratie</span> millesimo ducentesimo"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0242.lat001": [
+			"Actum anno <span class='elex-word'>gratiae</span> M o"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0244.lat001": [
+			"Datum anno <span class='elex-word'>gratie</span> M o"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0247.lat001": [
+			"Actum anno <span class='elex-word'>gratie</span> millesimo ducentesimo"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0249.lat001": [
+			"Actum anno <span class='elex-word'>gratiae</span> M o"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0252.lat001": [
+			"Actum anno <span class='elex-word'>gratie</span> millesimo ducentesimo"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0253.lat001": [
+			"M …. Dei <span class='elex-word'>gratia</span> Carnotensis episcopus,",
+			"Actum anno <span class='elex-word'>gratie</span> M o"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0283.lat001": [
+			"Johannes Dei <span class='elex-word'>gratia</span> Carnotensis episcopus",
+			"Johanni Dei <span class='elex-word'>gratia</span> episcopo Carnotensi,"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0001app.lat001": [
+			"karitatis, potius <span class='elex-word'>gratia</span> quam precii."
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0009app.lat001": [
+			"tenebat Gauscelinus, <span class='elex-word'>gratis</span> huic dono"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0013.lat001": [
+			"quidem Odo <span class='elex-word'>gracia</span> Dei comes,"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0015.lat001": [
+			"interfuerunt, firmitatis <span class='elex-word'>gratia</span> subsignentur. Herveus"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0017app.lat001": [
+			"ego Henricus, <span class='elex-word'>gratia</span> Dei Francorum"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0031.lat001": [
+			"Sancti Martini, <span class='elex-word'>gratia</span> magis familiaritatis"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0031app.lat001": [
+			"sub fidei <span class='elex-word'>gratia</span> Christiane seculari"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0033app.lat001": [
+			"domnus abba <span class='elex-word'>Guido</span> et omnes"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0044.lat001": [
+			"hujus rei <span class='elex-word'>gratia</span> solidos accepit,"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0048app.lat001": [
+			"hujus rei <span class='elex-word'>gratia</span>, XVcim solidos"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0049app.lat001": [
+			"in presenti, <span class='elex-word'>gratiam</span> qua nos"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0051.lat001": [
+			"ego Gelduinus <span class='elex-word'>gratia</span> Dei vicecomes"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0056app.lat001": [
+			"Henricus Dei <span class='elex-word'>gratia</span> rex Angliae,"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0057app.lat001": [
+			"Herveus, Dei <span class='elex-word'>gratia</span> ejusdem ecclesie"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0059app.lat001": [
+			"Gaufredus, Dei <span class='elex-word'>gratia</span> eorum humilis"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0060app.lat001": [
+			"mea, anno <span class='elex-word'>gratiae</span> MoCoXCoIXo, Philippo"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0089.lat001": [
+			"tenebat Guascelinus, <span class='elex-word'>gratis</span> huic dono"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0096.lat001": [
+			"uxoris ducendae <span class='elex-word'>gratia</span>, quandam Sancti"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0122.lat001": [
+			"quidem Marannus, <span class='elex-word'>gratia</span> Dei miles,"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0001.lat001": [
+			"meritis, sed <span class='elex-word'>gratia</span> proveniente Redemptoris"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0035.lat001": [
+			"eius maiorem <span class='elex-word'>gratiam</span> apud Deum"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0072.lat001": [
+			"cuius rei <span class='elex-word'>gratia</span> VII libras"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0084.lat001": [
+			"reclamantes, ipsique <span class='elex-word'>gratia</span> Dei, rationem"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0115.lat001": [
+			"tenebat Gauscelinus, <span class='elex-word'>gratis</span> huic dono"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0122.lat001": [
+			"anime salutis <span class='elex-word'>gratia</span> donavit, annuentibus"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0126.lat001": [
+			"Monasterium implorandi <span class='elex-word'>gratia</span> Sancti Martini"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0127.lat001": [
+			"nostram sollicitudinem <span class='elex-word'>gratia</span> divina confert,"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0173.lat001": [
+			"tandem Deo <span class='elex-word'>gratias</span>, volenti animo"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0183.lat001": [
+			"Huius rei <span class='elex-word'>gratia</span>, dedit eis"
+		],
+		"urn:cts:formulae:marmoutier_vendomois_appendix.trémault0012.lat001": [
+			"Actum anno <span class='elex-word'>gratie</span> millesimo ducentesimo"
+		],
+		"urn:cts:formulae:marmoutier_vendomois_appendix.trémault0017.lat001": [
+			"ego Telbaldus, <span class='elex-word'>gratia</span> Dei comes,"
+		],
+		"urn:cts:formulae:marmoutier_vendomois_appendix.trémault0018.lat001": [
+			"Sancti Martini, <span class='elex-word'>gratia</span> magis familiaritatis"
+		],
+		"urn:cts:formulae:marmoutier_vendomois_appendix.trémault0021.lat001": [
+			"qui cum <span class='elex-word'>gratia</span> accipiens promisit,"
+		],
+		"urn:cts:formulae:marmoutier_vendomois_appendix.trémault0033.lat001": [
+			"in presenti, <span class='elex-word'>gratiam</span> qua nos"
+		],
+		"urn:cts:formulae:marmoutier_vendomois_appendix.trémault0039.lat001": [
+			"tamdem, inspirante <span class='elex-word'>gratia</span> spiritus sancti,"
+		],
+		"urn:cts:formulae:marmoutier_vendomois_appendix.trémault0040.lat001": [
+			"Actum anno <span class='elex-word'>gratie</span> M.CC"
+		],
+		"urn:cts:formulae:marmoutier_vendomois_appendix.trémault0066.lat001": [
+			"fratrum, edificationis <span class='elex-word'>gratia</span> audituri aliquid"
+		],
+		"urn:cts:formulae:marmoutier_vendomois_appendix.trémault0067.lat001": [
+			"G., Dei <span class='elex-word'>gratia</span> Maioris Monasterii"
+		],
+		"urn:cts:formulae:marmoutier_vendomois_appendix.trémault0069.lat001": [
+			"Engebaldus, Dei <span class='elex-word'>gratia</span> Turonorum humilis",
+			"perire volentis, <span class='elex-word'>gratia</span> respectus, pariterque"
+		],
+		"urn:cts:formulae:telma_cormery.giraud1419.lat001": [
+			"immo ut <span class='elex-word'>gratiam</span> Dei omnipotentis"
+		],
+		"urn:cts:formulae:telma_cormery.giraud1774.lat001": [
+			"Pipinus, <span class='elex-word'>gratia</span> Dei rex"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud1012.lat001": [
+			"Gosfredus vicecomes, <span class='elex-word'>gratia</span> Dei, Toarcensium,"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud1435.lat001": [
+			"consanguinitatis conpetebat <span class='elex-word'>gratia</span> sua visendi"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud1488.lat001": [
+			"beneficii hujus <span class='elex-word'>gratia</span> mercedem Majoris",
+			"aliquos firmitatis <span class='elex-word'>gratia</span> huic subscripsimus"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud1496.lat001": [
+			"quoque immunitatis <span class='elex-word'>graccia</span> ipsum locum"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud2170.lat001": [
+			"meis Tetbaldo, <span class='elex-word'>gratia</span> Dei episcopo,"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3132.lat001": [
+			"tanti muneris <span class='elex-word'>gratia</span>. Si noster"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3259.lat001": [
+			"Hubertum Andecavensem <span class='elex-word'>gratia</span> Dei praesulem"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3574.lat001": [
+			"fideli studio <span class='elex-word'>gratia</span> Dei cooperante"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud4541.lat001": [
+			"fideli studio <span class='elex-word'>gratia</span> Dei cooperante"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud4785.lat001": [
+			"meam per <span class='elex-word'>gratiam</span> Dei. Ipsum"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud4884.lat001": [
+			"meritis sed <span class='elex-word'>gratia</span> Dei Carnotenus"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud4966.lat001": [
+			"Xce librarum <span class='elex-word'>gratia</span> potius recompensandae"
+		],
+		"urn:cts:formulae:telma_martin_tours.giraud1883.lat001": [
+			"Hujus rei <span class='elex-word'>gratia</span> de\n                     salutis"
+		],
+		"urn:cts:formulae:tours.0_capitula.lat001": [
+			"CAPITULA DEO <span class='elex-word'>GRATIAS</span> AMEN"
+		],
+		"urn:cts:formulae:tours.form034.lat001": [
+			"unacum Dei <span class='elex-word'>gratia</span> et nostra"
 		]
 	},
 	"cessio": {
@@ -6719,6 +7197,9 @@
 		"urn:cts:formulae:auvergne.form005.lat001": [
 			"REDEMTURIA <span class='elex-word'>Domino</span> illi. A",
 			"vos pietas <span class='elex-word'>Domini</span> imperavit, ut"
+		],
+		"urn:cts:formulae:elexicon.consilium.deu001": [
+			"Abt als <span class='elex-word'>dominus</span> eigentlich unbedingter"
 		],
 		"urn:cts:formulae:elexicon.dominium.deu001": [
 			"abgeleitet von <span class='elex-word'>dominus</span> Im römischen",
@@ -11096,6 +11577,22 @@
 		"urn:cts:formulae:elexicon.weregeldus.deu001": [
 			"Vertreter des <span class='elex-word'>fiscus</span> zu entrichten"
 		],
+		"urn:cts:formulae:flavigny.form1_001.deu001": [
+			"dem gemeinsamen <span class='elex-word'>fiscus</span> als Straf"
+		],
+		"urn:cts:formulae:flavigny.form1_002.deu001": [
+			"dem gemeinsamen <span class='elex-word'>fiscus</span> soundsoviele Pfund"
+		],
+		"urn:cts:formulae:flavigny.form1_008.deu001": [
+			"an unseren <span class='elex-word'>fiscus</span> bezahlen müssen.",
+			"sich unser <span class='elex-word'>fiscus</span> davon erhoffen"
+		],
+		"urn:cts:formulae:flavigny.form2_008.deu001": [
+			"dem gemeinsamen   <span class='elex-word'>fiscus</span> gezwungenermaßen soundsoviel"
+		],
+		"urn:cts:formulae:flavigny.form3_003.deu001": [
+			"ODER DES <span class='elex-word'>FISCUS</span> An meinen"
+		],
 		"urn:cts:formulae:marculf.form1_002.deu001": [
 			"Seiten des   <span class='elex-word'>fiscus</span> keine schwere",
 			"immer unser <span class='elex-word'>fiscus</span> vielleicht von"
@@ -12217,6 +12714,9 @@
 		"urn:cts:formulae:andecavensis.form007.lat001": [
 			"campis, terris, <span class='elex-word'>mancipiis</span>, acolabus, pratis,"
 		],
+		"urn:cts:formulae:andecavensis.form009.lat001": [
+			"de reliqua <span class='elex-word'>mancipia</span> vestra obnoxia"
+		],
 		"urn:cts:formulae:andecavensis.form019.lat001": [
 			"de reliqua <span class='elex-word'>mancipia</span> vestra obnoxia"
 		],
@@ -12868,6 +13368,73 @@
 			"et omnis <span class='elex-word'>potestas</span> sibi subiecta"
 		]
 	},
+	"furtum": {
+		"urn:cts:formulae:andecavensis.form003.lat001": [
+			"necligencias pro <span class='elex-word'>furta</span>, quid feci,"
+		],
+		"urn:cts:formulae:andecavensis.form011.lat001": [
+			"suo ad <span class='elex-word'>furtis</span> condicionis abuissit;",
+			"suo ad <span class='elex-word'>furtis</span> condicionis post"
+		],
+		"urn:cts:formulae:andecavensis.form032.lat001": [
+			"minust[ra]re,ad <span class='elex-word'>furtis</span> causis deportassent;"
+		],
+		"urn:cts:formulae:andecavensis.form033.lat001": [
+			"talas et <span class='elex-word'>furtis</span>, per captores",
+			"per ipso <span class='elex-word'>furte</span> exinde fuit",
+			"per ipso <span class='elex-word'>furto</span> exinde essit"
+		],
+		"urn:cts:formulae:andecavensis.form042.lat001": [
+			"rem ad <span class='elex-word'>furtis</span> condicionis post"
+		],
+		"urn:cts:formulae:elexicon.rapina.deu001": [
+			"und Diebstahl (<span class='elex-word'>furtum</span>) einhergehend mit",
+			"latrocinium und <span class='elex-word'>furtum</span> weitgehend austauschbar"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0172.lat001": [
+			"et medietatem <span class='elex-word'>furti</span>, et medietatem",
+			"molendinarii et <span class='elex-word'>furti</span> et rapti,"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0180.lat001": [
+			"habere in <span class='elex-word'>furto</span> vel latrone",
+			"Teoderici, pro <span class='elex-word'>furto</span> ibi facto,",
+			"me in <span class='elex-word'>furto</span> illo vel"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0190.lat001": [
+			"de manifesto <span class='elex-word'>furto</span> in curia",
+			"manifesto fuerit <span class='elex-word'>furto</span> convictus, corpus",
+			"monachorum fuerit <span class='elex-word'>furto</span> convictus, corpus"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0214.lat001": [
+			"scilicet sanguinem, <span class='elex-word'>furtum</span>, multrum, raptum,"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0225.lat001": [
+			"causis sanguinis, <span class='elex-word'>furti</span>, raptus, incisionis"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0236.lat001": [
+			"iusticie, scilicet <span class='elex-word'>furti</span>, rapti, sanguinis",
+			"iusticie, scilicet <span class='elex-word'>furti</span>, rapti, sanguinis"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0238.lat001": [
+			"raptu, incendio, <span class='elex-word'>furto</span>, sanguine et"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0105.lat001": [
+			"cum in <span class='elex-word'>furto</span> rerum nostrarum"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0032.lat001": [
+			"qui cum <span class='elex-word'>furtum</span> fecisset de",
+			"eum emendare <span class='elex-word'>furtum</span> III libras"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0129.lat001": [
+			"rapto et <span class='elex-word'>furto</span>, et hec"
+		],
+		"urn:cts:formulae:marmoutier_vendomois_appendix.trémault0014.lat001": [
+			"rapti vel <span class='elex-word'>furti</span> seu sanguinis,"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud2202.lat001": [
+			"rapti vel <span class='elex-word'>furti</span>, seu sanguinis,"
+		]
+	},
 	"pietas": {
 		"urn:cts:formulae:andecavensis.form003.lat001": [
 			"set abuit <span class='elex-word'>pietas</span> vestra datis"
@@ -12877,6 +13444,12 @@
 		],
 		"urn:cts:formulae:auvergne.form005.lat001": [
 			"Et vos <span class='elex-word'>pietas</span> Domini imperavit,"
+		],
+		"urn:cts:formulae:elexicon.clementia.deu001": [
+			"und der <span class='elex-word'>pietas</span> zum Königsideal"
+		],
+		"urn:cts:formulae:elexicon.iustitia.deu001": [
+			"neben der <span class='elex-word'>pietas</span> und der"
 		],
 		"urn:cts:formulae:marculf.form1_002.lat001": [
 			"inmensam Domini <span class='elex-word'>pietatem</span> iugiter implorare."
@@ -12986,6 +13559,275 @@
 			"ideo petii <span class='elex-word'>pietati</span> vestrae, et"
 		]
 	},
+	"epistula": {
+		"urn:cts:formulae:andecavensis.form003.lat001": [
+			"Ideo hanc <span class='elex-word'>epistolo</span> vindicione de"
+		],
+		"urn:cts:formulae:andecavensis.form005.lat001": [
+			"ut hanc <span class='elex-word'>epistola</span> facere deberit,"
+		],
+		"urn:cts:formulae:andecavensis.form008.lat001": [
+			"et haec <span class='elex-word'>epistola[s]</span> unitenorum conscriptas,"
+		],
+		"urn:cts:formulae:andecavensis.form032.lat001": [
+			"inspecta illa <span class='elex-word'>epistola</span>, quem illi"
+		],
+		"urn:cts:formulae:andecavensis.form035.lat001": [
+			"INCIPIT <span class='elex-word'>EPISTOLA</span> Ego enim",
+			"me hanc <span class='elex-word'>epistola</span> facere deberit.",
+			"contra hanc <span class='elex-word'>epistola</span> ista venire",
+			"et haec <span class='elex-word'>epistola</span> vindicare non"
+		],
+		"urn:cts:formulae:andecavensis.form037.lat001": [
+			"INCIPIT <span class='elex-word'>EPISTOLA</span> QUEM PATER",
+			"nostra sine <span class='elex-word'>epistolis</span> oblegatum et",
+			"contra hanc <span class='elex-word'>epistola</span> aliqua querilla,"
+		],
+		"urn:cts:formulae:andecavensis.form039.lat001": [
+			"et hec <span class='elex-word'>epistola</span> mano mea"
+		],
+		"urn:cts:formulae:andecavensis.form041.lat001": [
+			"in tale <span class='elex-word'>epistola</span>, ut legem",
+			"effectum.Data <span class='elex-word'>epistole</span> ..."
+		],
+		"urn:cts:formulae:andecavensis.form043.lat001": [
+			"INCIPIT <span class='elex-word'>EPISTOLA</span> QUEM HOMINEM",
+			"ut hanc <span class='elex-word'>epistola</span> facere deberit,",
+			"et hec <span class='elex-word'>epistola</span> firma permaniat‘."
+		],
+		"urn:cts:formulae:andecavensis.form045.lat001": [
+			"exinde perductas <span class='elex-word'>epistola[s]</span> uni tenorum",
+			"contra istas <span class='elex-word'>epistolas</span> venire voluerit,"
+		],
+		"urn:cts:formulae:andecavensis.form046.lat001": [
+			"INCIPIT <span class='elex-word'>EPISTOLA</span> QUI DE",
+			"contra hanc <span class='elex-word'>epistola</span> cessione, quem",
+			"conponat; nihilominus <span class='elex-word'>epistola</span> atque definicio"
+		],
+		"urn:cts:formulae:andecavensis.form054.lat001": [
+			"per hanc <span class='elex-word'>epistole</span> adque cessione,",
+			"contra hanc <span class='elex-word'>epistolas</span> adque cessione,"
+		],
+		"urn:cts:formulae:andecavensis.form056.lat001": [
+			"qui contra <span class='elex-word'>epistola</span> ista, ullus",
+			"et hec <span class='elex-word'>epistola</span> omni tempore"
+		],
+		"urn:cts:formulae:andecavensis.form057.lat001": [
+			"contra hanc <span class='elex-word'>episthola</span> ista agere",
+			"et hec <span class='elex-word'>epistola</span> omni tempore"
+		],
+		"urn:cts:formulae:andecavensis.form058.lat001": [
+			"per hanc <span class='elex-word'>epistola</span> cessione ad",
+			"contra hanc <span class='elex-word'>epistola</span> cessione ista"
+		],
+		"urn:cts:formulae:andecavensis.form059.lat001": [
+			"in hanc <span class='elex-word'>epistola</span> nobis intimare",
+			"aut contra <span class='elex-word'>epistola</span> hec agere,",
+			"et hec <span class='elex-word'>epistola</span> omni tempore"
+		],
+		"urn:cts:formulae:auvergne.form001.lat001": [
+			"rumpatur,inter <span class='elex-word'>epistolas</span> illas de"
+		],
+		"urn:cts:formulae:marculf.2_capitula.lat001": [
+			"facta. X <span class='elex-word'>Epistula</span> cum in",
+			"gesta.XXXVIIII <span class='elex-word'>Epistula</span> si aliquis"
+		],
+		"urn:cts:formulae:marculf.form1_039.lat001": [
+			"per vestras <span class='elex-word'>aepistolas</span> ingenuos relaxare"
+		],
+		"urn:cts:formulae:marculf.form2_001.lat001": [
+			"per praesentem <span class='elex-word'>epistolam</span> donationis meae",
+			"Nihilhominus praesens <span class='elex-word'>epistula</span>,quae a"
+		],
+		"urn:cts:formulae:marculf.form2_003.lat001": [
+			"per hanc <span class='elex-word'>aepistulam</span> donationis donamus"
+		],
+		"urn:cts:formulae:marculf.form2_004.lat001": [
+			"contra praesentem <span class='elex-word'>aepistulam</span> cessionis nostrae,"
+		],
+		"urn:cts:formulae:marculf.form2_005.lat001": [
+			"integritate per <span class='elex-word'>aepistulam</span> cessionis nostrae",
+			"nostra contenit <span class='elex-word'>aepistula</span>,ad profectum"
+		],
+		"urn:cts:formulae:marculf.form2_006.lat001": [
+			"contra hanc <span class='elex-word'>aepistulam</span> donationis nostrae,",
+			"sed praesens <span class='elex-word'>aepistula</span> omni tempore"
+		],
+		"urn:cts:formulae:marculf.form2_007.lat001": [
+			"nos duas <span class='elex-word'>epistolas</span> unotenore conscriptas",
+			"praesente vero <span class='elex-word'>aepistula</span> in nullo"
+		],
+		"urn:cts:formulae:marculf.form2_009.lat001": [
+			"coniugio,per <span class='elex-word'>epistulam</span> cessionis aut",
+			"per ipsam <span class='elex-word'>epistolam</span>,quam in",
+			"per hanc <span class='elex-word'>epistolam</span> obnoxiationis vobis",
+			"per meam <span class='elex-word'>epistolam</span> contuleram,per",
+			"per hanc <span class='elex-word'>epistolam</span> obnoxiationis meae"
+		],
+		"urn:cts:formulae:marculf.form2_010.lat001": [
+			"X\t<span class='elex-word'>EPISTOLA</span> CUM IN",
+			"per hanc <span class='elex-word'>epistolam</span>,vos, dulcissimi",
+			"contra hanc <span class='elex-word'>epistulam</span> venire temtaverit",
+			"sed praesens <span class='elex-word'>epistula</span> omni tempore"
+		],
+		"urn:cts:formulae:marculf.form2_011.lat001": [
+			"sed praesens <span class='elex-word'>epistula</span> firma permaneat."
+		],
+		"urn:cts:formulae:marculf.form2_012.lat001": [
+			"per hanc <span class='elex-word'>epistulam</span> te,dulcissima"
+		],
+		"urn:cts:formulae:marculf.form2_013.lat001": [
+			"tibi hanc <span class='elex-word'>epistulam</span> fieri decrevi,",
+			"sed praesens <span class='elex-word'>epistula</span> omni tempore"
+		],
+		"urn:cts:formulae:marculf.form2_014.lat001": [
+			"Propterea presentes <span class='elex-word'>epistulas</span> duas unotenore"
+		],
+		"urn:cts:formulae:marculf.form2_016.lat001": [
+			"per hanc <span class='elex-word'>epistulam</span> conposictionalem aut"
+		],
+		"urn:cts:formulae:marculf.form2_017.lat001": [
+			"et eis <span class='elex-word'>epistulas</span> manu nostra",
+			"quod ipsas <span class='elex-word'>epistulas</span> continent,ad",
+			"a quemcumque <span class='elex-word'>epistulas</span> de nomine",
+			"Reliquas vero <span class='elex-word'>epistolas</span> vacuas et"
+		],
+		"urn:cts:formulae:marculf.form2_018.lat001": [
+			"convenit,hanc <span class='elex-word'>epistulam</span> securitatis in",
+			"sed praesens <span class='elex-word'>epistula</span> securitas a"
+		],
+		"urn:cts:formulae:marculf.form2_023.lat001": [
+			"unde duas <span class='elex-word'>[epistulas]</span> inter se"
+		],
+		"urn:cts:formulae:marculf.form2_024.lat001": [
+			"studium duas <span class='elex-word'>[epistulas]</span> unotenore conscribserunt,"
+		],
+		"urn:cts:formulae:marculf.form2_029.lat001": [
+			"propterea praesentem <span class='elex-word'>epistulam</span> in te"
+		],
+		"urn:cts:formulae:marculf.form2_030.lat001": [
+			"Propterea has <span class='elex-word'>epistulas</span> inter se",
+			"permaneant. Facta <span class='elex-word'>epistula</span> ibi, sub"
+		],
+		"urn:cts:formulae:marculf.form2_035.lat001": [
+			"tibi hanc <span class='elex-word'>epistulam</span> evacuaturiam fecimus,"
+		],
+		"urn:cts:formulae:marculf.form2_036.lat001": [
+			"et hanc <span class='elex-word'>epistula</span> firma permaneat."
+		],
+		"urn:cts:formulae:marculf.form2_038.lat001": [
+			"vicem meam <span class='elex-word'>epistulam</span> donacionis aut",
+			"curialis dixerunt: <span class='elex-word'>Epistula</span>, qui recitata",
+			"Et quia <span class='elex-word'>epistula</span> donationis aut",
+			"et manumissoris <span class='elex-word'>epistula</span> scribantur, et"
+		],
+		"urn:cts:formulae:marculf.form2_039.lat001": [
+			"XXXVIIII <span class='elex-word'>EPISTULA</span> SI ALIQUI",
+			"per hanc <span class='elex-word'>epistula</span> absque ullius",
+			"contra hanc <span class='elex-word'>epistulam</span> venire aut",
+			"sed praesens <span class='elex-word'>epistula</span> firma permaneat."
+		],
+		"urn:cts:formulae:marculf.form2_040.lat001": [
+			"per vestra <span class='elex-word'>epistula</span> delegastis,ideo",
+			"convenit,hanc <span class='elex-word'>epistulam</span> prestariam in",
+			"vestra contenit <span class='elex-word'>epistula</span> locum praecariae",
+			"debeamus. Facta <span class='elex-word'>epistula</span>."
+		],
+		"urn:cts:formulae:marculf.form2_045.lat001": [
+			"non distituemus <span class='elex-word'>epistulis</span> preferendam vestram"
+		],
+		"urn:cts:formulae:marculf.form2_052.lat001": [
+			"PER SUA <span class='elex-word'>EPISTOLA</span> RELAXAT INGENUOS",
+			"per hanc <span class='elex-word'>epistulam</span> nostram, sicut",
+			"per hanc <span class='elex-word'>epistulam</span> ingenuetatis,sicut",
+			"sed praesens <span class='elex-word'>epistula</span> firma permaneat."
+		],
+		"urn:cts:formulae:marculf.form3_1_002.lat001": [
+			"sperabam capitola <span class='elex-word'>epistulae</span> finisse, nec"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0195.lat001": [
+			"<span class='elex-word'>Epistola</span> Lucii III"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0235.lat001": [
+			"<span class='elex-word'>Epistola</span> Ursionis de"
+		],
+		"urn:cts:formulae:marmoutier_vendomois_appendix.trémault0001.lat001": [
+			"per hanc <span class='elex-word'>epistolam</span> donationis vel"
+		],
+		"urn:cts:formulae:tours.0_capitula.lat001": [
+			"venundetur XI \t\t<span class='elex-word'>Epistola</span> collectionis XII",
+			"potest XXII \t\t<span class='elex-word'>Epistola</span>, qualiter nepotes",
+			"avo XXIII \t<span class='elex-word'>Epistola</span>, qualiter extraneo",
+			"adoptetur XXIIII \t<span class='elex-word'>Epistola</span>, qualiter pupilli",
+			"b XXXIIII  <span class='elex-word'>Epistola</span> abbatis XXXIIII",
+			"abbatis XXXIIII    <span class='elex-word'>Epistola</span> abbatis vel",
+			"commendat XLIII \t      <span class='elex-word'>Epistola</span>, qui se"
+		],
+		"urn:cts:formulae:tours.form001.lat001": [
+			"per hanc <span class='elex-word'>epistolam</span> donationis [dono]"
+		],
+		"urn:cts:formulae:tours.form011.lat001": [
+			"XI <span class='elex-word'>EPISTOLA</span> COLLECTIONIS Nos",
+			"ut praesens <span class='elex-word'>epistola</span> firmior sit,"
+		],
+		"urn:cts:formulae:tours.form016.lat001": [
+			"per hanc <span class='elex-word'>epistolam</span> conpostionalem aut",
+			"contra hanc <span class='elex-word'>epistolam</span> refragationem aliquam",
+			"et haec <span class='elex-word'>epistola</span> firma permaneat."
+		],
+		"urn:cts:formulae:tours.form017.lat001": [
+			"per hanc <span class='elex-word'>epistolam</span> donationis donatumque",
+			"per hanc <span class='elex-word'>epistolam</span> donationis sequitur",
+			"contra has <span class='elex-word'>epistolas</span> unotenore conscriptas,",
+			"et hae <span class='elex-word'>epistolae</span> contulitionis cum"
+		],
+		"urn:cts:formulae:tours.form018.lat001": [
+			"per hanc <span class='elex-word'>epistolam</span> contulitionis donatumque"
+		],
+		"urn:cts:formulae:tours.form019.lat001": [
+			"Propterea has <span class='elex-word'>epistolas</span> unotenore conscriptas"
+		],
+		"urn:cts:formulae:tours.form022.lat001": [
+			"XXII <span class='elex-word'>EPISTOLA</span> QUALITER NEPOTES",
+			"per hanc <span class='elex-word'>epistolam</span> firmitatis volo,"
+		],
+		"urn:cts:formulae:tours.form023.lat001": [
+			"XXIII <span class='elex-word'>EPISTOLA</span> QUALITER EXTRANEO",
+			"per hanc <span class='elex-word'>epistolam</span> adoptionis sit",
+			"contra hanc <span class='elex-word'>epistolam</span> adoptionis aliquid"
+		],
+		"urn:cts:formulae:tours.form024.lat001": [
+			"XXIIII <span class='elex-word'>EPISTOLA</span> QUALITER PUPILLI",
+			"ut duas <span class='elex-word'>epistolas</span> unotenore conscriptas"
+		],
+		"urn:cts:formulae:tours.form025.lat001": [
+			"contra has <span class='elex-word'>epistolas</span> aliquid agere"
+		],
+		"urn:cts:formulae:tours.form028.lat001": [
+			"ut duas <span class='elex-word'>epistolas</span> unotenore conscriptas"
+		],
+		"urn:cts:formulae:tours.form034.lat001": [
+			"XXXIIII \t<span class='elex-word'>EPISTOLA</span> ABBATIS VEL",
+			"nostrorum hanc <span class='elex-word'>epistolam</span> tibi emittendam",
+			"revertatur. Quam <span class='elex-word'>epistolam</span> manu propria"
+		],
+		"urn:cts:formulae:tours.form038.lat001": [
+			"XXXVIII <span class='elex-word'>EPISTOLA</span> ABBATIS VEL",
+			"debeas. Quam <span class='elex-word'>epistolam</span> manu propria"
+		],
+		"urn:cts:formulae:tours.form039.lat001": [
+			"ideo hanc <span class='elex-word'>epistolam</span> securitatis tibi"
+		],
+		"urn:cts:formulae:tours.form043.lat001": [
+			"ut duas <span class='elex-word'>epistolas</span> unotenore conscriptas"
+		],
+		"urn:cts:formulae:tours.form044.lat001": [
+			"ideo hanc <span class='elex-word'>epistolam</span> evacuaturiam fecimus,"
+		],
+		"urn:cts:formulae:tours.form2_001.lat001": [
+			"INCIPIT <span class='elex-word'>EPISTULA</span> SALVATORIS [DOMINI"
+		]
+	},
 	"peculium": {
 		"urn:cts:formulae:andecavensis.form003.lat001": [
 			"statum omni <span class='elex-word'>peculiare</span> meo vobis"
@@ -13066,6 +13908,9 @@
 		],
 		"urn:cts:formulae:elexicon.forum.deu001": [
 			"neben vicus, <span class='elex-word'>villa</span> oder burgum"
+		],
+		"urn:cts:formulae:elexicon.vicus.deu001": [
+			"Nähe zu <span class='elex-word'>villa</span> rückte In"
 		],
 		"urn:cts:formulae:marculf.2_capitula.lat001": [
 			"aecclesia de <span class='elex-word'>villa</span>. V Praecaria",
@@ -17180,6 +18025,12 @@
 		],
 		"urn:cts:formulae:elexicon.ususfructus.deu001": [
 			"precaria und <span class='elex-word'>beneficium</span>, die ebenfalls"
+		],
+		"urn:cts:formulae:flavigny.form1_011.deu001": [
+			"Kloster gewährten <span class='elex-word'>beneficium</span> daselbst allein"
+		],
+		"urn:cts:formulae:flavigny.form1_012.deu001": [
+			"Dir ein <span class='elex-word'>beneficium</span> über Besitzungen"
 		],
 		"urn:cts:formulae:marculf.form1_003.lat001": [
 			"monimentum,si <span class='elex-word'>beneficia</span> oportuna [ad]",
@@ -21954,6 +22805,9 @@
 			"in eo <span class='elex-word'>placito</span> illi de",
 			"ad vesperum <span class='elex-word'>placitum</span> suum legibus"
 		],
+		"urn:cts:formulae:elexicon.consilium.deu001": [
+			"Neben colloquium, <span class='elex-word'>placitum</span>, conventus und"
+		],
 		"urn:cts:formulae:elexicon.mallus.deu001": [
 			"synonym zu <span class='elex-word'>placitum</span> verwendet, eine",
 			"offener gebrauchten <span class='elex-word'>placitum</span> scheint mallus",
@@ -25309,6 +26163,153 @@
 			"roborata cum <span class='elex-word'>stipulatione</span> inserta diuturno"
 		]
 	},
+	"commendatio": {
+		"urn:cts:formulae:andecavensis.form029.lat001": [
+			"se abuissit <span class='elex-word'>conmandatas</span>. Hoc est",
+			"illi illi <span class='elex-word'>conmandasset</span>. Taliter visum",
+			"ipsi illi <span class='elex-word'>conmandassit</span>, ut hoc"
+		],
+		"urn:cts:formulae:elexicon.litterae_commendatitiae.deu001": [
+			"von lat. <span class='elex-word'>commendare</span> (empfehlen).Als"
+		],
+		"urn:cts:formulae:marculf.form1_005.lat001": [
+			"actio probata <span class='elex-word'>commendat</span> et nobilitatis"
+		],
+		"urn:cts:formulae:marculf.form1_021.lat001": [
+			"visus est <span class='elex-word'>commendasse</span>. Propterea iubemus,"
+		],
+		"urn:cts:formulae:marculf.form2_001.lat001": [
+			"conversatio honesta <span class='elex-word'>commendat</span>. Unde obsecro"
+		],
+		"urn:cts:formulae:marculf.form2_046.lat001": [
+			"Quos, ut <span class='elex-word'>commendetur</span>,in omnibus"
+		],
+		"urn:cts:formulae:marculf.form2_047.lat001": [
+			"beatitudine plurimum <span class='elex-word'>commendare</span> praesumimus,ut"
+		],
+		"urn:cts:formulae:marculf.form2_048.lat001": [
+			"precibus Domino <span class='elex-word'>commendetis</span>.Deinde subiectus",
+			"almitate vestrae <span class='elex-word'>commendare</span>,per quas"
+		],
+		"urn:cts:formulae:marculf.form2_049.lat001": [
+			"petiit vestrae <span class='elex-word'>commendare</span> almitate ac"
+		],
+		"urn:cts:formulae:marculf.form3_2_001.lat001": [
+			"peculiariter me <span class='elex-word'>commendans</span> rogo et",
+			"benigno animo <span class='elex-word'>commendare</span> deposco."
+		],
+		"urn:cts:formulae:marculf.form3_3_005.lat001": [
+			"accio probata <span class='elex-word'>commendat</span> et nobilitatis"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0067.lat001": [
+			"memoriae litterarum <span class='elex-word'>commendare</span> illorum. Igitur"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0076b.lat001": [
+			"scripto diligentissime <span class='elex-word'>commendemus</span>; ut si"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0078.lat001": [
+			"litterarum memoriae <span class='elex-word'>commendari</span>. Hanc igitur"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0089.lat001": [
+			"annotatis testibus <span class='elex-word'>commendentur</span>, qui ea"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0099.lat001": [
+			"futurorum memoriae <span class='elex-word'>commendare</span> volumus convenientiam,"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0170.lat001": [
+			"Habentes autem <span class='elex-word'>commendat</span> et in"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0201.lat001": [
+			"memoriae decrevimus <span class='elex-word'>commendare</span>. Noverint igitur"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0204.lat001": [
+			"habeatur, litteris <span class='elex-word'>commendavi</span>, et sigilli"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0205.lat001": [
+			"illesum litteris <span class='elex-word'>commendavi</span> et sigilli"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0206.lat001": [
+			"illesum litteris <span class='elex-word'>commendavit</span> et sigilli"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0216.lat001": [
+			"firmum, litteris <span class='elex-word'>commendavi</span> et sigilli"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0217.lat001": [
+			"annuente, litteris <span class='elex-word'>commendavi</span> et sigilli"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0218.lat001": [
+			"firmum litteris <span class='elex-word'>commendavi</span>, id ipsum"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0219.lat001": [
+			"firmum litteris <span class='elex-word'>commendavi</span> id ipsum"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0220.lat001": [
+			"firmum, litteris <span class='elex-word'>commandavi</span> et sigilli"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0225.lat001": [
+			"eterna litteris <span class='elex-word'>commendavimus</span> et sigillorum"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0226.lat001": [
+			"stabile litteris <span class='elex-word'>commendavi</span>, sigillo nostro"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0228.lat001": [
+			"istud feci <span class='elex-word'>commendari</span> litteris et"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0229.lat001": [
+			"firmum, litteris <span class='elex-word'>commendavi</span> et sigilli"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0048app.lat001": [
+			"scripto diligentissime <span class='elex-word'>commendemus</span>, ut si"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0055app.lat001": [
+			"litterarum apicibus <span class='elex-word'>commendare</span> decrevimus, quod"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0060app.lat001": [
+			"litterarum memoriae <span class='elex-word'>commendavi</span>, et sigilli"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0083.lat001": [
+			"elemosinam suam <span class='elex-word'>commendavit</span>. Est autem",
+			"ipsis pariter <span class='elex-word'>commandande</span> elemosine Rotgerii"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0168.lat001": [
+			"futuro huic <span class='elex-word'>commendantur</span> pargameno. Et"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0169.lat001": [
+			"se sepelire <span class='elex-word'>commendavit</span>. Ibique, super"
+		],
+		"urn:cts:formulae:marmoutier_vendomois_appendix.trémault0031.lat001": [
+			"posteritatis memorie <span class='elex-word'>commendamus</span> quod dominus"
+		],
+		"urn:cts:formulae:marmoutier_vendomois_appendix.trémault0040.lat001": [
+			"ergo pagine <span class='elex-word'>comendatum</span> noverint universi,"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud1439.lat001": [
+			"Monasterii monachi <span class='elex-word'>commendaverant</span> ministerium aquae",
+			"9 ut <span class='elex-word'>commendarent</span> illud ei",
+			"jamdictum est <span class='elex-word'>commendantes</span> illi non",
+			"quanto sibi <span class='elex-word'>commendarent</span> tempore. Juravit"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud2799.lat001": [
+			"immo et <span class='elex-word'>commendationem</span> habebat domnus"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3260.lat001": [
+			"parvulos quos <span class='elex-word'>commendavit</span> sancto Martino"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3262.lat001": [
+			"beneficio loci, <span class='elex-word'>commendans</span> se fratrum"
+		],
+		"urn:cts:formulae:tours.0_capitula.lat001": [
+			"alterius potestate <span class='elex-word'>commendat</span> XLIII \t      Epistola,",
+			"in alterius <span class='elex-word'>commendat</span> potestate XLIIII"
+		],
+		"urn:cts:formulae:tours.form024.lat001": [
+			"officium tutoris <span class='elex-word'>commendare</span> deberimus.Quod"
+		],
+		"urn:cts:formulae:tours.form043.lat001": [
+			"ALTERIUS POTESTATE <span class='elex-word'>COMMENDAT</span> Domino magnifico",
+			"tradere vel <span class='elex-word'>commendare</span> deberem. Quod"
+		]
+	},
 	"fides": {
 		"urn:cts:formulae:andecavensis.form029.lat001": [
 			"tantus bene <span class='elex-word'>fidem</span> habentes, vicinis"
@@ -25790,55 +26791,6 @@
 			"et ipsa <span class='elex-word'>convenentia</span> firma permaneat."
 		]
 	},
-	"appennis": {
-		"urn:cts:formulae:andecavensis.form031.deu001": [
-			"BEGINNT EIN <span class='elex-word'>APPENNIS</span> Weil ja"
-		],
-		"urn:cts:formulae:andecavensis.form031.lat001": [
-			"INCIPIT <span class='elex-word'>APENNIS</span> Dum non"
-		],
-		"urn:cts:formulae:andecavensis.form032.deu001": [
-			"BEGINNT EIN <span class='elex-word'>APPENNIS</span> Jeder, der",
-			"Urkunde, die <span class='elex-word'>appennis</span> heißt, die",
-			"zwei gleichartige <span class='elex-word'>appennes</span> erhalten sollte,"
-		],
-		"urn:cts:formulae:andecavensis.form032.lat001": [
-			"INCIPIT ITEM <span class='elex-word'>APPENNIS</span> Quicumquae ad",
-			"qui vocatur <span class='elex-word'>appennis</span>, prefatorum seniorum",
-			"ut duo <span class='elex-word'>appennis</span> quoequalis ex"
-		],
-		"urn:cts:formulae:andecavensis.form033.deu001": [
-			"UM EIN <span class='elex-word'>APPENNIS</span> ZU BESTÄTIGEN",
-			"Bezirks ein <span class='elex-word'>appennis</span> besser beantragen"
-		],
-		"urn:cts:formulae:andecavensis.form033.lat001": [
-			"NOTICIA AD <span class='elex-word'>APPENO</span> FIRMARE Cum",
-			"possit exinde <span class='elex-word'>appenne</span> in civetate,"
-		],
-		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0011.lat001": [
-			"Notitia de <span class='elex-word'>arpenno</span> vineae apud"
-		],
-		"urn:cts:formulae:marmoutier_vendomois.trémault0071.lat001": [
-			"amplius metiantur <span class='elex-word'>arpenni</span>. Rotgerius autem"
-		],
-		"urn:cts:formulae:marmoutier_vendomois.trémault0123.lat001": [
-			"et V <span class='elex-word'>arpenni</span> pratorum de"
-		],
-		"urn:cts:formulae:telma_marmoutier.giraud3150.lat001": [
-			"ex triginta <span class='elex-word'>arpennis</span> terrae ad"
-		],
-		"urn:cts:formulae:tours.0_capitula.lat001": [
-			"XXVIII \tItem <span class='elex-word'>appennem</span> XXVIIII \tEditio"
-		],
-		"urn:cts:formulae:tours.form028.deu001": [
-			"DESGLEICHEN EIN <span class='elex-word'>APPENNIS</span> Es besteht",
-			"dafür ein <span class='elex-word'>appennis</span> bestätigen sollten,"
-		],
-		"urn:cts:formulae:tours.form028.lat001": [
-			"XXVIII ITEM <span class='elex-word'>APPENNEM</span> Consuetudo huius",
-			"Turonus civitatem <span class='elex-word'>appennem</span> exinde deberent"
-		]
-	},
 	"iudex": {
 		"urn:cts:formulae:andecavensis.form031.deu001": [
 			"die Amtmänner (<span class='elex-word'>iudices</span> und auch"
@@ -25862,6 +26814,9 @@
 		],
 		"urn:cts:formulae:auvergne.form001.lat001": [
 			"dominorum vel <span class='elex-word'>iudicibus</span> adversariorum meorum"
+		],
+		"urn:cts:formulae:elexicon.ministerialis.deu001": [
+			"Grafen oder <span class='elex-word'>iudices</span> zuarbeiten konnten"
 		],
 		"urn:cts:formulae:elexicon.pulveraticum.deu001": [
 			"für Landvermesser, <span class='elex-word'>iudices</span> oder Sklaven,"
@@ -26570,6 +27525,11 @@
 			"Ille rex, <span class='elex-word'>vir</span> <span class='elex-word'>inluster</span>, illo"
 		]
 	},
+	"appennis": {
+		"urn:cts:formulae:andecavensis.form032.deu001": [
+			"zwei gleichartige <span class='elex-word'>appennes</span> erhalten sollte,"
+		]
+	},
 	"provincia": {
 		"urn:cts:formulae:andecavensis.form032.lat001": [
 			"in qua <span class='elex-word'>provincia</span> vi aut",
@@ -27188,6 +28148,9 @@
 		],
 		"urn:cts:formulae:elexicon.carta.deu001": [
 			"Sprachgebrauch verweist <span class='elex-word'>carta</span> auf den"
+		],
+		"urn:cts:formulae:elexicon.epistula.deu001": [
+			"B. littera/litterae, <span class='elex-word'>carta</span>, apex und"
 		],
 		"urn:cts:formulae:elexicon.manumissio_per_denarium.deu001": [
 			"denariale oder <span class='elex-word'>carta</span> denarilia genannt)"
@@ -28397,6 +29360,182 @@
 			"ut secundum <span class='elex-word'>legem</span> <span class='elex-word'>romanam</span> pro"
 		]
 	},
+	"consilium": {
+		"urn:cts:formulae:andecavensis.form041.lat001": [
+			"mente sanoque <span class='elex-word'>consilio</span>: Meduantis casus",
+			"Deo, conmune <span class='elex-word'>consilio</span> per cartole"
+		],
+		"urn:cts:formulae:auvergne.form001.lat001": [
+			"et [T]heodisio <span class='elex-word'>consilibus</span> eorum ad"
+		],
+		"urn:cts:formulae:marculf.form1_032.lat001": [
+			"et unacum <span class='elex-word'>consilio</span> fidelium nostrorum",
+			"ordinationem unacum <span class='elex-word'>consilio</span> seniorum fidelium"
+		],
+		"urn:cts:formulae:marculf.form2_002.lat001": [
+			"ac salubriter <span class='elex-word'>consilium</span> immoque satis",
+			"quid prumptione <span class='elex-word'>consilio</span>, ut homo"
+		],
+		"urn:cts:formulae:marculf.form2_017.lat001": [
+			"mente integroque <span class='elex-word'>consilio</span>: Metuentes casus"
+		],
+		"urn:cts:formulae:marculf.form2_041.lat001": [
+			"malorum hominum <span class='elex-word'>consilium</span>,quod non"
+		],
+		"urn:cts:formulae:marculf.form3_3_005.lat001": [
+			"nobis salubre <span class='elex-word'>consilium</span> pertractare,ut",
+			"exornat, cum <span class='elex-word'>consilio</span> [et volontate"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0061.lat001": [
+			"saniori usus <span class='elex-word'>consilio</span>, reddidit et"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0069.lat001": [
+			"frater eius, <span class='elex-word'>consilio</span> quorum et"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0077.lat001": [
+			"Prophetae Danielis <span class='elex-word'>consilio</span> quod regi"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0094.lat001": [
+			"comes accepit <span class='elex-word'>consilium</span> cum famulis",
+			"convocavitque ad <span class='elex-word'>consilium</span> suum optimates",
+			"comes, adquiescens <span class='elex-word'>consilio</span> eorum, nolens"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0095.lat001": [
+			"accepto inde <span class='elex-word'>consilio</span>, invenit apud",
+			"invenit apud <span class='elex-word'>consilium</span> suum idem"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0099.lat001": [
+			"decem librarum <span class='elex-word'>consilio</span> comitissae Ermengardis,"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0112.lat001": [
+			"canonici credentes <span class='elex-word'>consilio</span> suorum fautorum",
+			"tandem saniori <span class='elex-word'>consilio</span>, tractare inter"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0116.lat001": [
+			"omnia relinquendi <span class='elex-word'>consilio</span>, recessit ut",
+			"intercessionibus obtinentibus, <span class='elex-word'>consilia</span> in melius"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0138.lat001": [
+			"credo et <span class='elex-word'>consilio</span> inspiratus, et"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0155.lat001": [
+			"capituli sui <span class='elex-word'>consilio</span>, mandavit domno"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0174.lat001": [
+			"id saniori <span class='elex-word'>consilio</span> humiliter rogantem"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0190.lat001": [
+			"Vico, cum <span class='elex-word'>consilio</span> Odonis IIII",
+			"tradet cum <span class='elex-word'>consilio</span> Odonis custodiendum."
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0192.lat001": [
+			"prudentium virorum <span class='elex-word'>consilio</span> ipsas elemosinas"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0193.lat001": [
+			"intuitu et <span class='elex-word'>consilio</span> Raherii de"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0194.lat001": [
+			"et sapientium <span class='elex-word'>consilio</span>, discordiam calumnii"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0209.lat001": [
+			"prudentium virorum <span class='elex-word'>consilio</span>, abbatissam et"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0225.lat001": [
+			"prudentium virorum <span class='elex-word'>consilio</span>, pro amore"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0228.lat001": [
+			"acciperam, tandem <span class='elex-word'>consilio</span> bonorum et"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0230.lat001": [
+			"bonorum virorum <span class='elex-word'>consilio</span> idem comes"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0236.lat001": [
+			"prudentum virorum <span class='elex-word'>consilio</span> freti, nostrorum"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0238.lat001": [
+			"bonorum virorum <span class='elex-word'>consilio</span> compositum est"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0241.lat001": [
+			"bonorum virorum <span class='elex-word'>consilio</span> inter nos"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0243.lat001": [
+			"bonorum virorum <span class='elex-word'>consilio</span>, predicte partes",
+			"de bonorum <span class='elex-word'>consilio</span> de hoc",
+			"bonorum nostrorum <span class='elex-word'>consilio</span> quod in"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0244.lat001": [
+			"bonorum virorum <span class='elex-word'>consilio</span> suum arbitrium"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0246.lat001": [
+			"bonorum virorum <span class='elex-word'>consilio</span> in hunc"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0252.lat001": [
+			"bonorum virorum <span class='elex-word'>consilio</span>, de assensu"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0278.lat001": [
+			"proborum virorum <span class='elex-word'>consilio</span>, dicta Matildis"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0065.lat001": [
+			"monachi accepto <span class='elex-word'>consilio</span> in claustro,"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0009.lat001": [
+			"Horum igitur <span class='elex-word'>consilio</span> acquiescentes, ad"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0073.lat001": [
+			"eo, per <span class='elex-word'>consilium</span> et voluntatem"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0117.lat001": [
+			"sententie assumpto <span class='elex-word'>consilio</span>, incautum putavi,"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0125.lat001": [
+			"sed monachi, <span class='elex-word'>consilio</span> meo, dederunt"
+		],
+		"urn:cts:formulae:marmoutier_vendomois_appendix.trémault0037.lat001": [
+			"prior convenirent, <span class='elex-word'>consilium</span> ab eo",
+			"quererent, pro <span class='elex-word'>consilio</span> laudavit et"
+		],
+		"urn:cts:formulae:marmoutier_vendomois_appendix.trémault0070.lat001": [
+			"Jacquelinus pravo <span class='elex-word'>consilio</span> saisivit, tamdem"
+		],
+		"urn:cts:formulae:marmoutier_vendomois_appendix.trémault0079.lat001": [
+			"assensu et <span class='elex-word'>consilio</span> patris mei"
+		],
+		"urn:cts:formulae:marmoutier_vendomois_appendix.trémault0080.lat001": [
+			"vero meo <span class='elex-word'>consilio</span> et assensu,"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud2227.lat001": [
+			"inquieta...8 usus <span class='elex-word'>consilio</span> jam saniori"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud2617.lat001": [
+			"suggestione et <span class='elex-word'>consilio</span> pravorum hominum"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud2869.lat001": [
+			"hominum meorum <span class='elex-word'>consilio</span> quorum infra"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3205.lat001": [
+			"omnia relinquendi <span class='elex-word'>consilio</span> recessit, ut",
+			"intercessionibus obtinentibus, <span class='elex-word'>consilia</span> in melius"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3225.lat001": [
+			"canonici credentes <span class='elex-word'>consilio</span> suorum fautorum",
+			"tandem saniori <span class='elex-word'>consilio</span>, tractare inter"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3590.lat001": [
+			"perpetrandae nequitiae <span class='elex-word'>consilium</span>, sicut nulla"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud4785.lat001": [
+			"feci per <span class='elex-word'>consilium</span> quidem bonorum"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud4840.lat001": [
+			"tandem saniori <span class='elex-word'>consilio</span>, tractare inter"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud4884.lat001": [
+			"clericorum, quorum <span class='elex-word'>consilio</span> et voluntate"
+		],
+		"urn:cts:formulae:telma_martin_tours.giraud3485.lat001": [
+			"audientes, eorum <span class='elex-word'>consilio</span> Avramus tunc"
+		]
+	},
 	"contractus": {
 		"urn:cts:formulae:andecavensis.form041.lat001": [
 			"de qualibet <span class='elex-word'>contractum</span> mihi legibus"
@@ -28475,6 +29614,9 @@
 		],
 		"urn:cts:formulae:elexicon.mancipium.deu001": [
 			"colonus und <span class='elex-word'>servus</span> verwendet und"
+		],
+		"urn:cts:formulae:elexicon.ministerialis.deu001": [
+			"allem zunächst <span class='elex-word'>servus</span>, dann servitor)"
 		],
 		"urn:cts:formulae:elexicon.notar.deu001": [
 			"a manu <span class='elex-word'>servus</span>, ursprünglich ein"
@@ -32523,6 +33665,233 @@
 			"vel substantia <span class='elex-word'>monachorum</span> ibidem vitam"
 		]
 	},
+	"iustitia": {
+		"urn:cts:formulae:andecavensis.form046.lat001": [
+			"eternam et <span class='elex-word'>iusticia</span> repotitur. Igitur:"
+		],
+		"urn:cts:formulae:elexicon.clementia.deu001": [
+			"Korrektiv zur <span class='elex-word'>iustitia</span> gesehen, das"
+		],
+		"urn:cts:formulae:elexicon.pietas.deu001": [
+			"Gegengewicht zur <span class='elex-word'>iustitia</span> (Gerechtigkeit) dar"
+		],
+		"urn:cts:formulae:marculf.form1_023.lat001": [
+			"conditionibus et <span class='elex-word'>iusticiam</span> reddat et"
+		],
+		"urn:cts:formulae:marculf.form1_025.lat001": [
+			"ubi praelucit <span class='elex-word'>iustitia</span>,illuc gressum"
+		],
+		"urn:cts:formulae:marculf.form1_026.lat001": [
+			"et nulla <span class='elex-word'>iustitia</span> vobiscum ob"
+		],
+		"urn:cts:formulae:marculf.form1_027.lat001": [
+			"et nullam <span class='elex-word'>iustitiam</span> cum eodem"
+		],
+		"urn:cts:formulae:marculf.form1_028.lat001": [
+			"et nulla <span class='elex-word'>iusticia</span> ex hoc"
+		],
+		"urn:cts:formulae:marculf.form1_029.lat001": [
+			"et nullam <span class='elex-word'>iusticiam</span> ex hoc"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0001.lat001": [
+			"monachus illis <span class='elex-word'>iusticiam</span> faciat cum",
+			"Similem quoque <span class='elex-word'>iusticiam</span> homines vicecomitis",
+			"deinceps cesserunt <span class='elex-word'>iusticiae</span>. Ventilata igitur"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0014.lat001": [
+			"licet recognoscentes, <span class='elex-word'>justiciae</span> cesserunt, suoque"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0048.lat001": [
+			"monachus illis <span class='elex-word'>iusticiam</span> faciat, cum",
+			"Similem quoque <span class='elex-word'>iusticiam</span>, homines vicecomitis"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0053.lat001": [
+			"multa secundum <span class='elex-word'>iusticiam</span> persolvere debuissent,"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0060.lat001": [
+			"curia, secundum <span class='elex-word'>iusticiam</span>. Posuit etiam"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0064.lat001": [
+			"querela sua <span class='elex-word'>iusticiam</span> exequi nollet,"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0077.lat001": [
+			"de omnibus <span class='elex-word'>iusticiis</span> sive forisfactis,",
+			"fecerint eis <span class='elex-word'>iusticiam</span> benigne suscipiant"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0092.lat001": [
+			"reddibitiones, forisfacturae, <span class='elex-word'>iusticiae</span>, vicariae, districturae,",
+			"eis, inde <span class='elex-word'>iusticiam</span> benigne suscipiant"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0094.lat001": [
+			"retinerent, neque <span class='elex-word'>iusticiam</span>, neque aliquam"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0098.lat001": [
+			"iudicio tenebat <span class='elex-word'>iusticiae</span>. Unde in",
+			"debere, cui <span class='elex-word'>iusticia</span> debebatur, iudicio"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0112.lat001": [
+			"quamvis secundum <span class='elex-word'>iusticiam</span>, finito uno"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0117.lat001": [
+			"humanis quam <span class='elex-word'>iusticia</span> sibi vindicat"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0148.lat001": [
+			"consuetudines et <span class='elex-word'>iusticiam</span> suae tertiae",
+			"et totius <span class='elex-word'>iustitie</span> et quicquid",
+			"de capienda <span class='elex-word'>iustitia</span>, et de"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0158.lat001": [
+			"retinemus, sacrilegia, <span class='elex-word'>iusticiam</span>, de monachis,"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0163.lat001": [
+			"sibi inde <span class='elex-word'>iustitiam</span> ab eo"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0173.lat001": [
+			"tenebunt ei <span class='elex-word'>iusticiam</span> ante Nivelonem",
+			"gravari, quaerent <span class='elex-word'>iusticiam</span> vel sanctae",
+			"faciet eis <span class='elex-word'>iusticiam</span>, quod si",
+			"aliunde quaerent <span class='elex-word'>iusticiam</span>. Ad hanc"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0181.lat001": [
+			"cum omni <span class='elex-word'>iustitia</span> de sanguine",
+			"omni alia <span class='elex-word'>iusticia</span> excepto subfocato"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0190.lat001": [
+			"priore pro <span class='elex-word'>iusticia</span> districtum suum",
+			"ipsius pro <span class='elex-word'>iusticia</span> facienda Odoni"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0208.lat001": [
+			"capituli contra <span class='elex-word'>iusticiam</span> honeratum. Ita"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0211.lat001": [
+			"Montemirabili de <span class='elex-word'>iusticia</span> et consuetudinibus",
+			"et magnam <span class='elex-word'>iustitiam</span> advenarum, qui",
+			"magnam etiam <span class='elex-word'>iustitiam</span> de masnariis"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0214.lat001": [
+			"De maiore <span class='elex-word'>iusticia</span> in territorio",
+			"totam maiorem <span class='elex-word'>iusticiam</span>, scilicet sanguinem,",
+			"ad maiorem <span class='elex-word'>iusticiam</span> pertinentia quam"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0220.lat001": [
+			"omnimoda, salvis <span class='elex-word'>iusticiis</span> suis, quitavit"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0229.lat001": [
+			"salvis meis <span class='elex-word'>iusticiis</span> quitavi et"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0236.lat001": [
+			"nominatis medietatem <span class='elex-word'>iusticie</span>, scilicet furti,",
+			"molendinos tocius <span class='elex-word'>iusticie</span> per totam",
+			"monachi medietatem <span class='elex-word'>iusticie</span>, scilicet furti,",
+			"percipient dicte <span class='elex-word'>iusticie</span> quartam partem."
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0237.lat001": [
+			"pro alta <span class='elex-word'>iusticia</span>.Ego Helisendis,",
+			"super alta <span class='elex-word'>iusticia</span> et usagio"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0238.lat001": [
+			"pro alta <span class='elex-word'>iustitia</span> dictos homines",
+			"tamen alta <span class='elex-word'>iustitia</span> nobis et",
+			"ad altam <span class='elex-word'>iusticiam</span> dignoscuntur pertinere."
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0239.lat001": [
+			"rebus et <span class='elex-word'>iusticia</span> de Pusiaco",
+			"totam maiorem <span class='elex-word'>iusticiam</span>, scilicet sanguinem,",
+			"ad maiorem <span class='elex-word'>iusticiam</span> pertinentia, quae",
+			"tota maiori <span class='elex-word'>iusticia</span> quitam et"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0242.lat001": [
+			"de alta <span class='elex-word'>iusticia</span> de Villael.",
+			"super alta <span class='elex-word'>iusticia</span> territorii de",
+			"dicta alta <span class='elex-word'>iusticia</span> habebam vel",
+			"herbergamento, bassam <span class='elex-word'>iusticiam</span> semper habuisse."
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0011.lat001": [
+			"faciet ei <span class='elex-word'>justitiam</span> vel prior"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0018app.lat001": [
+			"licet recognoscentes, <span class='elex-word'>justitiae</span> cesserunt, suoque"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0038app.lat001": [
+			"si mihi <span class='elex-word'>justitiam</span> non fecerint,"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0116.lat001": [
+			"sibi aliquando <span class='elex-word'>justitiam</span> quererent conminantes,"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0057.lat001": [
+			"non solum <span class='elex-word'>iusticie</span> non adquiesceret"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0059.lat001": [
+			"sed prevalente <span class='elex-word'>iusticie</span> amatorum decreto"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0087.lat001": [
+			"Constantii contra <span class='elex-word'>iusticiam</span> iam manifestissimam",
+			"potius quam <span class='elex-word'>iustitia</span> cogi, satis"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0117.lat001": [
+			"sueque repetitionis <span class='elex-word'>iusticiam</span> probabili satis",
+			"asserebant antiquum, <span class='elex-word'>iusticia</span> quantum michi"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0129.lat001": [
+			"cetera vero <span class='elex-word'>iusticia</span>, in monachorum"
+		],
+		"urn:cts:formulae:marmoutier_vendomois_appendix.trémault0012.lat001": [
+			"ET DE <span class='elex-word'>IUSTITIA</span>, QUAS APPROBAT"
+		],
+		"urn:cts:formulae:marmoutier_vendomois_appendix.trémault0021.lat001": [
+			"sue querele <span class='elex-word'>iustitiam</span> eis consentiret,"
+		],
+		"urn:cts:formulae:marmoutier_vendomois_appendix.trémault0028.lat001": [
+			"septimo, recuperavimus, <span class='elex-word'>iusticia</span> .... igente, quiquid"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud1439.lat001": [
+			"recti habere <span class='elex-word'>justitie</span> reclamare. Unde"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud1573.lat001": [
+			"ei ad <span class='elex-word'>justitiam</span>. Sin autem,",
+			"quousque ad <span class='elex-word'>justitiam</span> nos posset"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud2171.lat001": [
+			"nimis a <span class='elex-word'>justitiae</span> linea discrepare"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3163.lat001": [
+			"monachus illis <span class='elex-word'>justiciam</span> faciet, cum",
+			"Similem quoque <span class='elex-word'>justiciam</span> homines vicecomitis"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3165.lat001": [
+			"monachus illis <span class='elex-word'>justiciam</span> faciat cum",
+			"Similem quoque <span class='elex-word'>justiciam</span> homines vicecomitis",
+			"deinceps cesserunt <span class='elex-word'>justiciae</span>. Ventilata igitur"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3176.lat001": [
+			"humanis quam <span class='elex-word'>justitia</span> sibi vindicat"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3225.lat001": [
+			"quamvis secundum <span class='elex-word'>justitiam</span> finito uno"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3515.lat001": [
+			"voluntatis effectum <span class='elex-word'>justitiae</span> convictus obtinere"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3589.lat001": [
+			"semetipsos in <span class='elex-word'>justitiae</span> suae conscientia",
+			"suisque famulis <span class='elex-word'>justitiae</span> sententia favit,"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3590.lat001": [
+			"suisque famulis <span class='elex-word'>justitiae</span> sententia favit,"
+		],
+		"urn:cts:formulae:telma_martin_tours.giraud3485.lat001": [
+			"Martini monachi <span class='elex-word'>justitiae</span> et rectitudini"
+		],
+		"urn:cts:formulae:tours.form028.lat001": [
+			"legis terrenae <span class='elex-word'>iustitiae</span> constat esse"
+		],
+		"urn:cts:formulae:tours.form032.lat001": [
+			"legem et <span class='elex-word'>iustitiam</span> sociasset.Qui"
+		],
+		"urn:cts:formulae:tours.form2_002.lat001": [
+			"omnibus declaretur <span class='elex-word'>iusticia</span>."
+		]
+	},
 	"monasterium": {
 		"urn:cts:formulae:andecavensis.form046.lat001": [
 			"nostris in <span class='elex-word'>monastirio</span> nostro, quem",
@@ -33339,6 +34708,10 @@
 		"urn:cts:formulae:elexicon.episcopus.deu001": [
 			"Wahl durch <span class='elex-word'>populus</span> und Klerus"
 		],
+		"urn:cts:formulae:elexicon.plebs.deu001": [
+			"synonym zu <span class='elex-word'>populus</span> gebraucht.Im",
+			"Teil des <span class='elex-word'>populus</span> jedoch in"
+		],
 		"urn:cts:formulae:elexicon.regnum.deu001": [
 			"gens und <span class='elex-word'>populus</span> ein und"
 		],
@@ -33969,6 +35342,35 @@
 		],
 		"urn:cts:formulae:telma_martin_tours.giraud2271.lat001": [
 			"et a <span class='elex-word'>presbytero</span> ecclesiae ipsius"
+		]
+	},
+	"homicidium": {
+		"urn:cts:formulae:andecavensis.form050.lat001": [
+			"IUDICIUS DE <span class='elex-word'>HOMICIDIO</span> Eveniens illi"
+		],
+		"urn:cts:formulae:marculf.2_capitula.lat001": [
+			"Securitas pro <span class='elex-word'>homicidio</span> facto, si"
+		],
+		"urn:cts:formulae:marculf.form2_018.lat001": [
+			"SECURITAS PRO <span class='elex-word'>HOMICIDIO</span> FACTO [SI"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0238.lat001": [
+			"nostris, scilicet <span class='elex-word'>homicidio</span>, raptu, incendio,"
+		],
+		"urn:cts:formulae:marmoutier_vendomois_appendix.trémault0012.lat001": [
+			"raptus et <span class='elex-word'>homicidum</span> domino remanebunt."
+		],
+		"urn:cts:formulae:tours.0_capitula.lat001": [
+			"Securitas de <span class='elex-word'>homicidio</span> XXXVIII  Securitas",
+			"Securitas de <span class='elex-word'>omicidio</span> vel de"
+		],
+		"urn:cts:formulae:tours.form029.lat001": [
+			"si de <span class='elex-word'>homicidio</span> accusatio processerit,",
+			"alium de <span class='elex-word'>homicidii</span> crimine periculosa"
+		],
+		"urn:cts:formulae:tours.form039.lat001": [
+			"SECURITAS DE <span class='elex-word'>HOMICIDIO</span> Fratri illo",
+			"de iamdicto <span class='elex-word'>homicidio</span> habere non"
 		]
 	},
 	"rachinburgus": {
@@ -35482,6 +36884,9 @@
 		"urn:cts:formulae:elexicon.civis.deu001": [
 			"der civis <span class='elex-word'>Romanus</span> noch bis"
 		],
+		"urn:cts:formulae:elexicon.franci.deu001": [
+			"auch Romanen (<span class='elex-word'>Romani</span>) und Burgunder ("
+		],
 		"urn:cts:formulae:marculf.2_capitula.lat001": [
 			"iuxta consuetudine <span class='elex-word'>Romanorum</span>. Qualiter \t\t\t\t\tdonationes"
 		],
@@ -35572,6 +36977,78 @@
 		],
 		"urn:cts:formulae:telma_martin_tours.giraud1423.lat001": [
 			"nostrae\n                     auctoritatis <span class='elex-word'>testamentum</span> concederemus. Cujus"
+		]
+	},
+	"vicus": {
+		"urn:cts:formulae:auvergne.form006.lat001": [
+			"Arvernico, in <span class='elex-word'>vico</span> illo, in"
+		],
+		"urn:cts:formulae:elexicon.forum.deu001": [
+			"forum neben <span class='elex-word'>vicus</span>, villa oder"
+		],
+		"urn:cts:formulae:elexicon.pagus.deu001": [
+			"mit einem <span class='elex-word'>vicus</span> oder castrum"
+		],
+		"urn:cts:formulae:marculf.form1_040.lat001": [
+			"per civitates, <span class='elex-word'>vicos</span> et castella"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0005.lat001": [
+			"partem quandam <span class='elex-word'>vici</span> nostri Camartii,",
+			"etiam partem <span class='elex-word'>vici</span> Camartii nostri",
+			"in eodem <span class='elex-word'>vico</span> hanc ipsam"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0009.lat001": [
+			"nostra de <span class='elex-word'>vico</span> Chamartio, ea",
+			"monachus, praefati <span class='elex-word'>vici</span> tunc temporis",
+			"eodem Camartio <span class='elex-word'>vico</span> eandem vinearum"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0039.lat001": [
+			"inhabitet villam, <span class='elex-word'>vicum</span>, castellum, aut"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0069.lat001": [
+			"Sancti omnibus <span class='elex-word'>boscum</span> suum ad"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0133.lat001": [
+			"de Veteri <span class='elex-word'>vico</span>; de laicis,"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0179.lat001": [
+			"martyris in <span class='elex-word'>vico</span> Choinensi sita.",
+			"martyris in <span class='elex-word'>vico</span> Choinensi sita,",
+			"in eodem <span class='elex-word'>vico</span> commanentibus concederem."
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0031app.lat001": [
+			"inhabitet villam, <span class='elex-word'>vicum</span>, castellum aut"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0038app.lat001": [
+			"cum toto <span class='elex-word'>vico</span> et omnibus"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0009.lat001": [
+			"eodem Navolii <span class='elex-word'>vico</span>, et in"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0115.lat001": [
+			"Rainaldo de <span class='elex-word'>vico</span> vassalorum – Landrico –"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud1467.lat001": [
+			"Fulcone apud <span class='elex-word'>vicum</span> Condatensem, relecta"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud2806.lat001": [
+			"atque in <span class='elex-word'>vico</span> Luviniaco domum"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3154.lat001": [
+			"nostra de <span class='elex-word'>vico</span> Camartio, ea",
+			"eodem Camartio <span class='elex-word'>vico</span> eandem vinearum"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3156.lat001": [
+			"in eodem <span class='elex-word'>vico</span> hanc ipsam"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3589.lat001": [
+			"quam in <span class='elex-word'>vico</span> castri superius"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3590.lat001": [
+			"quam in <span class='elex-word'>vico</span> castri superius"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud4785.lat001": [
+			"sedis meae <span class='elex-word'>vicum</span> ex parochitana"
 		]
 	},
 	"traditio": {
@@ -35842,6 +37319,9 @@
 		"urn:cts:formulae:elexicon.festuca.deu001": [
 			"In der <span class='elex-word'>Lex</span> <span class='elex-word'>Salica</span> ist"
 		],
+		"urn:cts:formulae:elexicon.franci.deu001": [
+			"fränkischem Recht (<span class='elex-word'>Lex</span> <span class='elex-word'>Salica</span>) lebte"
+		],
 		"urn:cts:formulae:elexicon.lex_salica.deu001": [
 			"Genosse, Kamerad“; <span class='elex-word'>Lex</span> <span class='elex-word'>Salica</span> wäre",
 			"auf die <span class='elex-word'>Lex</span> <span class='elex-word'>Salica</span> können",
@@ -36017,6 +37497,19 @@
 			"indignissimus in <span class='elex-word'>cathedram</span> substitutus, in"
 		]
 	},
+	"arrha": {
+		"urn:cts:formulae:elexicon.arrha.deu001": [
+			"diente die <span class='elex-word'>arra</span> im Zusammenhang",
+			"verfiel die <span class='elex-word'>arra</span> an den",
+			"er die <span class='elex-word'>arra</span> zusammen mit",
+			"nichtig. Die <span class='elex-word'>arra</span> selbst konnte",
+			"kam der <span class='elex-word'>arra</span> im römischen",
+			"Übergabe der <span class='elex-word'>arra</span> sponsalicia durch"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3259.lat001": [
+			"jam quasi <span class='elex-word'>arras</span> vel revestitionem"
+		]
+	},
 	"precarium": {
 		"urn:cts:formulae:elexicon.beneficium.deu001": [
 			"Verbindung mit <span class='elex-word'>precarium</span> auf und"
@@ -36111,6 +37604,338 @@
 			"hanc et <span class='elex-word'>amiciciam</span> placuit utrisque"
 		]
 	},
+	"vicarius": {
+		"urn:cts:formulae:elexicon.centenarius.deu001": [
+			"centenarius und <span class='elex-word'>vicarius</span> in karolingischer"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0008.lat001": [
+			"et Gislebertus <span class='elex-word'>vicarii</span>, quos ille"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0013.lat001": [
+			"Germundum, Guarinum <span class='elex-word'>vicarium</span>, Aimericum clericum,"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0016.lat001": [
+			"parato, Rodulfo, <span class='elex-word'>vicario</span> Blesensi, Rotberto",
+			"Gradulfi, Rainaldo, <span class='elex-word'>vicario</span> de Calvo"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0029.lat001": [
+			"frater Milonis, <span class='elex-word'>vicariam</span> habebat, quam",
+			"memoratus Hugo <span class='elex-word'>vicariam</span> istam Sancto",
+			"qui saepedictam <span class='elex-word'>vicariam</span> ex eo,",
+			"eius de <span class='elex-word'>vicaria</span> faciebat libenter"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0034.lat001": [
+			"Rainfredi, Arraldus <span class='elex-word'>vicarius</span> eius. De"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0049.lat001": [
+			"legisperiti, Guarinus <span class='elex-word'>vicarius</span>, Lanbertus filius"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0070.lat001": [
+			"Marcherius, Girbertus <span class='elex-word'>vicarius</span>, Rotbertus, Rainardus,"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0092.lat001": [
+			"forisfacturae, iusticiae, <span class='elex-word'>vicariae</span>, districturae, exactiones,"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0110.lat001": [
+			"vicecomitis, Airardus <span class='elex-word'>vicarius</span>, Sugerius et",
+			"eius, Richardus <span class='elex-word'>vicarius</span>, Gunterius de"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0121.lat001": [
+			"praepositus, Guarinus <span class='elex-word'>vicarius</span>, Ebruinus Baco,"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0124.lat001": [
+			"de remissione <span class='elex-word'>vicariae</span> Arblainvillae ab",
+			"Milonis solummodo <span class='elex-word'>vicariam</span> habebat, de",
+			"praedictus Hugo <span class='elex-word'>vicariam</span> istam Sancto",
+			"medietatem ipsius <span class='elex-word'>vicariae</span> tenebat in",
+			"assentit, et <span class='elex-word'>vicariam</span> istam ex"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0128.lat001": [
+			"filio Hervei <span class='elex-word'>vicarii</span>, Frotgerio mariscalco,"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0137.lat001": [
+			"Bosco, Ascelino <span class='elex-word'>vicario</span>. Porro dono"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0145.lat001": [
+			"Vienna, Ascelinus <span class='elex-word'>vicarius</span>; de monachis:"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0163.lat001": [
+			"qui fuit <span class='elex-word'>vicarius</span>, Herveus Burez",
+			"Burez tunc <span class='elex-word'>vicarius</span>, Rainerius serviens"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0165.lat001": [
+			"Pancer, Gislebertus <span class='elex-word'>vicarius</span>, Ainardus, Neptunus."
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0177.lat001": [
+			"Sextalararius, Hugo <span class='elex-word'>vicarius</span>, Stephanus de",
+			"ipsorum: Hugo <span class='elex-word'>vicarius</span>, Hilgodus de"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0183.lat001": [
+			"monachis omnem <span class='elex-word'>vicariam</span> et omnes"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0192.lat001": [
+			"Cloa, Matheo <span class='elex-word'>vicario</span>, Huberto presbitero"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0009app.lat001": [
+			"clericus, David <span class='elex-word'>vicarius</span>, Fulbertus telonearius,",
+			"homo David <span class='elex-word'>vicarii</span>, Fulcherius frater"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0010app.lat001": [
+			"Brito, Fulcerius <span class='elex-word'>vicarius</span> et plures"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0011.lat001": [
+			"senescalcus, Arembertus <span class='elex-word'>vicarius</span>, Galoius, Arnulfus"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0011app.lat001": [
+			"S. Roberti <span class='elex-word'>vicarii</span>. S. Hucberti"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0013app.lat001": [
+			"Follem. Salomo <span class='elex-word'>vicarius</span>. Tetbaldus filius"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0014app.lat001": [
+			"hic: Durandus <span class='elex-word'>vicarius</span> comiti Gausfredo,",
+			"Gausfredo, Salomon <span class='elex-word'>vicarius</span> comitis Fulconis,"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0015app.lat001": [
+			"nisi sub <span class='elex-word'>vicario</span> auctorisare, et"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0016.lat001": [
+			"Francisco, Guarino <span class='elex-word'>vicario</span>, Tetbaldo Rege,"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0019app.lat001": [
+			"Francisco, Guarino <span class='elex-word'>vicario</span>, Tetbaldo Rege,"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0024app.lat001": [
+			"et Gislebertus <span class='elex-word'>vicarii</span>, quos ille"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0027app.lat001": [
+			"Parato, Rodulfo <span class='elex-word'>vicario</span> Blesensi, Rotberto",
+			"Gradulfi, Rainaldo <span class='elex-word'>vicario</span> de Calvo"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0038app.lat001": [
+			"S. Fucaudi <span class='elex-word'>vicarii</span> Cabanensis. S."
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0043.lat001": [
+			"filium Gausberti <span class='elex-word'>vicarii</span> de Monte",
+			"filio Ascelini <span class='elex-word'>vicarii</span> de Castello",
+			"Rainaldi, Aremberto <span class='elex-word'>vicario</span>, Herveo de"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0048.lat001": [
+			"Ferrum, Arembertus <span class='elex-word'>vicarius</span> de Rupibus,",
+			"Scala, Petrus <span class='elex-word'>vicarius</span> de Rupibus,"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0051.lat001": [
+			"S. Ansaldi <span class='elex-word'>vicarii</span>. S. Ivonis"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0072.lat001": [
+			"S. Humberti <span class='elex-word'>vicarii</span>. S. Jonae"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0074.lat001": [
+			"S. Rainardi <span class='elex-word'>vicarii</span>."
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0089.lat001": [
+			"clericus. David <span class='elex-word'>vicarius</span>. Fulbertus telonearius.",
+			"homo David <span class='elex-word'>vicarii</span>. Fulcherius frater"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0102.lat001": [
+			"prepositus; Guarinus <span class='elex-word'>vicarius</span>; Ebroinus Baconus;"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0009.lat001": [
+			"et in <span class='elex-word'>vicaria</span> eiusdem ecclesie"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0020.lat001": [
+			"hii:Durandus <span class='elex-word'>vicarius</span> comitis Gauffredi –",
+			"Gauffredi – Salomon <span class='elex-word'>vicarius</span> comitis Fulconis –"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0030.lat001": [
+			"decanum – David <span class='elex-word'>vicarium</span> – Rogerium Piperaturam –",
+			"Bucellus – David <span class='elex-word'>vicarius</span> – Otbertus filius"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0031.lat001": [
+			"filio Guillelmi <span class='elex-word'>vicarii</span> – Johanne converso –"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0032.lat001": [
+			"calumniam dicens <span class='elex-word'>vicariam</span> molini suam"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0042.lat001": [
+			"filio Ascelini <span class='elex-word'>vicarii</span> – Petro molendinario"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0049.lat001": [
+			"filii Ingelbaldi <span class='elex-word'>vicarii</span> de Vindocino,",
+			"filius Ascelini <span class='elex-word'>vicarii</span> – Boninus – Giraldus"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0050.lat001": [
+			"Banasta – Hildebertus <span class='elex-word'>vicarius</span> de Lavarzino –"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0053.lat001": [
+			"et habere <span class='elex-word'>vicarium</span> in ea.",
+			"ea esse <span class='elex-word'>vicarium</span>. Quod cum",
+			"deinceps absque <span class='elex-word'>vicario</span> et absque"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0054.lat001": [
+			"istis: Gauterio, <span class='elex-word'>vicario</span> de Calvo-monte –",
+			"Pane-parato – Mainardo <span class='elex-word'>vicario</span> de Calvo-monte –",
+			"Fulberti – Guarino <span class='elex-word'>vicario</span> de Blesis –"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0062.lat001": [
+			"S. Lamberti <span class='elex-word'>vicarii</span>. – S. Gualterii. –"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0065.lat001": [
+			"forestarius – Hildebertus <span class='elex-word'>vicarius</span> – Fulbertus de"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0072.lat001": [
+			"cum tota <span class='elex-word'>vicaria</span> et omnibus"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0075.lat001": [
+			"ut dimitteret <span class='elex-word'>vicariam</span> quandam quam",
+			"et guerpitionis <span class='elex-word'>vicarie</span> ab Ingelbaldo,"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0077.lat001": [
+			"hospitalarius – Arembertus <span class='elex-word'>vicarius</span> - Fulco monachus"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0083.lat001": [
+			"decanus – Durandus <span class='elex-word'>vicarius</span> Gaufredi comitis –"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0086.lat001": [
+			"de Forgetis, <span class='elex-word'>vicariam</span> scilicet et"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0103.lat001": [
+			"S. Ingelbaldi <span class='elex-word'>vicarii</span> S. Viviani"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0104.lat001": [
+			"follem Salomon <span class='elex-word'>vicarius</span> – Tetbaldus filius"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0115.lat001": [
+			"clericus – David <span class='elex-word'>vicarius</span> – Fulbertus telonearius –",
+			"homo David <span class='elex-word'>vicarii</span> – Fulcherius frater"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0117.lat001": [
+			"presidebat Hildebrannus <span class='elex-word'>vicarius</span> pape Romani,",
+			"terram, a <span class='elex-word'>vicaria</span>, bannaria atque",
+			"fratris Ascionis <span class='elex-word'>vicarii</span>.S Gauscelini"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0118.lat001": [
+			"Wlgrini Guarino <span class='elex-word'>vicario</span> Hildemaro de"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0120.lat001": [
+			"Jerusalem – Arembertus <span class='elex-word'>vicarius</span> – Ausegisus maior –"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0122.lat001": [
+			"terra Ascelini <span class='elex-word'>vicarii</span> de Castello",
+			"terra Salomonis <span class='elex-word'>vicarii</span>, aliaque que"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0124.lat001": [
+			"illius fuisse <span class='elex-word'>vicarium</span>, ideoque iustum"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0128.lat001": [
+			"nisi sub <span class='elex-word'>vicario</span>, auctorizare, quo"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0129.lat001": [
+			"archipresbiter – Droco <span class='elex-word'>vicarius</span> – Hubertus de"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0164.lat001": [
+			"pratis et <span class='elex-word'>vicaria</span> et omnibus"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0170.lat001": [
+			"prepositus – David <span class='elex-word'>vicarius</span> – Ildegarius Caro"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0177.lat001": [
+			"Jotardus, Guillelmi <span class='elex-word'>vicarii</span> filius, terram"
+		],
+		"urn:cts:formulae:marmoutier_vendomois_appendix.trémault0014.lat001": [
+			"isti: Hildebertus <span class='elex-word'>vicarius</span> – Fulbertus de"
+		],
+		"urn:cts:formulae:marmoutier_vendomois_appendix.trémault0021.lat001": [
+			"quod Ascelinus <span class='elex-word'>vicarius</span> vendidit monachis"
+		],
+		"urn:cts:formulae:marmoutier_vendomois_appendix.trémault0022.lat001": [
+			"filius David <span class='elex-word'>vicarii</span> – Alcuinus coquus –"
+		],
+		"urn:cts:formulae:marmoutier_vendomois_appendix.trémault0025.lat001": [
+			"bosco – Ascelino <span class='elex-word'>vicario</span> – Porro dono"
+		],
+		"urn:cts:formulae:marmoutier_vendomois_appendix.trémault0036.lat001": [
+			"et Maleto <span class='elex-word'>vicario</span>, ventum est",
+			"vero: Maletus <span class='elex-word'>vicarius</span> – Leddetus maior"
+		],
+		"urn:cts:formulae:marmoutier_vendomois_appendix.trémault0064.lat001": [
+			"et Achardus <span class='elex-word'>vicarius</span> venerunt cum"
+		],
+		"urn:cts:formulae:telma_cormery.giraud4839.lat001": [
+			"Signum Syzleni\n                            <span class='elex-word'>vicarii</span>. Signum Gunberti"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud0629.lat001": [
+			"consuetudinum, exceptis <span class='elex-word'>vicaria</span> et decima",
+			"filius Alberici <span class='elex-word'>vicarii</span> de Valle,"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud1434.lat001": [
+			"firmavit. EBULO <span class='elex-word'>vicarius</span> firmavit. ERLALDUS"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud1485.lat001": [
+			"plano, excepta <span class='elex-word'>vicaria</span> quadam. De"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud1496.lat001": [
+			"omnes ad <span class='elex-word'>vicariam</span> pertinentes et"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud1972.lat001": [
+			"Infanti, Willelmo <span class='elex-word'>vicario</span>, Fulcherio Degladiato,"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud2197.lat001": [
+			"Signum Lantberti <span class='elex-word'>vicarii</span>. Signum Frodgerii."
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud2202.lat001": [
+			"istis: Hildebertus <span class='elex-word'>vicarius</span>, Fulbertus de"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud2806.lat001": [
+			"exactionis vel <span class='elex-word'>vicariae</span> sive caeterorum",
+			"Signum Walterii <span class='elex-word'>vicarii</span>. Signum Brienti."
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud2834.lat001": [
+			"meus, Ragan <span class='elex-word'>vicarius</span>, Herveus forestarius,",
+			"[...15...gerius, V......] <span class='elex-word'>vicarius</span>, [...7...on...rius], Johannes",
+			"Kinoaret etiam <span class='elex-word'>vicarius</span> dederat quandam",
+			"Dolo, Rotaldus <span class='elex-word'>vicarius</span>, Normannus, Rodulfus,",
+			"Cordun, Vualterius <span class='elex-word'>vicarius</span>, Tetbaldus presbiter."
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud2848.lat001": [
+			"exactionis vel <span class='elex-word'>vicariae</span> seu caeterorum"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3167.lat001": [
+			"Germundum, Guarinum <span class='elex-word'>vicarium</span>, Aymericum clericum,"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3173.lat001": [
+			"legisperiti, Guarinus <span class='elex-word'>vicarius</span>, Lanbertus filius"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3177.lat001": [
+			"vicecomitis, Airardus <span class='elex-word'>vicarius</span>, Sugerius, et",
+			"ejus, Ricardus <span class='elex-word'>vicarius</span>, Gunterius de"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3519.lat001": [
+			"earum, atque <span class='elex-word'>vicaria</span>, ac si"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3534.lat001": [
+			"et totam <span class='elex-word'>vicariam</span>, et bellum"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3540.lat001": [
+			"factus est <span class='elex-word'>vicarius</span>. Vendidit etiam"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3542.lat001": [
+			"Martini, David <span class='elex-word'>vicarium</span> vendidisse sancto"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3574.lat001": [
+			"aecclesiam aedificatur, <span class='elex-word'>vicariam</span> totam, bellum"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud4680.lat001": [
+			"corvata et <span class='elex-word'>vicaria</span> de his",
+			"presbiter, Archembaldus <span class='elex-word'>vicarius</span>, Petrus senescaldus,"
+		],
+		"urn:cts:formulae:telma_martin_tours.giraud1434.lat001": [
+			"firmavit. EBULO\n                     <span class='elex-word'>vicarius</span> firmavit. ERLALDUS"
+		],
+		"urn:cts:formulae:telma_martin_tours.giraud1965.lat001": [
+			"Rainaldo videlicet <span class='elex-word'>vicario</span>, Stephano de"
+		]
+	},
 	"comes_palatinus": {
 		"urn:cts:formulae:elexicon.comes_palatinus.deu001": [
 			"für den <span class='elex-word'>comes</span> <span class='elex-word'>palatinus</span> finden"
@@ -36128,10 +37953,30 @@
 			"Tetbaldi incliti <span class='elex-word'>comitis</span> <span class='elex-word'>palatini</span> filius"
 		]
 	},
+	"plebs": {
+		"urn:cts:formulae:elexicon.condita.deu001": [
+			"Bewohner, die <span class='elex-word'>plebs</span>, verbunden Im"
+		],
+		"urn:cts:formulae:elexicon.populus.deu001": [
+			"gebraucht zu <span class='elex-word'>plebs</span>, zur Bezeichnung"
+		],
+		"urn:cts:formulae:marculf.form1_005.lat001": [
+			"paulolum oberrat <span class='elex-word'>plebs</span> distituta praesidio,",
+			"discipulus.Qui <span class='elex-word'>plebem</span> non minus"
+		],
+		"urn:cts:formulae:marculf.form3_3_005.lat001": [
+			"clerum] et <span class='elex-word'>plebium</span> ipsius civitatis",
+			"canonica institucione <span class='elex-word'>plebem</span> vobis commissam"
+		]
+	},
 	"consensus": {
 		"urn:cts:formulae:elexicon.coniugium.deu001": [
 			"Antike der <span class='elex-word'>consensus</span> zwischen den",
 			"des fehlenden <span class='elex-word'>consensus</span> nicht zur"
+		],
+		"urn:cts:formulae:elexicon.consilium.deu001": [
+			"und Zustimmung (<span class='elex-word'>consensus</span>) gewannen in",
+			"consilium und <span class='elex-word'>consensus</span> im Rahmen"
 		],
 		"urn:cts:formulae:marculf.1_capitula.lat001": [
 			"benedicat.VII \t\t<span class='elex-word'>Consensu</span> civium pro"
@@ -36356,6 +38201,17 @@
 			"Laidet, Johanne <span class='elex-word'>camerario</span> et Johanne"
 		]
 	},
+	"osculum": {
+		"urn:cts:formulae:elexicon.dos.deu001": [
+			"dotalicium, maritagium, <span class='elex-word'>osculum</span>, sponsalia oder"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3591.lat001": [
+			"dato pacis <span class='elex-word'>osculo</span>, cum Dei"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3601.lat001": [
+			"dato pacis <span class='elex-word'>osculo</span>, cum die"
+		]
+	},
 	"sponsalia": {
 		"urn:cts:formulae:elexicon.dos.deu001": [
 			"maritagium, osculum, <span class='elex-word'>sponsalia</span> oder sponsalicium"
@@ -36366,7 +38222,7 @@
 			"praesul, pontifex, <span class='elex-word'>papa</span> und presbyter"
 		],
 		"urn:cts:formulae:marculf.form000.lat001": [
-			"ac reverentissimo <span class='elex-word'>pape</span> illi Marculfus,"
+			"ac reverentissimo <span class='elex-word'>pape</span> Landerico/Aeglidulfo"
 		],
 		"urn:cts:formulae:marculf.form2_043.lat001": [
 			"fratri illo <span class='elex-word'>papae</span> ille peccator"
@@ -36447,6 +38303,14 @@
 			"Gregorio septimo <span class='elex-word'>papa</span> in Galliam"
 		]
 	},
+	"burgundi": {
+		"urn:cts:formulae:elexicon.franci.deu001": [
+			"und Burgunder (<span class='elex-word'>Burgundi</span>)Mit der"
+		],
+		"urn:cts:formulae:marculf.form1_008.lat001": [
+			"Franci, Romani, <span class='elex-word'>Burgundiones</span> vel reliquas"
+		]
+	},
 	"germana": {
 		"urn:cts:formulae:elexicon.frater.deu001": [
 			"germanus und <span class='elex-word'>germana</span> benutzt Gegenüber"
@@ -36454,6 +38318,19 @@
 		"urn:cts:formulae:marculf.form3_3_004.lat001": [
 			"b)\tAD <span class='elex-word'>GERMANA</span> Domna Deo",
 			"mihi carnaliter <span class='elex-word'>germana</span> et in"
+		]
+	},
+	"rapina": {
+		"urn:cts:formulae:elexicon.furtum.deu001": [
+			"furtum und <span class='elex-word'>rapina</span> (Raub), die",
+			"vom Raub (<span class='elex-word'>rapina</span>, <span class='elex-word'>latrocinium</span>) ist",
+			"Bezeichnungen furtum, <span class='elex-word'>latrocinium</span> und <span class='elex-word'>rapina</span>"
+		],
+		"urn:cts:formulae:tours.form030.lat001": [
+			"quis ad <span class='elex-word'>rapinam</span> faciendam adgreditur"
+		],
+		"urn:cts:formulae:tours.form031.lat001": [
+			"et ad <span class='elex-word'>rapinam</span> vel ad"
 		]
 	},
 	"soror": {
@@ -36769,6 +38646,101 @@
 		],
 		"urn:cts:formulae:telma_martin_tours.giraud3200.lat001": [
 			"Noiastro, cum <span class='elex-word'>sorore</span> eorum nomine"
+		]
+	},
+	"clementia": {
+		"urn:cts:formulae:elexicon.gratia.deu001": [
+			"sie als <span class='elex-word'>clementia</span> principis zu"
+		],
+		"urn:cts:formulae:marculf.form1_002.lat001": [
+			"Oportet enim <span class='elex-word'>clementiae</span> principali, ut",
+			"petitionem illius <span class='elex-word'>clementia</span> nostra pro"
+		],
+		"urn:cts:formulae:marculf.form1_004.lat001": [
+			"Principale quidem <span class='elex-word'>clementia</span> cunctorum decet",
+			"civitatis episcopus, <span class='elex-word'>clementiae</span> regni nostri"
+		],
+		"urn:cts:formulae:marculf.form1_007.lat001": [
+			"vestrae circumspecta <span class='elex-word'>clementia</span> novit iusta",
+			"ipse regale <span class='elex-word'>clementiae</span> prosit salutis"
+		],
+		"urn:cts:formulae:marculf.form1_008.lat001": [
+			"perfecte conlaudatur <span class='elex-word'>clementia</span>,ut inter"
+		],
+		"urn:cts:formulae:marculf.form1_009.lat001": [
+			"responsis vestrae <span class='elex-word'>clementiae</span> praemoniti ad"
+		],
+		"urn:cts:formulae:marculf.form1_016.lat001": [
+			"a regale <span class='elex-word'>clemencia</span> pro aeterna",
+			"urbis episcopus, <span class='elex-word'>clementiae</span> regni nostri"
+		],
+		"urn:cts:formulae:marculf.form1_017.lat001": [
+			"vir ille <span class='elex-word'>clementiae</span> regni nostri"
+		],
+		"urn:cts:formulae:marculf.form1_021.lat001": [
+			"vel admallare.<span class='elex-word'>Clementiae</span> regni nostri"
+		],
+		"urn:cts:formulae:marculf.form1_028.lat001": [
+			"nostram veniens <span class='elex-word'>clementiam</span> regni nostri"
+		],
+		"urn:cts:formulae:marculf.form1_031.lat001": [
+			"Merito regalis <span class='elex-word'>clementia</span> in illis"
+		],
+		"urn:cts:formulae:marculf.form1_033.lat001": [
+			"est releventur <span class='elex-word'>clementia</span>,qui damnietatem",
+			"noster ille <span class='elex-word'>clementiae</span> regni nostri"
+		],
+		"urn:cts:formulae:marculf.form1_034.lat001": [
+			"vestri circumspecta <span class='elex-word'>clementia</span> novit iusta",
+			"vestrae innotescere <span class='elex-word'>clementiae</span>.Quod et"
+		],
+		"urn:cts:formulae:marculf.form2_044.lat001": [
+			"ad regi <span class='elex-word'>clementiae</span> vestrae”si"
+		],
+		"urn:cts:formulae:marculf.form2_045.lat001": [
+			"vestram praeuenire <span class='elex-word'>clementiam</span> aut sanctitatem"
+		],
+		"urn:cts:formulae:marculf.form3_3_002.lat001": [
+			"palatio nostro <span class='elex-word'>clemenciae</span> regni nostri"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0012.lat001": [
+			"supernae maiestatis <span class='elex-word'>clementiam</span> iugiter exorantium,"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0116.lat001": [
+			"calumnias. Tandem <span class='elex-word'>clementiam</span> Dei famulis"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0038app.lat001": [
+			"predecessorum meorum <span class='elex-word'>clementiam</span> ut, quemadmodum"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0109.lat001": [
+			"contritione est, <span class='elex-word'>clementia</span> fusis lacrimis"
+		],
+		"urn:cts:formulae:marmoutier_vendomois_appendix.trémault0011.lat001": [
+			"peccatoribus Dei <span class='elex-word'>clementiam</span> exorent, ut"
+		],
+		"urn:cts:formulae:marmoutier_vendomois_appendix.trémault0012.lat001": [
+			"peccatoribus Dei <span class='elex-word'>clementiam</span> exorent. Si"
+		],
+		"urn:cts:formulae:telma_cormery.giraud1420.lat001": [
+			"DIVINA REPROPITIANTE\n                            <span class='elex-word'>CLEMENTIA</span> IMPERATOR AUGUSTUS."
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud1422.lat001": [
+			"divina ordinante <span class='elex-word'>clementia</span> Francorum dux."
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud1525.lat001": [
+			"successorum nostrorum <span class='elex-word'>clementia</span> ut, sicut"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3170.lat001": [
+			"supernae majestatis <span class='elex-word'>clementiam</span> jugiter exorantium,"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3205.lat001": [
+			"calumnias. Tandem <span class='elex-word'>clementiam</span> Dei famulis"
+		],
+		"urn:cts:formulae:telma_martin_tours.giraud1420.lat001": [
+			"DIVINA REPROPITIANTE <span class='elex-word'>CLEMENTIA</span> IMPERATOR\n                     AUGUSTUS."
+		],
+		"urn:cts:formulae:tours.form027.lat001": [
+			"noster ille <span class='elex-word'>clementiae</span> regni nostri"
 		]
 	},
 	"dominium": {
@@ -37380,6 +39352,9 @@
 		]
 	},
 	"familia": {
+		"urn:cts:formulae:elexicon.ministerialis.deu001": [
+			"der kaiserlichen <span class='elex-word'>familia</span> rustica, die"
+		],
 		"urn:cts:formulae:elexicon.monachus.deu001": [
 			"der antiken <span class='elex-word'>familia</span> als Oberhaupt"
 		],
@@ -37478,6 +39453,24 @@
 		],
 		"urn:cts:formulae:tours.form016.lat001": [
 			"inter filios <span class='elex-word'>familias</span> sine voluntate"
+		]
+	},
+	"tuitio": {
+		"urn:cts:formulae:elexicon.mundeburdium.deu001": [
+			"zu defensio, <span class='elex-word'>tuitio</span> oder patrocinium"
+		],
+		"urn:cts:formulae:elexicon.patrocinium.deu001": [
+			"defensio und <span class='elex-word'>tuitio</span> gebraucht bezeichnete"
+		],
+		"urn:cts:formulae:marculf.form1_024.lat001": [
+			"potestas illis <span class='elex-word'>tuitutionem</span> inpertiat,quorum",
+			"sub sermonem <span class='elex-word'>tuticionis</span> nostrae visi"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0092.lat001": [
+			"sive preceptum <span class='elex-word'>tuitionis</span> gratia immunitatisque"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0203.lat001": [
+			"et sub <span class='elex-word'>tuitionem</span> suam tunc"
 		]
 	},
 	"amanuensis": {
@@ -38509,6 +40502,16 @@
 			"Petrus accipiens\n                            <span class='elex-word'>festicam</span> suam professus"
 		]
 	},
+	"centenarius": {
+		"urn:cts:formulae:elexicon.vicarius.deu001": [
+			"Osten vorherrschenden <span class='elex-word'>centenarius</span>, den er"
+		]
+	},
+	"mallus": {
+		"urn:cts:formulae:elexicon.vicus.deu001": [
+			"Versammlungen (placita, <span class='elex-word'>mallus</span>), als kirchliche"
+		]
+	},
 	"fredus": {
 		"urn:cts:formulae:elexicon.weregeldus.deu001": [
 			"Summe als <span class='elex-word'>fredus</span> an Vertreter"
@@ -38548,6 +40551,9 @@
 		]
 	},
 	"patricius": {
+		"urn:cts:formulae:flavigny.2_capitula.deu001": [
+			"Herzogs, eines <span class='elex-word'>patricius</span> [oder] eines"
+		],
 		"urn:cts:formulae:marculf.1_capitula.deu001": [
 			"Herzogs, eines <span class='elex-word'>patricius</span> oder eines"
 		],
@@ -38571,6 +40577,9 @@
 		]
 	},
 	"antrustio": {
+		"urn:cts:formulae:flavigny.2_capitula.deu001": [
+			"Für einen <span class='elex-word'>antrustio</span> des Königs"
+		],
 		"urn:cts:formulae:marculf.1_capitula.deu001": [
 			"Für einen  <span class='elex-word'>antrustio</span> des Königs."
 		],
@@ -38583,6 +40592,25 @@
 		"urn:cts:formulae:marculf.form1_018.lat001": [
 			"DE REGIS <span class='elex-word'>ANTRUSTIONEM</span> Rectum est,",
 			"inter numero <span class='elex-word'>antrustionorum</span> conputetur.Et"
+		]
+	},
+	"xenodochium": {
+		"urn:cts:formulae:flavigny.2_capitula.deu001": [
+			"will ein <span class='elex-word'>xenodochium</span> errichten LXXXVII"
+		],
+		"urn:cts:formulae:marculf.2_capitula.lat001": [
+			"monasterio aut <span class='elex-word'>exsinodocio</span> de magna"
+		],
+		"urn:cts:formulae:marculf.form2_001.deu001": [
+			"FÜR EIN <span class='elex-word'>XENODOCHIUM</span> ODER KLOSTER",
+			"Stadt dasselbe <span class='elex-word'>Xenodochium</span> liegt, ferner"
+		],
+		"urn:cts:formulae:marculf.form2_001.lat001": [
+			"QUI VULT <span class='elex-word'>EXSINODOTIO</span> \t\t\tAUT MONASTERIO",
+			"cuius oppidum <span class='elex-word'>exsinodotius</span> ipsi ponitur,"
+		],
+		"urn:cts:formulae:tours.0_capitula.lat001": [
+			"monasterium vel <span class='elex-word'>sinodochium</span> de magna"
 		]
 	},
 	"privilegium": {
@@ -38671,22 +40699,6 @@
 		],
 		"urn:cts:formulae:marculf.form1_011.lat001": [
 			"XI\t<span class='elex-word'>TRACTURIA</span> LEGATARIORUM VEL"
-		]
-	},
-	"xenodochium": {
-		"urn:cts:formulae:marculf.2_capitula.lat001": [
-			"monasterio aut <span class='elex-word'>exsinodocio</span> de magna"
-		],
-		"urn:cts:formulae:marculf.form2_001.deu001": [
-			"FÜR EIN <span class='elex-word'>XENODOCHIUM</span> ODER KLOSTER",
-			"Stadt dasselbe <span class='elex-word'>Xenodochium</span> liegt, ferner"
-		],
-		"urn:cts:formulae:marculf.form2_001.lat001": [
-			"QUI VULT <span class='elex-word'>EXSINODOTIO</span> \t\t\tAUT MONASTERIO",
-			"cuius oppidum <span class='elex-word'>exsinodotius</span> ipsi ponitur,"
-		],
-		"urn:cts:formulae:tours.0_capitula.lat001": [
-			"monasterium vel <span class='elex-word'>sinodochium</span> de magna"
 		]
 	},
 	"evacuaturia": {
@@ -39410,6 +41422,47 @@
 			"in saepefata <span class='elex-word'>cellula</span> Sancti Georgii"
 		]
 	},
+	"usurpare": {
+		"urn:cts:formulae:marculf.form1_002.lat001": [
+			"suis usibus <span class='elex-word'>usurpari</span>,nec,quod"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0009.lat001": [
+			"hereditatem illis <span class='elex-word'>usurparet</span> in rebus,"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0215.lat001": [
+			"aliena sibi <span class='elex-word'>usurpare</span>, iniustam altercationem"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0116.lat001": [
+			"molendinum sibi <span class='elex-word'>usurpavit</span>. Post aliquantum"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud2198.lat001": [
+			"molendinum sibi <span class='elex-word'>usurpavit</span>. Post aliquantum"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud2869.lat001": [
+			"malae consuetudinis <span class='elex-word'>usurpare</span> praesumpserunt, sanctorum"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3154.lat001": [
+			"hereditatem illis <span class='elex-word'>usurparet</span> in rebus,"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3591.lat001": [
+			"illius erant <span class='elex-word'>usurpare</span>, sicut Sancti"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3601.lat001": [
+			"illius erant <span class='elex-word'>usurpare</span>, sicut Sancti"
+		],
+		"urn:cts:formulae:tours.form001.lat001": [
+			"tenere et <span class='elex-word'>usurpare</span> debeam; et"
+		],
+		"urn:cts:formulae:tours.form006.lat001": [
+			"tenere et <span class='elex-word'>usurpare</span> debeam, et"
+		],
+		"urn:cts:formulae:tours.form007.lat001": [
+			"tenere et <span class='elex-word'>usurpare</span> faciam.Unde"
+		],
+		"urn:cts:formulae:tours.form035.lat001": [
+			"tenere et <span class='elex-word'>usurpare</span> faciam. Post"
+		]
+	},
 	"fideiussor": {
 		"urn:cts:formulae:marculf.form1_003.lat001": [
 			"paratas vel <span class='elex-word'>fideiussores</span> tollere non"
@@ -39537,21 +41590,6 @@
 		"urn:cts:formulae:tours.form033.lat001": [
 			"ut datis <span class='elex-word'>fideiussoribus</span> Kalendas illas",
 			"datos habuit <span class='elex-word'>fideiussores</span> et placitum"
-		]
-	},
-	"plebs": {
-		"urn:cts:formulae:marculf.form1_005.lat001": [
-			"paulolum oberrat <span class='elex-word'>plebs</span> distituta praesidio,",
-			"discipulus.Qui <span class='elex-word'>plebem</span> non minus"
-		],
-		"urn:cts:formulae:marculf.form3_3_005.lat001": [
-			"clerum] et <span class='elex-word'>plebium</span> ipsius civitatis",
-			"canonica institucione <span class='elex-word'>plebem</span> vobis commissam"
-		]
-	},
-	"burgundi": {
-		"urn:cts:formulae:marculf.form1_008.lat001": [
-			"Franci, Romani, <span class='elex-word'>Burgundiones</span> vel reliquas"
 		]
 	},
 	"aerarium": {
@@ -40238,6 +42276,27 @@
 			"loco de <span class='elex-word'>thesauro</span> ipsius sancti,"
 		]
 	},
+	"alienare": {
+		"urn:cts:formulae:marculf.form2_005.lat001": [
+			"qualibet rem <span class='elex-word'>alienandi</span> aut minuandi"
+		],
+		"urn:cts:formulae:marculf.form2_008.lat001": [
+			"quicquam exinde <span class='elex-word'>alienandi</span> aut minuendi",
+			"quicquam exinde <span class='elex-word'>alienandi</span> aut minuendi"
+		],
+		"urn:cts:formulae:marculf.form2_009.lat001": [
+			"vaendere nec <span class='elex-word'>alienare</span> nec concamiare"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0041.lat001": [
+			"faceret alienum, <span class='elex-word'>alienaretur</span> etiam in"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0059app.lat001": [
+			"alio modo <span class='elex-word'>alienare</span>, minime licebit."
+		],
+		"urn:cts:formulae:tours.form038.lat001": [
+			"donare nec <span class='elex-word'>alienare</span> nec in"
+		]
+	},
 	"tanodono": {
 		"urn:cts:formulae:marculf.form2_015.deu001": [
 			"ist als  <span class='elex-word'>tanodono</span> ein Landgut,"
@@ -40890,6 +42949,112 @@
 		],
 		"urn:cts:formulae:telma_martin_tours.giraud3199.lat001": [
 			"Signum Girberti <span class='elex-word'>majoris</span>. Signum Fulcradi."
+		]
+	},
+	"burgus": {
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0002.lat001": [
+			"quem in <span class='elex-word'>burgo</span> Camartiaco nomine,"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0005.lat001": [
+			"de parte <span class='elex-word'>burgi</span> Camartii quam"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0007.lat001": [
+			"est in <span class='elex-word'>burgo</span> Chamartio et"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartularium_dunense_0075.lat001": [
+			"volumus, quod <span class='elex-word'>burgum</span>, qui est"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0109.lat001": [
+			"omnesque consuetudines <span class='elex-word'>burgi</span> cellae illius,"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0138.lat001": [
+			"castelli mei <span class='elex-word'>burgum</span>, in Andura"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0169.lat001": [
+			"de Chamarcio <span class='elex-word'>burgo</span>, scilicet ipsorum"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0173.lat001": [
+			"et etiam <span class='elex-word'>burgum</span> quod subtus",
+			"aedificare, nec <span class='elex-word'>burgum</span> ampliare, nec",
+			"habere in <span class='elex-word'>burgo</span> suo, nisi",
+			"monachorum in <span class='elex-word'>burgo</span> suo nisi",
+			"habere in <span class='elex-word'>burgo</span> suo ministeriales",
+			"in quo <span class='elex-word'>burgum</span> situm est,",
+			"Lidi; et <span class='elex-word'>burgum</span> novum quod"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0180.lat001": [
+			"comes in <span class='elex-word'>burgo</span> nostro de",
+			"consuetudinem in <span class='elex-word'>burgo</span> de Chamarciaco,",
+			"homines illius <span class='elex-word'>burgi</span> pergunt mecum",
+			"de predicto <span class='elex-word'>burgo</span> ab exercitu",
+			"latrone eiusdem <span class='elex-word'>burgi</span>. Cum enim"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0181.lat001": [
+			"de libertate <span class='elex-word'>burgi</span> Chamartii.Ego"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0182.lat001": [
+			"noceat, edificabitur. <span class='elex-word'>Burgum</span> etiam novum"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0192.lat001": [
+			"ut in <span class='elex-word'>burgo</span> suo costume",
+			"omnium costumarum <span class='elex-word'>burgi</span> illius medietatem",
+			"de hominibus <span class='elex-word'>burgi</span> illius sicut",
+			"et vindennagium <span class='elex-word'>burgi</span> illius proprie",
+			"in hominibus <span class='elex-word'>burgi</span> illius sine",
+			"predicti monachi <span class='elex-word'>burgum</span> suum et"
+		],
+		"urn:cts:formulae:marmoutier_dunois.mabille_cartae_prioratum_0195.lat001": [
+			"quamdam in <span class='elex-word'>burgo</span> qui Chamartium"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0003.lat001": [
+			"domum in <span class='elex-word'>burgo</span> nostro, quam"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0033app.lat001": [
+			"dominatione totius <span class='elex-word'>burgi</span>, in terris,"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0038app.lat001": [
+			"homines in <span class='elex-word'>burgo</span> hujus ecclesiae",
+			"servis in <span class='elex-word'>burgo</span> monachorum manserit,"
+		],
+		"urn:cts:formulae:marmoutier_serfs.salmon0077.lat001": [
+			"nunc in <span class='elex-word'>burgo</span> nostro manentem,"
+		],
+		"urn:cts:formulae:marmoutier_vendomois.trémault0116.lat001": [
+			"Lidi, in <span class='elex-word'>burco</span> Castri Vindocini"
+		],
+		"urn:cts:formulae:marmoutier_vendomois_appendix.trémault0028.lat001": [
+			"apud Vindocinum, <span class='elex-word'>burgum</span> habemus, tenuerunt."
+		],
+		"urn:cts:formulae:marmoutier_vendomois_appendix.trémault0037.lat001": [
+			"maior de <span class='elex-word'>burgo</span> Maioris Monasterii –"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud1467.lat001": [
+			"ecclesiam et <span class='elex-word'>burgum</span>. Cui etiam"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3155.lat001": [
+			"quandam supradicti <span class='elex-word'>burgi</span> nostri Camartii",
+			"illam partem <span class='elex-word'>burgi</span> nobis ita",
+			"quam faciebat <span class='elex-word'>burgi</span> nostri Tetbaldum",
+			"partemque illam <span class='elex-word'>burgi</span> primo quidem",
+			"in eodem <span class='elex-word'>burgo</span> Camartio ambas"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3157.lat001": [
+			"quem in <span class='elex-word'>burgo</span> Camartiaco nomine"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3516.lat001": [
+			"injuste in <span class='elex-word'>burgo</span> illo quem"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3534.lat001": [
+			"consuetudines de <span class='elex-word'>burco</span> qui circa"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud3574.lat001": [
+			"consuetudines de <span class='elex-word'>burco</span>, qui circa"
+		],
+		"urn:cts:formulae:telma_marmoutier.giraud4680.lat001": [
+			"ovium, et <span class='elex-word'>burcum</span> cum omnibus"
+		],
+		"urn:cts:formulae:tours.form042.lat001": [
+			"[illam] – vel <span class='elex-word'>burgum</span> illum in"
 		]
 	},
 	"cognatio": {

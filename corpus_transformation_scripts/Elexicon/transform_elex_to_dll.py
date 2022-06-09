@@ -43,6 +43,12 @@ def add_inRefs_to_cts(filename):
         md = readable.xpath('cpt:structured-metadata', namespaces=ns)[0]
         for ref, cit in form_elex_mapping[key].items():
             md.append(E.isReferencedBy('%' + ref + '%' + '%'.join(cit)))
+    xml.write(filename, encoding='utf-8', pretty_print=True)
+    
+def add_translations_to_cts(filename):
+    xml = etree.parse(filename)                                                             
+    for readable in xml.xpath('/cpt:collection/cpt:members/cpt:collection[@readable="true"]', namespaces=ns):
+        md = readable.xpath('cpt:structured-metadata', namespaces=ns)[0]
         md.append(E.alternative(elex_translations[key]))
     xml.write(filename, encoding='utf-8', pretty_print=True)
 
@@ -59,6 +65,7 @@ for lex in lexes:
         xml.write(new_name, encoding='utf-8', pretty_print=True)
         subprocess.run(['java', '-jar',  saxon_path, '{}'.format(new_name), os.path.join(basedir, 'create_capitains_files_elex.xsl'), '-o:{dest}/data/elexicon/{entry}/__capitains__.xml'.format(dest=dest, entry=entry_name)])
         add_inRefs_to_cts('{dest}/data/elexicon/{entry}/__capitains__.xml'.format(dest=dest, entry=entry_name))
+        add_translations_to_cts('{dest}/data/elexicon/{entry}/__capitains__.xml'.format(dest=dest, entry=entry_name))
         try:
             remove_space_before_note(new_name)
         except FileNotFoundError:
