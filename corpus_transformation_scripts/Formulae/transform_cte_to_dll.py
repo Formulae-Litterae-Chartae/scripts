@@ -76,8 +76,10 @@ def produce_form_num(filename):
             form_num = 'form2_' + form_num
         elif re.search('Flavigny.*Kopenhagen', filename):
             form_num = 'form3_' + form_num
-        elif re.search('I,|Flavigny', german):
+        elif re.search('I,|Flavigny', filename):
             form_num = 'form1_' + form_num
+        else:
+            form_num = 'form' + form_num
     return form_num
 
 for german in germans:
