@@ -46,6 +46,9 @@ def add_inRefs_to_cts(filename):
     xml.write(filename, encoding='utf-8', pretty_print=True)
     
 def add_translations_to_cts(filename):
+    key = filename.split('/')[-2]
+    if key not in form_elex_mapping:
+        return
     xml = etree.parse(filename)                                                             
     for readable in xml.xpath('/cpt:collection/cpt:members/cpt:collection[@readable="true"]', namespaces=ns):
         md = readable.xpath('cpt:structured-metadata', namespaces=ns)[0]

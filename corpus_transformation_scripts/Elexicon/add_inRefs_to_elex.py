@@ -24,6 +24,9 @@ for filename in elex_md_files:
     xml = etree.parse(filename)                                                             
     for readable in xml.xpath('/cpt:collection/cpt:members/cpt:collection[@readable="true"]', namespaces=ns):
         md = readable.xpath('cpt:structured-metadata', namespaces=ns)[0]
+        is_refs = md.xpath('dct:isReferencedBy', namespaces=ns)
+        for is_ref in is_refs:
+            md.remove(is_ref)
         for ref, cit in form_elex_mapping[key].items():
             md.append(E.isReferencedBy('%' + ref + '%' + '%'.join(cit)))
     xml.write(filename, encoding='utf-8', pretty_print=True)

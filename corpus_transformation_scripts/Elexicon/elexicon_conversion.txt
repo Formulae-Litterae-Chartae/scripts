@@ -22,7 +22,7 @@ python /home/matt/scripts/corpus_transformation_scripts/Elexicon/add_new_lemmaRe
 
 The new entries then need to be mapped to the existing texts:
 
-/home/matt/scripts/corpus_transformation_scripts/Elexicon/create_formulae_elex_mapping.py
+python /home/matt/scripts/corpus_transformation_scripts/Elexicon/create_formulae_elex_mapping.py
 
 Then this new mapping needs to be transferred to the elex __capitains__ files:
 
