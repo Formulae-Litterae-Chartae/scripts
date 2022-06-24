@@ -43,5 +43,5 @@ for form in forms:
             else:
                 mapping[elex][urn] = [context_str.strip()]
 
-with open(os.path.join(basedir, 'formulae_elexicon_mapping_new.json'), mode='w') as f:
+with open(os.path.join(basedir, 'formulae_elexicon_mapping.json'), mode='w') as f:
     dump(mapping, f, ensure_ascii=False, indent='\t')
