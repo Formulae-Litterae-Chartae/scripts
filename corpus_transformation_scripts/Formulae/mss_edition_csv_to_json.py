@@ -27,17 +27,41 @@ def build_urn(s):
             form_num = roman_mapping[parts[1]] + '_capitula' 
         elif 'Praefatio' in s: 
             form_num = 'form000' 
+        elif 'Ergänzungen 2' in s:
+            form_num = 'form3_2_001'
+        elif 'Ergänzungen' in s:
+            erg_groups = re.search(r'(\d),(\d)', s)
+            form_num = 'form3_' + erg_groups.group(1) + '_' + '{:03}'.format(int(erg_groups.group(2)))
         else: 
             book, num = parts[1].split(',') 
-            form_num = roman_mapping[book] + '_{:03}'.format(int(num)) 
+            form_num = 'form' + roman_mapping[book] + '_{:03}'.format(int(num)) 
+    elif 'Flavigny' in s:
+        coll_name = 'flavigny'
+        if 'Paris' in s:
+            form_num_part = 'form2_'
+        elif 'Kopenhagen' in s:
+            form_num_part = 'form3_'
+        else:
+            form_num_part = 'form1_'
+        if 'Capitula' in s: 
+            form_num = form_num_part + '_capitula'
+        else:
+            num_split = re.search(r'(\d+)(\D?)$', s)
+            form_num = form_num_part + '{:03}'.format(int(num_split.group(1)))
+            if num_split.group(2):
+                form_num = form_num + num_split.group(2)
     else:
         coll_name = parts[0].lower() 
-        if 'Praefatio' in s: 
+        if re.search(r'Praefatio|Titel', s): 
             form_num = 'form000' 
         elif 'Capitula' in s: 
             form_num = '0_capitula' 
         elif 'Weltzeitalter' in s: 
             form_num = 'computus' 
+        elif 'Tours Ergänzung 1' in s:
+            form_num = 'form2_001'
+        elif 'Tours Ergänzung 2' in s:
+            form_num = 'form2_002'
         else: 
             num_parts = re.search(r'(\d+)(\D*)', parts[1]) 
             form_num = 'form' + '{:03}'.format(int(num_parts.group(1))) 
