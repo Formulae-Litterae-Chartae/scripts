@@ -44,7 +44,7 @@ def build_urn(s):
         else:
             form_num_part = 'form1_'
         if 'Capitula' in s: 
-            form_num = form_num_part + '_capitula'
+            form_num = form_num_part.replace('form', '') + 'capitula'
         else:
             num_split = re.search(r'(\d+)(\D?)$', s)
             form_num = form_num_part + '{:03}'.format(int(num_split.group(1)))
