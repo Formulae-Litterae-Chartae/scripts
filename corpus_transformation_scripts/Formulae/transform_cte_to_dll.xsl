@@ -273,6 +273,9 @@
             <xsl:when test="matches(lower-case($formTitle/tei:ref[@type='form-name']), 'angers|andecavensis')">
                 <xsl:text>andecavensis</xsl:text>
             </xsl:when>
+            <xsl:when test="matches(lower-case($formTitle/tei:ref[@type='form-name']), 'tours-überarbeitung')">
+                <xsl:text>tours_ueberarbeitung</xsl:text>
+            </xsl:when>
             <xsl:otherwise>
                 <xsl:value-of select="tokenize(lower-case($formTitle/tei:ref[@type='form-name']), '\s+')[1]"/>
             </xsl:otherwise>
@@ -288,6 +291,9 @@
             </xsl:when>
             <xsl:when test="matches(lower-case($formTitle/tei:ref[@type='form-name']), 'angers|andecavensis')">
                 <xsl:text>urn:cts:formulae:andecavensis.</xsl:text>
+            </xsl:when>
+            <xsl:when test="matches(lower-case($formTitle/tei:ref[@type='form-name']), 'tours-überarbeitung')">
+                <xsl:text>urn:cts:formulae:tours_ueberarbeitung.</xsl:text>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:text>urn:cts:formulae:</xsl:text><xsl:value-of select="tokenize(lower-case($formTitle/tei:ref[@type='form-name']), '\s+')[1]"/><xsl:text>.</xsl:text>
