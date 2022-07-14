@@ -345,7 +345,9 @@
                             </xsl:otherwise>
                         </xsl:choose>
                     <xsl:element name="author" namespace="http://www.tei-c.org/ns/1.0"></xsl:element>
-                    <xsl:element name="editor" namespace="http://www.tei-c.org/ns/1.0">Christoph Walther</xsl:element>
+                        <xsl:element name="editor" namespace="http://www.tei-c.org/ns/1.0">Philippe Depreux</xsl:element>
+                        <xsl:element name="editor" namespace="http://www.tei-c.org/ns/1.0">Horst Lößlein</xsl:element>
+                        <xsl:element name="editor" namespace="http://www.tei-c.org/ns/1.0">Christoph Walther</xsl:element>
                 </xsl:element>
                     <xsl:element name="editionStmt" namespace="http://www.tei-c.org/ns/1.0">
                         <xsl:choose>
@@ -360,14 +362,19 @@
                             </xsl:otherwise>
                         </xsl:choose>
                         <xsl:element name="respStmt" namespace="http://www.tei-c.org/ns/1.0">
-                            <xsl:element name="resp" namespace="http://www.tei-c.org/ns/1.0">Projektleiter</xsl:element>
-                            <xsl:element name="resp" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="xml:lang">eng</xsl:attribute>Principal investigator</xsl:element>
+                            <xsl:element name="resp" namespace="http://www.tei-c.org/ns/1.0">Herausgeber</xsl:element>
+                            <xsl:element name="resp" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="xml:lang">eng</xsl:attribute>Editor</xsl:element>
                             <xsl:element name="persName" namespace="http://www.tei-c.org/ns/1.0">Prof. Dr. Philippe Depreux (Universität Hamburg)</xsl:element>
                         </xsl:element>
                         <xsl:element name="respStmt" namespace="http://www.tei-c.org/ns/1.0">
-                            <xsl:element name="resp" namespace="http://www.tei-c.org/ns/1.0">Editor/Übersetzer</xsl:element>
-                            <xsl:element name="resp" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="xml:lang">eng</xsl:attribute>Editor/Translator</xsl:element>
+                            <xsl:element name="resp" namespace="http://www.tei-c.org/ns/1.0">Herausgeber</xsl:element>
+                            <xsl:element name="resp" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="xml:lang">eng</xsl:attribute>Editor</xsl:element>
                             <xsl:element name="persName" namespace="http://www.tei-c.org/ns/1.0">Dr. Christoph Walther (Universität Hamburg)</xsl:element>
+                        </xsl:element>
+                        <xsl:element name="respStmt" namespace="http://www.tei-c.org/ns/1.0">
+                            <xsl:element name="resp" namespace="http://www.tei-c.org/ns/1.0">Herausgeber</xsl:element>
+                            <xsl:element name="resp" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="xml:lang">eng</xsl:attribute>Editor</xsl:element>
+                            <xsl:element name="persName" namespace="http://www.tei-c.org/ns/1.0">Dr. Horst Löslein (Universität Hamburg)</xsl:element>
                         </xsl:element>
                         <xsl:element name="respStmt" namespace="http://www.tei-c.org/ns/1.0">
                             <xsl:element name="resp" namespace="http://www.tei-c.org/ns/1.0">Hauptentwickler</xsl:element>
