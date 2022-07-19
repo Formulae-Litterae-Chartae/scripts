@@ -45,7 +45,7 @@ for tsv_file in tsv_files:
             formula = line.strip().split('\t')[0].strip('*')
             inflected_to_primary_lem[formula] = list()
         if not line.startswith('**'): 
-            parts = line.strip().lower().split('\t') 
+            parts = line.strip().lower().replace('$', '').split('\t') 
             if not re.search(r'\w', parts[0]):
                 continue
             display_lem = parts[1]

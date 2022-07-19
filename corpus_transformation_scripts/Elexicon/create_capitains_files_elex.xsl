@@ -89,6 +89,7 @@
                     <xsl:text>), [URL: https://werkstatt.formulae.uni-hamburg.de/texts/</xsl:text><xsl:value-of select="string-join($urn, '.')"/><xsl:text>/passage/all]</xsl:text>
                 </dct:bibliographicCitation>
                 <dct:created><xsl:value-of select="$date"/></dct:created>
+                <dct:alternative><xsl:value-of select="string-join($textFile//tei:seg[@type='lex-keyword']//text(), ', ')"/></dct:alternative>
             </structured-metadata>
         </xsl:param>
         <xsl:param name="markedUpTitle">
