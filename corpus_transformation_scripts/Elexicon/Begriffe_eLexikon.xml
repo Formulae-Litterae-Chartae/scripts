@@ -127,9 +127,9 @@
 	<lem elex="iudex">iudices</lem>
 	<lem elex="ius">ius</lem>
 	<!--<lem elex="iustitia">iustitia</lem>-->
-	<lem elex="kalendae">idus</lem>
-	<lem elex="kalendae">kalendae</lem>
-	<lem elex="kalendae">nonae</lem>
+	<lem elex="tagesbezeichungen_nach_dem_römischen_kalender">idus</lem>
+	<lem elex="tagesbezeichungen_nach_dem_römischen_kalender">kalendae</lem>
+	<lem elex="tagesbezeichungen_nach_dem_römischen_kalender">nonae</lem>
 	<lem elex="leudes">leudes</lem>
 	<lem elex="lex">lex</lem>
 	<lem elex="lex_romana">lex romana</lem>
