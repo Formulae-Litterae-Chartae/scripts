@@ -8,7 +8,7 @@ from json import load
 home_dir = os.environ.get('HOME', '')
 dest = str(sys.argv[1]) if len(sys.argv) > 1 else os.path.join(home_dir, 'formulae-corpora') 
 basedir = os.path.abspath(os.path.dirname(__file__))
-with open(os.path.join(basedir, 'formulae_elexicon_mapping.json')) as f:
+with open(os.path.join(dest, 'formulae_elexicon_mapping.json')) as f:
     form_elex_mapping = load(f)
 
 elex_md_files = glob(os.path.join(dest, 'data/elexicon/*/__capitains__.xml'))
