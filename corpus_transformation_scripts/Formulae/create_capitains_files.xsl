@@ -71,6 +71,12 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:param>
+        <xsl:param name="mss-editions">
+            <xsl:variable name="mssEditionFile" select="document(concat(replace($folderName, '/data/.*', ''), '/hss_editionen.xml'))"/>
+            <xsl:value-of select="$mssEditionFile/xml/formula[@n=concat($urn[1], '.', $urn[2], '.lat001')]/manuscripts/text()"/>
+            <xsl:if test="$mssEditionFile/xml/formula[@n=concat($urn[1], '.', $urn[2], '.lat001')]"><xsl:text>**</xsl:text></xsl:if>
+            <xsl:value-of select="$mssEditionFile/xml/formula[@n=concat($urn[1], '.', $urn[2], '.lat001')]/editions/text()"/>
+        </xsl:param>
         <xsl:processing-instruction name="xml-model">href="../../../capitains.rng" schematypens="http://relaxng.org/ns/structure/1.0"</xsl:processing-instruction>
         <collection>
             <identifier><xsl:value-of select="$parentUrn"/></identifier>
@@ -109,6 +115,7 @@
                                     <xsl:with-param name="parentUrn"><xsl:value-of select="$parentUrn"/></xsl:with-param>
                                     <xsl:with-param name="shortRegest"><xsl:value-of select="$short-regest"/></xsl:with-param>
                                     <xsl:with-param name="longRegest"><xsl:value-of select="$long-regest"/></xsl:with-param>
+                                    <xsl:with-param name="mss-editions"><xsl:value-of select="$mss-editions"/></xsl:with-param>
                                 </xsl:call-template>
                             </xsl:otherwise>
                         </xsl:choose>
@@ -124,6 +131,7 @@
         <xsl:param name="parentUrn"/>
         <xsl:param name="longRegest"/>
         <xsl:param name="shortRegest"/>
+        <xsl:param name="mss-editions"/>
         <xsl:param name="textFile" select="document($textURI)"/>
         <xsl:param name="urn" select="tokenize($textFile/tei:TEI/tei:text/tei:body/tei:div/@n, '\.')"/>
         <xsl:param name="lang" select="$textFile/tei:TEI/tei:text/tei:body/tei:div/@xml:lang"/>
@@ -283,6 +291,7 @@
                 <xsl:if test="$isManuscript">
                     <dct:isVersionOf><xsl:value-of select="$textFile/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='subtitle']"/></dct:isVersionOf>
                 </xsl:if>
+                <dct:references><xsl:value-of select="$mss-editions"/></dct:references>
             </structured-metadata>
         </xsl:param>
         
