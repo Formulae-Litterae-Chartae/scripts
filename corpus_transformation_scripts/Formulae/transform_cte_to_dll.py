@@ -14,7 +14,7 @@ collection_metadata_xslt = home_dir + '/scripts/corpus_transformation_scripts/Fo
 corpus_name = sys.argv[2] or 'andecavensis' # Used to build the folder structure
 destination_folder = getcwd() # The base folder where the corpus folder structure should be built
 latins = glob(destination_folder + '/Latin/*.xml')
-germans = glob(destination_folder + '/Deutsch/*.xml')
+germans = []#glob(destination_folder + '/Deutsch/*.xml')
 transcriptions = glob(destination_folder + '/Transkripte/**/*.xml', recursive=True)
 temp_files = []
 
@@ -47,9 +47,9 @@ def produce_form_num(filename):
             form_num = '2_capitula'
         elif 'I' in filename:
             form_num = '1_capitula'
-        elif 'Paris' in filename:
+        elif ' Pa ' in filename:
             form_num = '2_capitula'
-        elif 'Kopenhagen' in filename:
+        elif ' Ko ' in filename:
             form_num = '3_capitula'
     elif 'Incipit' in filename:
         form_num = '1_incipit'
@@ -72,9 +72,9 @@ def produce_form_num(filename):
     else:
         num_match = re.search(r',?([\d]+)(\w?)', filename)
         form_num = "{:03}".format(int(num_match[1])) + num_match[2]
-        if re.search('II,|Flavigny.*Paris', filename):
+        if re.search('II,|Flavigny Pa ', filename):
             form_num = 'form2_' + form_num
-        elif re.search('Flavigny.*Kopenhagen', filename):
+        elif re.search('Flavigny Ko ', filename):
             form_num = 'form3_' + form_num
         elif re.search('I,|Flavigny', filename):
             form_num = 'form1_' + form_num
@@ -120,6 +120,10 @@ for transcription in sorted(transcriptions):
             edition_div.set('n', new_urn)
         xml.write(new_name, encoding='utf-8', pretty_print=True)
     subprocess.run(['java', '-jar',  saxon_location, '{}'.format(new_name), metadata_transformation_xslt, '-o:{folder}/__capitains__.xml'.format(folder=new_folder)])
+    md_xml = etree.parse('{folder}/__capitains__.xml'.format(folder=new_folder))
+    for is_version_of in md_xml.xpath('//dct:isVersionOf', namespaces={'dct': 'http://purl.org/dc/terms/'}):
+        is_version_of.text = 'urn:cts:formulae:{}.{}'.format(corpus_name, form_num)
+    md_xml.write('{folder}/__capitains__.xml'.format(folder=new_folder), encoding='utf-8', pretty_print=True)
     makedirs('{base_folder}/data/{corpus}/{entry}'.format(base_folder=destination_folder, corpus=corpus_name, entry=form_num), exist_ok=True)
     temp_file = '{base_folder}/data/{corpus}/{entry}/{man_filename}'.format(base_folder=destination_folder, corpus=corpus_name, entry=form_num, man_filename='.'.join(filename_parts) + '.xml')
     temp_files.append(temp_file)
