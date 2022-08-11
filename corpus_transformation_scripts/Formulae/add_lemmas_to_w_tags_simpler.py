@@ -7,7 +7,7 @@ import os
 
 ns = {'tei': "http://www.tei-c.org/ns/1.0"}
 xmls = list()
-for corpus in ['flavigny']:#['andecavensis', 'marculf', 'marmoutier_serfs', 'auvergne', 'flavigny', 'marmoutier_vendomois', 'marmoutier_vendomois_appendix', 'marmoutier_dunois', 'telma_cormery', 'telma_marmoutier', 'telma_martin_tours', 'tours', 'tours_ueberarbeitung']:
+for corpus in ['andecavensis', 'auvergne', 'flavigny', 'marculf', 'marmoutier_dunois', 'marmoutier_serfs', 'marmoutier_vendomois', 'marmoutier_vendomois_appendix', 'telma_cormery', 'telma_marmoutier', 'telma_martin_tours', 'tours', 'tours_ueberarbeitung']:
     xmls += glob('/home/matt/formulae-corpora/data/{}/**/*.lat00*.xml'.format(corpus), recursive=True)
     xmls += glob('/home/matt/formulae-corpora/data/{}/**/*.deu001.xml'.format(corpus), recursive=True)
 lex_xml = etree.parse('/home/matt/scripts/corpus_transformation_scripts/Elexicon/Begriffe_eLexikon.xml')
@@ -32,7 +32,7 @@ def test_text(lemmas, orig):
         inflected, lemma, display_lem = word.split('\t')[:3]
         if not re.search(r'\w', inflected):
             continue
-        inflected = re.sub(r'[{}«»„“‚‘’”\[\]]'.format(punctuation), '', inflected)
+        inflected = re.sub(r'[{}«»„“‚‘’”\[\]…]'.format(punctuation), '', inflected).strip()
         prev_lem = '' 
         next_lem = ''
         if i < len(lemmas) - 1:
@@ -97,7 +97,7 @@ def set_lemmaRef(orig, lemma, next_lem, prev_lem):
 
 
 for xml_file in sorted(xmls):
-    print(xml_file)
+    #print(xml_file)
     xml = etree.parse(xml_file).getroot()
     '''new_xml = xml_file.replace('/formulae/', '/test_lemmaRef/')
     try:
