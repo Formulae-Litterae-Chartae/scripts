@@ -174,10 +174,10 @@
         <xsl:param name="allEds">
             <xsl:choose>
                 <xsl:when test="$isFormula or $isManuscript = true()">
-                    <xsl:value-of select="$textFile/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:editor/text()"/>
+                    <xsl:value-of select="string-join($textFile/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:editor/text(), ';')"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="$textFile/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:monogr/tei:editor/text()"/>
+                    <xsl:value-of select="string-join($textFile/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:biblStruct/tei:monogr/tei:editor/text(), ';')"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:param>
@@ -263,7 +263,7 @@
             </dc:description>
             
             <structured-metadata>
-                <xsl:for-each select="$allEds">
+                <xsl:for-each select="tokenize($allEds, ';')">
                     <bib:editor><xsl:value-of select="."/></bib:editor>
                 </xsl:for-each>
                 <xsl:choose>
