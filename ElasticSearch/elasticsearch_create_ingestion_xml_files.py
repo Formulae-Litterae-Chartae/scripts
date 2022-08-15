@@ -8,7 +8,7 @@ import re
 basedir = os.path.abspath(os.path.dirname(__file__))
 home_dir = os.environ.get('HOME', '')
 work_dir = os.environ.get('WORK', home_dir)
-pattern = re.compile(r'fu2|ka1|ko2|le1|le3|m4|p3|p8|p10|p12|p12s|p14|p16a|p16b|data/s2|sg2|data/syd|v6|v8|v9|wa1')
+pattern = re.compile(r'fu2|ka1|ko2|le1|le3|m4|p3|p8|p10|p12|p12s|p14|p16a|p16b|data/s2|sg2|data/syd|v6|v8|v9|v11|wa1|data/z2')
 
 # When rebuilding for the open corpus
 # corpus = 'formulae-open'
