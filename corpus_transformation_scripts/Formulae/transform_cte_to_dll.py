@@ -14,7 +14,7 @@ collection_metadata_xslt = home_dir + '/scripts/corpus_transformation_scripts/Fo
 corpus_name = sys.argv[2] or 'andecavensis' # Used to build the folder structure
 destination_folder = getcwd() # The base folder where the corpus folder structure should be built
 latins = glob(destination_folder + '/Latin/*.xml')
-germans = []#glob(destination_folder + '/Deutsch/*.xml')
+germans = glob(destination_folder + '/Deutsch/*.xml')
 transcriptions = glob(destination_folder + '/Transkripte/**/*.xml', recursive=True)
 temp_files = []
 

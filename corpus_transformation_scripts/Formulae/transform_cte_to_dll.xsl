@@ -88,6 +88,9 @@
                         <xsl:when test="matches($tempTitle, 'Weltzeitalter|Capitula|Incipit|Praefatio|Ergänzung|Flavigny')">
                             <xsl:value-of select="normalize-space(substring-before($tempTitle, '('))"/>
                         </xsl:when>
+                        <xsl:when test="matches($tempTitle, 'Formula Marculfina aevi Karolini')">
+                            <xsl:value-of select="replace($tempTitle, '(Formula Marculfina aevi Karolini \d+).*', '$1')"/>
+                        </xsl:when>
                         <xsl:otherwise>
                             <xsl:value-of select="replace(string-join(subsequence(tokenize($tempTitle, '\s+'), 1, 2), ' '), ',$', '')"/>
                         </xsl:otherwise>
@@ -113,6 +116,9 @@
                         </xsl:when>
                         <xsl:when test="matches($tempTitle, 'Flavigny')">
                             <xsl:value-of select="normalize-space(string-join(subsequence(tokenize(substring-before($tempTitle, '('), '\s+'), 4), ' '))"/>
+                        </xsl:when>
+                        <xsl:when test="matches($tempTitle, 'Formula Marculfina aevi Karolini')">
+                            <xsl:value-of select="replace(substring-before($tempTitle, '('), 'Formula Marculfina aevi Karolini \d+ (.*)', '$1')"/>
                         </xsl:when>
                         <xsl:otherwise>
                             <xsl:value-of select="normalize-space(string-join(subsequence(tokenize(substring-before($tempTitle, '('), '\s+'), 3), ' '))"/>
@@ -167,7 +173,7 @@
                         <xsl:when test="matches($tempTitle, ' 0 ')">
                             <xsl:value-of select="replace($tempTitle, ' Deutsch| Übersetzung|\.xml| 0|\[|\]', '')"/>
                         </xsl:when>
-                        <xsl:when test="matches($tempTitle, 'Weltzeitalter|Capitula|Incipit|Praefatio|Ergänzung|Flavigny')">
+                        <xsl:when test="matches($tempTitle, 'Weltzeitalter|Capitula|Incipit|Praefatio|Ergänzung|Flavigny|Formula Marculfina')">
                             <xsl:value-of select="replace($tempTitle, ' Deutsch| Übersetzung|\.xml', '')"/>
                         </xsl:when>
                         <xsl:otherwise>
@@ -209,7 +215,7 @@
             <xsl:when test="contains($formTitle, 'Praefatio')">
                 <xsl:text>form000</xsl:text>
             </xsl:when>
-            <xsl:when test="matches(lower-case($formTitle/tei:ref[@type='form-name']), 'marculf|markulf')">
+            <xsl:when test="matches(lower-case($formTitle/tei:ref[@type='form-name']), 'marculf |markulf ')">
                 <xsl:choose>
                     <xsl:when test="contains($formTitle/tei:ref[@type='form-name'], 'II')">
                         <xsl:text>form2_</xsl:text><xsl:number value="substring-after($formTitle/tei:ref[@type='form-name'], ',')" format="001"/>
@@ -267,7 +273,7 @@
             <xsl:when test="$formTitle/tei:ref[@type='siglum']">
                 <xsl:value-of select="lower-case($formTitle/tei:ref[@type='siglum'])"/>
             </xsl:when>
-            <xsl:when test="matches(lower-case($formTitle/tei:ref[@type='form-name']), 'marculf|markulf')">
+            <xsl:when test="matches(lower-case($formTitle/tei:ref[@type='form-name']), 'marculf |markulf ')">
                 <xsl:text>marculf</xsl:text>
             </xsl:when>
             <xsl:when test="matches(lower-case($formTitle/tei:ref[@type='form-name']), 'angers|andecavensis')">
@@ -275,6 +281,9 @@
             </xsl:when>
             <xsl:when test="matches(lower-case($formTitle/tei:ref[@type='form-name']), 'tours-überarbeitung')">
                 <xsl:text>tours_ueberarbeitung</xsl:text>
+            </xsl:when>
+            <xsl:when test="matches($formTitle/tei:ref[@type='form-name'], 'Formula Marculfina aevi Karolini')">
+                <xsl:text>formulae_marculfinae</xsl:text>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:value-of select="tokenize(lower-case($formTitle/tei:ref[@type='form-name']), '\s+')[1]"/>
@@ -286,7 +295,7 @@
             <xsl:when test="$formTitle/tei:ref[@type='siglum']">
                 <xsl:text>urn:cts:formulae:</xsl:text><xsl:value-of select="lower-case($formTitle/tei:ref[@type='siglum'])"/><xsl:text>.</xsl:text>
             </xsl:when>
-            <xsl:when test="matches(lower-case($formTitle/tei:ref[@type='form-name']), 'marculf|markulf')">
+            <xsl:when test="matches(lower-case($formTitle/tei:ref[@type='form-name']), 'marculf |markulf ')">
                 <xsl:text>urn:cts:formulae:marculf.</xsl:text>
             </xsl:when>
             <xsl:when test="matches(lower-case($formTitle/tei:ref[@type='form-name']), 'angers|andecavensis')">
@@ -294,6 +303,9 @@
             </xsl:when>
             <xsl:when test="matches(lower-case($formTitle/tei:ref[@type='form-name']), 'tours-überarbeitung')">
                 <xsl:text>urn:cts:formulae:tours_ueberarbeitung.</xsl:text>
+            </xsl:when>
+            <xsl:when test="matches($formTitle/tei:ref[@type='form-name'], 'Formula Marculfina aevi Karolini')">
+                <xsl:text>urn:cts:formulae:formulae_marculfinae.</xsl:text>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:text>urn:cts:formulae:</xsl:text><xsl:value-of select="tokenize(lower-case($formTitle/tei:ref[@type='form-name']), '\s+')[1]"/><xsl:text>.</xsl:text>
@@ -750,26 +762,31 @@
     </xsl:template>-->
     
     <xsl:template match="tei:p">
-        <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
-            <xsl:attribute name="xml:space">preserve</xsl:attribute>
-            <xsl:if test="not($formTitle/tei:ref[@type='folia']) and matches($manuscript, 'deu0|lat0') and current()/parent::tei:body">
-                <xsl:variable name="prevPars" select="count(current()/preceding-sibling::tei:p) + 1"/>
-                <xsl:variable name="thisLang" select="$formTitle/xml:lang"/>
-                <xsl:variable name="transformedUrn" select="replace(concat($urnStart, $formNumber, '.', $manuscript, '-', $prevPars), ':', '-')"/>
-                <xsl:attribute name="xml:id"><xsl:value-of select="$transformedUrn"/></xsl:attribute>
-                <xsl:choose>
-                    <xsl:when test="$thisLang = 'deu'">
-                        <xsl:attribute name="corresp"><xsl:value-of select="replace($transformedUrn, $thisLang, 'lat')"/></xsl:attribute>
-                    </xsl:when>
-                    <xsl:when test="$thisLang = 'lat'">
-                        <xsl:attribute name="corresp"><xsl:value-of select="replace($transformedUrn, $thisLang, 'deu')"/></xsl:attribute>
-                    </xsl:when>
-                </xsl:choose>
-            </xsl:if>
-            <xsl:if test="contains(@style, 'margin-left:5mm;')"><xsl:attribute name="style">subparagraph</xsl:attribute></xsl:if>
-            <xsl:if test="contains(@style, 'text-align: center;')"><xsl:attribute name="style">text-center</xsl:attribute></xsl:if>
-            <xsl:apply-templates select="node()|comment()"/>
-        </xsl:element>        
+        <xsl:choose>
+            <xsl:when test="following::tei:milestone[not(contains(@n, 'Capitula'))]"></xsl:when>
+            <xsl:otherwise>
+                <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
+                    <xsl:attribute name="xml:space">preserve</xsl:attribute>
+                    <xsl:if test="not($formTitle/tei:ref[@type='folia']) and matches($manuscript, 'deu0|lat0') and current()/parent::tei:body">
+                        <xsl:variable name="prevPars" select="count(current()/preceding-sibling::tei:p[not(following::tei:milestone[not(contains(@n, 'Capitula'))])]) + 1"/>
+                        <xsl:variable name="thisLang" select="$formTitle/xml:lang"/>
+                        <xsl:variable name="transformedUrn" select="replace(concat($urnStart, $formNumber, '.', $manuscript, '-', $prevPars), ':', '-')"/>
+                        <xsl:attribute name="xml:id"><xsl:value-of select="$transformedUrn"/></xsl:attribute>
+                        <xsl:choose>
+                            <xsl:when test="$thisLang = 'deu'">
+                                <xsl:attribute name="corresp"><xsl:value-of select="replace($transformedUrn, $thisLang, 'lat')"/></xsl:attribute>
+                            </xsl:when>
+                            <xsl:when test="$thisLang = 'lat'">
+                                <xsl:attribute name="corresp"><xsl:value-of select="replace($transformedUrn, $thisLang, 'deu')"/></xsl:attribute>
+                            </xsl:when>
+                        </xsl:choose>
+                    </xsl:if>
+                    <xsl:if test="contains(@style, 'margin-left:5mm;')"><xsl:attribute name="style">subparagraph</xsl:attribute></xsl:if>
+                    <xsl:if test="contains(@style, 'text-align: center;')"><xsl:attribute name="style">text-center</xsl:attribute></xsl:if>
+                    <xsl:apply-templates select="node()|comment()"/>
+                </xsl:element>
+            </xsl:otherwise>
+        </xsl:choose>        
     </xsl:template>
     
     <xsl:template match="tei:s">
