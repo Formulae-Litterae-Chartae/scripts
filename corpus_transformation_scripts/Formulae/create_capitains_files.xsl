@@ -32,6 +32,9 @@
                 <xsl:when test="matches(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)], 'Flavigny')">
                     <xsl:value-of select="replace(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)], 'Flavigny ', '')"/>
                 </xsl:when>
+                <xsl:when test="matches(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)], 'Formula Marculfina aevi Karolini')">
+                    <xsl:value-of select="replace(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)], 'Formula Marculfina aevi Karolini ', '')"/><xsl:text> [Salzburger Formelmaterial]</xsl:text>
+                </xsl:when>
                 <xsl:when test="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:msDesc">
                     <xsl:value-of select="replace(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)], '.*\[(.*)\]$', '$1')"/>
                 </xsl:when>
@@ -164,6 +167,7 @@
                         <xsl:text> (</xsl:text>
                         <xsl:value-of select="$lang"/>
                         <xsl:text>)</xsl:text>
+                        <xsl:if test="matches(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)], 'Formula Marculfina aevi Karolini')"><xsl:text> [Salzburger Formelmaterial]</xsl:text></xsl:if>
                     </xsl:if>
                 </xsl:otherwise>
             </xsl:choose>
