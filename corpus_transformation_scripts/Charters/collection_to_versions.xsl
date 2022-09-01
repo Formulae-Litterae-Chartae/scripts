@@ -17,6 +17,7 @@
     <!-- MAIN TEMPLATE -->
     <xsl:template match="/">
         <xsl:for-each select="/tei:TEI/tei:text/tei:group/tei:text/descendant::tei:div[@type='edition']">
+            <xsl:variable name="isForgery" select="node()/ancestor::tei:text[@xml:id]/descendant::tei:note[@n='forgery']/text()"></xsl:variable>
             <xsl:variable name="edition" select="."/>
             <!-- The new documents will use the parameters of the xsl:output element. Each charter version file will be given the name of its @n value
                 (location . ch.number . language + vs.number)
@@ -36,6 +37,7 @@
                             <xsl:element name="titleStmt" namespace="http://www.tei-c.org/ns/1.0">
                                 <xsl:element name="title" namespace="http://www.tei-c.org/ns/1.0">
                                     <xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/><xsl:text> Nr. </xsl:text><xsl:value-of select="node()/ancestor::tei:text[@xml:id]/tei:front/tei:div[@subtype='urkundennummer']"/>
+                                    <xsl:if test="$isForgery"><xsl:text> †</xsl:text></xsl:if>
                                 </xsl:element>
                             </xsl:element>
                             
