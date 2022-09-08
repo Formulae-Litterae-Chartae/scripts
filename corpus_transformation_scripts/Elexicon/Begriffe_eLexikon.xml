@@ -3,421 +3,890 @@
 		sodass auch Formen mit angehängtem -que oder -ve auf die Lexikonartikel 
 		verweisen (z.B. clericusque). Außerdem daran denken, dass manche lat. Wörter auch
 		in der Übersetzung verwendet werden, z.B. boni homines -->
-	<lem elex="abbas">abbas</lem>
+	
+	<!--abbas-->
 	<lem elex="abbas">abba</lem>
+	<lem elex="abbas">abbas</lem>
+	
+	<!--abbatissa-->
 	<lem elex="abbatissa">abbatissa</lem>
+	
+	<!--adoptio-->
 	<lem elex="adoptio">adoptio</lem>
+	
+	<!--aerarium-->
 	<lem elex="aerarium">aerarium</lem>
+	
+	<!--agnatio-->
 	<lem elex="agnatio">agnatio</lem>
+	
+	<!--agrarium-->
 	<lem elex="agrarium">agrarium</lem>
+	
+	<!--alienare-->
 	<!--<lem elex="alienare">alienare</lem>-->
+	
+	<!--alligatio-->
 	<lem elex="alligatio">alligatio</lem>
+	
+	<!--allodium-->
 	<lem elex="allodium">allodium</lem>
 	<lem elex="allodium">allodis</lem>
 	<lem elex="allodium">alodis</lem>
-	<lem elex="allodium">allodium</lem>
-	<lem elex="amanuensis">amanuensis</lem>
+	
+	<!--amanuensis-->
 	<lem elex="amanuensis">amanvensis</lem>
+	<lem elex="amanuensis">amanuensis</lem>
 	<lem elex="amanuensis">manvensis</lem>
+	
+	<!--ambasciare-->
 	<lem elex="ambasciare">ambasciare</lem>
 	<lem elex="ambasciare">ambascio</lem>
+	
+	<!--amicitia-->
 	<lem elex="amicitia">amicitia</lem>
+	
+	<!--anathema-->
 	<lem elex="anathema">anathema</lem>
+	<lem elex="anathema">anathemare</lem>
 	<lem elex="anathema">anathematizare</lem>
 	<lem elex="anathema">anathematizo</lem>
 	<lem elex="anathema">anathematus</lem>
-	<lem elex="anathema">anathemare</lem>
 	<lem elex="anathema">anathemo</lem>	
+	
+	<!--ancilla-->
 	<lem elex="ancilla">ancilla</lem>
+	
+	<!--antrustio-->
 	<lem elex="antrustio">antrustio</lem>
+	
+	<!--apostolicus-->
 	<lem elex="apostolicus">apostolicus</lem>
-	<lem elex="appennis">appennis</lem>
+	
+	<!--appennis-->
 	<lem elex="appennis">appennes</lem>
-	<lem elex="arrha">arra</lem>
-	<lem elex="arrha">arrha</lem>
+	<lem elex="appennis">appennis</lem>
+	
+	<!--arrha-->
+	<lem elex="arrha">arra</lem>	
+	<lem elex="arrha">arrha</lem>	
+	
+	<!--auctor-->
 	<lem elex="auctor">auctor</lem>
+	
+	<!--auctoritas-->	
 	<lem elex="auctoritas">auctoritas</lem>
+	
+	<!--auditores-->	
 	<lem elex="auditores">auditor</lem>
 	<lem elex="auditores">auditores</lem>
+	
+	<!--basilica-->	
 	<lem elex="basilica">basilica</lem>
-	<lem elex="basilica">Basilica_Ortsname</lem>
-	<lem elex="benedictio">benedictio</lem>
-	<lem elex="benedictio">benedictus</lem>
+	<lem elex="basilica">basilica_ortsname</lem>
+	
+	<!--benedictio-->	
 	<lem elex="benedictio">benedicere</lem>
 	<lem elex="benedictio">benedico</lem>
+	<lem elex="benedictio">benedictio</lem>
+	<lem elex="benedictio">benedictus</lem>
+	
+	<!--beneficium-->	
 	<lem elex="beneficium">beneficium</lem>
+	
+	<!--boni hominies-->		
 	<lem elex="boni_homines">boni homines</lem>
 	<lem elex="boni_homines">bonus homo</lem>
-	<lem elex="burgundi">Burgundia</lem>
-	<lem elex="burgundi">Burgundio</lem>
-	<lem elex="burgundi">burgundi</lem>
+	
+	<!--burgundi-->
+	<lem elex="burgundi">burgundi</lem>	
+	<lem elex="burgundi">burgundia</lem>
+	<lem elex="burgundi">burgundio</lem>
+	
+	<!--burgus-->
 	<lem elex="burgus">burgus</lem>
-	<lem elex="burgus">Burgus_Ortsname</lem>
+	<lem elex="burgus">burgus_ortsname</lem>
+	
+	<!--caespitaticum-->
+	<lem elex="caespitaticum">caespitaticum</lem>
 	<lem elex="caespitaticum">caespitaticus</lem>
+	
+	<!--camerarius-->
 	<lem elex="camerarius">camerarius</lem>
 	<lem elex="camerarius">camerlanus</lem>
 	<lem elex="camerarius">camerlengus</lem>
-	<lem elex="camerarius">Camerlengus_Personenname</lem>
+	<lem elex="camerarius">camerlengus_personenname</lem>
 	<lem elex="camerarius">subcamerarius</lem>
+	
+	<!--cancellarius-->
 	<lem elex="cancellarius">cancellarius</lem>
+	
+	<!--canonicus-->
 	<lem elex="canonicus">canonicus</lem>
 	<lem elex="canonicus">cocanonicus</lem>
+	
+	<!--caritas-->
 	<lem elex="caritas">caritas</lem>
 	<lem elex="caritas">caritativus</lem>
+	
+	<!--carropera-->
 	<lem elex="carropera">carropera</lem>
 	<lem elex="carropera">carroperae</lem>
+	
+	<!--carta-->
+	<lem elex="carta">carta</lem>	
+	<lem elex="carta">cartola</lem>	
+	<lem elex="carta">cartula</lem>
 	<lem elex="carta">charta</lem>
 	<lem elex="carta">chartula</lem>
-	<lem elex="carta">carta</lem>
-	<lem elex="carta">cartula</lem>
-	<lem elex="carta">cartola</lem>
+	
+	<!--cathedra-->
 	<lem elex="cathedra">cathedra</lem>
+	
+	<!--causa-->
 	<lem elex="causa">causa</lem>
 	<lem elex="causa">causella</lem>
+	
+	<!--cautio-->
 	<lem elex="cautio">cautio</lem>
+	
+	<!--cella-->
 	<lem elex="cella">cella</lem>
-	<lem elex="cella">Cella_Ortsname</lem>
+	<lem elex="cella">cella_ortsname</lem>
+	
+	<!--cellula-->
 	<lem elex="cellula">cellula</lem>
+	
+	<!--census-->
 	<lem elex="census">census</lem>
+	
+	<!--cessio-->
 	<lem elex="cessio">cessio</lem>
+	
+	<!--centenarius-->
 	<!--<lem elex="centenarius">centenarius</lem>-->
+	
+	<!--chrisam-->
 	<lem elex="chrisam">chrisma</lem>
 	<lem elex="chrisam">chrisam</lem>
+	
+	<!--civis-->
 	<lem elex="civis">civis</lem>
+	
+	<!--civitas-->
 	<lem elex="civitas">civitas</lem>
-	<lem elex="clementia">clementia</lem>
+	
+	<!--clementia-->
 	<lem elex="clementia">clemens</lem>
-	<lem elex="clementia">Clemens_Personenname</lem>
-	<lem elex="clementia">clementer</lem>
+	<lem elex="clementia">clemens_personenname</lem>
+	<lem elex="clementia">clementer</lem>	
+	<lem elex="clementia">clementia</lem>
+	
+	<!--clericus-->
 	<lem elex="clericus">clericus</lem>
 	<lem elex="clericus">clericusque</lem>
+	
+	<!--cognatio-->
 	<lem elex="cognatio">cognatio</lem>
 	<lem elex="cognatio">cognatus</lem>
+	
+	<!--colonus-->
 	<lem elex="colonus">colonus</lem>
+	
+	<!--comes-->
 	<lem elex="comes">comes</lem>
+	
+	<!--comes palatinus-->
 	<lem elex="comes_palatinus">comes palatinus</lem>
+	
+	<!--commendatio-->
 	<!--<lem elex="commendatio">commendare</lem>-->
 	<!--<lem elex="commendatio">commendatio</lem>-->
+	
+	<!--communio-->
 	<lem elex="communio">communio</lem>
+	
+	<!--commutatio-->
 	<lem elex="commutatio">commutatio</lem>
 	<lem elex="commutatio">commutatioque</lem>
+	
+	<!--compositio-->
 	<lem elex="compositio">compositio</lem>
+	
+	<!--condita-->
 	<lem elex="condita">condita</lem>
+	
+	<!--confirmatio-->
+	<lem elex="confirmatio">confirmo</lem>	
+	<lem elex="confirmatio">confirmare</lem>	
 	<lem elex="confirmatio">confirmatio</lem>
-	<lem elex="confirmatio">confirmare</lem>
-	<lem elex="confirmatio">confirmo</lem>
+	
+	<!--congregatio-->
 	<lem elex="congregatio">congregatio</lem>
+	
+	<!--coniugum-->
 	<lem elex="coniugium">coniugium</lem>
 	<lem elex="coniugium">coniunx</lem>
 	<lem elex="coniugium">coniunxque</lem>
+	
+	<!--consensus-->
 	<lem elex="consensus">consensus</lem>
+	
+	<!--consilium-->
 	<!--<lem elex="consilium">consilium</lem>-->
+	
+	<!--consuetudo-->
 	<lem elex="consuetudo">consuetudo</lem>
+	
+	<!--contractus-->
 	<lem elex="contractus">contractus</lem>
+	
+	<!--contulitio-->
 	<lem elex="contulitio">contulitio</lem>
+	
+	<!--convenientia-->
 	<lem elex="convenientia">convenientia</lem>
+	
+	<!--cubicularius-->
 	<lem elex="cubicularius">cubicularius</lem>
+	
+	<!--curator-->
 	<lem elex="curator">curator</lem>
+	
+	<!--curia-->
 	<lem elex="curia">curia</lem>
+	
+	<!--curiales-->
 	<lem elex="curiales">curialis</lem>
+	
+	<!--defensor-->
 	<lem elex="defensor">defensor</lem>
+	
+	<!--denarius-->
 	<lem elex="denarius">denarius</lem>
+	
+	<!--diaconus-->
+	<lem elex="diaconus">archidiaconus</lem>
 	<lem elex="diaconus">diaconus</lem>
 	<lem elex="diaconus">subdiaconus</lem>
-	<lem elex="diaconus">archidiaconus</lem>
+	
+	<!--domesticus-->
 	<lem elex="domesticus">domesticus</lem>
+	
+	<!--dominium-->
 	<lem elex="dominium">dominium</lem>
+	
+	<!--dominus-->
+	<lem elex="dominus">dominicillus</lem>
 	<lem elex="dominus">dominus</lem>
 	<lem elex="dominus">dominusque</lem>
-	<lem elex="dominus">Dominus_Ortsname</lem>
+	<lem elex="dominus">dominus_ortsname</lem>
 	<lem elex="dominus">domnus</lem>
 	<lem elex="dominus">domnusque</lem>
-	<lem elex="dominus">dominicillus</lem>
 	<lem elex="dominus">vicedominus</lem>	
+	
+	<!--dominus-->
 	<lem elex="donatio">donatio</lem>
 	<lem elex="donatio">donatioque</lem>
+	
+	<!--dos-->
 	<lem elex="dos">dos</lem>
 	<lem elex="dos">dotis</lem>
+	
+	<!--dux-->	
 	<lem elex="dux">dux</lem>
+	
+	<!--episcopus-->	
 	<lem elex="episcopus">episcopus</lem>
 	<lem elex="episcopus">coepiscopus</lem>
+	
+	<!--epistula-->	
 	<lem elex="epistula">epistola</lem>
 	<lem elex="epistula">epistula</lem>
+	
+	<!--evacuaria (Verweis auf Lexikoneintrag evacuaturia-->
+	<lem elex="evacuaria">evacuaria</lem>
+	
+	<!--evacuaturia-->	
 	<lem elex="evacuaturia">evacuaturia</lem>
 	<lem elex="evacuaturia">evacuatorius</lem>
-	<lem elex="evacuaria">evacuaria</lem>
 	<lem elex="evacuaturia">vacuaturia</lem>
 	<lem elex="evacuaturia">vacuatorius</lem>
-	<lem elex="evangelium">evangelium</lem>
+	
+	<!--evangelium-->
 	<lem elex="evangelium">evangelicus</lem>
+	<lem elex="evangelium">evangelium</lem>
+	
+	<!--exceptor-->
 	<lem elex="exceptor">exceptor</lem>
+	
+	<!--familia-->
 	<lem elex="familia">familia</lem>
-	<lem elex="familia">Familia_Ortsname</lem>
+	<lem elex="familia">familia_ortsname</lem>
+	
+	<!--festuca-->
 	<lem elex="festuca">festuca</lem>
 	<lem elex="festuca">fistuca</lem>
+	
+	<!--fideiussor-->
 	<lem elex="fideiussor">fideiussor</lem>
-	<!-- Achtung: Folgende Lemmata hier nicht auf das E-Lexikon verweisen: fidelis_Adj-fidelis und fidelisque_Adj-fidelis+que; das sind Lemmata, die auf fidelis als Adjektiv in den Formelsammlungen verweisen -->
-	<lem elex="fidelis">fidelis_Subst</lem>
-	<lem elex="fidelis">fidelisque_Subst</lem>
-	<lem elex="fidelis">fidelis_Urkunden</lem>
+	
+	<!-- fidelis 
+	(Achtung: gemeint ist hier fidelis als Substantiv. 
+	Die Lemmata fidelis_Adj-fidelis und fidelisque_Adj-fidelis+que sollen nicht aufs E-Lexikon verlinken. 
+	Das sind Lemmata, die auf fidelis als Adjektiv in den Formelsammlungen verweisen
+	Nur in den Urkunden wird nicht unterschieden, hier gilt fidelis für beides-->
+	<lem elex="fidelis">fidelis_subst</lem>
+	<lem elex="fidelis">fidelisque_subst</lem>
+	<lem elex="fidelis">fidelis_urkunden</lem>
+	
+	<!--fidelitas-->
 	<lem elex="fidelitas">fidelitas</lem>
+	
+	<!--fides-->	
 	<lem elex="fides">fides</lem>
+	
+	<!--fiscus-->
 	<lem elex="fiscus">fiscus</lem>
-	<lem elex="fiscus">Fiscus_Ortsname</lem>
+	<lem elex="fiscus">fiscus_ortsname</lem>
+	
+	<!--forum-->
 	<lem elex="forum">forum</lem>
-	<lem elex="franci">Francia</lem>
-	<lem elex="franci">Francus</lem>
+	
+	<!--franci-->
 	<lem elex="franci">franci</lem>
+	<lem elex="franci">francia</lem>
+	<lem elex="franci">francus</lem>
+	
+	<!--frater-->
+	<lem elex="frater">confrater</lem>
 	<lem elex="frater">frater</lem>
 	<lem elex="frater">fraterque</lem>
-	<lem elex="frater">confrater</lem>
+		
+	<!--fredus-->
 	<lem elex="fredus">fredus</lem>
 	<lem elex="fredus">fretus</lem>
+	
+	<!--furtum-->
 	<lem elex="furtum">furtum</lem>
+	
+	<!--gasindus-->
 	<lem elex="gasindus">gasindus</lem>
+	
+	<!--germana-->
 	<lem elex="germana">germana</lem>
+	
+	<!--germanus-->
 	<lem elex="germanus">germanus</lem>
 	<lem elex="germanus">germanusque</lem>
-	<lem elex="germanus">Germanus_Personenname</lem>
-	<lem elex="germanus">Germanus_Personenname_Ortsname</lem>
-	<lem elex="gesta_municipalia">gesta municipalia</lem>
+	<lem elex="germanus">germanus_personenname</lem>
+	<lem elex="germanus">germanus_personenname_ortsname</lem>
+	
+	<!--gesta_municipalia-->
+		<lem elex="gesta_municipalia">gesta municipalia</lem>
 	<lem elex="gesta_municipalia">gesta municipalis</lem>
+	
+	<!--gratia-->
 	<lem elex="gratia">gratia</lem>
+	
+	<!--hereditas-->
 	<lem elex="hereditas">hereditas</lem>
+	
+	<!--heres-->
+	<lem elex="heres">coheres</lem>
 	<lem elex="heres">heres</lem>
 	<lem elex="heres">heresque</lem>
-	<lem elex="heres">coheres</lem>
 	<lem elex="heres">proheres</lem>
 	<lem elex="heres">subheres</lem>
+	
+	<!--hoba-->
 	<lem elex="hoba">hoba</lem>
+	
+	<!--homicidium-->
 	<lem elex="homicidium">homicidium</lem>
+	
+	<!--homo-->
 	<lem elex="homo">homo</lem>
 	<lem elex="homo">homove</lem>
+	
+	<!--immunitas-->
 	<lem elex="immunitas">immunitas</lem>
 	<lem elex="immunitas">immunitasque</lem>
+	
+	<!--ingenuus-->
 	<lem elex="ingenuus">ingenuus</lem>
+	
+	<!--iudex-->
+	<lem elex="iudex">coniudex</lem>
 	<lem elex="iudex">iudex</lem>
 	<lem elex="iudex">iudices</lem>
-	<lem elex="iudex">coniudex</lem>
+		
+	<!--ius-->
 	<lem elex="ius">ius</lem>
 	<lem elex="ius">iusque</lem>
+	
+	<!--iustitia-->
 	<!--<lem elex="iustitia">iustitia</lem>-->
-	<lem elex="tagesbezeichungen_nach_dem_römischen_kalender">idus</lem>
-	<lem elex="tagesbezeichungen_nach_dem_römischen_kalender">kalendae</lem>
-	<lem elex="tagesbezeichungen_nach_dem_römischen_kalender">nonae</lem>
+	
+	
+	
+	<!--rapina-->
 	<lem elex="rapina">latrocinium</lem>	
+	
+	<!--leudes-->
 	<lem elex="leudes">leudis</lem>
 	<lem elex="leudes">leudes</lem>
-	<lem elex="lex">lex</lem>
+	
+	<!--lex-->
 	<lem elex="lex">legisperitus</lem>
+	<lem elex="lex">lex</lem>
+		
+	<!--lex_romana-->
 	<lem elex="lex_romana">lex romana</lem>
 	<lem elex="lex_romana">lex romanus</lem>
+	
+	<!--lex_salica-->
 	<lem elex="lex_salica">lex salica</lem>
-	<lem elex="liber">liber_libera_liberum-</lem>
-	<lem elex="liber">liberque_liberaque_liberumque-</lem>
-	<lem elex="liber">liber_Urkunden-</lem>
-	<lem elex="liber">liberque_Urkunden-</lem>
-	<lem elex="libertus">libertus</lem>
-	<lem elex="libertus">liberta</lem>
-	<lem elex="libertus">collibertus</lem>
+	
+	<!--liber-->
+	<lem elex="liber">liber_libera_liberum-</lem> <!--findet: liber=frei bzw. Freier-->
+	<lem elex="liber">liberque_liberaque_liberumque-</lem> <!--findet: liber=frei bzw. Freier-->
+	<lem elex="liber">liber_urkunden-</lem> <!--findet: alle Formen von liber (nur für Urkunden)-->
+	<lem elex="liber">liberque_urkunden-</lem> <!--findet: alle Formen von liber (nur für Urkunden)-->
+	
+	<!--libertus-->
 	<lem elex="libertus">colliberta</lem>
+	<lem elex="libertus">collibertus</lem>
 	<lem elex="libertus">fevumcollibertus</lem>
+	<lem elex="libertus">liberta</lem>
+	<lem elex="libertus">libertus</lem>
+		
+	<!--libra-->
 	<lem elex="libra">libra</lem>
+	
+	<!--litterae_commendatitiae-->
 	<lem elex="litterae_commendatitiae">litterae commendatitiae</lem>
 	<lem elex="litterae_commendatitiae">littera commendatitia</lem>
+	
+	<!--litus-->
 	<lem elex="litus">litus</lem>
+	
+	<!--magister_militum-->
 	<lem elex="magister_militum">magister miles</lem>
 	<lem elex="magister_militum">magister militum</lem>
+	
+	<!--maior-->
 	<lem elex="maior">maior</lem>
 	<lem elex="maior">maiorque</lem>
+	
+	<!--maior_domus-->
 	<lem elex="maior_domus">maior domus</lem>
+	
+	<!--maleficium-->
 	<lem elex="maleficium">maleficium</lem>
+	
+	<!--mallus-->
 	<lem elex="mallus">admallare</lem>
 	<lem elex="mallus">admallo</lem>
-	<lem elex="mallus">mallare</lem>
-	<lem elex="mallus">mallo</lem>
 	<lem elex="mallus">homallare</lem>
 	<lem elex="mallus">homallo</lem>
+	<lem elex="mallus">mallare</lem>
+	<lem elex="mallus">mallo</lem>
+	<lem elex="mallus">mallus</lem>
+	
+	<!--mancipium-->
 	<lem elex="mancipium">mancipium</lem>
-	<lem elex="mandatum">mandatum</lem>
+	
+	<!--mandatum-->
 	<lem elex="mandatum">mandatus</lem>
-	<lem elex="mansus">mansus</lem>
-	<lem elex="mansus">Mansus_Ortsname-mansus+Ortsname</lem>
-	<lem elex="mansus">mansellus</lem>
-	<lem elex="mansus">Mansellus_Ortsnam</lem>
+	<lem elex="mandatum">mandatum</lem>
+		
+	<!--mansus-->
 	<lem elex="mansus">mansa</lem>
+	<lem elex="mansus">mansellus</lem>
+	<lem elex="mansus">mansellus_ortsname</lem>
 	<lem elex="mansus">mansum</lem>
-	<lem elex="mansus">mosum</lem>
+	<lem elex="mansus">mansus</lem>
+	<lem elex="mansus">mansus_ortsname</lem>
 	<lem elex="mansus">mesus</lem>
+	<lem elex="mansus">mosum</lem>
+		
+	<!--manumissio-->
+	<lem elex="manumissio">ingenuitas</lem>
 	<lem elex="manumissio">manumissio</lem>
 	<lem elex="manumissio">manumissor</lem>
-	<lem elex="manumissio">ingenuitas</lem>
+	
+	<!--manumissio_per_denarium-->
 	<!--<lem elex="manumissio_per_denarium">manumissio</lem>-->
+	
+	<!--martyrarius-->
 	<lem elex="martyrarius">martyrarius</lem>
+	
+	<!--matricula-->
 	<lem elex="matricula">matricula</lem>
-	<lem elex="matricula">matricularius</lem>
 	<lem elex="matricula">matricularii</lem>
+	<lem elex="matricula">matricularius</lem>
+	
+	<!--matrona-->
 	<lem elex="matrona">matrona</lem>
+	
+	<!--ministerialis-->
 	<!--<lem elex="ministerialis">ministerialis</lem>-->
+	
+	<!--missus-->
 	<lem elex="missus">missus</lem>
 	<lem elex="missus">missusque</lem>
+	
+	<!--mithio-->
 	<lem elex="mithio">mittio</lem>
 	<lem elex="mithio">mithio</lem>
+	
+	<!--modius-->
 	<lem elex="modius">modius</lem>
+	
+	<!--monachus-->
+	<lem elex="monachus">monachatus</lem>
+	<lem elex="monachus">monachicus</lem>
+	<lem elex="monachus">monachilis</lem>
 	<lem elex="monachus">monachus</lem>
 	<lem elex="monachus">monachusque</lem>
-	<lem elex="monachus">monachilis</lem>
-	<lem elex="monachus">monachicus</lem>
-	<lem elex="monachus">monachatus</lem>
+	
+	<!--monasterium-->
 	<lem elex="monasterium">monasterium</lem>
-	<lem elex="monasterium">Monasterium_Ortsname</lem>
+	<lem elex="monasterium">monasterium_ortsname</lem>
+	
+	<!--mos-->
 	<lem elex="mos">mos</lem>
 	<lem elex="mos">mosque</lem>
+	
+	<!--mundeburdium-->
 	<lem elex="mundeburdium">mundeburdium</lem>
 	<lem elex="mundeburdium">mundeburdus</lem>
+	
+	<!--notar-->
 	<lem elex="notar">notar</lem>
+	
+	<!--notarius-->
 	<lem elex="notarius">notarius</lem>
+	
+	<!--notitia-->
 	<lem elex="notitia">notitia</lem>
+	
+	<!--obsequium-->
 	<lem elex="obsequium">obsequium</lem>
+	
+	<!--ordinatio-->
 	<lem elex="ordinatio">ordinatio</lem>
+	
+	<!--osculum-->
 	<lem elex="osculum">osculum</lem>
-	<lem elex="pactum">pactus</lem>
+	
+	<!--pactum-->
 	<lem elex="pactum">pactum</lem>
+	<lem elex="pactum">pactus</lem>
+	
+	<!--pagus-->
 	<lem elex="pagus">pagus</lem>
+	
+	<!--palatium-->
 	<lem elex="palatium">palatium</lem>
+	
+	<!--papa-->
 	<lem elex="papa">papa</lem>
-	<lem elex="papa">Papa_Personenname</lem>
-	<lem elex="papa">Papabos_Personenname</lem>
-	<lem elex="paraveredus">paraveredus</lem>
+	<lem elex="papa">papa_personenname</lem>
+	<lem elex="papa">papabos_personenname</lem>
+	
+	<!--paraveredus-->
 	<lem elex="paraveredus">palefredus</lem>
+	<lem elex="paraveredus">paraveredus</lem>
+	
+	<!--parens-->
 	<lem elex="parens">parens</lem>
 	<lem elex="parens">parens_parentis</lem>
 	<lem elex="parens">parensque_parentisque</lem>
+	
+	<!--parentela-->
 	<lem elex="parentela">parentela</lem>
+	
+	<!--parochia-->
 	<lem elex="parochia">parochia</lem>
-	<lem elex="parochia">parochiula</lem>
 	<lem elex="parochia">parochialis</lem>
-	<lem elex="partiaricias">partiaricius</lem>
+	<lem elex="parochia">parochiula</lem>
+	
+	<!--partiaricias-->
 	<lem elex="partiaricias">partiaricia</lem>
+	<lem elex="partiaricias">partiaricius</lem>
+	
+	<!--pascuarium-->
 	<lem elex="pascuarium">pascuarium</lem>
+	
+	<!--patricius-->
 	<lem elex="patricius">patricius</lem>
+	
+	<!--patrocinium-->
 	<lem elex="patrocinium">patrocinium</lem>
+	
+	<!--peccatum-->
 	<lem elex="peccatum">peccatum</lem>
 	<lem elex="peccatum">peccatus</lem>
-	<lem elex="peculium">peculiaris_peculium</lem>
-	<lem elex="peculium">peculium_Urkunden</lem>
+	
+	<!--peculium-->
+	<lem elex="peculium">peculiaris_peculium</lem><!--findet: peculiare im Sinne von peculium-->
+	<lem elex="peculium">peculium_urkunden</lem>
+	
+	<!--pietas-->
 	<lem elex="pietas">pietas</lem>
+	
+	<!--pignus-->
 	<lem elex="pignus">pignus</lem>
+	
+	<!--placitum-->
 	<lem elex="placitum">placitum</lem>
 	<lem elex="placitum">placitumque</lem>
-	<lem elex="placitum">placitum_Urkunden</lem>
+	<lem elex="placitum">placitum_urkunden</lem>
+	
+	<!--plebs-->
 	<lem elex="plebs">plebs</lem>
+	
+	<!--polyptychon-->
 	<lem elex="polyptychon">polyptychon</lem>
+	
+	<!--pondus-->
 	<lem elex="pondus">pondus</lem>
-	<lem elex="pontaticum">pontaticus</lem>
+	
+	<!--pontaticum-->
 	<lem elex="pontaticum">pontaticum</lem>
+	<lem elex="pontaticum">pontaticus</lem>
+
+	<!--populus-->
 	<lem elex="populus">populus</lem>
+	
+	<!--possessio-->
 	<lem elex="possessio">possessio</lem>
+	
+	<!--potestas-->
 	<lem elex="potestas">potestas</lem>
 	<lem elex="potestas">potestasque</lem>
+	
+	<!--praeceptum-->
 	<lem elex="praeceptum">praeceptum</lem>
 	<lem elex="praeceptum">praeceptus</lem>
+	
+	<!--praepositus-->
 	<lem elex="praepositus">praepositus</lem>
+	
+	<!--precarium-->
 	<lem elex="precarium">precaria</lem>
 	<lem elex="precarium">precarium</lem>
+	
+	<!--presbyter-->
+	<lem elex="presbyter">archipresbyter</lem>
 	<lem elex="presbyter">presbyter</lem>
 	<lem elex="presbyter">presbyteralis</lem>
-	<lem elex="presbyter">archipresbyter</lem>
+
+	<!--privilegium-->
 	<lem elex="privilegium">privilegium</lem>
+	
+	<!--privilegium_libertatis-->
 	<lem elex="privilegium_libertatis">privilegium libertatis</lem>
+	
+	<!--procurator-->
 	<lem elex="procurator">procurator</lem>
 	<lem elex="procurator">procuratorve</lem>
+	
+	<!--propinquus-->
 	<lem elex="propinquus">propinquus</lem>
+	
+	<!--proprietas-->
 	<lem elex="proprietas">proprietas</lem>
+	
+	<!--provincia-->
 	<lem elex="provincia">provincia</lem>
-	<lem elex="pulveraticum">pulveraticus</lem>
+	
+	<!--pulveraticum-->
 	<lem elex="pulveraticum">pulveraticum</lem>
+	<lem elex="pulveraticum">pulveraticus</lem>
+	
+	<!--rachinburgus-->
 	<lem elex="rachinburgus">rachinburgus</lem>
+	
+	<!--rapina-->
 	<lem elex="rapina">rapina</lem>
-	<lem elex="raptus">raptus</lem>
+	
+	<!--raptus-->
 	<lem elex="raptus">raptum</lem>
+	<lem elex="raptus">raptus</lem>
+	
+	<!--referendarius-->
 	<lem elex="referendarius">referendarius</lem>
+	
+	<!--regnum-->
 	<lem elex="regnum">regnum</lem>
+	
+	<!--res_publica-->
 	<lem elex="res_publica">res publicus</lem>
+	
+	<!--riga-->
 	<lem elex="riga">riga</lem>
-	<lem elex="romani">Romanus</lem>
-	<lem elex="romani">Romanusque</lem>
+	
+	<!--romani-->
 	<lem elex="romani">romani</lem>
+	<lem elex="romani">romanus</lem>
+	<lem elex="romani">romanusque</lem>
+	
+	<!--rotaticum-->
 	<lem elex="rotaticum">rotaticum</lem>
+	<lem elex="rotaticum">rotaticus</lem>
+	
+	<!--sacer-->
 	<lem elex="sacer">sacer</lem>
+	
+	<!--sacramentum-->
 	<lem elex="sacramentum">sacramentum</lem>
-	<lem elex="salutaticum">salutaticus</lem>
+	
+	<!--salutaticum-->
 	<lem elex="salutaticum">salutaticum</lem>
+	<lem elex="salutaticum">salutaticus</lem>
+	
+	<!--securitas-->
 	<lem elex="securitas">securitas</lem>
+	
+	<!--seniscalco-->
 	<lem elex="seniscalco">seniscalco</lem>
 	<lem elex="seniscalco">senescalcus</lem>
+	
+	<!--servitium-->
 	<lem elex="servitium">servitium</lem>
-	<lem elex="servus">servus</lem>
-	<lem elex="servus">servusque</lem>
+	
+	<!--servus-->
+	<lem elex="servus">deservus</lem>
+	<lem elex="servus">serva</lem>
+	<lem elex="servus">servaque</lem>
 	<lem elex="servus">servulus</lem>
 	<lem elex="servus">servulusque</lem>
-	<lem elex="servus">deservus</lem>	
+	<lem elex="servus">servus</lem>
+	<lem elex="servus">servusque</lem>
+		
+	<!--signaculum-->
 	<lem elex="signaculum">signaculum</lem>
+	
+	<!--solidus-->
 	<lem elex="solidus">solidi</lem>
 	<lem elex="solidus">solidus</lem>
-	<lem elex="solsadium">solsadium</lem>
-	<lem elex="solsadium">solsaditus</lem>
-	<lem elex="solsadium">solsadire</lem>
+	
+	<!--solsadium-->
 	<lem elex="solsadium">solsadio</lem>
+	<lem elex="solsadium">solsadire</lem>
+	<lem elex="solsadium">solsaditus</lem>
+	<lem elex="solsadium">solsadium</lem>
+	
+	<!--soror-->
 	<lem elex="soror">soror</lem>
 	<lem elex="soror">sororque</lem>
+	
+	<!--sponsalia-->
 	<lem elex="sponsalia">sponsalia</lem>
 	<lem elex="sponsalia">sponsalis</lem>
-	<lem elex="stipulatio">stipulatio</lem>
-	<lem elex="stipulatio">stipulari</lem>
-	<lem elex="stipulatio">stipulor</lem>
-	<lem elex="stipulatio">stipulatus</lem>
-	<lem elex="stipulatio">astipulatio</lem>
+	
+	<!--stipulatio-->
 	<lem elex="stipulatio">astipulari</lem>
+	<lem elex="stipulatio">astipulatio</lem>
 	<lem elex="stipulatio">astipulor</lem>
+	<lem elex="stipulatio">stipulari</lem>
+	<lem elex="stipulatio">stipulatio</lem>
+	<lem elex="stipulatio">stipulatus</lem>
+	<lem elex="stipulatio">stipulor</lem>
+		
+	<!--subscriptio-->
 	<lem elex="subscriptio">subscriptio</lem>
+	
+	<!--tabellio-->
 	<lem elex="tabellio">tabellio</lem>
+	
+	<!--tabularius-->
 	<lem elex="tabularius">tabularius</lem>
+	
+	<!--tagesbezeichungen_nach_dem_römischen_kalender-->
+	<lem elex="tagesbezeichungen_nach_dem_römischen_kalender">idus</lem>
+	<lem elex="tagesbezeichungen_nach_dem_römischen_kalender">kalendae</lem>
+	<lem elex="tagesbezeichungen_nach_dem_römischen_kalender">nonae</lem>
+	
+	<!--tanodono-->
 	<lem elex="tanodono">tanodono</lem>
-	<lem elex="teloneum">teloneum</lem>
+	
+	<!--teloneum-->
 	<lem elex="teloneum">telonarius</lem>
 	<lem elex="teloneum">telonearius</lem>
+	<lem elex="teloneum">teloneum</lem>
+	
+	<!--testamentum-->
 	<lem elex="testamentum">testamentum</lem>
+	
+	<!--thesaurus-->
 	<lem elex="thesaurus">thesaurus</lem>
+	
+	<!--tonsur-->
 	<lem elex="tonsur">tonsur</lem>
-	<lem elex="tonsur">tonsuratus</lem>
-	<lem elex="tonsur">tonsuratusque</lem>
-	<lem elex="tonsur">tonsurare</lem>
-	<lem elex="tonsur">tonsuro</lem>
+	
+	<!--tonsurare-->
+	<lem elex="tonsurare">tonsurare</lem>
+	<lem elex="tonsurare">tonsuratus</lem>
+	<lem elex="tonsurare">tonsuratusque</lem>
+	<lem elex="tonsurare">tonsuro</lem>
+	
+	<!--tractoria-->
 	<lem elex="tractoria">tractoria</lem>
+	
+	<!--traditio-->
 	<lem elex="traditio">traditio</lem>
 	<lem elex="traditio">traditioque</lem>
-	<!--<lem elex="transscribere">transscribere</lem>-->
+	
+	<!--transscribere-->
+	<!--<lem elex="transscribere">transscribere</lem>-->  <!--eigentlich sollte es transcribere heißen?-->
+	
+	<!--tuitio-->
 	<lem elex="tuitio">tuitio</lem>
+	
+	<!--uncia-->
 	<lem elex="uncia">uncia</lem>
+	
+	<!--usurpare-->
 	<!--<lem elex="usurpare">usurpare</lem>-->
-	<lem elex="ususfructus">ususfructus</lem>
-	<lem elex="ususfructus">usufructus</lem>
+	
+	<!--ususfructus-->
 	<lem elex="ususfructus">usufructarius</lem>
+	<lem elex="ususfructus">usufructus</lem>
+	<lem elex="ususfructus">ususfructus</lem>
+		
+	<!--vacuaturia-->
 	<lem elex="vacuaturia">vacuaturia</lem>
-	<lem elex="vassus">vassus</lem>
+	
+	<!--vassus-->
 	<lem elex="vassus">vassallus</lem>
+	<lem elex="vassus">vassus</lem>
+	
+	<!--venditio-->
 	<lem elex="venditio">venditio</lem>
 	<lem elex="venditio">venditioque</lem>
+	
+	<!--via_publica-->
 	<lem elex="via_publica">via publica</lem>
 	<lem elex="via_publica">via publicus</lem>
+	
+	<!--vicarius-->
 	<!--<lem elex="vicarius">vicarius</lem>-->
+	
+	<!--vicus-->
 	<lem elex="vicus">vici</lem>
 	<lem elex="vicus">vicus</lem>
-	<lem elex="villa">Vicus_Ortsname</lem>
+	<lem elex="vicus">vicus_ortsname</lem>
+	
+	<!--villa-->
 	<lem elex="villa">villa</lem>
 	<lem elex="villa">villaque</lem>
-	<lem elex="villa">Villa_Ortsname</lem>
+	<lem elex="villa">villa_ortsname</lem>
+	
+	<!--vir...-->
 	<lem elex="vir_apostolicus">vir apostolicus</lem>
 	<lem elex="vir_illustris">vir illustris</lem>
 	<lem elex="vir_laudabilis">vir laudabilis</lem>
@@ -425,8 +894,16 @@
 	<lem elex="vir_magnificus">viri magnifici</lem>
 	<lem elex="vir_venerabilis">vir venerabilis</lem>
 	<lem elex="vir_venerabilis">viri venerabiles</lem>
+	
+	<!--wadium-->
 	<lem elex="wadium">wadium</lem>
+	
+	<!--weregeldus-->
 	<lem elex="weregeldus">weregeldus</lem>
+	
+	<!--wirigeldus-->
 	<lem elex="wirigeldus">wirigeldus</lem>
+	
+	<!--xenodochium-->
 	<lem elex="xenodochium">xenodochium</lem>
 </xml>
