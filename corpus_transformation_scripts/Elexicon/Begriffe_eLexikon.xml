@@ -10,10 +10,13 @@
 	<lem elex="aerarium">aerarium</lem>
 	<lem elex="agnatio">agnatio</lem>
 	<lem elex="agrarium">agrarium</lem>
+	<!--<lem elex="alienare">alienare</lem>-->
 	<lem elex="alligatio">alligatio</lem>
+	<lem elex="allodium">allodium</lem>
 	<lem elex="allodium">allodis</lem>
 	<lem elex="allodium">alodis</lem>
 	<lem elex="allodium">allodium</lem>
+	<lem elex="amanuensis">amanuensis</lem>
 	<lem elex="amanuensis">amanvensis</lem>
 	<lem elex="amanuensis">manvensis</lem>
 	<lem elex="ambasciare">ambasciare</lem>
@@ -29,7 +32,9 @@
 	<lem elex="antrustio">antrustio</lem>
 	<lem elex="apostolicus">apostolicus</lem>
 	<lem elex="appennis">appennis</lem>
+	<lem elex="appennis">appennes</lem>
 	<lem elex="arrha">arra</lem>
+	<lem elex="arrha">arrha</lem>
 	<lem elex="auctor">auctor</lem>
 	<lem elex="auctoritas">auctoritas</lem>
 	<lem elex="auditores">auditor</lem>
@@ -45,6 +50,7 @@
 	<lem elex="boni_homines">bonus homo</lem>
 	<lem elex="burgundi">Burgundia</lem>
 	<lem elex="burgundi">Burgundio</lem>
+	<lem elex="burgundi">burgundi</lem>
 	<lem elex="burgus">burgus</lem>
 	<lem elex="burgus">Burgus_Ortsname</lem>
 	<lem elex="caespitaticum">caespitaticus</lem>
@@ -76,6 +82,7 @@
 	<lem elex="cessio">cessio</lem>
 	<!--<lem elex="centenarius">centenarius</lem>-->
 	<lem elex="chrisam">chrisma</lem>
+	<lem elex="chrisam">chrisam</lem>
 	<lem elex="civis">civis</lem>
 	<lem elex="civitas">civitas</lem>
 	<lem elex="clementia">clementia</lem>
@@ -160,6 +167,7 @@
 	<lem elex="forum">forum</lem>
 	<lem elex="franci">Francia</lem>
 	<lem elex="franci">Francus</lem>
+	<lem elex="franci">franci</lem>
 	<lem elex="frater">frater</lem>
 	<lem elex="frater">fraterque</lem>
 	<lem elex="frater">confrater</lem>
@@ -307,6 +315,7 @@
 	<lem elex="polyptychon">polyptychon</lem>
 	<lem elex="pondus">pondus</lem>
 	<lem elex="pontaticum">pontaticus</lem>
+	<lem elex="pontaticum">pontaticum</lem>
 	<lem elex="populus">populus</lem>
 	<lem elex="possessio">possessio</lem>
 	<lem elex="potestas">potestas</lem>
@@ -327,6 +336,7 @@
 	<lem elex="proprietas">proprietas</lem>
 	<lem elex="provincia">provincia</lem>
 	<lem elex="pulveraticum">pulveraticus</lem>
+	<lem elex="pulveraticum">pulveraticum</lem>
 	<lem elex="rachinburgus">rachinburgus</lem>
 	<lem elex="rapina">rapina</lem>
 	<lem elex="raptus">raptus</lem>
@@ -342,7 +352,9 @@
 	<lem elex="sacer">sacer</lem>
 	<lem elex="sacramentum">sacramentum</lem>
 	<lem elex="salutaticum">salutaticus</lem>
+	<lem elex="salutaticum">salutaticum</lem>
 	<lem elex="securitas">securitas</lem>
+	<lem elex="seniscalco">seniscalco</lem>
 	<lem elex="seniscalco">senescalcus</lem>
 	<lem elex="servitium">servitium</lem>
 	<lem elex="servus">servus</lem>
