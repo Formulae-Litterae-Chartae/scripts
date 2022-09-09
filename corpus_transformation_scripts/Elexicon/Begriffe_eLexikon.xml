@@ -45,6 +45,8 @@
 	
 	<!--amicitia-->
 	<lem elex="amicitia">amicitia</lem>
+	<lem elex="amicitia">amicus</lem>	
+	<lem elex="amicitia">amicus_personenname</lem>
 	
 	<!--anathema-->
 	<lem elex="anathema">anathema</lem>
@@ -573,7 +575,9 @@
 	<lem elex="notitia">notitia</lem>
 	
 	<!--obsequium-->
+	<lem elex="obsequium">obsequi</lem>
 	<lem elex="obsequium">obsequium</lem>
+	<lem elex="obsequium">obsequor</lem>
 	
 	<!--ordinatio-->
 	<lem elex="ordinatio">ordinatio</lem>
@@ -586,8 +590,11 @@
 	<lem elex="pactum">pactus</lem>
 	
 	<!--pagus-->
+	<lem elex="pagus">pagana_personenname</lem>
+	<lem elex="pagus">paganus_personenname</lem>
+	<lem elex="pagus">paganus</lem>
+	<lem elex="pagus">pagensis</lem>
 	<lem elex="pagus">pagus</lem>
-	
 	<!--palatium-->
 	<lem elex="palatium">palatium</lem>
 	
