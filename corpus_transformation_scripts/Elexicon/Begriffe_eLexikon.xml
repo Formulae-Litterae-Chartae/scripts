@@ -454,7 +454,7 @@
 	<lem elex="liber">liber_libera_liberum-</lem> <!--findet: liber=frei bzw. Freier-->
 	<lem elex="liber">liberque_liberaque_liberumque-</lem> <!--findet: liber=frei bzw. Freier-->
 	<lem elex="liber">liber_urkunden-</lem> <!--findet: alle Formen von liber (nur für Urkunden)-->
-	<lem elex="liber">liberque_urkunden-</lem> <!--findet: alle Formen von liber (nur für Urkunden)-->
+	<lem elex="liber">liberque_urkunden-</lem> <!--findet: alle Formen von liberque (nur für Urkunden)-->
 	
 	<!--libertus-->
 	<lem elex="libertus">colliberta</lem>
