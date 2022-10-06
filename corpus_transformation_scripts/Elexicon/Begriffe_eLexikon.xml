@@ -391,6 +391,12 @@
 	<!--gratia-->
 	<lem elex="gratia">gratia</lem>
 	
+	<!--habere_tenere_possidere-->
+	<!--findet die Lemmata: habere_tenere_possidere-habere/habeo,
+		habere_tenere_possidere-tenere/teneo und habere_tenere_possidere-possidere/possideo-->
+	<lem elex="habere_tenere_possidere">habere_tenere_possidere</lem>
+	
+	
 	<!--hereditas-->
 	<lem elex="hereditas">hereditas</lem>
 	
@@ -451,10 +457,10 @@
 	<lem elex="lex_salica">lex salica</lem>
 	
 	<!--liber-->
-	<lem elex="liber">liber_libera_liberum-</lem> <!--findet: liber=frei bzw. Freier-->
-	<lem elex="liber">liberque_liberaque_liberumque-</lem> <!--findet: liber=frei bzw. Freier-->
-	<lem elex="liber">liber_urkunden-</lem> <!--findet: alle Formen von liber (nur für Urkunden)-->
-	<lem elex="liber">liberque_urkunden-</lem> <!--findet: alle Formen von liberque (nur für Urkunden)-->
+	<lem elex="liber">liber_libera_liberum</lem> <!--findet: liber=frei bzw. Freier-->
+	<lem elex="liber">liberque_liberaque_liberumque</lem> <!--findet: liber=frei bzw. Freier-->
+	<lem elex="liber">liber_urkunden</lem> <!--findet: alle Formen von liber (nur für Urkunden)-->
+	<lem elex="liber">liberque_urkunden</lem> <!--findet: alle Formen von liberque (nur für Urkunden)-->
 	
 	<!--libertus-->
 	<lem elex="libertus">colliberta</lem>
@@ -514,6 +520,7 @@
 	<lem elex="mansus">mosum</lem>
 		
 	<!--manumissio-->
+	<lem elex="manumissio">denarialis</lem>
 	<lem elex="manumissio">ingenuitas</lem>
 	<lem elex="manumissio">manumissio</lem>
 	<lem elex="manumissio">manumissor</lem>
