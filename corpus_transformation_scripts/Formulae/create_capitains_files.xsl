@@ -76,9 +76,7 @@
         </xsl:param>
         <xsl:param name="mss-editions">
             <xsl:variable name="mssEditionFile" select="document(concat(replace($folderName, '/data/.*', ''), '/hss_editionen.xml'))"/>
-            <xsl:value-of select="$mssEditionFile/xml/formula[@n=concat($urn[1], '.', $urn[2], '.lat001')]/manuscripts/text()"/>
-            <xsl:if test="$mssEditionFile/xml/formula[@n=concat($urn[1], '.', $urn[2], '.lat001')]"><xsl:text>**</xsl:text></xsl:if>
-            <xsl:value-of select="$mssEditionFile/xml/formula[@n=concat($urn[1], '.', $urn[2], '.lat001')]/editions/text()"/>
+            <xsl:value-of select="$mssEditionFile/xml/formula[@n=concat($urn[1], '.', $urn[2], '.lat001')]/text()"/>
         </xsl:param>
         <xsl:processing-instruction name="xml-model">href="../../../capitains.rng" schematypens="http://relaxng.org/ns/structure/1.0"</xsl:processing-instruction>
         <collection>
