@@ -525,8 +525,7 @@
 	<lem elex="manumissio">manumissor</lem>
 	
 	<!--manumissio_per_denarium-->
-	<lem elex="manumissio">denarialis</lem>
-	<!--<lem elex="manumissio_per_denarium">manumissio</lem>-->
+	<lem elex="manumissio_per_denarium">denarialis</lem>
 	
 	<!--martyrarius-->
 	<lem elex="martyrarius">martyrarius</lem>
