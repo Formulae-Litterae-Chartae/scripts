@@ -175,6 +175,12 @@
                         </xsl:when>
                         <xsl:when test="matches($tempTitle, 'Weltzeitalter|Capitula|Incipit|Praefatio|Ergänzung|Flavigny|Formula Marculfina')">
                             <xsl:value-of select="replace($tempTitle, ' Deutsch| Übersetzung|\.xml', '')"/>
+                            <xsl:if test="matches($tempTitle, 'Formula Marculfina')">
+                                <xsl:choose>
+                                    <xsl:when test="matches($tempTitle, '32')"> [Trierer Formelmaterial]</xsl:when>
+                                    <xsl:otherwise> [Salzburger Formelmaterial]</xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:if>
                         </xsl:when>
                         <xsl:otherwise>
                             <xsl:value-of select="replace(string-join(subsequence(tokenize($tempTitle, '\s+'), 1, 2), ' '), ',$', '')"/>

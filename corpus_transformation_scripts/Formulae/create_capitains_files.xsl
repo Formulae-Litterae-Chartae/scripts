@@ -33,7 +33,7 @@
                     <xsl:value-of select="replace(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)], 'Flavigny ', '')"/>
                 </xsl:when>
                 <xsl:when test="matches(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)], 'Formula Marculfina aevi Karolini')">
-                    <xsl:value-of select="replace(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)], 'Formula Marculfina aevi Karolini ', '')"/><xsl:text> [Salzburger Formelmaterial]</xsl:text>
+                    <xsl:value-of select="replace(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)], 'Formula Marculfina aevi Karolini ', '')"/>
                 </xsl:when>
                 <xsl:when test="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:msDesc">
                     <xsl:value-of select="replace(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)], '.*\[(.*)\]$', '$1')"/>
@@ -160,13 +160,22 @@
                     <xsl:value-of select="$title"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="string-join($title//text(), '')"/>
-                    <xsl:if test="$isFormula">
-                        <xsl:text> (</xsl:text>
-                        <xsl:value-of select="$lang"/>
-                        <xsl:text>)</xsl:text>
-                        <xsl:if test="matches(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)], 'Formula Marculfina aevi Karolini')"><xsl:text> [Salzburger Formelmaterial]</xsl:text></xsl:if>
-                    </xsl:if>
+                    <xsl:choose>
+                        <xsl:when test="$isFormula">
+                            <xsl:variable name="langString">
+                                <xsl:text> (</xsl:text>
+                                <xsl:value-of select="$lang"/>
+                                <xsl:text>)</xsl:text>
+                            </xsl:variable>
+                            <xsl:choose>
+                                <xsl:when test="matches(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)], 'Formula Marculfina aevi Karolini')">
+                                    <xsl:value-of select="replace(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)], ' (\[.*\])', string-join(($langString, '$1'), ' '))"/>
+                                </xsl:when>
+                                <xsl:otherwise><xsl:value-of select="string-join((string-join($title//text(), ''), $langString), '')"/></xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:when>
+                        <xsl:otherwise><xsl:value-of select="string-join($title//text(), '')"/></xsl:otherwise>
+                    </xsl:choose>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:param>
