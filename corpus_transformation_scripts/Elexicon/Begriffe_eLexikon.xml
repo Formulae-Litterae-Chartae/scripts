@@ -24,7 +24,11 @@
 	<lem elex="agrarium">agrarium</lem>
 	
 	<!--alienare-->
-	<!--<lem elex="alienare">alienare</lem>-->
+	<lem elex="alienare">abalienare</lem>
+	<lem elex="alienare">abalieno</lem>
+	<lem elex="alienare">alienare</lem>
+	<lem elex="alienare">alienatio</lem>
+	<lem elex="alienare">alieno</lem>
 	
 	<!--alligatio-->
 	<lem elex="alligatio">alligatio</lem>
@@ -161,6 +165,9 @@
 	
 	<!--census-->
 	<lem elex="census">census</lem>
+	
+	<!--centenarius-->
+	<lem elex="centenarius">centenarius</lem>
 	
 	<!--cessio-->
 	<lem elex="cessio">cessio</lem>
@@ -540,7 +547,7 @@
 	<lem elex="matrona">matrona</lem>
 	
 	<!--ministerialis-->
-	<!--<lem elex="ministerialis">ministerialis</lem>-->
+	<lem elex="ministerialis">ministerialis</lem>
 	
 	<!--missus-->
 	<lem elex="missus">missus</lem>
@@ -855,8 +862,9 @@
 	<lem elex="traditio">traditio</lem>
 	<lem elex="traditio">traditioque</lem>
 	
-	<!--transscribere-->
-	<!--<lem elex="transscribere">transscribere</lem>-->  <!--eigentlich sollte es transcribere heißen?-->
+	<!--transscribere--><!--e-Lexikoneintrag ist transscribere, Lemma ist transcribere/transcribo. Beide Schreibweisen sind nach Wörterbuch korrekt-->
+	<lem elex="transscribere">transcribere</lem>
+	<lem elex="transscribere">transcribo</lem>
 	
 	<!--tuitio-->
 	<lem elex="tuitio">tuitio</lem>
@@ -865,7 +873,9 @@
 	<lem elex="uncia">uncia</lem>
 	
 	<!--usurpare-->
-	<!--<lem elex="usurpare">usurpare</lem>-->
+	<lem elex="usurpare">usurpare</lem>
+	<lem elex="usurpare">usurpatio</lem>
+	<lem elex="usurpare">usurpo</lem>
 	
 	<!--ususfructus-->
 	<lem elex="ususfructus">usufructarius</lem>
@@ -888,7 +898,11 @@
 	<lem elex="via_publica">via publicus</lem>
 	
 	<!--vicarius-->
-	<!--<lem elex="vicarius">vicarius</lem>-->
+	<lem elex="vicarius">vicaria</lem>
+	<lem elex="vicarius">vicarialis</lem>
+	<lem elex="vicarius">vicarius</lem>
+	<lem elex="vicarius">Vicarius_Personenname</lem>
+	<lem elex="vicarius">vigerius</lem>
 	
 	<!--vicus-->
 	<lem elex="vicus">vici</lem>
