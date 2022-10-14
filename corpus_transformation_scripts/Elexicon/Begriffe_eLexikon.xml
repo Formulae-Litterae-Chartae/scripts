@@ -202,8 +202,8 @@
 	<lem elex="comes_palatinus">comes palatinus</lem>
 	
 	<!--commendatio-->
-	<!--<lem elex="commendatio">commendare</lem>-->
-	<!--<lem elex="commendatio">commendatio</lem>-->
+	<lem elex="commendatio">commendare</lem>
+	<lem elex="commendatio">commendatio</lem>
 	
 	<!--communio-->
 	<lem elex="communio">communio</lem>
@@ -235,7 +235,7 @@
 	<lem elex="consensus">consensus</lem>
 	
 	<!--consilium-->
-	<!--<lem elex="consilium">consilium</lem>-->
+	<lem elex="consilium">consilium</lem>
 	
 	<!--consuetudo-->
 	<lem elex="consuetudo">consuetudo</lem>
@@ -434,7 +434,7 @@
 	<lem elex="ius">iusque</lem>
 	
 	<!--iustitia-->
-	<!--<lem elex="iustitia">iustitia</lem>-->
+	<lem elex="iustitia">iustitia</lem>
 	
 	
 	
