@@ -175,7 +175,7 @@ for f_c in ms_coll_md.xpath('/cpt:collection/cpt:members/cpt:collection', namesp
 
 for r in rows[1:]:
     cells = r.strip().split('\t')
-    info_string = build_sigla(cells[1], sigla_html_dict) + '**' + build_editions(cells[2], ed_bib_info)
+    info_string = build_sigla(cells[1].strip(), sigla_html_dict) + '**' + build_editions(cells[2], ed_bib_info)
     if len(cells) > 3:
         info_string += '**' + '**'.join(cells[3:])
     form_ms_ed_xml.append(E.formula(info_string, n=title_id_dict[cells[0]]))
