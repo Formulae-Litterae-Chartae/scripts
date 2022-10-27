@@ -68,7 +68,8 @@ ed_bib_info = {'Zeu': 'Zeumer, Karl: Formulae Merowingici et Karolini aevi, Hann
                'Lin': 'Lindenbrog, Friedrich, Codex legum antiquarum. In quo continentur Leges Wisigothorum, Edictum Theodorici, Lex Burgundionum, Lex Allamannorum, Lex Baiuvariorum, Decretum Tassilonis, Lex Ripuariorum, Lex Saxonum, Lex Angliorum, Lex Frisionum, Lex Langobardorum, Constitutiones siculae, Capitulare Caroli, quibus accedunt Formulae solennes priscae publicorum privatorumque negotium, Frankfurt a.M. 1613',
                'Roz': "Rozière, Eugène de: Recueil des formules usitées dans l'empire des Francs du Ve au Xe siècle, Paris 1859-1871.",
                'Dav/Fou': 'Davies, Wendy und Paul Fouracre: The settlement of disputes in early medieval Europe, Cambridge 1986.',
-               'Roc': 'Rockinger, Ludwig von (Hg.), Drei Formelsammlungen aus der Zeit der Karolinger. Aus Münchner Handschriften mitgetheilt, München 1858'}
+               'Roc': 'Rockinger, Ludwig von (Hg.), Drei Formelsammlungen aus der Zeit der Karolinger. Aus Münchner Handschriften mitgetheilt, München 1858.',
+               'Mab': 'Mabillon, Jean: Librorum De Re Diplomatica Supplementum : In Quo Archetypa In His Libris pro regulis proposita, ipsaeque regulae denuo confirmantur, novisque speciminibus et argumentis et illustrantur, Paris 1704.'}
 
 def build_urn(s): 
     roman_mapping = {'I': '1', 'II': '2'} 
