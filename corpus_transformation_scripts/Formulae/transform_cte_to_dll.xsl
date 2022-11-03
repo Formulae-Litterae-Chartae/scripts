@@ -771,6 +771,7 @@
     <xsl:template match="tei:p">
         <xsl:choose>
             <xsl:when test="following::tei:milestone[not(contains(@n, 'Capitula'))]"></xsl:when>
+            <xsl:when test="tei:p[contains(@rend, '-cte-text-align:justify-center;')] and not(contains($collection, 'andecavensis'))"></xsl:when>
             <xsl:otherwise>
                 <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="xml:space">preserve</xsl:attribute>
@@ -866,7 +867,7 @@
     <xsl:template match="/tei:TEI/tei:text/tei:body/tei:div/tei:div/tei:p/tei:locus" />
     
     <!-- This is to take out the formula numbers in Auvergne -->
-    <xsl:template match="tei:p[contains(@rend, '-cte-text-align:justify-center;')]" />
+    <!--<xsl:template match="tei:p[contains(@rend, '-cte-text-align:justify-center;')]" />-->
     
     <xsl:template match="tei:table">
         <xsl:copy>
