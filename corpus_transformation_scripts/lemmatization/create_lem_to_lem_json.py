@@ -29,7 +29,8 @@ os.makedirs(result_dir, exist_ok=True)
 lem_to_lem_mapping = defaultdict(set)
 inflected_to_primary_lem = dict()
 inflected_to_lem_mapping = defaultdict(set)
-inflected_to_full_lemma = defaultdict(set)
+inflected_to_full_lemma_charters = defaultdict(set)
+inflected_to_full_lemma_formulae = defaultdict(set)
 all_lems = set()
 formula = 'UNK'
 german_lemmas = ['Personenname', 'Ortsname', 'Volksstamm', 'Monatsname', 'Tagesbezeichnung', 'Platzhalter']
@@ -46,6 +47,7 @@ for tsv_file in tsv_files:
             formula = line.strip().split('\t')[0].strip('*')
             inflected_to_primary_lem[formula] = list()
         if not line.startswith('**'): 
+            full_lem = line.strip().split('\t')[1]
             parts = line.strip().lower().replace('$', '').split('\t') 
             if not re.search(r'\w', parts[0]):
                 continue
@@ -74,19 +76,25 @@ for tsv_file in tsv_files:
                     lem_to_lem_mapping[lem_part[0]].update([primary_lem])
             inflected_to_primary_lem[formula].append((parts[0], primary_lem, display_lem))
             inflected_to_lem_mapping[parts[0]].update([primary_lem])
-            inflected_to_full_lemma[parts[0]].update([display_lem])
+            if 'formeln' in tsv_file:
+                inflected_to_full_lemma_formulae[parts[0]].update([full_lem])
+            else:
+                inflected_to_full_lemma_charters[parts[0]].update([full_lem])
                 
 for k, v in lem_to_lem_mapping.items():
     lem_to_lem_mapping[k] = list(v)
 for k, v in inflected_to_lem_mapping.items():
     inflected_to_lem_mapping[k] = list(v)
-for k, v in inflected_to_full_lemma.items():
-    inflected_to_full_lemma[k] = list(v)
+for k, v in inflected_to_full_lemma_charters.items():
+    inflected_to_full_lemma_charters[k] = list(v)
+for k, v in inflected_to_full_lemma_formulae.items():
+    inflected_to_full_lemma_formulae[k] = list(v)
             
 dest_file = dest_file_pattern + '_lem_to_lem_mapping.json'
 dest_file_2 = dest_file_pattern + '_inflected_to_lem_mapping.json'
 dest_file_3 = dest_file_pattern + '_lemma_list.json'
-dest_file_4 = dest_file_pattern + '_inflected_to_full_lem_mapping.json'
+dest_file_4 = dest_file_pattern + '_inflected_to_full_lem_mapping_charters.json'
+dest_file_5 = dest_file_pattern + '_inflected_to_full_lem_mapping_formulae.json'
 
 if dest_folder:
     dest_file = os.path.join(dest_folder, 'lem_to_lem.json')
@@ -100,7 +108,9 @@ with open(dest_file_2, mode="w") as f:
 with open(dest_file_3, mode="w") as f:
     dump(sorted(all_lems), f, ensure_ascii=False, sort_keys=True, indent='\t')
 with open(dest_file_4, mode="w") as f:
-    dump(inflected_to_full_lemma, f, ensure_ascii=False, sort_keys=True, indent='\t')
+    dump(inflected_to_full_lemma_charters, f, ensure_ascii=False, sort_keys=True, indent='\t')
+with open(dest_file_5, mode="w") as f:
+    dump(inflected_to_full_lemma_formulae, f, ensure_ascii=False, sort_keys=True, indent='\t')
 
 for form, mapping in inflected_to_primary_lem.items():
     with open(os.path.join(result_dir, form.replace('.txt', '') + '.txt'), mode="w") as f:

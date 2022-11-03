@@ -241,7 +241,7 @@
                 </xsl:choose>
             </xsl:when>
             <xsl:when test="contains($formTitle/tei:ref[@type='form-name'], 'Ergänzung')">
-                <xsl:text>form2_</xsl:text><xsl:number value="replace($formTitle/tei:ref[@type='form-name'], '.*?(\d+).*', '$1')" format="001"/>
+                <xsl:text>form2_</xsl:text><xsl:number value="replace($formTitle/tei:ref[@type='form-name'], '.*?(\d+)(\w?).*', '$1')" format="001"/><xsl:text>_</xsl:text><xsl:value-of select="replace($formTitle/tei:ref[@type='form-name'], '.*?(\d+)(\w?).*', '$2')"/>
             </xsl:when>
             <xsl:when test="contains($formTitle/tei:ref[@type='form-name'], 'Titel')">
                 <xsl:text>form000</xsl:text>
@@ -577,6 +577,7 @@
             select="translate(.,translate(.,$pSeparators,''),'')"/>
 <!--        <xsl:param name="pCount" select="1"/>-->
         <xsl:choose>
+            <xsl:when test="following::tei:milestone[not(contains(@n, 'Capitula'))]"></xsl:when>
             <xsl:when test="not($pString)"/>
             <xsl:when test="$pMask">
                 <xsl:variable name="vSeparator"

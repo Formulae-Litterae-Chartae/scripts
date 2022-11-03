@@ -66,7 +66,7 @@ def produce_form_num(filename):
             else:
                 form_num = 'form3_2_001'
         else:
-            form_num = 'form2_' + '{:03}'.format(int(re.sub(r'.*?(\d).*', r'\1', filename)))
+            form_num = 'form2_' + '{:03}'.format(int(re.sub(r'.*?(\d+)(\w?).*', r'\1', filename))) + '_' + re.sub(r'.*?(\d+)(\w?).*', r'\2', filename)
     elif 'Tours 40' in filename:
         form_num = 'form040_' + re.sub(r'.*Tours 40\((.)\).*', r'\1', filename)
     else:
