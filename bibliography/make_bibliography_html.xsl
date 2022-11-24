@@ -93,9 +93,13 @@
                 <xsl:if test="@xml:id">
                     <xsl:attribute name="id"><xsl:value-of select="@xml:id"/></xsl:attribute>
                 </xsl:if>
+                <xsl:element name="span">
+                    <xsl:attribute name="id"><xsl:value-of select="lower-case(replace(replace(.//t:title[@type='short'], '\W', '-'), '-+', '-'))"/></xsl:attribute>
+                    <xsl:attribute name="class">title-id</xsl:attribute>
                     <xsl:call-template name="buildBibEntry">
                         <xsl:with-param name="entry" select="current()"/>
                     </xsl:call-template>
+                </xsl:element>
             </xsl:element>
         </xsl:if>
     </xsl:template>
