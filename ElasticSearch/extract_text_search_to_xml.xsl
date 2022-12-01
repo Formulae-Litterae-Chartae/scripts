@@ -68,7 +68,7 @@
             <regest><xsl:value-of select="$theRegest"/></regest>
             <forgery><xsl:value-of select="boolean(/tei:TEI/tei:text/tei:front/tei:note[@type='echtheit']/@n = 'forgery')"/></forgery>
             <!-- A tag for each formulaic part -->
-            <xsl:for-each select="distinct-values(//tei:seg/@function)">
+<!--            <xsl:for-each select="distinct-values(//tei:seg/@function)">
                 <xsl:element name="part">
                     <xsl:attribute name="type"><xsl:value-of select="."/></xsl:attribute>
                     <xsl:for-each select="$teiBase//tei:seg[@function=current()]">
@@ -82,7 +82,7 @@
                     <xsl:attribute name="type"><xsl:value-of select="."/><xsl:text>-lems</xsl:text></xsl:attribute>
                     <xsl:value-of select="string-join($teiBase//tei:seg[@function=current()]//tei:w/@lemma, ' ')"/>
                 </xsl:element>
-            </xsl:for-each>
+            </xsl:for-each>-->
         </xml>
     </xsl:template>
     
