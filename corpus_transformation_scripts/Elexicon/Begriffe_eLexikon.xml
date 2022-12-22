@@ -592,6 +592,9 @@
 	<lem elex="obsequium">obsequium</lem>
 	<lem elex="obsequium">obsequor</lem>
 	
+	<!--oppidum-->
+	<lem elex="oppidum">oppidum</lem>
+	
 	<!--ordinatio-->
 	<lem elex="ordinatio">ordinatio</lem>
 	
@@ -719,6 +722,9 @@
 	
 	<!--proprietas-->
 	<lem elex="proprietas">proprietas</lem>
+	
+	<!--proskynese-->
+	<lem elex="proskynese">proskynese</lem>
 	
 	<!--provincia-->
 	<lem elex="provincia">provincia</lem>
@@ -907,6 +913,9 @@
 	<lem elex="vicus">vici</lem>
 	<lem elex="vicus">vicus</lem>
 	<lem elex="vicus">vicus_ortsname</lem>
+	
+	<!--vidua-->
+	<lem elex="vidua">vidua</lem>
 	
 	<!--villa-->
 	<lem elex="villa">villa</lem>
