@@ -35,14 +35,16 @@ all_lems = set()
 formula = 'UNK'
 german_lemmas = ['Personenname', 'Ortsname', 'Volksstamm', 'Monatsname', 'Tagesbezeichnung', 'Platzhalter']
 german_lemmas += [x.lower() for x in german_lemmas]
+all_lines = ['form\tlemma\tPOS\tmorph\n']
 
-for tsv_file in tsv_files:
+for tsv_file in sorted(tsv_files):
     try:
         with open(tsv_file) as f:
             s = f.readlines()
     except Exception as E:
         raise E
     for line in s[1:]: 
+        all_lines.append(line)
         if line.startswith('**'):
             formula = line.strip().split('\t')[0].strip('*')
             inflected_to_primary_lem[formula] = list()
@@ -75,7 +77,7 @@ for tsv_file in tsv_files:
                 if lem_part[0] != primary_lem:
                     lem_to_lem_mapping[lem_part[0]].update([primary_lem])
             inflected_to_primary_lem[formula].append((parts[0], primary_lem, display_lem))
-            inflected_to_lem_mapping[parts[0]].update([primary_lem])
+            inflected_to_lem_mapping[parts[0]].update([full_lem])
             if 'formeln' in tsv_file:
                 inflected_to_full_lemma_formulae[parts[0]].update([full_lem])
             else:
@@ -91,10 +93,11 @@ for k, v in inflected_to_full_lemma_formulae.items():
     inflected_to_full_lemma_formulae[k] = list(v)
             
 dest_file = dest_file_pattern + '_lem_to_lem_mapping.json'
-dest_file_2 = dest_file_pattern + '_inflected_to_lem_mapping.json'
+dest_file_2 = dest_file_pattern + '_inflected_to_full_lem_mapping.json'
 dest_file_3 = dest_file_pattern + '_lemma_list.json'
 dest_file_4 = dest_file_pattern + '_inflected_to_full_lem_mapping_charters.json'
 dest_file_5 = dest_file_pattern + '_inflected_to_full_lem_mapping_formulae.json'
+dest_file_6 = os.path.join(argv[1], 'Formulae+Urkunden.csv')
 
 if dest_folder:
     dest_file = os.path.join(dest_folder, 'lem_to_lem.json')
@@ -111,6 +114,8 @@ with open(dest_file_4, mode="w") as f:
     dump(inflected_to_full_lemma_charters, f, ensure_ascii=False, sort_keys=True, indent='\t')
 with open(dest_file_5, mode="w") as f:
     dump(inflected_to_full_lemma_formulae, f, ensure_ascii=False, sort_keys=True, indent='\t')
+with open(dest_file_6, mode="w") as f:
+    f.write(''.join(all_lines))
 
 for form, mapping in inflected_to_primary_lem.items():
     with open(os.path.join(result_dir, form.replace('.txt', '') + '.txt'), mode="w") as f:
