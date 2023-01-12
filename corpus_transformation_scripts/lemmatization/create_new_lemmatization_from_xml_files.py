@@ -35,10 +35,12 @@ for f in sorted(files):
                 inflected_forms.append('{form}\t{form}\t\t'.format(form=w))
             elif (w == w.title() or w == w.upper()) and re.search(r'us$|um$|i$', w.lower()):
                 inflected_forms.append('{form}\tPersonenname\t\t'.format(form=w))
-            elif (w == w.title() or w == w.upper()) and i - 1 >= 0 and tokens[i - 1] == 'de':
-                inflected_forms.append('{form}\Ortsname\t\t'.format(form=w))
+            elif (w == w.title() or w == w.upper()) and i - 2 >= 0 and tokens[i - 2] == 'de':
+                inflected_forms.append('{form}\tOrtsname\t\t'.format(form=w))
             else:
                 inflected_forms.append('{form}\t!Prüfen\t\t'.format(form=w))
+        if tokens[i - 2] == 'de':
+            print(w)
 
 with open(output_file, mode="w") as f:
     f.write('\n'.join(inflected_forms))
