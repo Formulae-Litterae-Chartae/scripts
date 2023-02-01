@@ -44,7 +44,7 @@ def test_text(lemmas, orig):
         if i > 0:
             prev_lem = lemmas[i-1].split('\t')[1]
         tried = []
-        if inflected.lower().replace('v', 'u') != re.sub(r'[{}«»„“‚‘’”\[\]]'.format(punctuation), '', ''.join(orig[i].xpath('.//text()', namespaces=ns)).lower().replace('v', 'u')):
+        if inflected.lower().replace('v', 'u') != re.sub(r'[{}«»„“‚‘’”\[\]…]'.format(punctuation), '', ''.join(orig[i].xpath('.//text()', namespaces=ns)).lower().replace('v', 'u')):
             not_found.append((inflected, tried))
             continue
         #try:

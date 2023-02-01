@@ -28,6 +28,7 @@ result_dir = os.path.join(os.path.dirname(argv[1]), 'results')
 os.makedirs(result_dir, exist_ok=True)
 lem_to_lem_mapping = defaultdict(set)
 inflected_to_primary_lem = dict()
+inflected_to_full_lem_mapping = defaultdict(set)
 inflected_to_lem_mapping = defaultdict(set)
 inflected_to_full_lemma_charters = defaultdict(set)
 inflected_to_full_lemma_formulae = defaultdict(set)
@@ -77,7 +78,8 @@ for tsv_file in sorted(tsv_files):
                 if lem_part[0] != primary_lem:
                     lem_to_lem_mapping[lem_part[0]].update([primary_lem])
             inflected_to_primary_lem[formula].append((parts[0], primary_lem, display_lem))
-            inflected_to_lem_mapping[parts[0]].update([full_lem])
+            inflected_to_lem_mapping[parts[0]].update([primary_lem])
+            inflected_to_full_lem_mapping[parts[0]].update([full_lem])
             if 'formeln' in tsv_file:
                 inflected_to_full_lemma_formulae[parts[0]].update([full_lem])
             else:
@@ -85,6 +87,8 @@ for tsv_file in sorted(tsv_files):
                 
 for k, v in lem_to_lem_mapping.items():
     lem_to_lem_mapping[k] = list(v)
+for k, v in inflected_to_full_lem_mapping.items():
+    inflected_to_full_lem_mapping[k] = list(v)
 for k, v in inflected_to_lem_mapping.items():
     inflected_to_lem_mapping[k] = list(v)
 for k, v in inflected_to_full_lemma_charters.items():
@@ -98,6 +102,7 @@ dest_file_3 = dest_file_pattern + '_lemma_list.json'
 dest_file_4 = dest_file_pattern + '_inflected_to_full_lem_mapping_charters.json'
 dest_file_5 = dest_file_pattern + '_inflected_to_full_lem_mapping_formulae.json'
 dest_file_6 = os.path.join(argv[1], 'Formulae+Urkunden.csv')
+dest_file_7 = dest_file_pattern + '_inflected_to_lem_mapping.json'
 
 if dest_folder:
     dest_file = os.path.join(dest_folder, 'lem_to_lem.json')
@@ -107,7 +112,7 @@ if dest_folder:
 with open(dest_file, mode="w") as f:
     dump(lem_to_lem_mapping, f, ensure_ascii=False, sort_keys=True, indent='\t')
 with open(dest_file_2, mode="w") as f:
-    dump(inflected_to_lem_mapping, f, ensure_ascii=False, sort_keys=True, indent='\t')
+    dump(inflected_to_full_lem_mapping, f, ensure_ascii=False, sort_keys=True, indent='\t')
 with open(dest_file_3, mode="w") as f:
     dump(sorted(all_lems), f, ensure_ascii=False, sort_keys=True, indent='\t')
 with open(dest_file_4, mode="w") as f:
@@ -116,6 +121,8 @@ with open(dest_file_5, mode="w") as f:
     dump(inflected_to_full_lemma_formulae, f, ensure_ascii=False, sort_keys=True, indent='\t')
 with open(dest_file_6, mode="w") as f:
     f.write(''.join(all_lines))
+with open(dest_file_7, mode="w") as f:
+    dump(inflected_to_lem_mapping, f, ensure_ascii=False, sort_keys=True, indent='\t')
 
 for form, mapping in inflected_to_primary_lem.items():
     with open(os.path.join(result_dir, form.replace('.txt', '') + '.txt'), mode="w") as f:

@@ -146,6 +146,12 @@
 	<lem elex="carta">charta</lem>
 	<lem elex="carta">chartula</lem>
 	
+	<!--castellum-->
+	<lem elex="castellum">castellum</lem>
+	
+	<!--castrum-->
+	<lem elex="castrum">castrum</lem>
+	
 	<!--cathedra-->
 	<lem elex="cathedra">cathedra</lem>
 	
@@ -268,11 +274,20 @@
 	<!--curiales-->
 	<lem elex="curiales">curialis</lem>
 	
+	<!--curtis-->
+	<lem elex="curtis">curtis</lem>
+	
 	<!--defensor-->
 	<lem elex="defensor">defensor</lem>
 	
+	<!--definitio-->
+	<lem elex="definitio">definitio</lem>
+	
 	<!--denarius-->
 	<lem elex="denarius">denarius</lem>
+	
+	<!--dignitas-->
+	<lem elex="dignitas">dignitas</lem>
 	
 	<!--diaconus-->
 	<lem elex="diaconus">archidiaconus</lem>
@@ -359,6 +374,10 @@
 	<lem elex="fiscus">fiscus</lem>
 	<lem elex="fiscus">fiscus_ortsname</lem>
 	
+	<!--forbatutus-->
+	<lem elex="forbatutus">forbatutus</lem>
+	<lem elex="forbatutus">ferrobattudus</lem>
+	
 	<!--forum-->
 	<lem elex="forum">forum</lem>
 	
@@ -423,6 +442,9 @@
 	<!--homo-->
 	<lem elex="homo">homo</lem>
 	<lem elex="homo">homove</lem>
+	
+	<!--honorati-->
+	<lem elex="honorati">honorati</lem>
 	
 	<!--immunitas-->
 	<lem elex="immunitas">immunitas</lem>

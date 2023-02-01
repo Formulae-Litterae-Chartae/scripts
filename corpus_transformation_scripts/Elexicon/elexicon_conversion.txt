@@ -2,7 +2,7 @@ First, transform the docx files to TEI with OxGarage.
 
 Start Docker Image for OxGarage:
 
-sudo docker run --rm -p 8080:8080 --mount type=bind,source="/home/matt/tei/tei-xsl/xml/tei/stylesheet",target="/usr/share/xml/tei/stylesheet" --mount type=bind,source="/home/matt/tei/tei/xml/tei/odd",target="/usr/share/xml/tei/odd" -e WEBSERVICE_URL=http://localhost:8080/ege-webservice/ --name oxgarage teic/oxgarage:dev
+sudo docker run --rm -p 8080:8080 --mount type=bind,source="/home/matt/tei/tei-xsl/xml/tei/stylesheet",target="/usr/share/xml/tei/stylesheet" --mount type=bind,source="/home/matt/tei/tei/xml/tei/odd",target="/usr/share/xml/tei/odd" -e WEBSERVICE_URL=http://localhost:8080/ege-webservice/ --name teigarage ghcr.io/teic/teigarage
 
 Then run the following script to transform the DOCX to TEI:
 
