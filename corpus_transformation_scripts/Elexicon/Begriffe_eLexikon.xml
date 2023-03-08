@@ -485,6 +485,9 @@
 	<!--lex_salica-->
 	<lem elex="lex_salica">lex salica</lem>
 	
+	<!--libellus_repudii-->
+	<lem elex="libellus_repudii">libellus repudium</lem>
+	
 	<!--liber-->
 	<lem elex="liber">liber_libera_liberum</lem> <!--findet: liber=frei bzw. Freier-->
 	<lem elex="liber">liberque_liberaque_liberumque</lem> <!--findet: liber=frei bzw. Freier-->

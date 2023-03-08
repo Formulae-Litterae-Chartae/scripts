@@ -69,6 +69,9 @@ def produce_form_num(filename):
             form_num = 'form2_' + '{:03}'.format(int(re.sub(r'.*?(\d+)(\w?).*', r'\1', filename))) + '_' + re.sub(r'.*?(\d+)(\w?).*', r'\2', filename)
     elif 'Tours 40' in filename:
         form_num = 'form040_' + re.sub(r'.*Tours 40\((.)\).*', r'\1', filename)
+    elif 'Bourges' in filename:
+        bourges_parts = re.search(r'Bourges ([A-C]) (\d+) ?([a-m])?', filename)
+        form_num = 'form_{}_{:03}{}'.format(bourges_parts[1].lower(), int(bourges_parts[2]), bourges_parts[3] if bourges_parts[3] else '')
     else:
         num_match = re.search(r',?([\d]+)(\w?)', filename)
         form_num = "{:03}".format(int(num_match[1])) + num_match[2]
@@ -108,8 +111,8 @@ for transcription in sorted(transcriptions):
     new_urn = ''
     while os.path.isfile(new_name):
         new_name = destination_folder + '/data/{man}/{fols}{add}/{man}.{fols}{add}.{ed}.xml'.format(man=filename_parts[0], fols=filename_parts[1], ed=filename_parts[2], add=fol_add)
-        fol_add += 1
         new_urn = 'urn:cts:formulae:{}.{}{}.{}'.format(filename_parts[0], filename_parts[1], fol_add, filename_parts[2])
+        fol_add += 1
     new_folder = os.path.dirname(new_name)
     makedirs(new_folder, exist_ok=True)
     rename(new_file, new_name)
