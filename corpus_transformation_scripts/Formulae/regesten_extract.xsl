@@ -26,6 +26,10 @@
                                 </xsl:otherwise>
                             </xsl:choose>
                         </xsl:when>
+                        <xsl:when test="contains(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title/text(), 'bourges')">
+                            <xsl:value-of select="lower-case(./preceding::tei:p[1])"/><xsl:text>_</xsl:text>
+                            <xsl:number value="replace(child::tei:cell[1]/., '.*?(\d+)(\D{0,3})$', '$1')" format="001"/><xsl:if test="matches(child::tei:cell[1]/., '[a-z]$')"><xsl:value-of select="replace(child::tei:cell[1]/., '.*?(\d+)([a-z])$', '$2')"/></xsl:if>
+                        </xsl:when>
                         <xsl:otherwise>
                             <xsl:number value="replace(child::tei:cell[1]/., '.*?(\d+)(\D{0,2})$', '$1')" format="001"/><xsl:value-of select="replace(child::tei:cell[1]/., '.*?(\d+)(\D{0,2})$', '$2')"/>
                         </xsl:otherwise>

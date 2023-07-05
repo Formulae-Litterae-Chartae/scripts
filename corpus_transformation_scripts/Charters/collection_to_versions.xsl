@@ -17,7 +17,7 @@
     <!-- MAIN TEMPLATE -->
     <xsl:template match="/">
         <xsl:for-each select="/tei:TEI/tei:text/tei:group/tei:text/descendant::tei:div[@type='edition']">
-            <xsl:variable name="isForgery" select="node()/ancestor::tei:text[@xml:id]/descendant::tei:note[@n='forgery']/text()"></xsl:variable>
+            <xsl:variable name="isForgery" select="node()/ancestor::tei:text[@xml:id]/descendant::tei:note[@n='forgery']/text() and node()/ancestor::tei:text[@xml:id]/descendant::tei:note[@n='forgery']/text() != 'deperditum'"></xsl:variable>
             <xsl:variable name="edition" select="."/>
             <!-- The new documents will use the parameters of the xsl:output element. Each charter version file will be given the name of its @n value
                 (location . ch.number . language + vs.number)
@@ -128,9 +128,10 @@
                             <xsl:copy-of select="node()/ancestor::tei:text[@xml:id]/descendant::tei:div[@subtype='regest']"/>
                             <xsl:copy-of select="node()/ancestor::tei:text[@xml:id]/descendant::tei:div[@subtype='ausstellungsort']"/>
                             <xsl:copy-of select="node()/ancestor::tei:text[@xml:id]/descendant::tei:dateline"/>
-                            <xsl:copy-of select="node()/ancestor::tei:text[@xml:id]/descendant::tei:note[@type='echtheit']"/>
+                            <xsl:if test="node()/ancestor::tei:text[@xml:id]/descendant::tei:note[@type='echtheit'] and not(lower-case(node()/ancestor::tei:text[@xml:id]/descendant::tei:note[@type='echtheit']/text()) = 'deperditum')">
+                                <xsl:copy-of select="node()/ancestor::tei:text[@xml:id]/descendant::tei:note[@type='echtheit']"/>
+                            </xsl:if>
                         </xsl:element>
-                        
                         <!-- Copy of the rest of the current <body> target. -->
                         <xsl:copy-of select="node()/ancestor::tei:body"/>
                         

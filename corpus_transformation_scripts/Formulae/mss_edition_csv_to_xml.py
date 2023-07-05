@@ -14,12 +14,14 @@ ns = {'tei': 'http://www.tei-c.org/ns/1.0', 'cpt': 'http://purl.org/capitains/ns
 ed_bib_info = {'Zeu': ('Zeu', 'Zeumer, Karl: Formulae Merowingici et Karolini aevi, Hannover 1882.'),
                'Zeua': ('Zeu&lt;span class="verso-recto"&gt;a&lt;/span&gt;', 'Zeumer, Karl: Über die älteren fränkischen Formelsammlungen, in: Neues Archiv der Gesellschaft für ältere deutsche Geschichtskunde 6 (1881), S. 9–115.'),
                'Udd': ('Udd', 'Uddholm, Alf: Marculfi formularium libri duo, 1962 (Collectio scriptorum veterum Upsaliensis).'),
-               'Lin': ('Lin', 'Lindenbrog, Friedrich, Codex legum antiquarum. In quo continentur Leges Wisigothorum, Edictum Theodorici, Lex Burgundionum, Lex Allamannorum, Lex Baiuvariorum, Decretum Tassilonis, Lex Ripuariorum, Lex Saxonum, Lex Angliorum, Lex Frisionum, Lex Langobardorum, Constitutiones siculae, Capitulare Caroli, quibus accedunt Formulae solennes priscae publicorum privatorumque negotium, Frankfurt a.M. 1613'),
+               'Lin': ('Lin', 'Lindenbrog, Friedrich: Codex legum antiquarum. In quo continentur Leges Wisigothorum, Edictum Theodorici, Lex Burgundionum, Lex Allamannorum, Lex Baiuvariorum, Decretum Tassilonis, Lex Ripuariorum, Lex Saxonum, Lex Angliorum, Lex Frisionum, Lex Langobardorum, Constitutiones siculae, Capitulare Caroli, quibus accedunt Formulae solennes priscae publicorum privatorumque negotium, Frankfurt a.M. 1613'),
                'Roz': ('Roz', "Rozière, Eugène de: Recueil des formules usitées dans l'empire des Francs du Ve au Xe siècle, Paris 1859-1871."),
                'Dav/Fou': ('Dav/Fou', 'Davies, Wendy und Paul Fouracre: The settlement of disputes in early medieval Europe, Cambridge 1986.'),
-               'Roc': ('Roc', 'Rockinger, Ludwig von (Hg.), Drei Formelsammlungen aus der Zeit der Karolinger. Aus Münchner Handschriften mitgetheilt, München 1858.'),
+               'Roc': ('Roc', 'Rockinger, Ludwig von (Hg.): Drei Formelsammlungen aus der Zeit der Karolinger. Aus Münchner Handschriften mitgetheilt, München 1858.'),
                'Mab': ('Mab', 'Mabillon, Jean: Librorum De Re Diplomatica Supplementum : In Quo Archetypa In His Libris pro regulis proposita, ipsaeque regulae denuo confirmantur, novisque speciminibus et argumentis et illustrantur, Paris 1704.'),
-               'Rio': ('Rio', 'Rio, Alice: The formularies of Angers and Marculf: Two Merovingian legal handbooks, Liverpool 2008 (Translated texts for historians 46).')}
+               'Rio': ('Rio', 'Rio, Alice: The formularies of Angers and Marculf: Two Merovingian legal handbooks, Liverpool 2008 (Translated texts for historians 46).'),
+               'Par': ('Par', "Pardessus, Jean-Marie: Notice sur les manuscrits de formules relatives au droit observé dans l'Empire des Francs, suivie de quatorze formules inédites, in: Bibliothèque de l’école des chartes 4 (1843), S. 1-22."),
+               'Bis': ('Bis', 'Bischoff, Bernhard: Epitaphienformeln für Äbtissinnen (Achtes Jahrhundert), in: Ders. (Hg.), Anecdota Novissima. Texte des vierten bis sechszehnten Jahrhunderts, Stuttgart 1984, S. 152')}
 
 def build_urn(s): 
     roman_mapping = {'I': '1', 'II': '2'} 
@@ -42,16 +44,16 @@ def build_urn(s):
             form_num = 'form' + roman_mapping[book] + '_{:03}'.format(int(num)) 
     elif 'Flavigny' in s:
         coll_name = 'flavigny'
-        if 'Paris' in s:
-            form_num_part = 'form2_'
-        elif 'Kopenhagen' in s:
+        if 'Pa+Ko' in s:
+            form_num_part = 'form1_'
+        elif 'Ko' in s:
             form_num_part = 'form3_'
         else:
-            form_num_part = 'form1_'
+            form_num_part = 'form2_'
         if 'Capitula' in s: 
             form_num = form_num_part.replace('form', '') + 'capitula'
         else:
-            num_split = re.search(r'(\d+)(\D?)$', s)
+            num_split = re.search(r'(\d+) ?(\D?)$', s)
             form_num = form_num_part + '{:03}'.format(int(num_split.group(1)))
             if num_split.group(2):
                 form_num = form_num + num_split.group(2)
@@ -78,24 +80,32 @@ def build_sigla(s, sigla_dict):
     all_sigla = re.split(r',\s+', s) 
     formatted_sigla = list() 
     for sig in all_sigla: 
-        formatted_sigla.append('&lt;b&gt;' + sigla_dict.get(sig, sig) + '&lt;/b&gt;')
-        if sig not in sigla_dict:
-            print(sig + ' not found in siglen list')
+        pared_sig = re.sub(r'(\w+\d*\w?).*', r'\1', sig)
+        remainder = re.sub(r'\w+\d*\w?(.*)', r'\1', sig)
+        formatted_sigla.append('&lt;b&gt;' + sigla_dict.get(pared_sig, pared_sig) + '&lt;/b&gt;' + remainder)
+        if pared_sig not in sigla_dict:
+            print(pared_sig + ' not found in siglen list')
     return ', '.join(formatted_sigla)
 
 def build_editions(s, ed_dict): 
     all_eds = re.split(r'; ', s) 
     formatted_eds = list() 
     for ed in all_eds: 
-        editor, number = re.split(r': ', ed) 
-        formatted_editor = editor
-        biblio = ed_dict.get(editor, editor)
-        if len(biblio) == 2:
-            formatted_editor = biblio[0]
-            biblio = biblio[1]
-        formatted_eds.append('&lt;span data-toggle="tooltip" id="{editor}" data-html="true" data-container="body" title="{biblio}"&gt;&lt;b&gt;{formatted_editor}&lt;/b&gt;&lt;/span&gt;: {form_number}'.format(editor=editor, form_number=number, biblio=biblio, formatted_editor=formatted_editor))
-        if editor not in ed_dict:
-            print(editor + ' not found in the list of editors')
+        try:
+            editor, number = re.split(r': ', ed)
+            formatted_editor = editor
+            biblio = ed_dict.get(editor, editor)
+            if len(biblio) == 2:
+                formatted_editor = biblio[0]
+                biblio = biblio[1]
+            formatted_eds.append('&lt;span data-toggle="tooltip" id="{editor}" data-html="true" data-container="body" title="{biblio}"&gt;&lt;b&gt;{formatted_editor}&lt;/b&gt;&lt;/span&gt;: {form_number}'.format(editor=editor, form_number=number, biblio=biblio, formatted_editor=formatted_editor))
+            if editor not in ed_dict:
+                print(editor + ' not found in the list of editors')
+        except ValueError:
+            for w in ed.split():
+                if w in ed_dict:
+                    ed = re.sub(w, '&lt;span data-toggle="tooltip" id="{editor}" data-html="true" data-container="body" title="{biblio}"&gt;&lt;b&gt;{editor}&lt;/b&gt;&lt;/span&gt;'.format(editor=w, biblio=ed_dict[w]), ed)
+            formatted_eds.append(ed)
     return '; '.join(formatted_eds)
 
 form_ms_ed_xml = E.xml()
@@ -135,6 +145,7 @@ for r in rows[1:]:
         info_string = build_sigla(cells[1].strip(), sigla_html_dict) + '**' + build_editions(cells[2], ed_bib_info)
         if len(cells) > 3:
             info_string += '**' + '**'.join(cells[3:])
+        cells[0] = re.sub(r'Flavigny Pa 7 (\D)', r'Flavigny Pa 7\1', cells[0])
         form_ms_ed_xml.append(E.formula(info_string, n=title_id_dict[cells[0].strip()]))
     # form_ms_ed_dict[build_urn(formula)] = {'manuscripts': build_sigla(mss), 'editions': build_editions(eds)}
 

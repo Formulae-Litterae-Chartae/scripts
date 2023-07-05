@@ -46,7 +46,7 @@ def collate_to_csv(formula, work_folder, baseline_sigla, collatex_location, spec
         with open(i) as f:
             txt = f.read().split('******\n')[3]
         wits.append({'id': wit_id, 'tokens': [{'t': make_lower(w.rstrip(punct))} for w in txt.split() if w.rstrip(punct)]})
-        if baseline_sigla in i:
+        if baseline_sigla == wit_id:
             base_text = [{'t': w} for w in txt.split()]
 
     with open(json_input_filename, mode="w") as f:
@@ -105,7 +105,7 @@ def produce_cte_xml(base_text, json_output_filename, script_dir, baseline_sigla)
                 i += 1
         for k in sorted(d.keys(), key=lambda x: d[x]):
             if k != baseline:
-                readings.append('{reading} {witness}'.format(witness=', '.join(['<hi rend="font-size:10pt;font-style:italic;">{}</hi><hi rend="font-size:10pt;font-style:italic;vertical-align:sub;font-size:smaller;">{}</hi>'.format(re.search(r'(\D+)(\d*[a-z]?)', witnesses[x]).groups('')[0], re.search(r'(\D+)(\d*[a-z]?)', witnesses[x]).groups('')[1].lstrip('0')) for x in d[k]]), reading=k.replace('<', '&lt;').replace('>', '&gt;') if k != ' ' else '<hi rend="font-style:italic;">fehlt</hi>'))
+                readings.append('{reading} {witness}'.format(witness=', '.join(['<hi rend="font-size:10pt;font-style:italic;">{}</hi><hi rend="font-size:10pt;font-style:italic;vertical-align:sub;font-size:smaller;">{}</hi>'.format(re.search(r'(\D+)(\d*[a-z]*)', witnesses[x]).groups('')[0], re.search(r'(\D+)(\d*[a-z]?)', witnesses[x]).groups('')[1].lstrip('0')) for x in d[k]]), reading=k.replace('<', '&lt;').replace('>', '&gt;') if k != ' ' else '<hi rend="font-style:italic;">fehlt</hi>'))
         if readings:
             output_text += beg_note + '; '.join(readings) + end_note
             note_num += 1

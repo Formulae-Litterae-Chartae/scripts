@@ -50,7 +50,9 @@ for l in latins:
         lemma = w_tag.get('lemma') 
         next_lem = words[i + 1].get('lemma') if len(words) > i + 1 else '' 
         prev_lem = words[i - 1].get('lemma') if i - 1 >= 0 else '' 
-        if lemma in lex_dict.keys(): 
+        if w_tag.text and w_tag.text.lower() == 'salutem':
+            w_tag.set('lemmaRef', 'in_domino_salutem')
+        elif lemma in lex_dict.keys():
             if set_lemmaRef(w_tag, lemma, next_lem, prev_lem) is False: 
                 w_tag.set('lemmaRef', lex_dict[lemma]) 
         elif set_lemmaRef(w_tag, lemma, next_lem, prev_lem) is False:
@@ -61,7 +63,9 @@ for g in germans:
     xml = etree.parse(g) 
     latin_words = xml.xpath('//tei:seg[@type="latin-word;"]/tei:w', namespaces=ns) 
     for i, w in enumerate(latin_words): 
-        if w.text.lower() in lex_dict.keys(): 
+        if w.text.lower() == 'salutem':
+            w.set('lemmaRef', 'in_domino_salutem')
+        elif w.text.lower() in lex_dict.keys():
             if set_lemmaRef(w, w.text.lower(), latin_words[i + 1].text.lower() if len(latin_words) > i + 1 else ' ', latin_words[i - 1].text.lower() if i > 0 else ' ') is False: 
                 w.set('lemmaRef', lex_dict[w.text.lower()]) 
         elif set_lemmaRef(w, w.text.lower(), latin_words[i + 1].text.lower() if len(latin_words) > i + 1 else ' ', latin_words[i - 1].text.lower() if i > 0 else ' ') is False:
@@ -72,7 +76,9 @@ for elex in elexes:
     xml = etree.parse(elex) 
     latin_words = xml.xpath('//tei:w[@type="latin-word"]', namespaces=ns) 
     for i, w in enumerate(latin_words): 
-        if w.text.lower() in lex_dict.keys(): 
+        if w.text.lower() == 'salutem':
+            w.set('lemmaRef', 'in_domino_salutem')
+        elif w.text.lower() in lex_dict.keys():
             if set_lemmaRef(w, w.text.lower(), latin_words[i + 1].text.lower() if len(latin_words) > i + 1 else ' ', latin_words[i - 1].text.lower() if i > 0 else ' ') is False: 
                 w.set('lemmaRef', lex_dict[w.text.lower()]) 
         elif set_lemmaRef(w, w.text.lower(), latin_words[i + 1].text.lower() if len(latin_words) > i + 1 else ' ', latin_words[i - 1].text.lower() if i > 0 else ' ') is False:

@@ -5,6 +5,7 @@ from os import makedirs, environ, getcwd, remove, rename
 import os.path
 import sys
 from lxml import etree
+from collections import defaultdict
 
 home_dir = environ.get('HOME', '')
 saxon_location = sys.argv[1] or home_dir + '/Downloads/SaxonHE10-1J/saxon-he-10.1.jar'
@@ -17,13 +18,47 @@ latins = glob(destination_folder + '/Latin/*.xml')
 germans = glob(destination_folder + '/Deutsch/*.xml')
 transcriptions = glob(destination_folder + '/Transkripte/**/*.xml', recursive=True)
 temp_files = []
+ns = {'dct': "http://purl.org/dc/terms/", 'dc': "http://purl.org/dc/elements/1.1/", 'cpt': "http://purl.org/capitains/ns/1.0#", 'tei': 'http://www.tei-c.org/ns/1.0'}
+
+formulae_collections_md_file = '/home/matt/formulae-corpora/data/formulae_collection/__capitains__.xml'
+form_coll_md = etree.parse(formulae_collections_md_file)
+mss_edition_dict = defaultdict(set)
+title_id_dict = dict()
+for f_c in form_coll_md.xpath('/cpt:collection/cpt:members/cpt:collection', namespaces=ns):
+    form_corp_md_path = os.path.normpath(os.path.join(os.path.dirname(formulae_collections_md_file), f_c.get('path')))
+    form_corp_md = etree.parse(form_corp_md_path)
+    for f_corp in form_corp_md.xpath('/cpt:collection/cpt:members/cpt:collection', namespaces=ns):
+        form_md_path = os.path.normpath(os.path.join(os.path.dirname(form_corp_md_path), f_corp.get('path')))
+        form_md = etree.parse(form_md_path)
+        for c in form_md.xpath('/cpt:collection/cpt:members/cpt:collection', namespaces=ns):
+            for t in c.xpath('./dc:type/text()', namespaces=ns):
+                if t  == 'cts:edition':
+                    title_id_dict[c.xpath('./cpt:identifier/text()', namespaces=ns)[0]] = c.xpath('./dc:title/text()', namespaces=ns)[0].replace(' (lat)', '')
+        for c in form_md.xpath('/cpt:collection/cpt:members/cpt:collection[@identifier]', namespaces=ns):
+            mss_path = os.path.normpath(os.path.join(os.path.dirname(form_md_path), c.get('path')))
+            mss_md = etree.parse(mss_path)
+            for mss in mss_md.xpath('/cpt:collection/cpt:members/cpt:collection', namespaces=ns):
+                if mss.xpath('dc:type', namespaces=ns)[0].text == 'transcription':
+                    mss_edition_dict[mss.xpath('cpt:identifier', namespaces=ns)[0].text].add(form_md.xpath('/cpt:collection/cpt:identifier', namespaces=ns)[0].text)
 
 def remove_space_before_note(filename):
     with open(filename) as f:
         text = f.read()
     text = re.sub(r'\s+<note', '<note', text)
+    text = re.sub(r'<seg type="italic;"><w>([^<]+)</w></seg>', r'<w><seg type="italic;">\1</seg></w>', text)
+    text = re.sub(r'</w><w>', '', text)
+    #patt_1 = re.compile(r'</w><seg type="italic;"><w>([^<]+)</w></seg>')
+    #patt_2 = re.compile(r'(<seg type="italic;">[^<]+</seg>)</w><w>([^<]+</w>)')
+    #while re.search(patt_1, text) or re.search(patt_2, text):
+        #text = re.sub(patt_1, r'<seg type="italic;">\1</seg></w>', text)
+        #text = re.sub(patt_2, r'\1\2', text)
     with open(filename, mode="w") as f:
         f.write(text)
+    # Add urn and title to title_id_dict
+    xml = etree.parse(filename)
+    urn = xml.xpath('/tei:TEI/tei:text/tei:body/tei:div/@n', namespaces=ns)[0].replace('deu001', 'lat001')
+    title = xml.xpath('/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title', namespaces=ns)[0].text
+    title_id_dict[urn] = title
         
 def remove_tei_dtd_reference(filename):
     with open(filename) as f:
@@ -47,9 +82,9 @@ def produce_form_num(filename):
             form_num = '2_capitula'
         elif 'I' in filename:
             form_num = '1_capitula'
-        elif ' Pa ' in filename:
+        elif ' P3' in filename:
             form_num = '2_capitula'
-        elif ' Ko ' in filename:
+        elif ' Ko2' in filename:
             form_num = '3_capitula'
     elif 'Incipit' in filename:
         form_num = '1_incipit'
@@ -107,12 +142,12 @@ for transcription in sorted(transcriptions):
     new_file = glob(destination_folder + '/temp/*.xml')[0]
     filename_parts = new_file.split('/')[-1].split('.')[:-1]
     new_name = destination_folder + '/data/{man}/{fols}/{man}.{fols}.{ed}.xml'.format(man=filename_parts[0], fols=filename_parts[1], ed=filename_parts[2])
-    fol_add = 2
+    fol_add = 1
     new_urn = ''
     while os.path.isfile(new_name):
+        fol_add += 1
         new_name = destination_folder + '/data/{man}/{fols}{add}/{man}.{fols}{add}.{ed}.xml'.format(man=filename_parts[0], fols=filename_parts[1], ed=filename_parts[2], add=fol_add)
         new_urn = 'urn:cts:formulae:{}.{}{}.{}'.format(filename_parts[0], filename_parts[1], fol_add, filename_parts[2])
-        fol_add += 1
     new_folder = os.path.dirname(new_name)
     makedirs(new_folder, exist_ok=True)
     rename(new_file, new_name)
@@ -126,6 +161,17 @@ for transcription in sorted(transcriptions):
     md_xml = etree.parse('{folder}/__capitains__.xml'.format(folder=new_folder))
     for is_version_of in md_xml.xpath('//dct:isVersionOf', namespaces={'dct': 'http://purl.org/dc/terms/'}):
         is_version_of.text = 'urn:cts:formulae:{}.{}'.format(corpus_name, form_num)
+    mss_urn = 'urn:cts:formulae:{}.{}.{}'.format(filename_parts[0], filename_parts[1], filename_parts[2])
+    if new_urn:
+        mss_urn = new_urn
+        filename_parts[1] = filename_parts[1] + str(fol_add)
+    mss_edition_dict[mss_urn].add('urn:cts:formulae:{}.{}'.format(corpus_name, form_num))
+    for s_md in md_xml.xpath('//cpt:structured-metadata', namespaces=ns):
+        for mss_edition in mss_edition_dict[mss_urn]:
+            new_element = etree.Element('{http://purl.org/dc/terms/}isVersionOf', nsmap=ns)
+            new_element.text = mss_edition
+            s_md.append(new_element)
+    md_xml.xpath('/cpt:collection/dc:title', namespaces=ns)[0].text = md_xml.xpath('/cpt:collection/dc:title', namespaces=ns)[0].text + ': ' + '/'.join([title_id_dict[form_id + '.lat001'] for form_id in mss_edition_dict[mss_urn]])
     md_xml.write('{folder}/__capitains__.xml'.format(folder=new_folder), encoding='utf-8', pretty_print=True)
     makedirs('{base_folder}/data/{corpus}/{entry}'.format(base_folder=destination_folder, corpus=corpus_name, entry=form_num), exist_ok=True)
     temp_file = '{base_folder}/data/{corpus}/{entry}/{man_filename}'.format(base_folder=destination_folder, corpus=corpus_name, entry=form_num, man_filename='.'.join(filename_parts) + '.xml')

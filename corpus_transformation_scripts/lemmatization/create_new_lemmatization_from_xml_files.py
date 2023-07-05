@@ -13,7 +13,7 @@ inflected_to_lem_mapping = argv[2]
 output_file = argv[3]
 if not os.path.isdir(corpus_folder):
     raise SyntaxError('\n**The first argument must be a CapiTainS compatible corpus folder.**\n')
-files = [x for x in glob(os.path.join(corpus_folder, '**/*.xml'), recursive=True) if '__capitains__' not in x]
+files = [x for x in glob(os.path.join(corpus_folder, '**/*lat00*.xml'), recursive=True) if '__capitains__' not in x]
 inflected_forms = ['form\tlemma\tPOS\tmorph']
 if os.path.isfile(inflected_to_lem_mapping):
     with open(inflected_to_lem_mapping) as f:
@@ -39,8 +39,6 @@ for f in sorted(files):
                 inflected_forms.append('{form}\tOrtsname\t\t'.format(form=w))
             else:
                 inflected_forms.append('{form}\t!Prüfen\t\t'.format(form=w))
-        if tokens[i - 2] == 'de':
-            print(w)
 
 with open(output_file, mode="w") as f:
     f.write('\n'.join(inflected_forms))

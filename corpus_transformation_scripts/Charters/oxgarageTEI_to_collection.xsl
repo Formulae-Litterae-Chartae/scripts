@@ -737,6 +737,15 @@
     <xsl:template name="extractText">
         <xsl:param name="currentNode"/>
         <xsl:choose>
+            <xsl:when test="lower-case($currentNode/child::tei:cell[position()=7]//text()) = 'deperditum'">
+                <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
+                    <xsl:attribute name="xml:space">preserve</xsl:attribute>
+                    <xsl:element name="seg" namespace="http://www.tei-c.org/ns/1.0">
+                        <xsl:attribute name="type">deperditum</xsl:attribute>
+                        <xsl:text>[Deperditum]</xsl:text>
+                    </xsl:element>
+                </xsl:element>
+            </xsl:when>
             <xsl:when test="$currentNode/child::tei:cell[position()=6]/tei:p">
                 <xsl:for-each select="$currentNode/child::tei:cell[position()=6]/*">
                     <xsl:choose>

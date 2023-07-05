@@ -111,7 +111,7 @@
                         <xsl:when test="contains($tempTitle, 'Fu2')">
                             <xsl:text>Fulda, Hessische Landesbibliothek, D1</xsl:text>
                         </xsl:when>
-                        <xsl:when test="matches($tempTitle, 'Mar[ck]ulf I* ?(Ergänzungen|Capitula|Incipit)')">
+                        <xsl:when test="matches($tempTitle, 'Mar[ck]ulf I* ?(Ergänzung|Capitula|Incipit)')">
                             <xsl:value-of select="normalize-space(string-join(subsequence(tokenize(substring-before($tempTitle, '('), '\s+'), 4), ' '))"/>
                         </xsl:when>
                         <xsl:when test="matches($tempTitle, 'Flavigny')">
@@ -119,6 +119,9 @@
                         </xsl:when>
                         <xsl:when test="matches($tempTitle, 'Formula Marculfina aevi Karolini')">
                             <xsl:value-of select="replace(substring-before($tempTitle, '('), 'Formula Marculfina aevi Karolini \d+ (.*)', '$1')"/>
+                        </xsl:when>
+                        <xsl:when test="matches($tempTitle, 'Bourges')">
+                            <xsl:value-of select="normalize-space(replace(substring-before($tempTitle, '('), 'Bourges \w \d+ ?\w? (.*)', '$1'))"/>
                         </xsl:when>
                         <xsl:otherwise>
                             <xsl:value-of select="normalize-space(string-join(subsequence(tokenize(substring-before($tempTitle, '('), '\s+'), 3), ' '))"/>
@@ -128,16 +131,16 @@
                 <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="type">folia</xsl:attribute>
                     <!--<xsl:value-of select="normalize-space(translate(substring-before(string-join($folia[1], ' '), ']'), '[]', ''))"/>-->
-                    <xsl:value-of select="normalize-space(replace($folia[1], '.*?\[((fol|p).[^\]]+).*', '$1'))"/>
+                    <xsl:value-of select="normalize-space(replace($folia[1], '.*?\[((fol|p).[^\]/]+).*', '$1'))"/>
                     <xsl:if test="count($folia) > 1">
-                        <xsl:text>-</xsl:text><xsl:value-of select="normalize-space(replace($folia[last()], '.*?\[((fol|p).[^\]]+).*', '$1'))"/>
+                        <xsl:text>-</xsl:text><xsl:value-of select="normalize-space(replace($folia[last()], '.*?\[((fol|p).[^\]/]+).*', '$1'))"/>
                     </xsl:if>
                 </xsl:element>
                 <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
-                    <xsl:variable name="firstFolio"><xsl:value-of select="normalize-space(replace($folia[1], '.*?\[((fol|p).[^\]]+).*', '$1'))"/></xsl:variable>
-                    <xsl:variable name="lastFolio"><xsl:value-of select="normalize-space(replace($folia[last()], '.*?\[((fol|p).[^\]]+).*', '$1'))"/></xsl:variable>
-                    <xsl:variable name="bindingFirst"><xsl:value-of select="replace($folia[1], '.*?\[fol.[^\]]+\]\s*', ' ')"/></xsl:variable>
-                    <xsl:variable name="bindingLast"><xsl:value-of select="replace($folia[last()], '.*?\[fol.[^\]]+\]\s*', ' ')"/></xsl:variable>
+                    <xsl:variable name="firstFolio"><xsl:value-of select="normalize-space(replace($folia[1], '.*?\[((fol|p).[^\]/]+).*', '$1'))"/></xsl:variable>
+                    <xsl:variable name="lastFolio"><xsl:value-of select="normalize-space(replace($folia[last()], '.*?\[((fol|p).[^\]/]+).*', '$1'))"/></xsl:variable>
+                    <xsl:variable name="bindingFirst"><xsl:value-of select="replace($folia[1], '.*?\[fol.[^\]/]+\]\s*', ' ')"/></xsl:variable>
+                    <xsl:variable name="bindingLast"><xsl:value-of select="replace($folia[last()], '.*?\[fol.[^\]/]+\]\s*', ' ')"/></xsl:variable>
                     <xsl:attribute name="type">markedUpFolia</xsl:attribute>
                     <xsl:choose>
                         <xsl:when  test="contains($tempTitle, 'Sg2')">
@@ -209,8 +212,8 @@
                 <xsl:choose>
                     <xsl:when test="contains($formTitle/tei:ref[@type='form-name'], 'II')"><xsl:text>2_</xsl:text></xsl:when>
                     <xsl:when test="contains($formTitle/tei:ref[@type='form-name'], 'I')"><xsl:text>1_</xsl:text></xsl:when>
-                    <xsl:when test="contains($formTitle/tei:ref[@type='form-name'], ' Pa ')"><xsl:text>2_</xsl:text></xsl:when>
-                    <xsl:when test="contains($formTitle/tei:ref[@type='form-name'], ' Ko ')"><xsl:text>3_</xsl:text></xsl:when>
+                    <xsl:when test="contains($formTitle/tei:ref[@type='form-name'], ' P3')"><xsl:text>2_</xsl:text></xsl:when>
+                    <xsl:when test="contains($formTitle/tei:ref[@type='form-name'], ' Ko2')"><xsl:text>3_</xsl:text></xsl:when>
                     <xsl:otherwise><xsl:text>0_</xsl:text></xsl:otherwise>
                 </xsl:choose>
                 <xsl:text>capitula</xsl:text>
@@ -229,7 +232,7 @@
                     <xsl:when test="contains($formTitle/tei:ref[@type='form-name'], 'I')">
                         <xsl:text>form1_</xsl:text><xsl:number value="substring-after($formTitle/tei:ref[@type='form-name'], ',')" format="001"/>
                     </xsl:when>
-                    <xsl:when test="contains($formTitle/tei:ref[@type='form-name'], 'Ergänzungen')">
+                    <xsl:when test="contains($formTitle/tei:ref[@type='form-name'], 'Ergänzung')">
                         <xsl:text>form3_</xsl:text>
                         <xsl:choose>
                             <xsl:when test="contains($formTitle/tei:ref[@type='form-name'], ',')">
@@ -580,7 +583,7 @@
             select="translate(.,translate(.,$pSeparators,''),'')"/>
 <!--        <xsl:param name="pCount" select="1"/>-->
         <xsl:choose>
-            <xsl:when test="following::tei:milestone[not(contains(@n, 'Capitula'))]"></xsl:when>
+            <xsl:when test="not(preceding::tei:milestone[@unit='chapter'])"></xsl:when>
             <xsl:when test="not($pString)"/>
             <xsl:when test="$pMask">
                 <xsl:variable name="vSeparator"
@@ -614,6 +617,17 @@
                     <xsl:when test="ancestor::tei:hi[@style='font-size:14pt;' or @rend='font-size:14pt;']">
                         <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="type">no-search</xsl:attribute><xsl:value-of select="$pString"/></xsl:element>
                     </xsl:when>
+                    <xsl:when test="ancestor::tei:hi[@style='font-size:10pt;' or @rend='font-size:10pt;']">
+                        <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="function">from-other</xsl:attribute><xsl:value-of select="$pString"/></xsl:element>
+                    </xsl:when>
+                    <xsl:when test="concat('#', parent::tei:seg/@xml:id)=parent::tei:seg/following-sibling::*[1][self::tei:note]/@targetEnd">
+                            <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0">
+                                <xsl:attribute name="type">note-begin-marker</xsl:attribute>
+                                <xsl:attribute name="n"><xsl:value-of select="generate-id(parent::tei:seg/following-sibling::*[1][self::tei:note])"/></xsl:attribute>
+                                <xsl:value-of select="$pString"/>
+                            </xsl:element>
+                        
+                    </xsl:when>
                     <xsl:otherwise>
                         <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:value-of select="$pString"/></xsl:element>
                     </xsl:otherwise>
@@ -623,20 +637,51 @@
     </xsl:template>
     
     <!-- Clean up the unnecessary attributes on the note elements. -->
-    <xsl:template match="tei:note" name="buildNotes">
+    <xsl:template match="tei:note[not(@targetEnd)]" name="buildNotes">
         <xsl:variable name="previous_get_id" select="concat('#', preceding::tei:seg[position()=1]/@xml:id)"/>
-        <xsl:copy>
-            <xsl:if test="@targetEnd"><xsl:attribute name="targetEnd" select="@targetEnd"/></xsl:if>
-            <xsl:choose>
-                <xsl:when test="@type"><xsl:attribute name="type" select="@type"/></xsl:when>
-                <xsl:otherwise><xsl:attribute name="type">n1</xsl:attribute></xsl:otherwise>
-            </xsl:choose>
-            <xsl:attribute name="place" select="@place"/>
-            <xsl:if test="@n"><xsl:attribute name="n" select="@n"/></xsl:if>
-            <xsl:apply-templates select="node()|comment()"/>
-        </xsl:copy>
+        <xsl:variable name="target_end" select="replace(@targetEnd, '#', '')"/>
+        <xsl:variable name="new_note_tag">
+            <xsl:copy>
+                <xsl:if test="@targetEnd"><xsl:attribute name="targetEnd" select="@targetEnd"/></xsl:if>
+                <xsl:choose>
+                    <xsl:when test="@type"><xsl:attribute name="type" select="@type"/></xsl:when>
+                    <xsl:otherwise><xsl:attribute name="type">n1</xsl:attribute></xsl:otherwise>
+                </xsl:choose>
+                <xsl:attribute name="place" select="@place"/>
+                <xsl:if test="@n"><xsl:attribute name="n" select="@n"/></xsl:if>
+                <xsl:apply-templates select="node()|comment()"/>
+            </xsl:copy>
+        </xsl:variable>
+        <xsl:choose>
+            <xsl:when test="@targetEnd"><xsl:apply-templates select="//tei:seg[@xml:id=$target_end]" mode="placeNoteAtTargetEnd"><xsl:with-param name="noteTag" select="$new_note_tag"></xsl:with-param></xsl:apply-templates></xsl:when>
+            <xsl:otherwise><xsl:copy-of select="$new_note_tag"/></xsl:otherwise>
+        </xsl:choose>
         <xsl:for-each select=".//tei:note">
             <xsl:call-template name="buildNotes"></xsl:call-template>
+        </xsl:for-each>
+    </xsl:template>
+    
+    <xsl:template match="tei:note[@targetEnd]">
+        <xsl:variable name="id_to_test" select="replace(@targetEnd, '#', '')"/>
+        <xsl:if test="not(preceding-sibling::tei:seg[@xml:id=$id_to_test])"><xsl:element name="seg" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="type">note-begin-marker</xsl:attribute><xsl:attribute name="n" select="generate-id(.)"></xsl:attribute></xsl:element></xsl:if>
+    </xsl:template>
+    
+    <!-- Place note element after the @targetEnd seg element -->
+    <xsl:template match="tei:seg[@xml:id]">
+        <xsl:variable name="target_end"><xsl:text>#</xsl:text><xsl:value-of select="@xml:id"/></xsl:variable>
+        <xsl:copy><xsl:apply-templates select="@*"/><xsl:apply-templates/></xsl:copy>
+        <xsl:for-each select="//tei:note[@targetEnd=$target_end]">
+            <xsl:copy>
+                <xsl:if test="@targetEnd"><xsl:attribute name="targetEnd" select="@targetEnd"/></xsl:if>
+                <xsl:choose>
+                    <xsl:when test="@type"><xsl:attribute name="type" select="@type"/></xsl:when>
+                    <xsl:otherwise><xsl:attribute name="type">n1</xsl:attribute></xsl:otherwise>
+                </xsl:choose>
+                <xsl:attribute name="place" select="@place"/>
+                <xsl:if test="@n"><xsl:attribute name="n" select="@n"/></xsl:if>
+                <xsl:attribute name="xml:id"><xsl:value-of select="generate-id(.)"/></xsl:attribute>
+                <xsl:apply-templates select="node()|comment()"/>
+            </xsl:copy>
         </xsl:for-each>
     </xsl:template>
     
@@ -771,15 +816,15 @@
         </xsl:element>
     </xsl:template>-->
     
-    <xsl:template match="tei:p">
+    <xsl:template match="tei:p">        
         <xsl:choose>
-            <xsl:when test="following::tei:milestone[not(contains(@n, 'Capitula'))]"></xsl:when>
+            <xsl:when test="not(preceding::tei:milestone[@unit='chapter']) and not(descendant::tei:milestone[@unit='chapter'])"></xsl:when>
             <xsl:when test="tei:p[contains(@rend, '-cte-text-align:justify-center;')] and not(contains($collection, 'andecavensis'))"></xsl:when>
             <xsl:otherwise>
                 <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="xml:space">preserve</xsl:attribute>
                     <xsl:if test="not($formTitle/tei:ref[@type='folia']) and matches($manuscript, 'deu0|lat0') and current()/parent::tei:body">
-                        <xsl:variable name="prevPars" select="count(current()/preceding-sibling::tei:p[not(following::tei:milestone[not(contains(@n, 'Capitula'))])]) + 1"/>
+                        <xsl:variable name="prevPars" select="count(current()/preceding-sibling::tei:p[preceding::tei:milestone[@unit='chapter'] or descendant::tei:milestone[@unit='chapter']]) + 1"/>
                         <xsl:variable name="thisLang" select="$formTitle/xml:lang"/>
                         <xsl:variable name="transformedUrn" select="replace(concat($urnStart, $formNumber, '.', $manuscript, '-', $prevPars), ':', '-')"/>
                         <xsl:attribute name="xml:id"><xsl:value-of select="$transformedUrn"/></xsl:attribute>

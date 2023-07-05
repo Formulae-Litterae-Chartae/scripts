@@ -35,6 +35,9 @@
                 <xsl:when test="matches(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)], 'Formula Marculfina aevi Karolini')">
                     <xsl:value-of select="replace(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)], 'Formula Marculfina aevi Karolini ', '')"/>
                 </xsl:when>
+                <xsl:when test="matches(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)], 'Bourges')">
+                    <xsl:value-of select="replace(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)], 'Bourges ', '')"/>
+                </xsl:when>
                 <xsl:when test="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:msDesc">
                     <xsl:value-of select="replace(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)], '.*?\[(.*)\]$', '$1')"/>
                 </xsl:when>
@@ -66,7 +69,7 @@
         </xsl:param>
         <xsl:param name="long-regest">
             <xsl:choose>
-                <xsl:when test="matches(string-join($urn, '.'), 'form\d')">
+                <xsl:when test="matches(string-join($urn, '.'), 'form[\d_]')">
                     <xsl:value-of select="document(concat(replace($folderName, '/data/.*', '/regesten/'), $urn[1], '_regesten.xml'))/xml/regest[@docId=concat($urn[1], '.', $urn[2])]/longDesc/text()"/>
                 </xsl:when>
                 <xsl:otherwise>
@@ -299,9 +302,9 @@
                     <xsl:attribute name="xml:lang"><xsl:value-of select="$pubLang"/></xsl:attribute>
                     <xsl:value-of select="$shortRegest"/>
                 </dct:abstract>
-                <xsl:if test="$isManuscript">
+<!--                <xsl:if test="$isManuscript">
                     <dct:isVersionOf><xsl:value-of select="$textFile/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[@type='subtitle']"/></dct:isVersionOf>
-                </xsl:if>
+                </xsl:if>-->
                 <dct:references><xsl:value-of select="$mss-editions"/></dct:references>
             </structured-metadata>
         </xsl:param>

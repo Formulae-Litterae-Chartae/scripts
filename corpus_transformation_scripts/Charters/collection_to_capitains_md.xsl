@@ -8,6 +8,7 @@
     xmlns="http://purl.org/capitains/ns/1.0#"
     xmlns:owl="http://www.w3.org/2002/07/owl#" 
     xmlns:bib="http://bibliotek-o.org/1.0/ontology/"
+    xmlns:bf="http://id.loc.gov/ontologies/bibframe/"
     exclude-result-prefixes="xs tei"
     version="2.0">
     
@@ -97,6 +98,7 @@
                     <xsl:namespace name="dc">http://purl.org/dc/elements/1.1/</xsl:namespace>
                     <xsl:namespace name="foaf">http://xmlns.com/foaf/0.1/</xsl:namespace>
                     <xsl:namespace name="bib">http://bibliotek-o.org/1.0/ontology/</xsl:namespace>
+                    <xsl:namespace name="bf">http://id.loc.gov/ontologies/bibframe/</xsl:namespace>
                     <xsl:element name="identifier">urn:cts:formulae:<xsl:value-of select="@xml:id"/></xsl:element>
                     <xsl:element name="parent">urn:cts:formulae:<xsl:value-of select="ancestor::tei:group/@xml:id"/></xsl:element>
                     
@@ -166,6 +168,12 @@
                                    </xsl:element>
                                    <xsl:element name="dct:temporal"><xsl:value-of select="normalize-space(string-join(/tei:TEI/tei:text/tei:group/tei:text[@xml:id=$urn]/tei:front/tei:dateline//text(), ' '))"/></xsl:element>
                                    <xsl:element name="dct:spatial"><xsl:value-of select="/tei:TEI/tei:text/tei:group/tei:text[@xml:id=$urn]/tei:front/tei:div[@subtype='ausstellungsort']/tei:p/text()"/></xsl:element>
+                                   <xsl:if test="current()/ancestor::tei:text[@xml:id]/tei:front/tei:note[@type='source_edition']">
+                                       <xsl:element name="dct:source"><xsl:value-of select="current()/ancestor::tei:text[@xml:id]/tei:front/tei:note[@type='source_edition']"/></xsl:element>
+                                   </xsl:if>
+                                   <xsl:if test="lower-case(current()/ancestor::tei:text[@xml:id]/tei:front/tei:note[@type='echtheit']/text()) = 'deperditum'">
+                                       <xsl:element name="bf:status">deperditum</xsl:element>
+                                   </xsl:if>
                                </xsl:element>
                            </xsl:element>
                        </xsl:for-each>
