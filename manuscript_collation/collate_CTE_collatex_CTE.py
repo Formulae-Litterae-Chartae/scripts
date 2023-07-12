@@ -120,7 +120,7 @@ def run_process(formula, baseline, folder, collatex, script_dir, with_special=Tr
     base_text, json_output_filename = collate_to_csv(formula=formula, work_folder=folder, special='', baseline_sigla=baseline, collatex_location=collatex, java_exe=java_exe)
     produce_cte_xml(base_text=base_text, json_output_filename=json_output_filename, script_dir=script_dir, baseline_sigla=baseline)
     if with_special:
-        collate_to_csv(formula=formula, work_folder=folder, special='special', baseline_sigla=baseline, collatex_location=collatex)
+        collate_to_csv(formula=formula, work_folder=folder, special='special', baseline_sigla=baseline, collatex_location=collatex, java_exe=java_exe)
         
 if __name__ == "__main__":
     script_dir = os.path.dirname(os.path.realpath(__file__))

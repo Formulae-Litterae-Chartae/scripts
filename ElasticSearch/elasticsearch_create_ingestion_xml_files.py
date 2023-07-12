@@ -21,7 +21,7 @@ procs = int(sys.argv[3]) if len(sys.argv) == 4 else 3
 
 # xmls = [x for x in glob(os.path.join(orig, 'data/**/*lat*.xml'), recursive=True) if not re.search(pattern, x)] + [x for x in glob(os.path.join(orig, 'data/**/*deu001.xml'), recursive=True) if re.search(r'elexicon', x)]
 # Use the following line to process a single corpus
-xmls = [x for x in glob(os.path.join(orig, 'data/**/*lat*.xml'), recursive=True) if re.search(r'bourges|andecavensis', x)]
+xmls = [x for x in glob(os.path.join(orig, 'data/**/*lat*.xml'), recursive=True) if re.search(r'tours\.', x)]
 # xmls = [x for x in glob(os.path.join(orig, 'data/**/*deu001.xml'), recursive=True) if re.search(r'elexicon', x)]
 
 def extract_text(xml_file):

@@ -13,7 +13,7 @@
     
     <xsl:output omit-xml-declaration="yes" indent="yes"/>
     
-    <xsl:param name="pSeparators">&#xA;&#x9;&#x20;&#8230;&#8221;,.;:?!()'"„“‚‘|</xsl:param>
+    <xsl:param name="pSeparators">&#xA;&#x9;&#x20;&#8230;&#8221;,.;:?!()'"„“‚‘|+</xsl:param>
     <xsl:param name="formTitle">
         <xsl:variable name="tempTitle"><xsl:value-of select="replace(replace(normalize-space(replace(replace(tokenize(base-uri(), '/')[last()], '%20', ' '), '.xml', '')), 'Paris,? BNF (\d)', 'Paris BnF Lat. $1'), 'Markulf', 'Marculf')"/></xsl:variable>
         <xsl:choose>
@@ -244,7 +244,12 @@
                 </xsl:choose>
             </xsl:when>
             <xsl:when test="contains($formTitle/tei:ref[@type='form-name'], 'Ergänzung')">
-                <xsl:text>form2_</xsl:text><xsl:number value="replace($formTitle/tei:ref[@type='form-name'], '.*?(\d+)(\w?).*', '$1')" format="001"/><xsl:text>_</xsl:text><xsl:value-of select="replace($formTitle/tei:ref[@type='form-name'], '.*?(\d+)(\w?).*', '$2')"/>
+                <xsl:text>form2_</xsl:text>
+                <xsl:number value="replace($formTitle/tei:ref[@type='form-name'], '.*?(\d+)(\w?).*', '$1')" format="001"/>
+                <xsl:if test="replace($formTitle/tei:ref[@type='form-name'], '.*?(\d+)(\w?).*', '$2')">
+                    <xsl:text>_</xsl:text>
+                    <xsl:value-of select="replace($formTitle/tei:ref[@type='form-name'], '.*?(\d+)(\w?).*', '$2')"/>
+                </xsl:if>
             </xsl:when>
             <xsl:when test="contains($formTitle/tei:ref[@type='form-name'], 'Titel')">
                 <xsl:text>form000</xsl:text>
@@ -583,7 +588,7 @@
             select="translate(.,translate(.,$pSeparators,''),'')"/>
 <!--        <xsl:param name="pCount" select="1"/>-->
         <xsl:choose>
-            <xsl:when test="not(preceding::tei:milestone[@unit='chapter'])"></xsl:when>
+            <xsl:when test="/tei:milestone and not(preceding::tei:milestone[@unit='chapter'])"></xsl:when>
             <xsl:when test="not($pString)"/>
             <xsl:when test="$pMask">
                 <xsl:variable name="vSeparator"
@@ -818,23 +823,41 @@
     
     <xsl:template match="tei:p">        
         <xsl:choose>
-            <xsl:when test="not(preceding::tei:milestone[@unit='chapter']) and not(descendant::tei:milestone[@unit='chapter'])"></xsl:when>
+            <xsl:when test="/tei:milestone and not(preceding::tei:milestone[@unit='chapter']) and not(descendant::tei:milestone[@unit='chapter'])"></xsl:when>
             <xsl:when test="tei:p[contains(@rend, '-cte-text-align:justify-center;')] and not(contains($collection, 'andecavensis'))"></xsl:when>
             <xsl:otherwise>
                 <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="xml:space">preserve</xsl:attribute>
                     <xsl:if test="not($formTitle/tei:ref[@type='folia']) and matches($manuscript, 'deu0|lat0') and current()/parent::tei:body">
-                        <xsl:variable name="prevPars" select="count(current()/preceding-sibling::tei:p[preceding::tei:milestone[@unit='chapter'] or descendant::tei:milestone[@unit='chapter']]) + 1"/>
-                        <xsl:variable name="thisLang" select="$formTitle/xml:lang"/>
-                        <xsl:variable name="transformedUrn" select="replace(concat($urnStart, $formNumber, '.', $manuscript, '-', $prevPars), ':', '-')"/>
-                        <xsl:attribute name="xml:id"><xsl:value-of select="$transformedUrn"/></xsl:attribute>
                         <xsl:choose>
-                            <xsl:when test="$thisLang = 'deu'">
-                                <xsl:attribute name="corresp"><xsl:value-of select="replace($transformedUrn, $thisLang, 'lat')"/></xsl:attribute>
+                            <xsl:when test="/tei:milestone">
+                                <xsl:variable name="prevPars" select="count(current()/preceding-sibling::tei:p[preceding::tei:milestone[@unit='chapter'] or descendant::tei:milestone[@unit='chapter']]) + 1"/>
+                                <xsl:variable name="thisLang" select="$formTitle/xml:lang"/>
+                                <xsl:variable name="transformedUrn" select="replace(concat($urnStart, $formNumber, '.', $manuscript, '-', $prevPars), ':', '-')"/>
+                                <xsl:attribute name="xml:id"><xsl:value-of select="$transformedUrn"/></xsl:attribute>
+                                <xsl:choose>
+                                    <xsl:when test="$thisLang = 'deu'">
+                                        <xsl:attribute name="corresp"><xsl:value-of select="replace($transformedUrn, $thisLang, 'lat')"/></xsl:attribute>
+                                    </xsl:when>
+                                    <xsl:when test="$thisLang = 'lat'">
+                                        <xsl:attribute name="corresp"><xsl:value-of select="replace($transformedUrn, $thisLang, 'deu')"/></xsl:attribute>
+                                    </xsl:when>
+                                </xsl:choose>
                             </xsl:when>
-                            <xsl:when test="$thisLang = 'lat'">
-                                <xsl:attribute name="corresp"><xsl:value-of select="replace($transformedUrn, $thisLang, 'deu')"/></xsl:attribute>
-                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:variable name="prevPars" select="count(current()/preceding-sibling::tei:p) + 1"/>
+                                <xsl:variable name="thisLang" select="$formTitle/xml:lang"/>
+                                <xsl:variable name="transformedUrn" select="replace(concat($urnStart, $formNumber, '.', $manuscript, '-', $prevPars), ':', '-')"/>
+                                <xsl:attribute name="xml:id"><xsl:value-of select="$transformedUrn"/></xsl:attribute>
+                                <xsl:choose>
+                                    <xsl:when test="$thisLang = 'deu'">
+                                        <xsl:attribute name="corresp"><xsl:value-of select="replace($transformedUrn, $thisLang, 'lat')"/></xsl:attribute>
+                                    </xsl:when>
+                                    <xsl:when test="$thisLang = 'lat'">
+                                        <xsl:attribute name="corresp"><xsl:value-of select="replace($transformedUrn, $thisLang, 'deu')"/></xsl:attribute>
+                                    </xsl:when>
+                                </xsl:choose>
+                            </xsl:otherwise>
                         </xsl:choose>
                     </xsl:if>
                     <xsl:if test="contains(@style, 'margin-left:5mm;')"><xsl:attribute name="style">subparagraph</xsl:attribute></xsl:if>
