@@ -16,7 +16,7 @@ corpus_name = sys.argv[2] or 'andecavensis' # Used to build the folder structure
 destination_folder = getcwd() # The base folder where the corpus folder structure should be built
 latins = glob(destination_folder + '/Latin/*.xml')
 germans = glob(destination_folder + '/Deutsch/*.xml')
-transcriptions = glob(destination_folder + '/Transkripte/**/*.xml', recursive=True)
+transcriptions = glob(destination_folder + '/Transkripte/*.xml', recursive=True)
 temp_files = []
 ns = {'dct': "http://purl.org/dc/terms/", 'dc': "http://purl.org/dc/elements/1.1/", 'cpt': "http://purl.org/capitains/ns/1.0#", 'tei': 'http://www.tei-c.org/ns/1.0'}
 

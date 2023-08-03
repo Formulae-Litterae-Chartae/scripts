@@ -82,6 +82,9 @@ def build_sigla(s, sigla_dict):
     for sig in all_sigla: 
         pared_sig = re.sub(r'(\w+\d*\w?).*', r'\1', sig)
         remainder = re.sub(r'\w+\d*\w?(.*)', r'\1', sig)
+        if sig == 'Fu†':
+            pared_sig = 'Fu†'
+            remainder = ''
         formatted_sigla.append('&lt;b&gt;' + sigla_dict.get(pared_sig, pared_sig) + '&lt;/b&gt;' + remainder)
         if pared_sig not in sigla_dict:
             print(pared_sig + ' not found in siglen list')

@@ -50,11 +50,16 @@ for l in latins:
         lemma = w_tag.get('lemma') 
         next_lem = words[i + 1].get('lemma') if len(words) > i + 1 else '' 
         prev_lem = words[i - 1].get('lemma') if i - 1 >= 0 else '' 
+        next_word = words[i + 1].text if len(words) > i + 1 else ''
+        prev_word = words[i - 1].text if i - 1 >= 0 else ''
         if w_tag.text and w_tag.text.lower() == 'salutem':
             w_tag.set('lemmaRef', 'in_domino_salutem')
         elif lemma in lex_dict.keys():
             if set_lemmaRef(w_tag, lemma, next_lem, prev_lem) is False: 
-                w_tag.set('lemmaRef', lex_dict[lemma]) 
+                w_tag.set('lemmaRef', lex_dict[lemma])
+        elif w_tag.text and w_tag.text.lower() in lex_dict.keys():
+            if set_lemmaRef(w_tag, w_tag.text.lower(), next_word.lower() if next_word else '', prev_word.lower() if prev_word else '') is False:
+                w_tag.set('lemmaRef', lex_dict[w_tag.text.lower()])
         elif set_lemmaRef(w_tag, lemma, next_lem, prev_lem) is False:
             w_tag.attrib.pop('lemmaRef', None)
     xml.write(l, encoding="utf-8", pretty_print=True) 

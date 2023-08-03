@@ -347,6 +347,10 @@
         </xsl:choose>
     </xsl:template>
     
+    <xsl:template match="tei:TEI">
+        <xsl:copy><xsl:apply-templates></xsl:apply-templates></xsl:copy>
+    </xsl:template>
+    
     <!-- Create teiHeader -->
     <xsl:template match="tei:teiHeader">
             <xsl:copy>
@@ -588,7 +592,7 @@
             select="translate(.,translate(.,$pSeparators,''),'')"/>
 <!--        <xsl:param name="pCount" select="1"/>-->
         <xsl:choose>
-            <xsl:when test="/tei:milestone and not(preceding::tei:milestone[@unit='chapter'])"></xsl:when>
+            <xsl:when test="//tei:milestone[@unit='chapter'] and not(preceding::tei:milestone[@unit='chapter'])"></xsl:when>
             <xsl:when test="not($pString)"/>
             <xsl:when test="$pMask">
                 <xsl:variable name="vSeparator"
@@ -625,14 +629,6 @@
                     <xsl:when test="ancestor::tei:hi[@style='font-size:10pt;' or @rend='font-size:10pt;']">
                         <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="function">from-other</xsl:attribute><xsl:value-of select="$pString"/></xsl:element>
                     </xsl:when>
-                    <xsl:when test="concat('#', parent::tei:seg/@xml:id)=parent::tei:seg/following-sibling::*[1][self::tei:note]/@targetEnd">
-                            <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0">
-                                <xsl:attribute name="type">note-begin-marker</xsl:attribute>
-                                <xsl:attribute name="n"><xsl:value-of select="generate-id(parent::tei:seg/following-sibling::*[1][self::tei:note])"/></xsl:attribute>
-                                <xsl:value-of select="$pString"/>
-                            </xsl:element>
-                        
-                    </xsl:when>
                     <xsl:otherwise>
                         <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:value-of select="$pString"/></xsl:element>
                     </xsl:otherwise>
@@ -642,9 +638,8 @@
     </xsl:template>
     
     <!-- Clean up the unnecessary attributes on the note elements. -->
-    <xsl:template match="tei:note[not(@targetEnd)]" name="buildNotes">
+    <xsl:template match="tei:note" name="buildNotes">
         <xsl:variable name="previous_get_id" select="concat('#', preceding::tei:seg[position()=1]/@xml:id)"/>
-        <xsl:variable name="target_end" select="replace(@targetEnd, '#', '')"/>
         <xsl:variable name="new_note_tag">
             <xsl:copy>
                 <xsl:if test="@targetEnd"><xsl:attribute name="targetEnd" select="@targetEnd"/></xsl:if>
@@ -658,7 +653,10 @@
             </xsl:copy>
         </xsl:variable>
         <xsl:choose>
-            <xsl:when test="@targetEnd"><xsl:apply-templates select="//tei:seg[@xml:id=$target_end]" mode="placeNoteAtTargetEnd"><xsl:with-param name="noteTag" select="$new_note_tag"></xsl:with-param></xsl:apply-templates></xsl:when>
+            <xsl:when test="@type='n1'"><xsl:copy-of select="$new_note_tag"/></xsl:when>
+            <xsl:when test="@targetEnd">
+                <xsl:element name="seg" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="type">note-begin-marker</xsl:attribute><xsl:attribute name="n" select="generate-id(.)"></xsl:attribute></xsl:element>
+            </xsl:when>
             <xsl:otherwise><xsl:copy-of select="$new_note_tag"/></xsl:otherwise>
         </xsl:choose>
         <xsl:for-each select=".//tei:note">
@@ -666,15 +664,10 @@
         </xsl:for-each>
     </xsl:template>
     
-    <xsl:template match="tei:note[@targetEnd]">
-        <xsl:variable name="id_to_test" select="replace(@targetEnd, '#', '')"/>
-        <xsl:if test="not(preceding-sibling::tei:seg[@xml:id=$id_to_test])"><xsl:element name="seg" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="type">note-begin-marker</xsl:attribute><xsl:attribute name="n" select="generate-id(.)"></xsl:attribute></xsl:element></xsl:if>
-    </xsl:template>
-    
     <!-- Place note element after the @targetEnd seg element -->
     <xsl:template match="tei:seg[@xml:id]">
         <xsl:variable name="target_end"><xsl:text>#</xsl:text><xsl:value-of select="@xml:id"/></xsl:variable>
-        <xsl:copy><xsl:apply-templates select="@*"/><xsl:apply-templates/></xsl:copy>
+        <xsl:copy><xsl:attribute name="xml:id" select="@xml:id"></xsl:attribute><xsl:apply-templates/></xsl:copy>
         <xsl:for-each select="//tei:note[@targetEnd=$target_end]">
             <xsl:copy>
                 <xsl:if test="@targetEnd"><xsl:attribute name="targetEnd" select="@targetEnd"/></xsl:if>
@@ -823,14 +816,14 @@
     
     <xsl:template match="tei:p">        
         <xsl:choose>
-            <xsl:when test="/tei:milestone and not(preceding::tei:milestone[@unit='chapter']) and not(descendant::tei:milestone[@unit='chapter'])"></xsl:when>
+            <xsl:when test="//tei:milestone[@unit='chapter'] and not(preceding::tei:milestone[@unit='chapter']) and not(descendant::tei:milestone[@unit='chapter'])"></xsl:when>
             <xsl:when test="tei:p[contains(@rend, '-cte-text-align:justify-center;')] and not(contains($collection, 'andecavensis'))"></xsl:when>
             <xsl:otherwise>
                 <xsl:element name="p" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="xml:space">preserve</xsl:attribute>
                     <xsl:if test="not($formTitle/tei:ref[@type='folia']) and matches($manuscript, 'deu0|lat0') and current()/parent::tei:body">
                         <xsl:choose>
-                            <xsl:when test="/tei:milestone">
+                            <xsl:when test="//tei:milestone[@unit='chapter']">
                                 <xsl:variable name="prevPars" select="count(current()/preceding-sibling::tei:p[preceding::tei:milestone[@unit='chapter'] or descendant::tei:milestone[@unit='chapter']]) + 1"/>
                                 <xsl:variable name="thisLang" select="$formTitle/xml:lang"/>
                                 <xsl:variable name="transformedUrn" select="replace(concat($urnStart, $formNumber, '.', $manuscript, '-', $prevPars), ':', '-')"/>
@@ -973,11 +966,4 @@
     
     <!-- Remove the xml-stylesheet declaration that CTE sometimes has -->
     <xsl:template match="processing-instruction('xml-stylesheet')"/>
-    
-    <xsl:template match="@*|node()|comment()">
-        <xsl:copy>
-            <!--<xsl:apply-templates select="./@*"/>-->
-            <xsl:apply-templates select="@*|node()|comment()"/>
-        </xsl:copy>
-    </xsl:template>
 </xsl:stylesheet>
