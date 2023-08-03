@@ -1067,7 +1067,17 @@
 	
 	<!--villa-->
 	<lem elex="villa">villa</lem>
+	<lem elex="villa">villae</lem>
+	<lem elex="villa">villam</lem>
+	<lem elex="villa">villarum</lem>
+	<lem elex="villa">villis</lem>
+	<lem elex="villa">villas</lem>
 	<lem elex="villa">villaque</lem>
+	<lem elex="villa">villaeque</lem>
+	<lem elex="villa">villamque</lem>
+	<lem elex="villa">villarumque</lem>
+	<lem elex="villa">villisque</lem>
+	<lem elex="villa">villasque</lem>
 	<lem elex="villa">villa_ortsname</lem>
 	
 	<!--vir...-->
