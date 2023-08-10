@@ -106,7 +106,7 @@ for xml_file in sorted(xmls):
         pass'''
     form_name = os.path.basename(xml_file)
     if 'lat001' in xml_file:
-        lem_file = '/home/matt/lemmatization/pyrrha_output/results/{}.txt'.format(form_name.replace('.xml', ''))
+        lem_file = '/home/matt/Lemmatization/pyrrha_output/results/{}.txt'.format(form_name.replace('.xml', ''))
         try:
             with open(lem_file) as f:
                 lems = f.read().strip().split('\n')
