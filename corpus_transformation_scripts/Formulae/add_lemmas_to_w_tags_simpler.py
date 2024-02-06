@@ -6,11 +6,13 @@ from string import punctuation
 import os
 
 ns = {'tei': "http://www.tei-c.org/ns/1.0"}
+home_dir = os.environ.get('HOME', '')
 xmls = list()
-for corpus in ['andecavensis', 'auvergne', 'bourges', 'flavigny', 'formulae_marculfinae', 'marculf', 'marmoutier_dunois', 'marmoutier_serfs', 'marmoutier_vendomois', 'marmoutier_vendomois_appendix', 'telma_cormery', 'telma_marmoutier', 'telma_martin_tours', 'tours', 'tours_ueberarbeitung']: #
-    xmls += glob('/home/matt/formulae-corpora/data/{}/**/*.lat00*.xml'.format(corpus), recursive=True)
-    xmls += glob('/home/matt/formulae-corpora/data/{}/**/*.deu001.xml'.format(corpus), recursive=True)
-lex_xml = etree.parse('/home/matt/scripts/corpus_transformation_scripts/Elexicon/Begriffe_eLexikon.xml')
+lemmatized_corpora = ['andecavensis', 'auvergne', 'bourges', 'flavigny', 'formulae_marculfinae', 'marculf', 'marmoutier_dunois', 'marmoutier_serfs', 'marmoutier_vendomois', 'marmoutier_vendomois_appendix', 'pancarte_noire', 'telma_cormery', 'telma_marmoutier', 'telma_martin_tours', 'tours', 'tours_ueberarbeitung']
+for corpus in lemmatized_corpora: #
+    xmls += glob(home_dir + '/formulae-corpora/data/{}/**/*.lat00*.xml'.format(corpus), recursive=True)
+    xmls += glob(home_dir + '/formulae-corpora/data/{}/**/*.deu001.xml'.format(corpus), recursive=True)
+lex_xml = etree.parse(home_dir + '/scripts/corpus_transformation_scripts/Elexicon/Begriffe_eLexikon.xml')
 lex_dict = {}
 for lem in lex_xml.xpath('/xml/lem'):
     lex_dict[lem.text.strip()] = lem.get('elex').strip()
@@ -26,7 +28,18 @@ for k, v in lex_dict.items():
 
 def test_text(lemmas, orig):
     if len(lemmas) != len(orig):
-        return '\n{}\n{}'.format(' '.join([n.split('\t')[0] for n in lemmas]).lower(), ' '.join([''.join(x.xpath('.//text()')) for x in orig]).lower())
+        orig_inflected = [''.join(x.xpath('.//text()')) for x in orig]
+        lemmas_inflected = [n.split('\t')[0] for n in lemmas]
+        lemmas_text = list()
+        orig_text = list()
+        for i, w in enumerate(lemmas_inflected):
+            if i >= len(orig_inflected):
+                return '\n{}\n{}'.format(' '.join(lemmas_text + ['!!!'] + [n.split('\t')[0] for n in lemmas[i:]]).lower(), ' '.join(orig_text + ['!!!']))
+            elif w.lower().replace('v', 'u') == orig_inflected[i].lower().replace('v', 'u'):
+                lemmas_text.append(w.lower().replace('v', 'u'))
+                orig_text.append(w.lower().replace('v', 'u'))
+            else:
+                return '\n{}\n{}'.format(' '.join(lemmas_text + ['!!!'] + [n.split('\t')[0] for n in lemmas[i:]]).lower(), ' '.join(orig_text + ['!!!'] + [''.join(x.xpath('.//text()')) for x in orig[i:]]).lower())
     not_found = []
     for i, word in enumerate(lemmas):
         inflected, lemma, display_lem = word.split('\t')[:3]
@@ -45,7 +58,7 @@ def test_text(lemmas, orig):
             prev_lem = lemmas[i-1].split('\t')[1]
         tried = []
         if inflected.lower().replace('v', 'u') != re.sub(r'[{}«»„“‚‘’”\[\]…]'.format(punctuation), '', ''.join(orig[i].xpath('.//text()', namespaces=ns)).lower().replace('v', 'u')):
-            not_found.append((inflected, tried))
+            not_found.append((inflected, i))
             continue
         #try:
             #while inflected.lower().replace('v', 'u') != re.sub(r'[{}«»„“‚‘’”\[\]]'.format(punctuation), '', ''.join(orig[i].xpath('.//text()', namespaces=ns)).lower().replace('v', 'u')):
@@ -106,7 +119,7 @@ for xml_file in sorted(xmls):
         pass'''
     form_name = os.path.basename(xml_file)
     if 'lat001' in xml_file:
-        lem_file = '/home/matt/Lemmatization/pyrrha_output/results/{}.txt'.format(form_name.replace('.xml', ''))
+        lem_file = home_dir + '/Lemmatization/pyrrha_output/results/{}.txt'.format(form_name.replace('.xml', ''))
         try:
             with open(lem_file) as f:
                 lems = f.read().strip().split('\n')
@@ -120,7 +133,6 @@ for xml_file in sorted(xmls):
             print(xml_file, '\n\t', '; '.join(x.text for x in xml.xpath('//tei:w[not(@lemma)]', namespaces=ns)))
         else:
             xml.getroottree().write(xml_file, encoding='utf-8')
-            #subprocess.run(['java', '-jar',  '/home/matt/Downloads/SaxonHE9-8-0-11J/saxon9he.jar', '{}'.format(xml_file), '/home/matt/docx_tei_cte_conversion/ElasticSearch/extract_text_search_to_xml.xsl', '-o:/home/matt/results/formulae/search/{}'.format(xml_file.split('/')[-1].replace('xml', 'txt'))])
     else:
         latin_words = xml.xpath('//tei:seg[@type="latin-word;"]/tei:w', namespaces=ns)
         for i, w in enumerate(latin_words):
@@ -130,8 +142,3 @@ for xml_file in sorted(xmls):
             else:
                 set_lemmaRef(w, w.text.lower(), latin_words[i + 1].text.lower() if len(latin_words) > i + 1 else ' ', latin_words[i - 1].text.lower() if i > 0 else ' ')
         xml.getroottree().write(xml_file, encoding='utf-8')
-
-# TO RECREATE THE TEXT FILES USED TO POPULATE THE ELASTICSEARCH INDEX
-
-"""for xml_file in xmls:
-     subprocess.run(['java', '-jar',  '/home/matt/Downloads/SaxonHE9-8-0-11J/saxon9he.jar', '{}'.format(xml_file), '/home/matt/docx_tei_cte_conversion/extract_text_search.xsl', '-o:/home/matt/results/formulae/search/{}'.format(xml_file.split('/')[-1].replace('xml', 'txt'))])"""

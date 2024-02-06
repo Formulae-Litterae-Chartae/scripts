@@ -12,6 +12,7 @@ else:
     print(argv[1], 'is not a file.')
     raise FileNotFoundError
     
+form_mapping = dict()
 if len(argv) == 3:
     try:
         with open(argv[2]) as f:
@@ -41,29 +42,36 @@ corp_mapping = {'Mondsee': ['mondsee', 'rath'],
 
 json_output = []
 temp_dict = dict()
+version_mapping = {'a': '1', 'b': '2', 'c': '3', 'd': '4', 'e': '5', 'f': '6', 'g': '7', 'h': '8', 'i': '9'}
 
 with open(source) as f:                                         
     res = f.readlines()
     # This assumes that the first two columns of the CSV are given over to the naming of the charter and the rest with the formulaic
     # elements.
     # parts contains the names of the formulaic elements in the first line of the CSV.
-    parts = [form_mapping.get(x.strip(), None) for x in res[0].split('\t')]
+    parts = [form_mapping.get(x.strip(), x.strip()) for x in res[0].split('\t')]
     # charters are the rows of the CSV that actually contain the charter names and formulaic elements.
     charters = [x.rstrip('\n').split('\t') for x in res[1:]]
     
 
 for row in charters:
-    if row[0] not in corp_mapping:
+    corpus = row[0].strip()
+    if corpus not in corp_mapping:
         continue
     codex = '' 
-    if row[0] == 'Salzburg': 
+    if corpus == 'Salzburg':
         if 'Codex' in row[1]: 
-            codex = re.sub(r'.+Codex (\w)', r'\1', row[1]).lower() 
+            codex = re.sub(r'.+Codex (\w)', r'\1', row[1]).lower().strip()
         else: 
             codex = 'a' 
     number = re.sub(r'(?:nr.)?\s*(\d+).*', r'\1', row[1].lower()) 
-    file_name = '{coll}/{ed}{codex}{num:04}/{coll}.{ed}{codex}{num:04}.lat001'.format(coll=corp_mapping[row[0]][0], codex=codex, ed=corp_mapping[row[0]][1], num=int(number)) 
-    if number == '784' and row[0] == 'Freising':
+    version_number = version_mapping.get(re.sub(r'(?:nr.)?\s*\d+(\D?).*', r'\1', row[1].lower()), '1')
+    try:
+        file_name = '{coll}/{ed}{codex}{num:04}/{coll}.{ed}{codex}{num:04}.lat00{v_num}'.format(coll=corp_mapping[corpus][0], codex=codex, ed=corp_mapping[corpus][1], num=int(number), v_num=version_number)
+    except ValueError as E:
+        print(row)
+        continue
+    if number == '784' and corpus == 'Freising':
         if '784a' in row[1]:
             file_name = 'freising/bitterauf0784/freising.bitterauf0784.lat003'
         else:

@@ -8,7 +8,9 @@
     <xsl:output omit-xml-declaration="yes" indent="yes"/>
     
     <xsl:param name="pSeparators">&#xA;&#x9;&#x20;,.;:?!()'"</xsl:param>
-    <xsl:param name="entryTitle"><xsl:value-of select="normalize-space(string-join(/tei:TEI/tei:text/tei:body/tei:p[1]/tei:hi[starts-with(@rend, 'Überschrift') or @rend = 'italic bold']/text(), ', '))"/></xsl:param>
+    <xsl:param name="entryTitle">
+        <xsl:value-of select="normalize-space(string-join(/tei:TEI/tei:text/tei:body/tei:p[1]/tei:hi[starts-with(@rend, 'Überschrift') or @rend = 'italic bold']/text() | /tei:TEI/tei:text/tei:body/tei:p[1]//tei:seg[@rend = 'italic bold']/text(), ', '))"/>
+    </xsl:param>
     <xsl:param name="urn"><xsl:value-of select="lower-case(replace(replace(substring-before(tokenize(base-uri(), '/')[last()], '.xml'), '[%20\-\s]+', '_'), '\s+', ''))"/></xsl:param>
     <xsl:param name="authorMapping">
         <abbr full="Bart Quintilier">BQ</abbr>
@@ -42,7 +44,7 @@
             </xsl:when>
         </xsl:choose>
     </xsl:param>
-    <xsl:param name="biblFile">/home/matt/results/Bibliographie_E-Lexikon.xml</xsl:param>
+    <xsl:param name="biblFile">../../bibliography/formulae_bibliographie.xml</xsl:param>
     
     <xsl:template match="/">
         <xsl:processing-instruction name="xml-model">href="https://digitallatin.github.io/guidelines/critical-editions.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"</xsl:processing-instruction>
@@ -223,6 +225,13 @@
                 <xsl:apply-templates/>
             </xsl:otherwise>
         </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template match="tei:seg[@rend='italic bold']">
+        <xsl:element name="seg" namespace="http://www.tei-c.org/ns/1.0">
+            <xsl:attribute name="type">lex-title</xsl:attribute>
+            <xsl:apply-templates/>
+        </xsl:element>
     </xsl:template>
     
     <xsl:template name="buildNValue">

@@ -89,7 +89,8 @@
         
         <xsl:for-each select="/tei:TEI/tei:text/tei:group/tei:text">
             <xsl:variable name="frontLang" select="./tei:front/@xml:lang"/>
-            <xsl:variable name="isForgery" select="descendant::tei:note[@n='forgery']/text()"></xsl:variable>
+            <xsl:variable name="isProblematic" select="descendant::tei:note[@n='forgery']/text()"/>
+            <xsl:variable name="forgeryText" select="descendant::tei:note[@n='forgery']/text()"/>
             <xsl:result-document format="general" href="data/{ancestor::tei:group[@xml:id]/@xml:id}/{substring-after(@xml:id,'.')}/__capitains__.xml">
                 <xsl:processing-instruction name="xml-model">href="../../../capitains.rng" schematypens="http://relaxng.org/ns/structure/1.0"</xsl:processing-instruction>
                 <xsl:element name="collection">
@@ -105,7 +106,7 @@
                     <!-- Creating the title from the group location, the editor whose numbering we are using and the number itself. -->
                     <xsl:element name="dc:title">
                         <xsl:attribute name="xml:lang"><xsl:value-of select="$frontLang"/></xsl:attribute>
-                        <xsl:text>Nr. </xsl:text><xsl:value-of select="node()/descendant::tei:div[@subtype='urkundennummer']"/><xsl:if test="$isForgery"><xsl:text> †</xsl:text></xsl:if>
+                        <xsl:text>Nr. </xsl:text><xsl:value-of select="node()/descendant::tei:div[@subtype='urkundennummer']"/>
                     </xsl:element>
                    <xsl:element name="dc:type">cts:work</xsl:element>
                    <xsl:element name="members">
@@ -118,7 +119,7 @@
                                <xsl:element name="parent">urn:cts:formulae:<xsl:value-of select="$urn"/></xsl:element>
                                <xsl:element name="dc:title">
                                    <xsl:attribute name="xml:lang"><xsl:value-of select="$frontLang"/></xsl:attribute>
-                                   <xsl:value-of select="/tei:TEI/tei:teiHeader/descendant::tei:monogr/tei:title"/>, <xsl:value-of select="ancestor::tei:text[@type='charta']/descendant::tei:div[@subtype='urkundennummer']/tei:p"/><xsl:if test="$isForgery"><xsl:text> †</xsl:text></xsl:if>
+                                   <xsl:value-of select="/tei:TEI/tei:teiHeader/descendant::tei:monogr/tei:title"/>, <xsl:value-of select="ancestor::tei:text[@type='charta']/descendant::tei:div[@subtype='urkundennummer']/tei:p"/>
                                </xsl:element>
                                <xsl:choose>
                                    <xsl:when test="current()/ancestor::tei:text[@xml:id]/tei:front/tei:div[@subtype='regest']/tei:p">
@@ -171,9 +172,14 @@
                                    <xsl:if test="current()/ancestor::tei:text[@xml:id]/tei:front/tei:note[@type='source_edition']">
                                        <xsl:element name="dct:source"><xsl:value-of select="current()/ancestor::tei:text[@xml:id]/tei:front/tei:note[@type='source_edition']"/></xsl:element>
                                    </xsl:if>
-                                   <xsl:if test="lower-case(current()/ancestor::tei:text[@xml:id]/tei:front/tei:note[@type='echtheit']/text()) = 'deperditum'">
-                                       <xsl:element name="bf:status">deperditum</xsl:element>
-                                   </xsl:if>
+                                   <xsl:choose>
+                                       <xsl:when test="lower-case(current()/ancestor::tei:text[@xml:id]/tei:front/tei:note[@type='echtheit']/text()) = 'deperditum'">
+                                           <xsl:element name="bf:status">deperditum</xsl:element>
+                                       </xsl:when>
+                                       <xsl:when test="$isProblematic">
+                                           <xsl:element name="bib:Activity"><xsl:value-of select="$forgeryText"/></xsl:element>
+                                       </xsl:when>
+                                   </xsl:choose>
                                </xsl:element>
                            </xsl:element>
                        </xsl:for-each>

@@ -284,7 +284,7 @@
         </xsl:choose>
     </xsl:param>
     <!--<xsl:param name="formNumber">1</xsl:param>-->
-    <xsl:param name="biblFile">/home/matt/results/Bibliographie_E-Lexikon.xml</xsl:param>
+    <xsl:param name="biblFile">../../bibliography/formulae_bibliographie.xml</xsl:param>
     <xsl:param name="collection">
         <xsl:choose>
             <xsl:when test="$formTitle/tei:ref[@type='siglum']">

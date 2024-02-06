@@ -5,8 +5,10 @@ from bibtexparser.bparser import BibTexParser
 from bibtexparser.customization import convert_to_unicode
 import sys
 import re
+from os import environ
 
-bib_source = sys.argv[1] if len(sys.argv) > 1 else '/home/matt/results/Bibliographie_E-Lexikon.bib'
+home_dir = environ.get('HOME', '')
+bib_source = sys.argv[1] if len(sys.argv) > 1 else home_dir + '/results/formulae_bibliographie.bib'
 
 with open(bib_source) as f:
     parser = BibTexParser(common_strings=True)
@@ -203,9 +205,8 @@ for e in sorted(bib_database.entries, key=author_year_sort):
     entries.append(entry)
     
 
-tree = etree.parse('/home/matt/scripts/internal/biblatex/tei_bibliography_template.xml')
+tree = etree.parse(home_dir + '/scripts/internal/biblatex/tei_bibliography_template.xml')
 tree.xpath('//tei:body', namespaces={'tei': "http://www.tei-c.org/ns/1.0"})[0].append(entries)
-# tree.write('/home/matt/results/Bibliographie_E-Lexikon.xml', encoding="utf-8", pretty_print=True)
 xml_str = etree.tostring(tree, pretty_print=True, encoding="unicode")
 xml_str = xml_str.replace('><', '>\n<')
 with open(bib_source.replace('.bib', '.xml'), mode="w") as f:

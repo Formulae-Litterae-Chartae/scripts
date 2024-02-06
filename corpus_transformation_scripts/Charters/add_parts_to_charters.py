@@ -5,10 +5,14 @@ from sys import argv
 from string import punctuation
 import re
 import os
+from collections import defaultdict
 
 ns = {'tei': 'http://www.tei-c.org/ns/1.0'}
 punc = punctuation.replace(']', '')
 not_typed = []
+unmatched_forms = defaultdict(list)
+unmatched_important = defaultdict(list)
+unmatched_important_2 = defaultdict(list)
 typed = {}
 json_file = argv[1] # The JSON file with the formulaic parts of the charters
 corpus_dir = argv[2] # The /data directory in which the XML files for the corpora are kept
@@ -38,13 +42,14 @@ def check_phrases(form_type, words, form_words):
     new_type = re.sub(r'\W+', '-', form_type)
     for i, w in enumerate(words):                                                    
         test_words = words[i:min(len(words), i + len(form_words))]
-        if [x.text for x in test_words] == form_words:
+        if [x.text.lower() for x in test_words] == form_words:
             test_words[0].addprevious(E.seg({'function': new_type + '-begin'}))
             test_words[-1].addnext(E.seg({'function': new_type + '-end'}))
             if test_words[0].getparent() != test_words[-1].getparent():
                 test_words[0].getparent().append(E.seg({'function': new_type + '-end'}))
                 test_words[-1].getparent().insert(0, E.seg({'function': new_type + '-begin'}))
-            return
+            return True
+    return False
         
 for charter in charter_forms:
     xml_file = os.path.join(corpus_dir, charter['file'] + '.xml')
@@ -64,17 +69,24 @@ for charter in charter_forms:
     for k, v in charter.items():                      
         if k != 'file':                                                        
             for phrase in v:
-                form_words = [x.rstrip(punc) for x in phrase.strip().split()]
+                form_words = [x.rstrip(punc).lower() for x in phrase.strip().split()]
                 try:
-                    check_phrases(k, xml_words, form_words)
-                except:
-                    print(charter[k], charter['file'])
+                    found = check_phrases(k, xml_words, form_words)
+                    if not found:
+                        unmatched_forms[xml_file].append(k)
+                        if k in ['Arenga', 'Überleitungsformel']:
+                            unmatched_important[xml_file].append(k + '\t' + ' '.join(form_words))
+                        elif 'Poenformel' in k or k == "Stipulationsformel":
+                            unmatched_important_2[xml_file].append(k + '\t' + ' '.join(form_words))
+                except Exception as E:
+                    print(E)
+                    print(charter[k], charter['file'], form_words)
     # taking this line out for now since I am only testing. It should be added back in later.
     xml.write(xml_file, encoding='utf-8', pretty_print=True)
     with open(xml_file) as f:
         s = f.read()
     s = re.sub(r'\s*<seg function="([\w\-]+)\-begin"/>', r' <seg function="\1">', s)
-    s = re.sub(r'<seg function="([\w\-]+)\-end"/>\s*', r'</seg> ', s)
+    s = re.sub(r'<seg function="([\w\-]+)\-end"/>([^\s<]*)\s*', r'</seg>\2 ', s)
     with open(xml_file, mode="w") as f:
         f.write(s)
     xml = etree.parse(xml_file)
@@ -121,4 +133,19 @@ with open(os.path.splitext(dest_file)[0] + '_types' + '.csv', mode='w') as f:
             f.write(k + '\t')
             f.write('\n\t\t'.join(v))
             f.write('\n\t')
+        f.write('\n')
+
+with open(os.path.splitext(dest_file)[0] + '_unmatched_parts' + '.json', mode='w') as f:
+    dump(unmatched_forms, f, ensure_ascii=False, indent='\t')
+
+with open(os.path.splitext(dest_file)[0] + '_unmatched_Arenga_Überleitungsformel' + '.csv', mode='w') as f:
+    for r in unmatched_important.keys():
+        f.write(r + '\t')
+        f.write('\n\t'.join(unmatched_important[r]))
+        f.write('\n')
+
+with open(os.path.splitext(dest_file)[0] + '_unmatched_Poenformel_Stipulationsformel' + '.csv', mode='w') as f:
+    for r in unmatched_important_2.keys():
+        f.write(r + '\t')
+        f.write('\n\t'.join(unmatched_important_2[r]))
         f.write('\n')

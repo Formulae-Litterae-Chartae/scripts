@@ -1,50 +1,40 @@
+Make sure you have following the installation instructions for TEIGarage and the TEI sources and stylesheets here: https://github.com/TEIC/TEIGarage/
+
 First, transform the docx files to TEI with OxGarage.
 
-Start Docker Image for OxGarage:
+- Start Docker Image for OxGarage:
 
 sudo docker run --rm -p 8080:8080 --mount type=bind,source="/home/matt/tei/tei-xsl/xml/tei/stylesheet",target="/usr/share/xml/tei/stylesheet" --mount type=bind,source="/home/matt/tei/tei/xml/tei/odd",target="/usr/share/xml/tei/odd" -e WEBSERVICE_URL=http://localhost:8080/ege-webservice/ --name teigarage ghcr.io/teic/teigarage
 
-Then run the following script to transform the DOCX to TEI:
+- Then run the following script to transform the DOCX to TEI:
 
 python ~/scripts/corpus_transformation_scripts/Elexicon/transform_docx_with_oxgarage.py <LOCATION OF DOCX FILES>
 
-Then run the following script to transform the TEI to DLL:
+Now transform the resulting XML files to the Formulae format
+
+- Then run the following script to transform the TEI to DLL:
 
 python ~/scripts/corpus_transformation_scripts/Elexicon/transform_elex_to_dll.py <FORMULAE CORPUS FOLDER> <PATH TO SAXON JAR> <NUMBER OF THREADS>
 
-Then run the following script to check the bibliographical short titles:
+- Then run the following script to check the bibliographical short titles:
 
 python /home/matt/scripts/corpus_transformation_scripts/check_short_entries.py <FORMULAE CORPUS FOLDER> <PATH TO SAXON JAR>
 
-Then run the following to add new lemmaRef attributes to the appropriate words:
+- Add the new entries into "Begriffe_eLexikon.xml" in the scripts/corpus_transformation_scripts/Elexicon folder.
+    The entries should follow the format <lem elex="abbatissa">abbatissa</lem> where the value of the @elex attribute is the name of the article and the text of the element is the inflected word that should be mapped to this article.
+    If more than one word should be mapped to the article, then there should be more than one element for the new entry. For instance:
+        <lem elex="abbas">abba</lem>
+        <lem elex="abbas">abbas</lem>
+    Here the words "abba" and "abbas" will both me mapped to the E-Lexicon article "abbas"
+
+- Then run the following to add new lemmaRef attributes to the appropriate words:
 
 python /home/matt/scripts/corpus_transformation_scripts/Elexicon/add_new_lemmaRefs.py
 
-The new entries then need to be mapped to the existing texts:
+- The new entries then need to be mapped to the existing texts:
 
 python /home/matt/scripts/corpus_transformation_scripts/Elexicon/create_formulae_elex_mapping.py
 
-Then this new mapping needs to be transferred to the elex __capitains__ files:
+- Then this new mapping needs to be transferred to the elex __capitains__ files:
 
 python /home/matt/scripts/corpus_transformation_scripts/Elexicon/add_inRefs_to_elex.py <FORMULAE CORPUS FOLDER>
-
-OLD INFORMATION
-
-The actual transformation can be done with the following script once OxGarage is running. In order to avoid retransforming all the formulae as well, edit the ~/docx_tei_cte_conversion/folder_list.txt file so that only the eLexicon folder is done:
-
-bash ~/docx_tei_cte_conversion/folder_conversion.sh
-
-Once this transformation to TEI is finished, run the following in an IPython shell:
-
-from glob import glob
-
-import subprocess
-
-lexes = glob('/home/matt/results/FORMAKAD/Werkstatt/e-Lexikon-DOCX/*.xml')
-
-for lex in lexes:
-    new_name = '/home/matt/results/formulae/data/elexicon/{entry}/elexicon.{entry}.deu001.xml'.format(entry=lex.split('/')[-1].replace('.xml', '').replace('-', '').replace('  ', ' ').replace(' ', '_').lower())
-    subprocess.run(['java', '-jar',  '/home/matt/Downloads/SaxonHE9-8-0-11J/saxon9he.jar', '{}'.format(lex), '/home/matt/docx_tei_cte_conversion/transform_elex_to_dll.xsl', '-o:{}'.format(new_name)])
-    subprocess.run(['java', '-jar',  '/home/matt/Downloads/SaxonHE9-8-0-11J/saxon9he.jar', '{}'.format(new_name), '/home/matt/docx_tei_cte_conversion/create_cts_files_elex.xsl', '-o:/home/matt/results/formulae/data/elexicon/{entry}/__cts__.xml'.format(entry=lex.split('/')[-1].replace('.xml', '').replace('-', '').replace('  ', ' ').replace(' ', '_').lower())])
-    
-There will almost certainly be some cleanup required here as the way the files are named and the way the URNs are assigned are essentially different. The folder structure, filenames, and URNs will need to be unified.

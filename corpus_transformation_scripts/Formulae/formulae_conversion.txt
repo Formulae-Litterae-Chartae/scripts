@@ -1,0 +1,87 @@
+Make sure you have followed the installation instructions for TEIGarage and the TEI sources and stylesheets here: https://github.com/TEIC/TEIGarage/
+
+The following process relies heavily on having the correct directory structure. In a folder dedicated to the formula corpus being transformed, there should be following directories. NB capitalization is important:
+    - "Deutsch" - this is where the transformed XML files for the German translations should be put after the transformation of the DOCX files into XML with TEIGarage
+    - "DOCX" - this is where the uncoverted DOCX translation files should be saved
+    - "Latin" - this is where the Latin edition XML files, which were exported from CTE, should be saved
+    - "regesten" - this is where the XML file containing the regests for the formulae should be located
+        - See the file "make_regest_ingest_xml.txt" for instructions on how to produce the XML file with the regests
+    - "Transkripte" - this is where all of the manuscript transcription XML files, which were exported from CTE, should be saved.
+This same folder should also contain 2 files:
+    - "capitains.rng" - this file can be copied from the directory where the Github repository https://github.com/Formulae-Litterae-Chartae/formulae-corpora has been cloned, usually at ~/formulae-corpora
+    - "hss_editionen.xml" - this file contains the information about the manuscripts and editions that contain each formula. It is produced automatically from the Excel table containing this information. See the instructions in "make_hss_editionen_mapping.txt" for instructions on how to produce this file.
+How the files are named is also very important since the relationship of, e.g., an edition to its translation or its manuscript transcriptions is based on the file names.
+    - The edition and translation files should have the same names except that the translation filename should have "Deutsch" appended to it. E.g. if the edition XML file were named "Angers 39.xml" then the translation file should be named "Angers 39 Deutsch.xml". Or if the edition file were named "Marculf Ergänzung 3,1.xml" then the translation file should be named "Marculf Ergänzung 3,1 Deutsch.xml"
+    - The manuscript transcription XML files should start with this same name which should then be followed by the manuscript's signature and then, in parentheses, the manuscript's siglum. So for the edition file "Marculf Ergänzung 3,1.xml" from the previous step, the two transcription files should be named "Markulf Ergänzung 3,1 Leiden BPL 114 (Le1).xml" and "Markulf Ergänzung 3,1 Paris BNF 10756 (P16a).xml"
+
+First, transform the docx files to TEI with TEIGarage.
+
+- Start Docker Image for TEIGarage. It is important to replace "LOCATION_OF_YOUR_TEI_STYLESHEET" and "LOCATION_OF_YOUR_TEI_ODD_FILE" with the path to these files on your local system. I prefer to create a ~/tei folder into which I then extract the XSL and ODD files from the TEI Github repositories. In that case, the values to use in the following command would be "~/tei/tei-xsl/xml/tei/stylesheet" for "LOCATION_OF_YOUR_TEI_STYLESHEET" and "~/tei/tei/xml/tei/odd" for "LOCATION_OF_YOUR_TEI_ODD_FILE"
+
+sudo docker run --rm -p 8080:8080 --mount type=bind,source="LOCATION_OF_YOUR_TEI_STYLESHEET",target="/usr/share/xml/tei/stylesheet" --mount type=bind,source="LOCATION_OF_YOUR_TEI_ODD_FILE",target="/usr/share/xml/tei/odd" -e WEBSERVICE_URL=http://localhost:8080/ege-webservice/ --name teigarage ghcr.io/teic/teigarage
+
+- Then run the following script to transform the DOCX to TEI:
+
+python ~/scripts/corpus_transformation_scripts/Formulae/transform_translation_docx_with_oxgarage.py <LOCATION OF DOCX FILES>
+
+- The resulting XML files will be saved in the "oxgarage_results" subfolder in the DOCX folder. Copy these files from that folder into the "Deutsch" folder
+
+Then perform the following steps to convert the existing files to the Formulae format.
+
+- Change directory in your terminal to the base directory for this formula corpus. Then run the following script to transform the TEI to DLL. NB: "CORPUS NAME" should have no spaces and no punctuation characters except underscores (_). It will be the corpus name that is used to automatically create the identifiers for the corpus and all the XML files. For instance, if the corpus name is "marculf", then the collection ID will be urn:cts:formulae:marculf and the ID for the Latin edition for Marculf I,1 will be urn:cts:formulae:marculf.form1_001.lat001
+
+python ~/scripts/corpus_transformation_scripts/Formulae/transform_cte_to_dll.py <PATH TO SAXON JAR> <CORPUS NAME>
+
+- This will create a new "data" folder in the base directory for the corpus. Within this data folder there should be a subfolder that has the same name as "<CORPUS NAME>" from the previous command. There should also be subfolders for all of the manuscripts that contain any formulae from this collection. These should be named using the sigla from the manuscripts, e.g., "le1" or "p16a".
+- These folders now need to be copied into formulae-corpora/data. There are several different scenarios that determine how the copy-and-paste should be handled.
+    1. The collection does not exist or is being completely replaced
+        - The whole folder can be copied-and-pasted. Replace any existing files and folders with the new ones.
+    2. Only a few formulae in the collection are being replaced.
+        - Only the new edition and/or translation XML files should be copied into the appropriate folders.
+        - For instance, if new versions of the edition and translation of Tours 1 were produced, then copy the files "tours.form001.lat001.xml" and "tours.form001.deu001.xml" into the folder formulae-corpora/data/tours/form001. There is no need to replace the __capitains__.xml file in that same folder unless the regests have been updated.
+    3. New texts are being added to an existing collection. This happens most frequently for manuscript collections when a new formulae collection is added that has an existing manuscript collection as a source. For instance, the manuscript Le1 contains formulae from Bourges C and from Marculf. When Bourges C was added to the database, the new transcriptions of Bourges expanded the existing collection of Marculf transcriptions.
+        - Copy all of the collection subfolders to the existing collection directory in formulae-corpora/data. For instance, with Le1, the subdirectories "89r" or "91r91v" should be copied into formulae-corpora/data/le1. Do not copy the collection __capitains__.xml file, e.g., le1/__capitains__.xml
+        - Open the existing collection __capitains__.xml file, e.g., formulae-corpora/data/le1/__capitains__.xml as well as the one that was produced by the current transformation.
+        - In both files there are existing <collection> elements under the <members> element. The look like this:
+            <collection path="./157r158r/__capitains__.xml" identifier="urn:cts:formulae:le1.157r158r"/>
+        - Copy all of these elements from the newly created __capitains__.xml file into the existing one, adding them below the last <collection> element but before the closing </members> element
+
+- Any brand new collections need to be added to the appropriate __capitains__.xml files. This does not need to be done for collections that are being updated or where texts are being replaced.
+    - Formulae collections:
+        - A new <collection> element should be added to formulae-corpora/data/display_formulae/__capitains__.xml and formulae-corpora/data/formulae_collection/__capitains__.xml
+        - For instance, if Marculf were being added, then the following <collection> element should be added after the last <collection> element but before the closing </members> element
+            <collection identifier="urn:cts:formulae:marculf" path="../marculf/__capitains__.xml"/>
+        - Change the @identifier attribute and the @path attribute to match the new collection
+    - Manuscript transcription collections:
+        - A new <collection> element should be added to formulae-corpora/data/manuscript_collection/__capitains__.xml
+        - It should take the following form and should be added after the last <collection> element but before the closing </members> element
+            <collection identifier="urn:cts:formulae:le1" path="../le1/__capitains__.xml"/>
+        - Again, change the @identifier attribute and the @path attribute to match the new collection
+
+- Any new formulae collection needs to be lemmatized.
+    - Use the scripts/corpus_transformation_scripts/lemmatization/create_new_lemmatization_from_xml_files.py script to create the input for the Pyrrha web app
+    - The terminal command is "python ~/scripts/corpus_transformation_scripts/lemmatization/create_new_lemmatization_from_xml_files.py <path to corpus folder> <path to inflected to lem mapping file> <path to output file>
+    - For instance, if the lemmatization information is in the folder ~/Lemmatization with subfolders ~/Lemmatization/pyrrha_input and ~/Lemmatization/pyrrha_output, then the command to lemmatize Marculf might look like this:
+        python ~/scripts/corpus_transformation_scripts/lemmatization/create_new_lemmatization_from_xml_files.py ~/formulae-corpora/data/marculf ~/Lemmatization/pyrrha_output/all_files_inflected_to_full_lem_mapping_formulae.json ~/Lemmatization/pyrrha_input/formeln-marculf.tsv
+    - This command will produce the file ~/Lemmatization/pyrrha_input/formeln-marculf.tsv with automatically assigned lemmata for each word.
+    - Import the lemmatization data into Pyrrha
+        - Login to your account at https://dh.chartes.psl.eu/pyrrha/
+        - Click on "New Corpus" in the navbar
+        - Enter a name for the corpus, e.g., "formulae_marculf"
+        - Leave "Left Context", "Right Context" and "Delimiter Token" as they are
+        - In the "Layout" section, click the boxes next to "POS" and "Morph" to hide those two columns
+        - In the "Data" section
+            - In a text editing program (like "Notepad" or "Notepad++", NB not in the browser and not in MS-Excel) open the automatically produced .tsv file from the previous step, e.g., formulae_marculf.tsv
+            - Copy all of the contents from this file
+            - Paste it into the text box in the "Tokens (as TSV content)" section the entire copied contents of this file
+        - In the "Control Lists" section, make sure the radio button next to "Use an existing control list" is checked
+        - From the dropdown menu to the right of "Use an existing control list" select the "Lemmatisierung Formulae + Urkunden" control list
+        - Click on "Submit" at the bottom of the screen
+        - If the corpus needs to be shared with another user
+            - click on "Dashboard" in the navbar
+            - select the corpus
+            - find the user you want to add in the "Grant access to a user" list and click on their name
+            - They should now appear in the top list under the name of the corpus and under your own name
+            - Click the check box in the "Owner" column so that this person can update and lemmatize the list
+            - Click on the "Save modifications" button at the bottom of the screen
+

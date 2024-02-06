@@ -8,7 +8,6 @@ import re
 basedir = os.path.abspath(os.path.dirname(__file__))
 home_dir = os.environ.get('HOME', '')
 work_dir = os.environ.get('WORK', home_dir)
-pattern = re.compile(r'be4|fu2|ka1|ko2|le1|le3|m4|p3|p6|p8|p10|p12|p12s|p13|p14|p16a|p16b|p16c|data/s2|sg2|data/syd|v6|v8|v9|v11|wa1|data/z2')
 
 # When rebuilding for the open corpus
 # corpus = 'formulae-open'
@@ -18,6 +17,12 @@ orig = str(sys.argv[1]) if len(sys.argv) > 1 else os.path.join(work_dir, 'result
 # corpus = 'corpus_transform'
 saxon_path = str(sys.argv[2]) if len(sys.argv) > 2 else os.path.join(home_dir, 'Downloads/SaxonHE9-8-0-11J/saxon9he.jar') # The path to the Saxon JAR file
 procs = int(sys.argv[3]) if len(sys.argv) == 4 else 3
+
+
+with open(os.path.join(orig, 'data/manuscript_collection/__capitains__.xml')) as manuscript_file:
+    manuscript_string = manuscript_file.read()
+    manuscript_list = ['data/{}'.format(x[1]) for x in re.finditer('identifier="urn:cts:formulae:([^"]+)"', manuscript_string)]
+pattern = re.compile(r'{}'.format('|'.join(manuscript_list)))
 
 # xmls = [x for x in glob(os.path.join(orig, 'data/**/*lat*.xml'), recursive=True) if not re.search(pattern, x)] + [x for x in glob(os.path.join(orig, 'data/**/*deu001.xml'), recursive=True) if re.search(r'elexicon', x)]
 # Use the following line to process a single corpus

@@ -34,9 +34,9 @@ def build_urn(s):
             form_num = roman_mapping[parts[1]] + '_capitula' 
         elif 'Praefatio' in s: 
             form_num = 'form000' 
-        elif 'Ergänzungen 2' in s:
+        elif 'Ergänzung 2' in s:
             form_num = 'form3_2_001'
-        elif 'Ergänzungen' in s:
+        elif 'Ergänzung' in s:
             erg_groups = re.search(r'(\d),(\d)', s)
             form_num = 'form3_' + erg_groups.group(1) + '_' + '{:03}'.format(int(erg_groups.group(2)))
         else: 
