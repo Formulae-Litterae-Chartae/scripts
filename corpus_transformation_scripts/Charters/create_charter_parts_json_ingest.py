@@ -38,7 +38,13 @@ corp_mapping = {'Mondsee': ['mondsee', 'rath'],
                 'St. Gallen': ['stgallen', 'wartmann'],
                 'Weißenburg': ['weissenburg', 'gloeckner'],
                 'Zürich': ['zuerich', 'escher'],
-                'Zürich, S. Felix und Regula': ['zuerich', 'escher']}
+                'Zürich, S. Felix und Regula': ['zuerich', 'escher'],
+                'Marculfi Formulae I': ['marculf', 'form1_'],
+                'Marculfi Formulae II': ['marculf', 'form2_'],
+                'Formulae Tours': ['tours', 'form'],
+                'Formulae Turonenses': ['tours', 'form'],
+                'Formulae Flavigny Pa+Ko': ['flavigny', 'form1_'],
+                'Formulae Bituricenses C': ['bourges', 'form_c_']}
 
 json_output = []
 temp_dict = dict()
@@ -67,7 +73,10 @@ for row in charters:
     number = re.sub(r'(?:nr.)?\s*(\d+).*', r'\1', row[1].lower()) 
     version_number = version_mapping.get(re.sub(r'(?:nr.)?\s*\d+(\D?).*', r'\1', row[1].lower()), '1')
     try:
-        file_name = '{coll}/{ed}{codex}{num:04}/{coll}.{ed}{codex}{num:04}.lat00{v_num}'.format(coll=corp_mapping[corpus][0], codex=codex, ed=corp_mapping[corpus][1], num=int(number), v_num=version_number)
+        if 'form' in corp_mapping[corpus][1]:
+            file_name = '{coll}/{ed}{codex}{num:03}/{coll}.{ed}{codex}{num:03}.lat00{v_num}'.format(coll=corp_mapping[corpus][0], codex=codex, ed=corp_mapping[corpus][1], num=int(number), v_num=version_number)
+        else:
+            file_name = '{coll}/{ed}{codex}{num:04}/{coll}.{ed}{codex}{num:04}.lat00{v_num}'.format(coll=corp_mapping[corpus][0], codex=codex, ed=corp_mapping[corpus][1], num=int(number), v_num=version_number)
     except ValueError as E:
         print(row)
         continue

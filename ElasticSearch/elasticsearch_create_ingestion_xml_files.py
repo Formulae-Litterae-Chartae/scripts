@@ -16,7 +16,8 @@ orig = str(sys.argv[1]) if len(sys.argv) > 1 else os.path.join(work_dir, 'result
 # When building test files for new corpora
 # corpus = 'corpus_transform'
 saxon_path = str(sys.argv[2]) if len(sys.argv) > 2 else os.path.join(home_dir, 'Downloads/SaxonHE9-8-0-11J/saxon9he.jar') # The path to the Saxon JAR file
-procs = int(sys.argv[3]) if len(sys.argv) == 4 else 3
+corpus_name = str(sys.argv[3]) if len(sys.argv) > 3 else 'all'
+procs = int(sys.argv[4]) if len(sys.argv) == 5 else 3
 
 
 with open(os.path.join(orig, 'data/manuscript_collection/__capitains__.xml')) as manuscript_file:
@@ -24,10 +25,17 @@ with open(os.path.join(orig, 'data/manuscript_collection/__capitains__.xml')) as
     manuscript_list = ['data/{}'.format(x[1]) for x in re.finditer('identifier="urn:cts:formulae:([^"]+)"', manuscript_string)]
 pattern = re.compile(r'{}'.format('|'.join(manuscript_list)))
 
-# xmls = [x for x in glob(os.path.join(orig, 'data/**/*lat*.xml'), recursive=True) if not re.search(pattern, x)] + [x for x in glob(os.path.join(orig, 'data/**/*deu001.xml'), recursive=True) if re.search(r'elexicon', x)]
-# Use the following line to process a single corpus
-xmls = [x for x in glob(os.path.join(orig, 'data/**/*lat*.xml'), recursive=True) if re.search(r'pancarte_noire', x)]
-# xmls = [x for x in glob(os.path.join(orig, 'data/**/*deu001.xml'), recursive=True) if re.search(r'elexicon', x)]
+if corpus_name == 'all':
+    # The following rebuilds the files for all corpora. NB this will probably take several hours to complete.
+    xmls = [x for x in glob(os.path.join(orig, 'data/**/*lat*.xml'), recursive=True) if not re.search(pattern, x)] + [x for x in glob(os.path.join(orig, 'data/**/*deu001.xml'), recursive=True) if re.search(r'elexicon', x)]
+elif corpus_name == 'elexicon':
+    # The following processes all the files for the elexicon
+    xmls = [x for x in glob(os.path.join(orig, 'data/**/*deu001.xml'), recursive=True) if re.search(r'elexicon', x)]
+else:
+    # The following processes a single charter or formulae corpus
+    xmls = [x for x in glob(os.path.join(orig, 'data/**/*lat*.xml'), recursive=True) if re.search(corpus_name, x)]
+    if xmls == []:
+        raise Exception('Corpus ' + corpus_name + ' does not exist')
 
 def extract_text(xml_file):
     subprocess.run(['java', '-jar',  saxon_path, '{}'.format(xml_file), os.path.join(basedir, 'extract_text_search_to_xml.xsl'), '-o:{}'.format(os.path.join(work_dir, orig, 'search', xml_file.split('/')[-1].replace('xml', 'txt')))])

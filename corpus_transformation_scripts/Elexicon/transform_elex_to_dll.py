@@ -13,7 +13,7 @@ saxon_path = str(sys.argv[2]) if len(sys.argv) > 2 else os.path.join(home_dir, '
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-lexes = glob('/home/matt/results/oxgarage_results/elex/*.xml')
+lexes = glob(home_dir + '/results/oxgarage_results/elex/*.xml')
 elex_translations = dict()
 with open(os.path.join(basedir, 'formulae_elexicon_mapping.json')) as f:
     form_elex_mapping = load(f)

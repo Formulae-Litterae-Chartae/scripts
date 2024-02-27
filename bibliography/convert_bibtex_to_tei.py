@@ -5,10 +5,11 @@ from bibtexparser.bparser import BibTexParser
 from bibtexparser.customization import convert_to_unicode
 import sys
 import re
-from os import environ
+from os import environ, path
 
 home_dir = environ.get('HOME', '')
-bib_source = sys.argv[1] if len(sys.argv) > 1 else home_dir + '/results/formulae_bibliographie.bib'
+current_dir = path.abspath(path.dirname(__file__))
+bib_source = sys.argv[1] if len(sys.argv) > 1 else current_dir + '/formulae_bibliographie.bib'
 
 with open(bib_source) as f:
     parser = BibTexParser(common_strings=True)

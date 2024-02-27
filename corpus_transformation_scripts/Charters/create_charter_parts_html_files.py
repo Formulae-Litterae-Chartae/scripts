@@ -13,10 +13,21 @@ with open('/home/matt/results/corpus_segmentation/Gesamtübersicht_Urkundengrupp
     charter_group_dict = json.load(f)
 with open('/home/matt/results/corpus_segmentation/St_Gallen_Urkundenfamilien.json') as f:
     st_gallen_group_dict = json.load(f)
+with open('/home/matt/results/corpus_segmentation/Gesamtübersicht_Arengenfamilien_ingest.json') as f:
+    arengenfamilien_dict = json.load(f)
+with open('/home/matt/results/corpus_segmentation/Gesamtübersicht_Überleitungsformelfamilien_ingest.json') as f:
+    ueberleitungsformelfamilien_dict = json.load(f)
+with open('/home/matt/results/corpus_segmentation/Formel_zu_Urkunden_Entsprechungen.json') as f:
+    formel_zu_urkunden_dict = json.load(f)
+with open('/home/matt/results/corpus_segmentation/Formel_zu_Formel_Entsprechungen.json') as f:
+    formel_zu_formel_dict = json.load(f)
 
 all_part_template = list()
 all_charter_groups_list = list()
+charter_parts_list = list()
 st_gallen_groups_template = list()
+arengenfamilien_template = list()
+ueberleitungsformelfamilien_template = list()
 parts_dict = defaultdict(dict)
 title_dict = dict()
 good_parts = {'Arenga': {'title': 'Arengen'},
@@ -253,21 +264,87 @@ for k, v in sorted(charter_group_dict.items(), key=sort_st_gallen):
         group_list.append(part_template.replace('ROWS_HERE', ''.join(all_rows)))
     all_charter_groups_list.append(group_template.replace('SUB_GROUP_HERE', ''.join(group_list)))
 
-for k in sorted(st_gallen_group_dict.keys(), key=sort_st_gallen):
-    part_template = copy(st_gallen_subgroup_html_template)
-    part_template = part_template.replace('GROUP_TITLE_HERE', k)
-    part_template = part_template.replace('GROUP_HERE', k.replace(' ', '_'))
+arengenlist = list()
+for sub_group, charters in sorted(arengenfamilien_dict.items(), key=sort_st_gallen):
+    if len(charters) == 1:
+        continue
+    all_dates = list()
+    part_template = copy(all_subgroup_html_template)
+    part_template = part_template.replace('GROUP_TITLE_HERE', '{{ _("Gruppe") }} ' + sub_group + ' (' + str(len(charters)) + ' {{ _("Texte") }})')
+    part_template = part_template.replace('COLLECTION_HERE', '{{ _("Tabelle") }}: ' + 'Arengenfamilien ')
+    part_template = part_template.replace('NO_SPACE_GROUP_HERE', 'arengenfamilien')
+    part_template = part_template.replace('GROUP_HERE', 'arengenfamilien' + sub_group.replace(' ', '_'))
     all_rows = list()
-    for charter in sorted(st_gallen_group_dict[k]):
+    for charter in sorted(charters):
+        if charter not in title_dict:
+            print(charter + ' not found')
+            continue
+        if title_dict[charter]['taq']:
+            all_dates.append(title_dict[charter]['taq'])
+        if title_dict[charter]['tpq']:
+            all_dates.append(title_dict[charter]['tpq'])
         single_row = copy(all_group_row_template)
-        charter_type = type_dict.get(k, '')
-        if isinstance(charter_type, list):
-            charter_type = '/'.join(charter_type)
-        single_row = single_row.replace('URN_HERE', charter).replace('TITLE_HERE', title_dict[charter]['title']).replace('GROUP_HERE', k).replace('DATE_HERE', title_dict[charter]['date_string'])
+        single_row = single_row.replace('URN_HERE', charter).replace('TITLE_HERE', title_dict[charter]['title']).replace('GROUP_HERE', 'Arengenfamilien').replace('DATE_HERE', title_dict[charter]['date_string'])
         all_rows.append(single_row)
-    st_gallen_groups_template.append(part_template.replace('ROWS_HERE', ''.join(all_rows)))
-st_gallen_group_html_template = st_gallen_group_html_template.replace('SUB_GROUP_HERE', ''.join(st_gallen_groups_template))
+    if all_dates:
+        part_template = part_template.replace('DATE_RANGE_HERE', ' [' + sorted(all_dates)[0].lstrip('0').split('-')[0] + '-' + sorted(all_dates)[-1].lstrip('0').split('-')[0] + ']')
+    else:
+        part_template = part_template.replace('DATE_RANGE_HERE', '')
+    arengenlist.append(part_template.replace('ROWS_HERE', ''.join(all_rows)))
+group_template = copy(all_group_html_template)
+group_template = group_template.replace('MAIN_GROUP_HERE', '{{ _("Gruppen ähnlicher ") }}' + '{{ _("Arengen") }}')
+group_template = group_template.replace('NO_SPACE_GROUP_HERE', 'arengenfamilien')
+charter_parts_list.append(group_template.replace('SUB_GROUP_HERE', ''.join(arengenlist)))
 
+ueberleitungsformel_list = list()
+for sub_group, charters in sorted(ueberleitungsformelfamilien_dict.items(), key=sort_st_gallen):
+    if len(charters) == 1:
+        continue
+    all_dates = list()
+    part_template = copy(all_subgroup_html_template)
+    part_template = part_template.replace('GROUP_TITLE_HERE', '{{ _("Gruppe") }} ' + sub_group + ' (' + str(len(charters)) + ' {{ _("Texte") }})')
+    part_template = part_template.replace('COLLECTION_HERE', '{{ _("Tabelle") }}: ' + 'Überleitungsformelfamilien ')
+    part_template = part_template.replace('NO_SPACE_GROUP_HERE', 'ueberleitungsformelfamilien')
+    part_template = part_template.replace('GROUP_HERE', 'ueberleitungsformelfamilien' + sub_group.replace(' ', '_'))
+    all_rows = list()
+    for charter in sorted(charters):
+        if charter not in title_dict:
+            print(charter + ' not found')
+            continue
+        if title_dict[charter]['taq']:
+            all_dates.append(title_dict[charter]['taq'])
+        if title_dict[charter]['tpq']:
+            all_dates.append(title_dict[charter]['tpq'])
+        single_row = copy(all_group_row_template)
+        single_row = single_row.replace('URN_HERE', charter).replace('TITLE_HERE', title_dict[charter]['title']).replace('GROUP_HERE', 'Überleitungsformelfamilien').replace('DATE_HERE', title_dict[charter]['date_string'])
+        all_rows.append(single_row)
+    if all_dates:
+        part_template = part_template.replace('DATE_RANGE_HERE', ' [' + sorted(all_dates)[0].lstrip('0').split('-')[0] + '-' + sorted(all_dates)[-1].lstrip('0').split('-')[0] + ']')
+    else:
+        part_template = part_template.replace('DATE_RANGE_HERE', '')
+    ueberleitungsformel_list.append(part_template.replace('ROWS_HERE', ''.join(all_rows)))
+group_template = copy(all_group_html_template)
+group_template = group_template.replace('MAIN_GROUP_HERE', '{{ _("Gruppen ähnlicher ") }}' + '{{ _("Überleitungsformel") }}')
+group_template = group_template.replace('NO_SPACE_GROUP_HERE', 'ueberleitungsformelfamilien')
+charter_parts_list.append(group_template.replace('SUB_GROUP_HERE', ''.join(ueberleitungsformel_list)))
+
+formel_zu_formel_tabelle = list()
+for k, v in formel_zu_formel_dict.items():
+    existing_titles = ['<td>{}</td>'.format(title_dict[x]['title']) for x in v if x.startswith('urn:cts')]
+    existing_docs = [x for x in v if x.startswith('urn:cts')]
+    existing_refs = ['all' for x in v if x.startswith('urn:cts')]
+    if len(existing_docs) > 1:
+        formel_zu_formel_tabelle.append("""<tr><td><a class="internal-link" href="{{ url_for('InstanceNemo.r_multipassage', objectIds='""" + '+'.join(existing_docs) + """', subreferences='""" + '+'.join(existing_refs) + """') }}">""" + k + "</a></td>" + ''.join(existing_titles) + "</tr>")
+formel_zu_formel_html = """<table id="formel_zu_formel_tabelle" class="table table-sm table-hover table-bordered" aria-label="{{ _('Formel zu Formel Entsprechungen') }}"><tbody>""" + ''.join(formel_zu_formel_tabelle) + '</tbody></table>'
+
+formel_zu_urkunden_tabelle = list()
+for k, v in formel_zu_urkunden_dict.items():
+    existing_titles = ['<td>{}</td>'.format(title_dict[x]['title']) for x in v if x.startswith('urn:cts')]
+    existing_docs = [x for x in v if x.startswith('urn:cts')]
+    existing_refs = ['all' for x in v if x.startswith('urn:cts')]
+    if len(existing_docs) > 1:
+        formel_zu_urkunden_tabelle.append("""<tr><td><a class="internal-link" href="{{ url_for('InstanceNemo.r_multipassage', objectIds='""" + '+'.join(existing_docs) + """', subreferences='""" + '+'.join(existing_refs) + """') }}">""" + k + "</a></td>" + ''.join(existing_titles) + "</tr>")
+formel_zu_urkunden_html = """<table id="formel_zu_urkunde_tabelle" class="table table-sm table-hover table-bordered" aria-label="{{ _('Formel zu Urkunde Entsprechungen') }}"><tbody>""" + ''.join(formel_zu_urkunden_tabelle) + '</tbody></table>'
 
 with open('/home/matt/formulae-capitains-nemo/templates/main/all_parts_table.html', mode='w') as f:
     f.write(''.join(all_part_template))
@@ -275,5 +352,11 @@ with open('/home/matt/formulae-capitains-nemo/templates/main/all_parts_table.htm
 with open('/home/matt/formulae-capitains-nemo/templates/main/charter_group_table.html', mode='w') as f:
     f.write(''.join(all_charter_groups_list))
 
-with open('/home/matt/formulae-capitains-nemo/templates/main/st_gallen_group_table.html', mode='w') as f:
-    f.write(st_gallen_group_html_template)
+with open('/home/matt/formulae-capitains-nemo/templates/main/charter_parts_table.html', mode='w') as f:
+    f.write(''.join(charter_parts_list))
+
+with open('/home/matt/formulae-capitains-nemo/templates/main/formulae_formulae_table.html', mode='w') as f:
+    f.write(formel_zu_formel_html)
+
+with open('/home/matt/formulae-capitains-nemo/templates/main/formulae_charter_table.html', mode='w') as f:
+    f.write(formel_zu_urkunden_html)

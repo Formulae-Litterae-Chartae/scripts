@@ -6,11 +6,13 @@ import sys
 import os
 import subprocess
 
+current_dir = os.path.abspath(os.path.dirname(__file__))
+home_dir = os.environ.get('HOME', '')
 orig = str(sys.argv[1])
 saxon_location = sys.argv[2]
-add_bibl_xslt = "/home/matt/scripts/corpus_transformation_scripts/Formulae/add_missing_bibl_links.xsl"
+add_bibl_xslt = current_dir + "/Formulae/add_missing_bibl_links.xsl"
 
-kurz = [re.sub('[„“"\'’]', '', x) for x in etree.parse('/home/matt/results/Bibliographie_E-Lexikon.xml').xpath('//tei:title[@type="short"]/text()', namespaces={'tei': 'http://www.tei-c.org/ns/1.0'})]
+kurz = [re.sub('[„“"\'’]', '', x) for x in etree.parse(home_dir + '/scripts/bibliography/formulae_bibliographie.xml').xpath('//tei:title[@type="short"]/text()', namespaces={'tei': 'http://www.tei-c.org/ns/1.0'})]
 
 texts = [x for x in glob(orig + '/data/**/*.xml', recursive=True) if '__capitains__' not in x]
 
@@ -27,5 +29,5 @@ for text in sorted(texts):
             subprocess.run(['java', '-jar',  saxon_location, '{}'.format(text), add_bibl_xslt, '-o:{}'.format(text)])
             
             
-with open('/home/matt/results/elex_problems.txt', mode="w") as f:                                                                                                                                      
+with open(home_dir + '/results/elex_problems.txt', mode="w") as f:
     f.write('\n'.join(['\t'.join(x) for x in problems]))
