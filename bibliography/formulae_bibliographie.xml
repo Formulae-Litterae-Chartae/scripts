@@ -131,23 +131,6 @@
 <biblScope unit="page" from="431" to="450">431--450</biblScope>
 </monogr>
 </biblStruct>
-<biblStruct type="book">
-<monogr>
-<editor>
-<forename>Giuseppe</forename>
-<surname>Alberigo</surname>
-</editor>
-<title>Conciliorum oecumenicorum generaliumque decreta: editio critica. 1: The oecumenical councils: from Nicaea I to Nicaea II (325 - 787)</title>
-<title type="short">Alberigo (Hg.) 2006 – Conciliorum oecumenicorum generaliumque decreta</title>
-<imprint>
-<pubPlace>Turnhout</pubPlace>
-<date type="publicationDate">2006</date>
-</imprint>
-</monogr>
-<series>
-<title level="s">Corpus Christianorum</title>
-</series>
-</biblStruct>
 <biblStruct type="incollection">
 <analytic>
 <title>Concilium Chalcedonense 451</title>
@@ -192,6 +175,27 @@
 </biblStruct>
 <biblStruct type="incollection">
 <analytic>
+<title>Concilium Nicaenum I -325</title>
+<title type="short">Konzil von Nicaea 325</title>
+</analytic>
+<monogr>
+<title level="m">Conciliorum oecumenicorum generaliumque decreta: editio critica. 1: The oecumenical councils: from Nicaea I to Nicaea II (325 - 787)</title>
+<editor>
+<forename>Giuseppe</forename>
+<surname>Alberigo</surname>
+</editor>
+<imprint>
+<pubPlace>Turnhout</pubPlace>
+<date type="publicationDate">2006</date>
+</imprint>
+<biblScope unit="page" from="3" to="34">3--34</biblScope>
+</monogr>
+<series>
+<title level="s">Corpus Christianorum</title>
+</series>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
 <title>Concilium Ephesenum 431</title>
 <title type="short">Konzil von Ephesos 431</title>
 </analytic>
@@ -211,26 +215,36 @@
 <title level="s">Corpus Christianorum</title>
 </series>
 </biblStruct>
-<biblStruct type="incollection">
-<analytic>
-<title>Concilium Nicaenum I -325</title>
-<title type="short">Konzil von Nicaea 325</title>
-</analytic>
+<biblStruct type="book">
 <monogr>
-<title level="m">Conciliorum oecumenicorum generaliumque decreta: editio critica. 1: The oecumenical councils: from Nicaea I to Nicaea II (325 - 787)</title>
 <editor>
 <forename>Giuseppe</forename>
 <surname>Alberigo</surname>
 </editor>
+<title>Conciliorum oecumenicorum generaliumque decreta: editio critica. 1: The oecumenical councils: from Nicaea I to Nicaea II (325 - 787)</title>
+<title type="short">Alberigo (Hg.) 2006 – Conciliorum oecumenicorum generaliumque decreta</title>
 <imprint>
 <pubPlace>Turnhout</pubPlace>
 <date type="publicationDate">2006</date>
 </imprint>
-<biblScope unit="page" from="3" to="34">3--34</biblScope>
 </monogr>
 <series>
 <title level="s">Corpus Christianorum</title>
 </series>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<author>
+<forename>Andreas</forename>
+<surname>Albert</surname>
+</author>
+<title>Untersuchungen zum Begriff peregrinatio bzw. peregrinus in der benediktinischen Tradition des Früh- und Hochmittelalters</title>
+<title type="short">A. Albert, Untersuchungen</title>
+<imprint>
+<publisher>Eos Verlag</publisher>
+<date type="publicationDate">1992</date>
+</imprint>
+</monogr>
 </biblStruct>
 <biblStruct type="article">
 <analytic>
@@ -323,6 +337,42 @@
 <forename>Gerd</forename>
 <surname>Althoff</surname>
 </author>
+<title>Demonstration und Inszenierung: Spielregeln der Kommunikation in mittelalterlicher Öffentlichkeit</title>
+<title type="short">G. Althoff, Demonstration und Inszenierung</title>
+</analytic>
+<monogr>
+<title level="m">Spielregeln der Politik im Mittelalter. Kommunikation in Frieden und Fehde</title>
+<editor>
+<forename>Gerd</forename>
+<surname>Althoff</surname>
+</editor>
+<imprint>
+<pubPlace>Darmstadt</pubPlace>
+<date type="publicationDate">1996</date>
+</imprint>
+<biblScope unit="page" from="229" to="257">229--257</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Gerd</forename>
+<surname>Althoff</surname>
+</editor>
+<title>Spielregeln der Politik im Mittelalter. Kommunikation in Frieden und Fehde</title>
+<title type="short">Althoff (Hg.) 1996 – Spielregeln der Politik im Mittelalter</title>
+<imprint>
+<pubPlace>Darmstadt</pubPlace>
+<date type="publicationDate">1996</date>
+</imprint>
+</monogr>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Gerd</forename>
+<surname>Althoff</surname>
+</author>
 <title>Das Privileg der 'Deditio'. Formen gütlicher Konfliktbeendigung in der mittelalterlichen Adelsgesellschaft</title>
 <title type="short">G. Althoff, Privileg der Deditio</title>
 </analytic>
@@ -349,37 +399,11 @@
 <forename>Gerd</forename>
 <surname>Althoff</surname>
 </author>
-<title>"Amicitiae" as relationships between states and people</title>
-<title type="short">G. Althoff, Amicitiae</title>
-</analytic>
-<monogr>
-<title level="m">Debating the Middle Ages. Issues and Readings</title>
-<editor>
-<forename>Lester Knox</forename>
-<surname>Little</surname>
-</editor>
-<editor>
-<forename>Barbara H.</forename>
-<surname>Rosenwein</surname>
-</editor>
-<imprint>
-<pubPlace>Oxford</pubPlace>
-<date type="publicationDate">1998</date>
-</imprint>
-<biblScope unit="page" from="191" to="210">191--210</biblScope>
-</monogr>
-</biblStruct>
-<biblStruct type="incollection">
-<analytic>
-<author>
-<forename>Gerd</forename>
-<surname>Althoff</surname>
-</author>
 <title>Art. Würde. II. Institutions- und Sozialgeschichte</title>
 <title type="short">G. Althoff, Würde</title>
 </analytic>
 <monogr>
-<title level="m">Lexikon des Mittelalters</title>
+<title level="m">Lexikon des Mittelalters: Teilband 9</title>
 <imprint>
 <date type="publicationDate">1998</date>
 </imprint>
@@ -409,6 +433,32 @@
 <biblScope unit="page" from="59" to="74">59--74</biblScope>
 </monogr>
 </biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Gerd</forename>
+<surname>Althoff</surname>
+</author>
+<title>"Amicitiae" as relationships between states and people</title>
+<title type="short">G. Althoff, Amicitiae</title>
+</analytic>
+<monogr>
+<title level="m">Debating the Middle Ages. Issues and Readings</title>
+<editor>
+<forename>Lester Knox</forename>
+<surname>Little</surname>
+</editor>
+<editor>
+<forename>Barbara H.</forename>
+<surname>Rosenwein</surname>
+</editor>
+<imprint>
+<pubPlace>Oxford</pubPlace>
+<date type="publicationDate">1998</date>
+</imprint>
+<biblScope unit="page" from="191" to="210">191--210</biblScope>
+</monogr>
+</biblStruct>
 <biblStruct type="book">
 <monogr>
 <editor>
@@ -421,6 +471,80 @@
 <pubPlace>Stuttgart</pubPlace>
 <date type="publicationDate">2001</date>
 </imprint>
+</monogr>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Gerd</forename>
+<surname>Althoff</surname>
+</author>
+<title>Freiwilligkeit und Konsensfassaden: Emotionale Ausdrucksformen in der Politik des Mittelalters</title>
+<title type="short">G. Althoff, Freiwilligkeit und Konsensfassaden</title>
+</analytic>
+<monogr>
+<title level="m">Pathos, Affekt, Gefühl: Die Emotionen in den Künsten</title>
+<editor>
+<forename>Klaus</forename>
+<surname>Herding</surname>
+</editor>
+<editor>
+<forename>Bernhard</forename>
+<surname>Stumpfhaus</surname>
+</editor>
+<imprint>
+<pubPlace>Berlin [u.a.]</pubPlace>
+<date type="publicationDate">2004</date>
+</imprint>
+<biblScope unit="page" from="145" to="161">145--161</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Gerd</forename>
+<surname>Althoff</surname>
+</editor>
+<title>Heinrich IV.</title>
+<title type="short">Althoff (Hg.) 2009 – Heinrich IV</title>
+<imprint>
+<pubPlace>Ostfildern</pubPlace>
+<date type="publicationDate">2009</date>
+</imprint>
+</monogr>
+<series>
+<title level="s">Vorträge und Forschungen</title>
+<biblScope unit="volume">69</biblScope>
+</series>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Gerd</forename>
+<surname>Althoff</surname>
+</author>
+<title>Inszenierte Freiwilligkeit. Techniken der Entmachtung im Mittelalter</title>
+<title type="short">G. Althoff, Inszenierte Freiwilligkeit</title>
+</analytic>
+<monogr>
+<title level="m">Herrschaftsverlust und Machtverfall</title>
+<editor>
+<forename>Peter</forename>
+<surname>Hoeres</surname>
+</editor>
+<editor>
+<forename>Armin</forename>
+<surname>Owzar</surname>
+</editor>
+<editor>
+<forename>Christina</forename>
+<surname>Schröer</surname>
+</editor>
+<imprint>
+<pubPlace>München</pubPlace>
+<date type="publicationDate">2013</date>
+</imprint>
+<biblScope unit="page" from="87" to="96">87--96</biblScope>
 </monogr>
 </biblStruct>
 <biblStruct type="incollection">
@@ -1617,6 +1741,21 @@
 <biblScope unit="volume">5</biblScope>
 </monogr>
 </biblStruct>
+<biblStruct type="book">
+<monogr>
+<title>Arcana imperii (IVe-XIe siècle)</title>
+<title type="short">Arcana imperii IVe-XIe siècle 2003</title>
+<imprint>
+<pubPlace>Limoges</pubPlace>
+<publisher>PULIM</publisher>
+<date type="publicationDate">2003</date>
+</imprint>
+</monogr>
+<series>
+<title level="s">Cahiers de l'Institut d'Anthropologie Juridique</title>
+<biblScope unit="volume">10</biblScope>
+</series>
+</biblStruct>
 <biblStruct type="incollection">
 <analytic>
 <author>
@@ -1851,6 +1990,28 @@
 <date type="publicationDate">2018</date>
 </imprint>
 </monogr>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Peter</forename>
+<surname>Aufgebauer</surname>
+</editor>
+<editor>
+<forename>Christine</forename>
+<surname>den van Heuvel</surname>
+</editor>
+<title>Herrschaftspraxis und soziale Ordnungen im Mittelalter und in der frühen Neuzeit. Ernst Schubert zum Gedenken</title>
+<title type="short">Aufgebauer, van Heuvel (Hg.) 2006 – Herrschaftspraxis und soziale Ordnungen</title>
+<imprint>
+<pubPlace>Hannover</pubPlace>
+<date type="publicationDate">2006</date>
+</imprint>
+</monogr>
+<series>
+<title level="s">Veröffentlichungen der Historischen Kommission für Niedersachsen und Bremen</title>
+<biblScope unit="volume">232</biblScope>
+</series>
 </biblStruct>
 <biblStruct type="incollection">
 <analytic>
@@ -2289,6 +2450,24 @@
 <forename>Joseph</forename>
 <surname>Balon</surname>
 </author>
+<title>L'andelangus en face du droit</title>
+<title type="short">J. Balon, L'andelangus</title>
+</analytic>
+<monogr>
+<title level="j">Zeitschrift der Savigny-Stiftung für Rechtsgeschichte: Germanistische Abteilung</title>
+<imprint>
+<date type="publicationDate">1962</date>
+</imprint>
+<biblScope unit="volume">79</biblScope>
+<biblScope unit="page" from="32" to="51">32--51</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="article">
+<analytic>
+<author>
+<forename>Joseph</forename>
+<surname>Balon</surname>
+</author>
 <title>Les lètes chez les Francs</title>
 <title type="short">J. Balon, Lètes</title>
 </analytic>
@@ -2519,6 +2698,32 @@
 </biblStruct>
 <biblStruct type="book">
 <monogr>
+<editor>
+<forename>Irene</forename>
+<surname>Barbiera</surname>
+</editor>
+<editor>
+<forename>Francesco</forename>
+<surname>Borri</surname>
+</editor>
+<editor>
+<forename>Annamaria</forename>
+<surname>Pazienza</surname>
+</editor>
+<title>I Longobardi a Venezia: Scritti per Stefano Gasparri</title>
+<title type="short">Barbiera, Borri et al. (Hg.) 2020 – I Longobardi a Venezia</title>
+<imprint>
+<pubPlace>Turnhout</pubPlace>
+<date type="publicationDate">2020</date>
+</imprint>
+</monogr>
+<series>
+<title level="s">Collection Haut Moyen Âge</title>
+<biblScope unit="volume">40</biblScope>
+</series>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
 <author>
 <forename>Timothy D.</forename>
 <surname>Barnes</surname>
@@ -2684,6 +2889,24 @@
 <biblScope unit="volume">61</biblScope>
 </series>
 </biblStruct>
+<biblStruct type="article">
+<analytic>
+<author>
+<forename>Dominique</forename>
+<surname>Barthélemy</surname>
+</author>
+<title>Diversité des ordalies médiévales</title>
+<title type="short">D. Barthélemy, Diversité des ordalies</title>
+</analytic>
+<monogr>
+<title level="j">Revue historique</title>
+<imprint>
+<date type="publicationDate">1988</date>
+</imprint>
+<biblScope unit="volume">280</biblScope>
+<biblScope unit="page" from="3" to="26">3--26</biblScope>
+</monogr>
+</biblStruct>
 <biblStruct type="book">
 <monogr>
 <author>
@@ -2712,6 +2935,21 @@
 <imprint>
 <pubPlace>Ithaca</pubPlace>
 <date type="publicationDate">2009</date>
+</imprint>
+</monogr>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<author>
+<forename>Robert J.</forename>
+<surname>Bartlett</surname>
+</author>
+<title>Trial by fire and water: The medieval judicial ordeal</title>
+<title type="short">R. Bartlett, Trial by Fire</title>
+<edition>1.</edition>
+<imprint>
+<pubPlace>Oxford</pubPlace>
+<date type="publicationDate">1986</date>
 </imprint>
 </monogr>
 </biblStruct>
@@ -2897,6 +3135,32 @@
 <forename>Sönke</forename>
 <surname>Lorenz</surname>
 </editor>
+<title>Mönchtum - Kirche - Herrschaft 750-1000. Josef Semmler zum 65. Geburtstag</title>
+<title type="short">Bauer, Hiestand et al. (Hg.) 1998 – Mönchtum</title>
+<imprint>
+<pubPlace>Sigmaringen</pubPlace>
+<date type="publicationDate">1998</date>
+</imprint>
+</monogr>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Dieter R.</forename>
+<surname>Bauer</surname>
+</editor>
+<editor>
+<forename>Rudolf</forename>
+<surname>Hiestand</surname>
+</editor>
+<editor>
+<forename>Brigitte</forename>
+<surname>Kasten</surname>
+</editor>
+<editor>
+<forename>Sönke</forename>
+<surname>Lorenz</surname>
+</editor>
 <title>Mönchtum - Kirche - Herrschaft 750-1000: FS Josef Semmler</title>
 <title type="short">Bauer, Hiestand et al. (Hg.) 1998 – Mönchtum</title>
 <imprint>
@@ -3032,6 +3296,28 @@
 <title level="s">Collecció oberta</title>
 <biblScope unit="volume">28</biblScope>
 </series>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Katrin</forename>
+<surname>Bayerle</surname>
+</author>
+<title>Einsatzfelder des weltlichen Bannes im Frühmittelalter</title>
+<title type="short">K. Bayerle, Einsatzfelder</title>
+</analytic>
+<monogr>
+<title level="m">Von den leges barbarorum bis zum ius barbarum des Nationalsozialismus. Festschrift für Hermann Nehlsen zum 70. Geburtstag</title>
+<editor>
+<forename>Hans-Georg</forename>
+<surname>Hermann</surname>
+</editor>
+<imprint>
+<pubPlace>Köln</pubPlace>
+<date type="publicationDate">2008</date>
+</imprint>
+<biblScope unit="page" from="13" to="34">13--34</biblScope>
+</monogr>
 </biblStruct>
 <biblStruct type="incollection">
 <analytic>
@@ -3211,6 +3497,36 @@
 <title level="s">Super alta perennis</title>
 <biblScope unit="volume">11</biblScope>
 </series>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Corinne</forename>
+<surname>Beck</surname>
+</author>
+<author>
+<forename>Fabrice</forename>
+<surname>Guizard</surname>
+</author>
+<title>La forêt ressources</title>
+<title type="short">C. Beck/F. Guizard, La forêt ressources</title>
+</analytic>
+<monogr>
+<title level="m">La forêt au Moyen Âge</title>
+<editor>
+<forename>Sylvie</forename>
+<surname>Bépoix</surname>
+</editor>
+<editor>
+<forename>Hervé</forename>
+<surname>Richard</surname>
+</editor>
+<imprint>
+<pubPlace>Paris</pubPlace>
+<date type="publicationDate">2019</date>
+</imprint>
+<biblScope unit="page" from="107" to="120">107--120</biblScope>
+</monogr>
 </biblStruct>
 <biblStruct type="book">
 <monogr>
@@ -3480,6 +3796,42 @@
 <imprint>
 <pubPlace>Frankfurt a. M.</pubPlace>
 <date type="publicationDate">1993</date>
+</imprint>
+</monogr>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Sylvie</forename>
+<surname>Bépoix</surname>
+</editor>
+<editor>
+<forename>Hervé</forename>
+<surname>Richard</surname>
+</editor>
+<title>La forêt au Moyen Âge</title>
+<title type="short">Bépoix, Richard (Hg.) 2019 – La forêt au Moyen Âge</title>
+<imprint>
+<pubPlace>Paris</pubPlace>
+<date type="publicationDate">2019</date>
+</imprint>
+</monogr>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Sylvie</forename>
+<surname>Bépoix</surname>
+</editor>
+<editor>
+<forename>Hervé</forename>
+<surname>Richard</surname>
+</editor>
+<title>La forêt au Moyen Âge</title>
+<title type="short">Bépoix, Richard (Hg.) 2019 – La forêt au Moyen Âge</title>
+<imprint>
+<pubPlace>Paris</pubPlace>
+<date type="publicationDate">2019</date>
 </imprint>
 </monogr>
 </biblStruct>
@@ -4346,6 +4698,30 @@
 <title level="s">MGH LL</title>
 </series>
 </biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Uta-Renate</forename>
+<surname>Blumenthal</surname>
+</author>
+<title>The Prohibition of Clerical Marriage in the Eleventh Century</title>
+<title type="short">U.-R. Blumenthal, The Prohibition</title>
+</analytic>
+<monogr>
+<title level="m">Chastity: A Study in Perception, Ideals, Opposition</title>
+<editor>
+<forename>Nancy</forename>
+<surname>van Deusen</surname>
+</editor>
+<imprint>
+<pubPlace>Leiden</pubPlace>
+<date type="publicationDate">2008</date>
+</imprint>
+</monogr>
+<series>
+<title level="s">Presenting the past</title>
+</series>
+</biblStruct>
 <biblStruct type="article">
 <analytic>
 <author>
@@ -4505,6 +4881,24 @@
 <biblScope unit="page" from="249" to="258">249--258</biblScope>
 </monogr>
 </biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Alfred</forename>
+<surname>Boretius</surname>
+</editor>
+<title>Capitularia regum Francorum</title>
+<title type="short">MGH Capit. 1</title>
+<imprint>
+<pubPlace>Hannover</pubPlace>
+<date type="publicationDate">1883</date>
+</imprint>
+</monogr>
+<series>
+<title level="s">MGH Capit.</title>
+<biblScope unit="volume">1</biblScope>
+</series>
+</biblStruct>
 <biblStruct type="incollection">
 <analytic>
 <title>Chlotharii II. edictum: 614 Oct 18</title>
@@ -4545,24 +4939,6 @@
 </monogr>
 <series>
 <title level="s">MGH Capit.</title>
-</series>
-</biblStruct>
-<biblStruct type="book">
-<monogr>
-<editor>
-<forename>Alfred</forename>
-<surname>Boretius</surname>
-</editor>
-<title>Capitularia regum Francorum</title>
-<title type="short">MGH Capit. 1</title>
-<imprint>
-<pubPlace>Hannover</pubPlace>
-<date type="publicationDate">1883</date>
-</imprint>
-</monogr>
-<series>
-<title level="s">MGH Capit.</title>
-<biblScope unit="volume">1</biblScope>
 </series>
 </biblStruct>
 <biblStruct type="book">
@@ -5012,6 +5388,39 @@
 <date type="publicationDate">2015</date>
 </imprint>
 <biblScope unit="page" from="215" to="238">215--238</biblScope>
+</monogr>
+<series>
+<title level="s">Collection Haut Moyen Âge</title>
+</series>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>François</forename>
+<surname>Bougard</surname>
+</author>
+<title>Témoigner en justice à Plaisance aux IXe-Xe siècles. Autour d'un breve inédit</title>
+<title type="short">F. Bougard, Témoigner</title>
+</analytic>
+<monogr>
+<title level="m">I Longobardi a Venezia: Scritti per Stefano Gasparri</title>
+<editor>
+<forename>Irene</forename>
+<surname>Barbiera</surname>
+</editor>
+<editor>
+<forename>Francesco</forename>
+<surname>Borri</surname>
+</editor>
+<editor>
+<forename>Annamaria</forename>
+<surname>Pazienza</surname>
+</editor>
+<imprint>
+<pubPlace>Turnhout</pubPlace>
+<date type="publicationDate">2020</date>
+</imprint>
+<biblScope unit="page" from="185" to="194">185--194</biblScope>
 </monogr>
 <series>
 <title level="s">Collection Haut Moyen Âge</title>
@@ -5926,6 +6335,23 @@
 </biblStruct>
 <biblStruct type="book">
 <monogr>
+<editor>
+<forename>Norbert</forename>
+<surname>Brieskorn</surname>
+</editor>
+<title>Vom mittelalterlichen Recht zur neuzeitlichen Rechtswissenschaft. Bedingungen, Wege und Probleme der europäischen Rechtsgeschichte. Winfried Trusen zum 70. Geburtstag</title>
+<title type="short">Brieskorn (Hg.) 1994 – Vom mittelalterlichen Recht zur neuzeitlichen</title>
+<imprint>
+<pubPlace>Paderborn</pubPlace>
+<date type="publicationDate">1994</date>
+</imprint>
+</monogr>
+<series>
+<title level="s">Rechts- und staatswissenschaftliche Veröffentlichungen der Görres-Gesellschaft</title>
+</series>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
 <author>
 <forename>Anna-Dorothee von den</forename>
 <surname>Brincken</surname>
@@ -6112,6 +6538,24 @@
 <date type="publicationDate">2015</date>
 </imprint>
 </monogr>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<author>
+<forename>Peter Robert Lamont</forename>
+<surname>Brown</surname>
+</author>
+<title>The Body and Society: Men, Women and Sexual Renunciation in Early Christianity</title>
+<title type="short">P. Brown, The Body</title>
+<imprint>
+<pubPlace>New York, NY</pubPlace>
+<date type="publicationDate">1988</date>
+</imprint>
+</monogr>
+<series>
+<title level="s">Lectures on the history of religions</title>
+<biblScope unit="volume">NS 13</biblScope>
+</series>
 </biblStruct>
 <biblStruct type="article">
 <analytic>
@@ -6372,6 +6816,24 @@
 </imprint>
 </monogr>
 </biblStruct>
+<biblStruct type="article">
+<analytic>
+<author>
+<forename>Heinrich</forename>
+<surname>Brunner</surname>
+</author>
+<title>Die uneheliche Vaterschaft in den älteren germanischen Rechten</title>
+<title type="short">H. Brunner, Die uneheliche Vaterschaft</title>
+</analytic>
+<monogr>
+<title level="j">Zeitschrift der Savigny-Stiftung für Rechtsgeschichte: Germanistische Abteilung</title>
+<imprint>
+<date type="publicationDate">1896</date>
+</imprint>
+<biblScope unit="volume">17</biblScope>
+<biblScope unit="page" from="1" to="32">1--32</biblScope>
+</monogr>
+</biblStruct>
 <biblStruct type="book">
 <monogr>
 <author>
@@ -6385,52 +6847,6 @@
 <pubPlace>Leipzig</pubPlace>
 <date type="publicationDate">1906</date>
 </imprint>
-</monogr>
-</biblStruct>
-<biblStruct type="incollection">
-<analytic>
-<author>
-<forename>Heinrich</forename>
-<surname>Brunner</surname>
-</author>
-<title>Mithio und Sperantes</title>
-<title type="short">H. Brunner, Mithio</title>
-</analytic>
-<monogr>
-<title level="m">Abhandlungen zur Rechtsgeschichte: gesammelte Aufsätze</title>
-<editor>
-<forename>Karl</forename>
-<surname>Rauch</surname>
-</editor>
-<imprint>
-<pubPlace>Weimar</pubPlace>
-<publisher>Böhlau</publisher>
-<date type="publicationDate">1931</date>
-</imprint>
-<biblScope unit="page" from="209" to="240">209--240</biblScope>
-</monogr>
-</biblStruct>
-<biblStruct type="incollection">
-<analytic>
-<author>
-<forename>Heinrich</forename>
-<surname>Brunner</surname>
-</author>
-<title>Die fränkisch-romanische Urkunde als Wertpapier (1877)</title>
-<title type="short">H. Brunner, Die fränkisch-romanische Urkunde</title>
-</analytic>
-<monogr>
-<title level="m">Abhandlungen zur Rechtsgeschichte: gesammelte Aufsätze</title>
-<editor>
-<forename>Karl</forename>
-<surname>Rauch</surname>
-</editor>
-<imprint>
-<pubPlace>Weimar</pubPlace>
-<publisher>Böhlau</publisher>
-<date type="publicationDate">1931</date>
-</imprint>
-<biblScope unit="page" from="524" to="630">524--630</biblScope>
 </monogr>
 </biblStruct>
 <biblStruct type="book">
@@ -6477,8 +6893,8 @@
 <forename>Heinrich</forename>
 <surname>Brunner</surname>
 </author>
-<title>Die fränkisch-romanische dos</title>
-<title type="short">H. Brunner, Die fränkisch-romanische dos</title>
+<title>Die fränkisch-romanische Urkunde als Wertpapier (1877)</title>
+<title type="short">H. Brunner, Die fränkisch-romanische Urkunde</title>
 </analytic>
 <monogr>
 <title level="m">Abhandlungen zur Rechtsgeschichte: gesammelte Aufsätze</title>
@@ -6491,7 +6907,7 @@
 <publisher>Böhlau</publisher>
 <date type="publicationDate">1931</date>
 </imprint>
-<biblScope unit="page" from="78" to="116">78--116</biblScope>
+<biblScope unit="page" from="524" to="630">524--630</biblScope>
 </monogr>
 </biblStruct>
 <biblStruct type="incollection">
@@ -6515,6 +6931,52 @@
 <date type="publicationDate">1931</date>
 </imprint>
 <biblScope unit="page" from="55" to="72">55--72</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Heinrich</forename>
+<surname>Brunner</surname>
+</author>
+<title>Mithio und Sperantes</title>
+<title type="short">H. Brunner, Mithio</title>
+</analytic>
+<monogr>
+<title level="m">Abhandlungen zur Rechtsgeschichte: gesammelte Aufsätze</title>
+<editor>
+<forename>Karl</forename>
+<surname>Rauch</surname>
+</editor>
+<imprint>
+<pubPlace>Weimar</pubPlace>
+<publisher>Böhlau</publisher>
+<date type="publicationDate">1931</date>
+</imprint>
+<biblScope unit="page" from="209" to="240">209--240</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Heinrich</forename>
+<surname>Brunner</surname>
+</author>
+<title>Die fränkisch-romanische dos</title>
+<title type="short">H. Brunner, Die fränkisch-romanische dos</title>
+</analytic>
+<monogr>
+<title level="m">Abhandlungen zur Rechtsgeschichte: gesammelte Aufsätze</title>
+<editor>
+<forename>Karl</forename>
+<surname>Rauch</surname>
+</editor>
+<imprint>
+<pubPlace>Weimar</pubPlace>
+<publisher>Böhlau</publisher>
+<date type="publicationDate">1931</date>
+</imprint>
+<biblScope unit="page" from="78" to="116">78--116</biblScope>
 </monogr>
 </biblStruct>
 <biblStruct type="article">
@@ -6573,6 +7035,28 @@
 <series>
 <title level="s">Mitteilungen des Instituts für Österreichische Geschichtsforschung. Ergänzungsband</title>
 </series>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Otto</forename>
+<surname>Brunner</surname>
+</editor>
+<editor>
+<forename>Werner</forename>
+<surname>Conze</surname>
+</editor>
+<editor>
+<forename>Reinhart</forename>
+<surname>Koselleck</surname>
+</editor>
+<title>Geschichtliche Grundbegriffe. Historisches Lexikon zur politisch-sozialen Sprache in Deutschland</title>
+<title type="short">Brunner, Conze et al. (Hg.) 1972-1997 – Geschichtliche Grundbegriffe</title>
+<imprint>
+<pubPlace>Stuttgart</pubPlace>
+<date type="publicationDate">1972-1997</date>
+</imprint>
+</monogr>
 </biblStruct>
 <biblStruct type="article">
 <analytic>
@@ -6704,20 +7188,6 @@
 </imprint>
 </monogr>
 </biblStruct>
-<biblStruct type="book">
-<monogr>
-<editor>
-<forename>Carlrichard</forename>
-<surname>Brühl</surname>
-</editor>
-<title>Aus Mittelalter und Diplomatik: Gesammelte Aufsätze</title>
-<title type="short">Brühl (Ed.) 1989-1997 – Aus Mittelalter und Diplomatik</title>
-<imprint>
-<pubPlace>Hildesheim u.a.</pubPlace>
-<date type="publicationDate">1989-1997</date>
-</imprint>
-</monogr>
-</biblStruct>
 <biblStruct type="incollection">
 <analytic>
 <author>
@@ -6739,6 +7209,20 @@
 </imprint>
 <biblScope unit="page" from="148" to="165">148--165</biblScope>
 <biblScope unit="volume">3</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Carlrichard</forename>
+<surname>Brühl</surname>
+</editor>
+<title>Aus Mittelalter und Diplomatik: Gesammelte Aufsätze</title>
+<title type="short">Brühl (Ed.) 1989-1997 – Aus Mittelalter und Diplomatik</title>
+<imprint>
+<pubPlace>Hildesheim u.a.</pubPlace>
+<date type="publicationDate">1989-1997</date>
+</imprint>
 </monogr>
 </biblStruct>
 <biblStruct type="book">
@@ -7924,6 +8408,42 @@
 <biblScope unit="page" from="145" to="154">145--154</biblScope>
 </monogr>
 </biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Peter</forename>
+<surname>Classen</surname>
+</editor>
+<title>Recht und Schrift im Mittelalter</title>
+<title type="short">Classen (Hg.) 1977 – Recht und Schrift im Mittelalter</title>
+<imprint>
+<pubPlace>Sigmaringen</pubPlace>
+<date type="publicationDate">1977</date>
+</imprint>
+</monogr>
+<series>
+<title level="s">Vorträge und Forschungen</title>
+<biblScope unit="volume">23</biblScope>
+</series>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<author>
+<forename>Peter</forename>
+<surname>Classen</surname>
+</author>
+<title>Kaiserreskript und Königsurkunde: Diplomatische Studien zum Problem der Kontinuität zwischen Altertum und Mittelalter</title>
+<title type="short">P. Classen, Kaiserreskript</title>
+<imprint>
+<pubPlace>Thessalonike</pubPlace>
+<date type="publicationDate">1977</date>
+</imprint>
+</monogr>
+<series>
+<title level="s">Byzantina keimena kai meletai</title>
+<biblScope unit="volume">15</biblScope>
+</series>
+</biblStruct>
 <biblStruct type="incollection">
 <analytic>
 <author>
@@ -7947,42 +8467,6 @@
 </monogr>
 <series>
 <title level="s">Vorträge und Forschungen</title>
-</series>
-</biblStruct>
-<biblStruct type="book">
-<monogr>
-<author>
-<forename>Peter</forename>
-<surname>Classen</surname>
-</author>
-<title>Kaiserreskript und Königsurkunde: Diplomatische Studien zum Problem der Kontinuität zwischen Altertum und Mittelalter</title>
-<title type="short">P. Classen, Kaiserreskript</title>
-<imprint>
-<pubPlace>Thessalonike</pubPlace>
-<date type="publicationDate">1977</date>
-</imprint>
-</monogr>
-<series>
-<title level="s">Byzantina keimena kai meletai</title>
-<biblScope unit="volume">15</biblScope>
-</series>
-</biblStruct>
-<biblStruct type="book">
-<monogr>
-<editor>
-<forename>Peter</forename>
-<surname>Classen</surname>
-</editor>
-<title>Recht und Schrift im Mittelalter</title>
-<title type="short">Classen (Hg.) 1977 – Recht und Schrift im Mittelalter</title>
-<imprint>
-<pubPlace>Sigmaringen</pubPlace>
-<date type="publicationDate">1977</date>
-</imprint>
-</monogr>
-<series>
-<title level="s">Vorträge und Forschungen</title>
-<biblScope unit="volume">23</biblScope>
 </series>
 </biblStruct>
 <biblStruct type="book">
@@ -8198,6 +8682,28 @@
 </biblStruct>
 <biblStruct type="incollection">
 <analytic>
+<title>Synode von Paris 556-573</title>
+<title type="short">Synode von Paris 556-573</title>
+</analytic>
+<monogr>
+<title level="m">Concilia Galliae. A. 511 - A. 695</title>
+<editor>
+<forename>Charles de</forename>
+<surname>Clercq</surname>
+</editor>
+<imprint>
+<pubPlace>Turnhout</pubPlace>
+<publisher>Brepols</publisher>
+<date type="publicationDate">1963</date>
+</imprint>
+<biblScope unit="page" from="204" to="210">204--210</biblScope>
+</monogr>
+<series>
+<title level="s">Corpus Christianorum / Series Latina 148 A</title>
+</series>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
 <title>Concilium Aurelianense a. 533</title>
 <title type="short">Concilium Aurelianense II</title>
 </analytic>
@@ -8301,28 +8807,6 @@
 <date type="publicationDate">1963</date>
 </imprint>
 <biblScope unit="page" from="175" to="199">175--199</biblScope>
-</monogr>
-<series>
-<title level="s">Corpus Christianorum / Series Latina 148 A</title>
-</series>
-</biblStruct>
-<biblStruct type="incollection">
-<analytic>
-<title>Synode von Paris 556-573</title>
-<title type="short">Synode von Paris 556-573</title>
-</analytic>
-<monogr>
-<title level="m">Concilia Galliae. A. 511 - A. 695</title>
-<editor>
-<forename>Charles de</forename>
-<surname>Clercq</surname>
-</editor>
-<imprint>
-<pubPlace>Turnhout</pubPlace>
-<publisher>Brepols</publisher>
-<date type="publicationDate">1963</date>
-</imprint>
-<biblScope unit="page" from="204" to="210">204--210</biblScope>
 </monogr>
 <series>
 <title level="s">Corpus Christianorum / Series Latina 148 A</title>
@@ -8683,6 +9167,66 @@
 </imprint>
 <biblScope unit="page" from="1278" to="1278">1278</biblScope>
 <biblScope unit="volume">5</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Albrecht</forename>
+<surname>Cordes</surname>
+</editor>
+<title>Rechtsbegriffe im Mittelalter</title>
+<title type="short">Cordes (Hg.) 2002 – Rechtsbegriffe im Mittelalter</title>
+<imprint>
+<pubPlace>Frankfurt a. M. [u.a.]</pubPlace>
+<date type="publicationDate">2002</date>
+</imprint>
+</monogr>
+<series>
+<title level="s">Rechtshistorische Reihe</title>
+<biblScope unit="volume">262</biblScope>
+</series>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Albrecht</forename>
+<surname>Cordes</surname>
+</editor>
+<title>Handwörterbuch zur deutschen Rechtsgeschichte</title>
+<title type="short">Cordes (Hg.) 2005- – Handwörterbuch zur deutschen Rechtsgeschichte</title>
+<edition>2., völlig überarb. und erw. Aufl.</edition>
+<imprint>
+<pubPlace>Berlin</pubPlace>
+<date type="publicationDate">2005-</date>
+</imprint>
+</monogr>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Albrecht</forename>
+<surname>Cordes</surname>
+</editor>
+<editor>
+<forename>Heiner</forename>
+<surname>Lück</surname>
+</editor>
+<editor>
+<forename>Dieter</forename>
+<surname>Werkmüller</surname>
+</editor>
+<editor>
+<forename>Ruth</forename>
+<surname>Schmidt-Wiegand</surname>
+</editor>
+<title>Handwörterbuch zur deutschen Rechtsgeschichte</title>
+<title type="short">HRG 2</title>
+<edition>2. Aufl.</edition>
+<imprint>
+<pubPlace>Berlin</pubPlace>
+<date type="publicationDate">2005-2016</date>
+</imprint>
 </monogr>
 </biblStruct>
 <biblStruct type="book">
@@ -9079,6 +9623,23 @@
 <title level="s">Menschen - Kulturen - Traditionen</title>
 <biblScope unit="volume">6</biblScope>
 </series>
+</biblStruct>
+<biblStruct type="article">
+<analytic>
+<author>
+<forename>Irénée-Henri</forename>
+<surname>Dalmais</surname>
+</author>
+<title>Le "Mysterion", contribution à une théologie de la liturgie</title>
+<title type="short">I.-H. Dalmais, Le mysterion</title>
+</analytic>
+<monogr>
+<title level="j">La Maison-Dieu: cahiers de pastorale liturgique</title>
+<imprint>
+<date type="publicationDate">1984</date>
+</imprint>
+<biblScope unit="page" from="14" to="50">14--50</biblScope>
+</monogr>
 </biblStruct>
 <biblStruct type="book">
 <monogr>
@@ -9592,28 +10153,6 @@
 <forename>Philippe</forename>
 <surname>Depreux</surname>
 </author>
-<title>La prestation de serment dans le monde franc: formes et functions (VIe-IXe siècles)</title>
-<title type="short">Ph. Depreux, La prestation de serment</title>
-</analytic>
-<monogr>
-<title level="m">Serment, promesse et engagement. Rituels et modalités au Moyen Âge</title>
-<editor>
-<forename>Françoise</forename>
-<surname>Laurent</surname>
-</editor>
-<imprint>
-<pubPlace>Montpellier</pubPlace>
-<date type="publicationDate">2008</date>
-</imprint>
-<biblScope unit="page" from="517" to="532">517--532</biblScope>
-</monogr>
-</biblStruct>
-<biblStruct type="incollection">
-<analytic>
-<author>
-<forename>Philippe</forename>
-<surname>Depreux</surname>
-</author>
 <title>Les Carolingiens et le serment</title>
 <title type="short">Ph. Depreux, Les Carolingiens et le serment</title>
 </analytic>
@@ -9640,43 +10179,20 @@
 <forename>Philippe</forename>
 <surname>Depreux</surname>
 </author>
-<title>Die Schenkung an die Kirche als bleibende Erinnerung an das Verhältnis zwischen Herrscher undfideles im Frühmittelalter</title>
-<title type="short">Ph. Depreux, Die Schenkung</title>
+<title>La prestation de serment dans le monde franc: formes et functions (VIe-IXe siècles)</title>
+<title type="short">Ph. Depreux, La prestation de serment</title>
 </analytic>
 <monogr>
-<title level="m">Verwandtschaft, Freundschaft, Bruderschaft. Soziale Lebens- und Kommunikationsformen im Mittelalter</title>
+<title level="m">Serment, promesse et engagement. Rituels et modalités au Moyen Âge</title>
 <editor>
-<forename>Gerhard</forename>
-<surname>Krieger</surname>
+<forename>Françoise</forename>
+<surname>Laurent</surname>
 </editor>
 <imprint>
-<pubPlace>Berlin</pubPlace>
-<date type="publicationDate">2009</date>
+<pubPlace>Montpellier</pubPlace>
+<date type="publicationDate">2008</date>
 </imprint>
-<biblScope unit="page" from="297" to="306">297--306</biblScope>
-</monogr>
-</biblStruct>
-<biblStruct type="incollection">
-<analytic>
-<author>
-<forename>Philippe</forename>
-<surname>Depreux</surname>
-</author>
-<title>Gestures and Comportment at the Carolingian Court: Between Practice and Perception</title>
-<title type="short">Ph. Depreux, Gestures and comportment</title>
-</analytic>
-<monogr>
-<title level="m">The politics of gesture</title>
-<editor>
-<forename>M. J.</forename>
-<surname>Braddick</surname>
-</editor>
-<imprint>
-<pubPlace>Oxford and New York</pubPlace>
-<publisher>Oxford University Press</publisher>
-<date type="publicationDate">2009</date>
-</imprint>
-<biblScope unit="page" from="57" to="79">57--79</biblScope>
+<biblScope unit="page" from="517" to="532">517--532</biblScope>
 </monogr>
 </biblStruct>
 <biblStruct type="incollection">
@@ -9711,6 +10227,80 @@
 </monogr>
 <series>
 <title level="s">Cahiers de l'Institut d'Anthropologie Juridique</title>
+</series>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Philippe</forename>
+<surname>Depreux</surname>
+</author>
+<title>Gestures and Comportment at the Carolingian Court: Between Practice and Perception</title>
+<title type="short">Ph. Depreux, Gestures and comportment</title>
+</analytic>
+<monogr>
+<title level="m">The politics of gesture</title>
+<editor>
+<forename>M. J.</forename>
+<surname>Braddick</surname>
+</editor>
+<imprint>
+<pubPlace>Oxford and New York</pubPlace>
+<publisher>Oxford University Press</publisher>
+<date type="publicationDate">2009</date>
+</imprint>
+<biblScope unit="page" from="57" to="79">57--79</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Philippe</forename>
+<surname>Depreux</surname>
+</author>
+<title>Die Schenkung an die Kirche als bleibende Erinnerung an das Verhältnis zwischen Herrscher undfideles im Frühmittelalter</title>
+<title type="short">Ph. Depreux, Die Schenkung</title>
+</analytic>
+<monogr>
+<title level="m">Verwandtschaft, Freundschaft, Bruderschaft. Soziale Lebens- und Kommunikationsformen im Mittelalter</title>
+<editor>
+<forename>Gerhard</forename>
+<surname>Krieger</surname>
+</editor>
+<imprint>
+<pubPlace>Berlin</pubPlace>
+<date type="publicationDate">2009</date>
+</imprint>
+<biblScope unit="page" from="297" to="306">297--306</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Philippe</forename>
+<surname>Depreux</surname>
+</author>
+<title>Auf der Suche nach dem princeps in Aquitanien (7.-8. Jahrhundert)</title>
+<title type="short">Ph. Depreux, Auf der Suche</title>
+</analytic>
+<monogr>
+<title level="m">Die Anfänge Bayerns: von Raetien und Noricum zur frühmittelalterlichen Baiovaria</title>
+<editor>
+<forename>Hubert</forename>
+<surname>Fehr</surname>
+</editor>
+<editor>
+<forename>Irmtraut</forename>
+<surname>Heitmeier</surname>
+</editor>
+<imprint>
+<pubPlace>St. Ottilien</pubPlace>
+<date type="publicationDate">2012</date>
+</imprint>
+<biblScope unit="page" from="551" to="566">551--566</biblScope>
+</monogr>
+<series>
+<title level="s">Bayerische Landesgeschichte und europäische Regionalgeschichte</title>
 </series>
 </biblStruct>
 <biblStruct type="article">
@@ -10425,6 +11015,23 @@
 <biblScope unit="volume">43</biblScope>
 </series>
 </biblStruct>
+<biblStruct type="article">
+<analytic>
+<author>
+<forename>Albrecht</forename>
+<surname>Diem</surname>
+</author>
+<title>Organisierte Keuschheit. Sexualprävention im Mönchtum der Spätantike und des frühen Mittelalters</title>
+<title type="short">A. Diem, Organisierte Keuschheit</title>
+</analytic>
+<monogr>
+<title level="j">Invertito: Jahrbuch für die Geschichte der Homosexualitäten</title>
+<imprint>
+<date type="publicationDate">2001</date>
+</imprint>
+<biblScope unit="page" from="8" to="37">8--37</biblScope>
+</monogr>
+</biblStruct>
 <biblStruct type="book">
 <monogr>
 <editor>
@@ -10552,6 +11159,31 @@
 <forename>Gerhard</forename>
 <surname>Dilcher</surname>
 </author>
+<title>Die Zwangsgewalt und der Rechtsbegriff vorstaatlicher Ordnungen im Mittelalter</title>
+<title type="short">G. Dilcher, Die Zwangsgewalt</title>
+</analytic>
+<monogr>
+<title level="m">Rechtsbegriffe im Mittelalter</title>
+<editor>
+<forename>Albrecht</forename>
+<surname>Cordes</surname>
+</editor>
+<imprint>
+<pubPlace>Frankfurt a. M. [u.a.]</pubPlace>
+<date type="publicationDate">2002</date>
+</imprint>
+<biblScope unit="page" from="111" to="153">111--153</biblScope>
+</monogr>
+<series>
+<title level="s">Rechtshistorische Reihe</title>
+</series>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Gerhard</forename>
+<surname>Dilcher</surname>
+</author>
 <title>Leges -  Gentes -  Regna. Zur Rolle normativer Traditionen  germanischer Volkerschaften  bei der Ausbildung der  mittelalterlichen Rechtskultur: Fragen  und Probleme</title>
 <title type="short">G. Dilcher, Fragen und Probleme</title>
 </analytic>
@@ -10655,6 +11287,20 @@
 <title level="s">Schriften zur europäischen Rechts- und Verfassungsgeschichte</title>
 <biblScope unit="volume">6</biblScope>
 </series>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<author>
+<forename>Peter</forename>
+<surname>Dinzelbacher</surname>
+</author>
+<title>Das fremde Mittelalter: Gottesurteil und Tierprozess</title>
+<title type="short">P. Dinzelbacher, Das fremde Mittelalter</title>
+<imprint>
+<pubPlace>Essen</pubPlace>
+<date type="publicationDate">2007</date>
+</imprint>
+</monogr>
 </biblStruct>
 <biblStruct type="incollection">
 <analytic>
@@ -12113,6 +12759,24 @@
 <forename>Ekkehard</forename>
 <surname>Kaufmann</surname>
 </editor>
+<title>Handwörterbuch zur deutschen Rechtsgeschichte</title>
+<title type="short">HRG 1</title>
+<imprint>
+<pubPlace>Berlin</pubPlace>
+<date type="publicationDate">1971-1998</date>
+</imprint>
+</monogr>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Adalbert</forename>
+<surname>Erler</surname>
+</editor>
+<editor>
+<forename>Ekkehard</forename>
+<surname>Kaufmann</surname>
+</editor>
 <title>Handwörterbuch zur deutschen Rechtsgeschichte: III. Band: List - Protonotar</title>
 <title type="short">HRG 3</title>
 <imprint>
@@ -12136,6 +12800,42 @@
 <imprint>
 <pubPlace>Berlin</pubPlace>
 <date type="publicationDate">1990</date>
+</imprint>
+</monogr>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Adalbert</forename>
+<surname>Erler</surname>
+</editor>
+<editor>
+<forename>Ekkehard</forename>
+<surname>Kaufmann</surname>
+</editor>
+<title>Handwörterbuch zur deutschen Rechtsgeschichte: Tl. 5</title>
+<title type="short">Erler, Kaufmann (Hg.) 1998 – Handwörterbuch zur deutschen Rechtsgeschichte</title>
+<imprint>
+<pubPlace>Berlin</pubPlace>
+<date type="publicationDate">1998</date>
+</imprint>
+</monogr>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Adalbert</forename>
+<surname>Erler</surname>
+</editor>
+<editor>
+<forename>Ekkehard</forename>
+<surname>Kaufmann</surname>
+</editor>
+<title>Handwörterbuch zur deutschen Rechtsgeschichte</title>
+<title type="short">HRG 5</title>
+<imprint>
+<pubPlace>Berlin</pubPlace>
+<date type="publicationDate">1998</date>
 </imprint>
 </monogr>
 </biblStruct>
@@ -12191,6 +12891,49 @@
 <forename>Stefan</forename>
 <surname>Esders</surname>
 </author>
+<title>Treueidleistung und Rechtsveränderung im frühen Mittelalter</title>
+<title type="short">S. Esders, Treueidleistung</title>
+</analytic>
+<monogr>
+<title level="m">Rechtsveränderung im politischen und sozialen Kontext mittelalterlicher Rechtsvielfalt</title>
+<editor>
+<forename>Stefan</forename>
+<surname>Esders</surname>
+</editor>
+<editor>
+<forename>Christine</forename>
+<surname>Reinle</surname>
+</editor>
+<imprint>
+<pubPlace>Münster i. W</pubPlace>
+<date type="publicationDate">2005</date>
+</imprint>
+<biblScope unit="page" from="25" to="61">25--61</biblScope>
+</monogr>
+<series>
+<title level="s">Neue Aspekte der europäischen Mittelalterforschung</title>
+</series>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Stefan</forename>
+<surname>Esders</surname>
+</editor>
+<title>Rechtsverständnis und Konfliktbewältigung. Gerichtliche und außergerichtliche Strategien im Mittelalter: [internationales Kolloquium zu Ehren von Hanna Vollrath im Juni 2004 an der Ruhr-Universität Bochum]</title>
+<title type="short">Esders (Hg.) 2007 – Rechtsverständnis und Konfliktbewältigung</title>
+<imprint>
+<pubPlace>Köln u.a.</pubPlace>
+<date type="publicationDate">2007</date>
+</imprint>
+</monogr>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Stefan</forename>
+<surname>Esders</surname>
+</author>
 <title>Der Reinigungseid mit Helfern. Individuelle und kollektive Rechtsvorstellungen in der Wahrnehmung und Darstellung frühmittelalterlicher Konflikte</title>
 <title type="short">S. Esders, Reinigungseid</title>
 </analytic>
@@ -12205,20 +12948,6 @@
 <date type="publicationDate">2007</date>
 </imprint>
 <biblScope unit="page" from="55" to="78">55--78</biblScope>
-</monogr>
-</biblStruct>
-<biblStruct type="book">
-<monogr>
-<editor>
-<forename>Stefan</forename>
-<surname>Esders</surname>
-</editor>
-<title>Rechtsverständnis und Konfliktbewältigung. Gerichtliche und außergerichtliche Strategien im Mittelalter: [internationales Kolloquium zu Ehren von Hanna Vollrath im Juni 2004 an der Ruhr-Universität Bochum]</title>
-<title type="short">Esders (Hg.) 2007 – Rechtsverständnis und Konfliktbewältigung</title>
-<imprint>
-<pubPlace>Köln u.a.</pubPlace>
-<date type="publicationDate">2007</date>
-</imprint>
 </monogr>
 </biblStruct>
 <biblStruct type="incollection">
@@ -12540,6 +13269,39 @@
 <biblScope unit="page" from="325" to="344">325--344</biblScope>
 </monogr>
 </biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Stefan</forename>
+<surname>Esders</surname>
+</author>
+<title>Amt und Bann. Weltliche Funktionsträger (centenarii, vicarii) als Teil ländlicher Gesellschaften im Karolingerreich</title>
+<title type="short">S. Esders, Amt und Bann</title>
+</analytic>
+<monogr>
+<title level="m">Kleine Welten: ländliche Gesellschaften im Karolingerreich</title>
+<editor>
+<forename>Thomas</forename>
+<surname>Kohl</surname>
+</editor>
+<editor>
+<forename>Steffen</forename>
+<surname>Patzold</surname>
+</editor>
+<editor>
+<forename>Bernhard</forename>
+<surname>Zeller</surname>
+</editor>
+<imprint>
+<pubPlace>Ostfildern</pubPlace>
+<date type="publicationDate">2019</date>
+</imprint>
+<biblScope unit="page" from="255" to="306">255--306</biblScope>
+</monogr>
+<series>
+<title level="s">Vorträge und Forschungen</title>
+</series>
+</biblStruct>
 <biblStruct type="article">
 <analytic>
 <author>
@@ -12561,6 +13323,28 @@
 <biblScope unit="volume">27</biblScope>
 <biblScope unit="page" from="85" to="111">85--111</biblScope>
 </monogr>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Stefan</forename>
+<surname>Esders</surname>
+</editor>
+<editor>
+<forename>Christine</forename>
+<surname>Reinle</surname>
+</editor>
+<title>Rechtsveränderung im politischen und sozialen Kontext mittelalterlicher Rechtsvielfalt</title>
+<title type="short">Esders, Reinle (Hg.) 2005 – Rechtsveränderung im politischen und sozialen</title>
+<imprint>
+<pubPlace>Münster i. W</pubPlace>
+<date type="publicationDate">2005</date>
+</imprint>
+</monogr>
+<series>
+<title level="s">Neue Aspekte der europäischen Mittelalterforschung</title>
+<biblScope unit="volume">5</biblScope>
+</series>
 </biblStruct>
 <biblStruct type="book">
 <monogr>
@@ -12754,6 +13538,34 @@
 <forename>Eugen</forename>
 <surname>Ewig</surname>
 </author>
+<title>Die fränkischen Teilungen und Teilreiche (511-613)</title>
+<title type="short">E. Ewig, Die fränkischen Teilungen</title>
+</analytic>
+<monogr>
+<title level="m">Spätantikes und fränkisches Gallien</title>
+<editor>
+<forename>Eugen</forename>
+<surname>Ewig</surname>
+</editor>
+<editor>
+<forename>Hartmut</forename>
+<surname>Atsma</surname>
+</editor>
+<imprint>
+<pubPlace>Ostfildern</pubPlace>
+<publisher>Artemis</publisher>
+<date type="publicationDate">1976</date>
+</imprint>
+<biblScope unit="page" from="72" to="113">72--113</biblScope>
+<biblScope unit="volume">1</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Eugen</forename>
+<surname>Ewig</surname>
+</author>
 <title>Volkstum und Volksbewusstsein im Frankenreich des 7. Jahrhunderts</title>
 <title type="short">E. Ewig, Volkstum</title>
 </analytic>
@@ -12800,34 +13612,6 @@
 <date type="publicationDate">1976</date>
 </imprint>
 <biblScope unit="page" from="3" to="71">3--71</biblScope>
-<biblScope unit="volume">1</biblScope>
-</monogr>
-</biblStruct>
-<biblStruct type="incollection">
-<analytic>
-<author>
-<forename>Eugen</forename>
-<surname>Ewig</surname>
-</author>
-<title>Die fränkischen Teilungen und Teilreiche (511-613)</title>
-<title type="short">E. Ewig, Die fränkischen Teilungen</title>
-</analytic>
-<monogr>
-<title level="m">Spätantikes und fränkisches Gallien</title>
-<editor>
-<forename>Eugen</forename>
-<surname>Ewig</surname>
-</editor>
-<editor>
-<forename>Hartmut</forename>
-<surname>Atsma</surname>
-</editor>
-<imprint>
-<pubPlace>Ostfildern</pubPlace>
-<publisher>Artemis</publisher>
-<date type="publicationDate">1976</date>
-</imprint>
-<biblScope unit="page" from="72" to="113">72--113</biblScope>
 <biblScope unit="volume">1</biblScope>
 </monogr>
 </biblStruct>
@@ -12931,8 +13715,8 @@
 <forename>Eugen</forename>
 <surname>Ewig</surname>
 </author>
-<title>Überlegungen zu den merowingischen und karolingischen Teilungen</title>
-<title type="short">E. Ewig, Überlegungen</title>
+<title>Das Bild Constantins des Grossen in den ersten Jahrhunderten des abendländischen Mittelalters</title>
+<title type="short">E. Ewig, Das Bild Constantins</title>
 </analytic>
 <monogr>
 <title level="m">Spätantikes und fränkisches Gallien</title>
@@ -12944,21 +13728,7 @@
 <pubPlace>Ostfildern</pubPlace>
 <date type="publicationDate">2009</date>
 </imprint>
-<biblScope unit="page" from="287" to="322">287--322</biblScope>
-</monogr>
-</biblStruct>
-<biblStruct type="book">
-<monogr>
-<editor>
-<forename>Eugen</forename>
-<surname>Ewig</surname>
-</editor>
-<title>Spätantikes und fränkisches Gallien</title>
-<title type="short">Ewig (Ed.) 2009 – Spätantikes und fränkisches Gallien</title>
-<imprint>
-<pubPlace>Ostfildern</pubPlace>
-<date type="publicationDate">2009</date>
-</imprint>
+<biblScope unit="page" from="72" to="113">72--113</biblScope>
 </monogr>
 </biblStruct>
 <biblStruct type="incollection">
@@ -12983,14 +13753,28 @@
 <biblScope unit="page" from="519" to="538">519--538</biblScope>
 </monogr>
 </biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Eugen</forename>
+<surname>Ewig</surname>
+</editor>
+<title>Spätantikes und fränkisches Gallien</title>
+<title type="short">Ewig (Ed.) 2009 – Spätantikes und fränkisches Gallien</title>
+<imprint>
+<pubPlace>Ostfildern</pubPlace>
+<date type="publicationDate">2009</date>
+</imprint>
+</monogr>
+</biblStruct>
 <biblStruct type="incollection">
 <analytic>
 <author>
 <forename>Eugen</forename>
 <surname>Ewig</surname>
 </author>
-<title>Das Bild Constantins des Grossen in den ersten Jahrhunderten des abendländischen Mittelalters</title>
-<title type="short">E. Ewig, Das Bild Constantins</title>
+<title>Überlegungen zu den merowingischen und karolingischen Teilungen</title>
+<title type="short">E. Ewig, Überlegungen</title>
 </analytic>
 <monogr>
 <title level="m">Spätantikes und fränkisches Gallien</title>
@@ -13002,7 +13786,7 @@
 <pubPlace>Ostfildern</pubPlace>
 <date type="publicationDate">2009</date>
 </imprint>
-<biblScope unit="page" from="72" to="113">72--113</biblScope>
+<biblScope unit="page" from="287" to="322">287--322</biblScope>
 </monogr>
 </biblStruct>
 <biblStruct type="book">
@@ -13042,7 +13826,38 @@
 </imprint>
 </monogr>
 </biblStruct>
-<biblStruct type="article" xml:id="BL-F">
+<biblStruct type="incollection" xml:id="BL-F">
+<analytic>
+<author>
+<forename>Eva-Maria</forename>
+<surname>Faber</surname>
+</author>
+<title>Mysterium. III. Systematisch-theologisch</title>
+<title type="short">E.-M. Faber, Mysterium III. Systematisch-theologisch</title>
+</analytic>
+<monogr>
+<title level="m">Lexikon für Theologie und Kirche</title>
+<editor>
+<forename>Walter</forename>
+<surname>Kasper</surname>
+</editor>
+<editor>
+<forename>Konrad</forename>
+<surname>Baumgartner</surname>
+</editor>
+<editor>
+<forename>Peter A.</forename>
+<surname>Brunt</surname>
+</editor>
+<imprint>
+<pubPlace>Freiburg i. Br. u.a</pubPlace>
+<date type="publicationDate">1993-2001</date>
+</imprint>
+<biblScope unit="page" from="579" to="582">579--582</biblScope>
+<biblScope unit="volume">7</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="article">
 <analytic>
 <author>
 <forename>Clara</forename>
@@ -13058,6 +13873,36 @@
 </imprint>
 <biblScope unit="volume">9</biblScope>
 <biblScope unit="page" from="39" to="194">39-86, 168-194</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>A.</forename>
+<surname>Faivre</surname>
+</author>
+<title>Presbyter</title>
+<title type="short">A. Faivre, Presbyter</title>
+</analytic>
+<monogr>
+<title level="m">Lexikon für Theologie und Kirche</title>
+<editor>
+<forename>Walter</forename>
+<surname>Kasper</surname>
+</editor>
+<editor>
+<forename>Konrad</forename>
+<surname>Baumgartner</surname>
+</editor>
+<editor>
+<forename>Peter A.</forename>
+<surname>Brunt</surname>
+</editor>
+<imprint>
+<pubPlace>Freiburg i. Br. u.a</pubPlace>
+<date type="publicationDate">1993-2001</date>
+</imprint>
+<biblScope unit="page" from="538f." to="538f.">538f.</biblScope>
 </monogr>
 </biblStruct>
 <biblStruct type="incollection">
@@ -13089,36 +13934,6 @@
 </imprint>
 <biblScope unit="page" from="131" to="133">131--133</biblScope>
 <biblScope unit="volume">6</biblScope>
-</monogr>
-</biblStruct>
-<biblStruct type="incollection">
-<analytic>
-<author>
-<forename>A.</forename>
-<surname>Faivre</surname>
-</author>
-<title>Presbyter</title>
-<title type="short">A. Faivre, Presbyter</title>
-</analytic>
-<monogr>
-<title level="m">Lexikon für Theologie und Kirche</title>
-<editor>
-<forename>Walter</forename>
-<surname>Kasper</surname>
-</editor>
-<editor>
-<forename>Konrad</forename>
-<surname>Baumgartner</surname>
-</editor>
-<editor>
-<forename>Peter A.</forename>
-<surname>Brunt</surname>
-</editor>
-<imprint>
-<pubPlace>Freiburg i. Br. u.a</pubPlace>
-<date type="publicationDate">1993-2001</date>
-</imprint>
-<biblScope unit="page" from="538f." to="538f.">538f.</biblScope>
 </monogr>
 </biblStruct>
 <biblStruct type="book">
@@ -13240,6 +14055,28 @@
 <series>
 <title level="s">Ergänzungsbände zum Reallexikon der germanischen Altertumskunde</title>
 <biblScope unit="volume">68</biblScope>
+</series>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Hubert</forename>
+<surname>Fehr</surname>
+</editor>
+<editor>
+<forename>Irmtraut</forename>
+<surname>Heitmeier</surname>
+</editor>
+<title>Die Anfänge Bayerns: von Raetien und Noricum zur frühmittelalterlichen Baiovaria</title>
+<title type="short">Fehr, Heitmeier (Hg.) 2012 – Die Anfänge Bayerns</title>
+<imprint>
+<pubPlace>St. Ottilien</pubPlace>
+<date type="publicationDate">2012</date>
+</imprint>
+</monogr>
+<series>
+<title level="s">Bayerische Landesgeschichte und europäische Regionalgeschichte</title>
+<biblScope unit="volume">1</biblScope>
 </series>
 </biblStruct>
 <biblStruct type="book">
@@ -13507,6 +14344,24 @@
 <biblScope unit="volume">18</biblScope>
 </series>
 </biblStruct>
+<biblStruct type="article">
+<analytic>
+<author>
+<forename>Heinrich</forename>
+<surname>Fichtenau</surname>
+</author>
+<title>Die Reihung von Zeugen in Urkunden des frühen Mittelalters</title>
+<title type="short">H. Fichtenau, Die Reihung</title>
+</analytic>
+<monogr>
+<title level="j">Mitteilungen des Instituts für Österreichische Geschichtsforschung</title>
+<imprint>
+<date type="publicationDate">1979</date>
+</imprint>
+<biblScope unit="volume">87</biblScope>
+<biblScope unit="page" from="301" to="315">301--315</biblScope>
+</monogr>
+</biblStruct>
 <biblStruct type="book">
 <monogr>
 <editor>
@@ -13635,6 +14490,31 @@
 <biblStruct type="incollection">
 <analytic>
 <author>
+<forename>Roberto</forename>
+<surname>Fiori</surname>
+</author>
+<title>The Roman Conception of Contract</title>
+<title type="short">R. Fiori, The roman conception of contract</title>
+</analytic>
+<monogr>
+<title level="m">Obligations in Roman law: past, present, and future</title>
+<editor>
+<forename>Thomas A. J.</forename>
+<surname>McGinn</surname>
+</editor>
+<imprint>
+<pubPlace>Ann Arbor, Mich.</pubPlace>
+<date type="publicationDate">2012</date>
+</imprint>
+<biblScope unit="page" from="40" to="75">40--75</biblScope>
+</monogr>
+<series>
+<title level="s">Papers and monographs of the American Academy in Rome</title>
+</series>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
 <forename>Carsten</forename>
 <surname>Fischer</surname>
 </author>
@@ -13670,6 +14550,33 @@
 <pubPlace>Wien</pubPlace>
 <date type="publicationDate">1942</date>
 </imprint>
+</monogr>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Matthias G.</forename>
+<surname>Fischer</surname>
+</author>
+<title>Art. Zeugen</title>
+<title type="short">M. G. Fischer, Zeugen</title>
+</analytic>
+<monogr>
+<title level="m">Handwörterbuch zur deutschen Rechtsgeschichte</title>
+<editor>
+<forename>Adalbert</forename>
+<surname>Erler</surname>
+</editor>
+<editor>
+<forename>Ekkehard</forename>
+<surname>Kaufmann</surname>
+</editor>
+<imprint>
+<pubPlace>Berlin</pubPlace>
+<date type="publicationDate">1998</date>
+</imprint>
+<biblScope unit="page" from="1684" to="1693">1684--1693</biblScope>
+<biblScope unit="volume">5</biblScope>
 </monogr>
 </biblStruct>
 <biblStruct type="book">
@@ -14826,6 +15733,24 @@
 <biblStruct type="article">
 <analytic>
 <author>
+<forename>Georg</forename>
+<surname>Frommhold</surname>
+</author>
+<title>Das Andelang-Rätsel</title>
+<title type="short">G. Frommhold, Das Andelang-Rätsel</title>
+</analytic>
+<monogr>
+<title level="j">Zeitschrift der Savigny-Stiftung für Rechtsgeschichte: Germanistische Abteilung</title>
+<imprint>
+<date type="publicationDate">1914</date>
+</imprint>
+<biblScope unit="volume">35</biblScope>
+<biblScope unit="page" from="426" to="431">426--431</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="article">
+<analytic>
+<author>
 <forename>David</forename>
 <surname>Frye</surname>
 </author>
@@ -14861,6 +15786,28 @@
 <date type="publicationDate">1993</date>
 </imprint>
 <biblScope unit="page" from="111" to="139">111--139</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Rodrigo</forename>
+<surname>Furtado</surname>
+</author>
+<title>From "Gens" to "Imperium": a study of Isidore's political lexicon</title>
+<title type="short">R. Furtado, From gens to imperium</title>
+</analytic>
+<monogr>
+<title level="m">Latin vulgaire - latin tardif VIII: actes du VIIIe Colloque International sur le Latin Vulgaire et Tardif, Oxford, 6 - 9 septembre 2006</title>
+<editor>
+<forename>Roger</forename>
+<surname>Wright</surname>
+</editor>
+<imprint>
+<pubPlace>Hildesheim u.a.</pubPlace>
+<date type="publicationDate">2008</date>
+</imprint>
+<biblScope unit="page" from="408" to="414">408--414</biblScope>
 </monogr>
 </biblStruct>
 <biblStruct type="book">
@@ -14970,6 +15917,24 @@
 <biblStruct type="book" xml:id="BL-G">
 <monogr>
 <editor>
+<forename>Mariacarla</forename>
+<surname>Gadebusch Bondio</surname>
+</editor>
+<editor>
+<forename>Andrea</forename>
+<surname>Bettels</surname>
+</editor>
+<title>Im Korsett der Tugenden: Moral und Geschlecht im kulturhistorischen Kontext</title>
+<title type="short">Gadebusch Bondio, Bettels (Hg.) 2013 – Im Korsett der Tugenden</title>
+<imprint>
+<pubPlace>Hildesheim u.a.</pubPlace>
+<date type="publicationDate">2013</date>
+</imprint>
+</monogr>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
 <forename>Félix</forename>
 <surname>Gaffiot</surname>
 </editor>
@@ -15044,38 +16009,6 @@
 <forename>Hartmut</forename>
 <surname>Galsterer</surname>
 </author>
-<title>Pagus</title>
-<title type="short">H. Galsterer, "pagus"</title>
-</analytic>
-<monogr>
-<title level="m">Der neue Pauly: Enzyklopädie der Antike</title>
-<editor>
-<forename>Hubert</forename>
-<surname>Cancik</surname>
-</editor>
-<editor>
-<forename>Helmuth</forename>
-<surname>Schneider</surname>
-</editor>
-<editor>
-<forename>Manfred</forename>
-<surname>Landfester</surname>
-</editor>
-<imprint>
-<pubPlace>Stuttgart</pubPlace>
-<publisher>Metzler</publisher>
-<date type="publicationDate">1996-2010</date>
-<date type="urldate">09.05.2019</date>
-</imprint>
-</monogr>
-<ref type="url">https://referenceworks.brillonline.com/entries/der-neue-pauly/pagus-e903730?s.num=0&amp;s.f.s2_parent=s.f.book.der-neue-pauly&amp;s.q=pagus</ref>
-</biblStruct>
-<biblStruct type="incollection">
-<analytic>
-<author>
-<forename>Hartmut</forename>
-<surname>Galsterer</surname>
-</author>
 <title>Ingenuus [2]</title>
 <title type="short">H. Galsterer, "ingenuus 2"</title>
 </analytic>
@@ -15101,6 +16034,38 @@
 </imprint>
 </monogr>
 <ref type="url">https://referenceworks.brillonline.com/entries/der-neue-pauly/ingenuus-e524560?s.num=0&amp;s.f.s2_parent=s.f.book.der-neue-pauly&amp;s.q=Ingenuus+</ref>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Hartmut</forename>
+<surname>Galsterer</surname>
+</author>
+<title>Pagus</title>
+<title type="short">H. Galsterer, "pagus"</title>
+</analytic>
+<monogr>
+<title level="m">Der neue Pauly: Enzyklopädie der Antike</title>
+<editor>
+<forename>Hubert</forename>
+<surname>Cancik</surname>
+</editor>
+<editor>
+<forename>Helmuth</forename>
+<surname>Schneider</surname>
+</editor>
+<editor>
+<forename>Manfred</forename>
+<surname>Landfester</surname>
+</editor>
+<imprint>
+<pubPlace>Stuttgart</pubPlace>
+<publisher>Metzler</publisher>
+<date type="publicationDate">1996-2010</date>
+<date type="urldate">09.05.2019</date>
+</imprint>
+</monogr>
+<ref type="url">https://referenceworks.brillonline.com/entries/der-neue-pauly/pagus-e903730?s.num=0&amp;s.f.s2_parent=s.f.book.der-neue-pauly&amp;s.q=pagus</ref>
 </biblStruct>
 <biblStruct type="incollection">
 <analytic>
@@ -15252,6 +16217,28 @@
 <forename>François Louis</forename>
 <surname>Ganshof</surname>
 </author>
+<title>L'étranger dans la monarchie franque</title>
+<title type="short">F. L. Ganshof, L'étranger</title>
+</analytic>
+<monogr>
+<title level="m">L'étranger</title>
+<imprint>
+<pubPlace>Bruxelles</pubPlace>
+<date type="publicationDate">1958</date>
+</imprint>
+<biblScope unit="page" from="5" to="36">5--36</biblScope>
+<biblScope unit="volume">1-2</biblScope>
+</monogr>
+<series>
+<title level="s">Recueils de la Société Jean Bodin</title>
+</series>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>François Louis</forename>
+<surname>Ganshof</surname>
+</author>
 <title>L'immunité dans la monarchie franque</title>
 <title type="short">F.-L. Ganshof, L’immunité</title>
 </analytic>
@@ -15390,6 +16377,27 @@
 <biblScope unit="volume">3</biblScope>
 <biblScope unit="page" from="9" to="26">9--26</biblScope>
 </monogr>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>François Louis</forename>
+<surname>Ganshof</surname>
+</author>
+<title>L'armée sous les Carolingiens</title>
+<title type="short">F. L. Ganshof, L'armée sous les Carolingiens</title>
+</analytic>
+<monogr>
+<title level="m">Ordinamenti militari in Occidente nell'alto medioevo</title>
+<imprint>
+<pubPlace>Spoleto</pubPlace>
+<date type="publicationDate">1968</date>
+</imprint>
+<biblScope unit="page" from="109" to="130">109--130</biblScope>
+</monogr>
+<series>
+<title level="s">Settimane di studio del Centro italiano di studi sull'alto medioevo</title>
+</series>
 </biblStruct>
 <biblStruct type="incollection">
 <analytic>
@@ -15574,6 +16582,31 @@
 <title level="s">Symbolische Kommunikation in der Vormoderne</title>
 </series>
 </biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Claudia</forename>
+<surname>Garnier</surname>
+</author>
+<title>Der bittende Herrscher - der gebetene Herrscher. Zur Instrumentalisierung der Bitte im endenden 11. Jahrhundert</title>
+<title type="short">C. Garnier, Der bittende Herrscher</title>
+</analytic>
+<monogr>
+<title level="m">Heinrich IV.</title>
+<editor>
+<forename>Gerd</forename>
+<surname>Althoff</surname>
+</editor>
+<imprint>
+<pubPlace>Ostfildern</pubPlace>
+<date type="publicationDate">2009</date>
+</imprint>
+<biblScope unit="page" from="189" to="218">189--218</biblScope>
+</monogr>
+<series>
+<title level="s">Vorträge und Forschungen</title>
+</series>
+</biblStruct>
 <biblStruct type="book">
 <monogr>
 <editor>
@@ -15686,6 +16719,28 @@
 <series>
 <title level="s">Histoire du droit et des institutions de l'Eglise en Occident</title>
 <biblScope unit="volume">3</biblScope>
+</series>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Jean</forename>
+<surname>Gaudemet</surname>
+</author>
+<title>Les ordalies au moyen âge: doctrine, legislation et pratique canoniques</title>
+<title type="short">J. Gaudemet, Les ordalies</title>
+</analytic>
+<monogr>
+<title level="m">La Preuve</title>
+<imprint>
+<pubPlace>Brüssel</pubPlace>
+<date type="publicationDate">1963-1965</date>
+</imprint>
+<biblScope unit="page" from="99" to="136">99--136</biblScope>
+<biblScope unit="volume">2 (Reihennummer 17, 1965)</biblScope>
+</monogr>
+<series>
+<title level="s">Recueils de la Société Jean Bodin</title>
 </series>
 </biblStruct>
 <biblStruct type="book">
@@ -16484,6 +17539,23 @@
 </biblStruct>
 <biblStruct type="book">
 <monogr>
+<author>
+<forename>Robert</forename>
+<surname>Godding</surname>
+</author>
+<title>Prêtres en Gaule mérovingienne</title>
+<title type="short">R. Godding, Prêtres</title>
+<imprint>
+<pubPlace>Bruxelles</pubPlace>
+<date type="publicationDate">2001</date>
+</imprint>
+</monogr>
+<series>
+<title level="s">Subsidia hagiographica</title>
+</series>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
 <editor>
 <forename>Frédéric</forename>
 <surname>Godefroy</surname>
@@ -16858,6 +17930,35 @@
 <forename>Hans-Werner</forename>
 <surname>Goetz</surname>
 </author>
+<title>"Fremdheit" im früheren Mittelalter</title>
+<title type="short">H.-W. Goetz, Fremdheit</title>
+</analytic>
+<monogr>
+<title level="m">Herrschaftspraxis und soziale Ordnungen im Mittelalter und in der frühen Neuzeit. Ernst Schubert zum Gedenken</title>
+<editor>
+<forename>Peter</forename>
+<surname>Aufgebauer</surname>
+</editor>
+<editor>
+<forename>Christine</forename>
+<surname>den van Heuvel</surname>
+</editor>
+<imprint>
+<pubPlace>Hannover</pubPlace>
+<date type="publicationDate">2006</date>
+</imprint>
+<biblScope unit="page" from="245" to="265">245--265</biblScope>
+</monogr>
+<series>
+<title level="s">Veröffentlichungen der Historischen Kommission für Niedersachsen und Bremen</title>
+</series>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Hans-Werner</forename>
+<surname>Goetz</surname>
+</author>
 <title>Gens - Regnum - Lex: das Beispiel der Franken.</title>
 <title type="short">H.-W. Goetz, Gens – Regnum – Lex</title>
 </analytic>
@@ -17099,6 +18200,35 @@
 <forename>Hans-Werner</forename>
 <surname>Goetz</surname>
 </author>
+<title>Introduction. The many facets and methodological problems of "otherness"</title>
+<title type="short">H.-W. Goetz, Introduction Otherness</title>
+</analytic>
+<monogr>
+<title level="m">Otherness in the Middle Ages</title>
+<editor>
+<forename>Hans-Werner</forename>
+<surname>Goetz</surname>
+</editor>
+<editor>
+<forename>Ian N.</forename>
+<surname>Wood</surname>
+</editor>
+<imprint>
+<pubPlace>Turnhout</pubPlace>
+<date type="publicationDate">2021</date>
+</imprint>
+<biblScope unit="page" from="11" to="36">11--36</biblScope>
+</monogr>
+<series>
+<title level="s">International medieval research</title>
+</series>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Hans-Werner</forename>
+<surname>Goetz</surname>
+</author>
 <title>"Eliten": ein Forschungsbegriff und seine mediävistische Problematik.</title>
 <title type="short">H.-W. Goetz, Eliten. Ein Forschungsbegriff</title>
 </analytic>
@@ -17175,6 +18305,28 @@
 </imprint>
 </monogr>
 </biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Hans-Werner</forename>
+<surname>Goetz</surname>
+</editor>
+<editor>
+<forename>Ian N.</forename>
+<surname>Wood</surname>
+</editor>
+<title>Otherness in the Middle Ages</title>
+<title type="short">Goetz, Wood (Hg.) 2021 – Otherness in the Middle Ages</title>
+<imprint>
+<pubPlace>Turnhout</pubPlace>
+<date type="publicationDate">2021</date>
+</imprint>
+</monogr>
+<series>
+<title level="s">International medieval research</title>
+<biblScope unit="volume">25</biblScope>
+</series>
+</biblStruct>
 <biblStruct type="article">
 <analytic>
 <author>
@@ -17245,6 +18397,24 @@
 <date type="publicationDate">2004</date>
 </imprint>
 </monogr>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<author>
+<forename>Emil</forename>
+<surname>Goldmann</surname>
+</author>
+<title>Der andelang</title>
+<title type="short">E. Goldmann, Der andelang</title>
+<imprint>
+<pubPlace>Breslau</pubPlace>
+<date type="publicationDate">1912</date>
+</imprint>
+</monogr>
+<series>
+<title level="s">Untersuchungen zur deutschen Staats- und Rechtsgeschichte</title>
+<biblScope unit="volume">3</biblScope>
+</series>
 </biblStruct>
 <biblStruct type="book">
 <monogr>
@@ -18014,6 +19184,28 @@
 </monogr>
 <series>
 <title level="s">Estudis. Fundació Noguera</title>
+</series>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Olivier</forename>
+<surname>Guillot</surname>
+</author>
+<title>Quelques remarques sur la dignité des princeps à l'époque mérovingienne</title>
+<title type="short">O. Guillot, Quelques remarques</title>
+</analytic>
+<monogr>
+<title level="m">Arcana imperii (IVe-XIe siècle)</title>
+<imprint>
+<pubPlace>Limoges</pubPlace>
+<publisher>PULIM</publisher>
+<date type="publicationDate">2003</date>
+</imprint>
+<biblScope unit="page" from="239" to="267">239--267</biblScope>
+</monogr>
+<series>
+<title level="s">Cahiers de l'Institut d'Anthropologie Juridique</title>
 </series>
 </biblStruct>
 <biblStruct type="book">
@@ -19071,27 +20263,6 @@
 </biblStruct>
 <biblStruct type="incollection">
 <analytic>
-<title>12. Francia Oktober 846</title>
-<title type="short">Konzil Francia 846</title>
-</analytic>
-<monogr>
-<title level="m">Die Konzilien der karolingischen Teilreiche 843-859</title>
-<editor>
-<forename>Wilfried</forename>
-<surname>Hartmann</surname>
-</editor>
-<imprint>
-<pubPlace>Hannover</pubPlace>
-<date type="publicationDate">1984</date>
-</imprint>
-<biblScope unit="page" from="132" to="139">132--139</biblScope>
-</monogr>
-<series>
-<title level="s">MGH Concilia</title>
-</series>
-</biblStruct>
-<biblStruct type="incollection">
-<analytic>
 <title>14. Mainz Oktober 847</title>
 <title type="short">Konzil von Mainz 847</title>
 </analytic>
@@ -19106,6 +20277,27 @@
 <date type="publicationDate">1984</date>
 </imprint>
 <biblScope unit="page" from="150" to="177">150--177</biblScope>
+</monogr>
+<series>
+<title level="s">MGH Concilia</title>
+</series>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<title>12. Francia Oktober 846</title>
+<title type="short">Konzil Francia 846</title>
+</analytic>
+<monogr>
+<title level="m">Die Konzilien der karolingischen Teilreiche 843-859</title>
+<editor>
+<forename>Wilfried</forename>
+<surname>Hartmann</surname>
+</editor>
+<imprint>
+<pubPlace>Hannover</pubPlace>
+<date type="publicationDate">1984</date>
+</imprint>
+<biblScope unit="page" from="132" to="139">132--139</biblScope>
 </monogr>
 <series>
 <title level="s">MGH Concilia</title>
@@ -19445,6 +20637,43 @@
 </imprint>
 <biblScope unit="page" from="18" to="21">18--21</biblScope>
 <biblScope unit="volume">5</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Stephanie</forename>
+<surname>Hayes-Healy</surname>
+</editor>
+<title>Medieval paradigms: essays in honor of Jeremy Duquesnay Adams</title>
+<title type="short">Hayes-Healy (Hg.) 2005 – Medieval paradigms</title>
+<imprint>
+<pubPlace>New York, NY</pubPlace>
+<date type="publicationDate">2005</date>
+</imprint>
+</monogr>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Stephanie</forename>
+<surname>Hayes-Healy</surname>
+</author>
+<title>Patterns of Peregrinatio in the Early Middle Ages</title>
+<title type="short">S. Hayes-Healy, Patterns of peregrinatio</title>
+</analytic>
+<monogr>
+<title level="m">Medieval paradigms: essays in honor of Jeremy Duquesnay Adams</title>
+<editor>
+<forename>Stephanie</forename>
+<surname>Hayes-Healy</surname>
+</editor>
+<imprint>
+<pubPlace>New York, NY</pubPlace>
+<date type="publicationDate">2005</date>
+</imprint>
+<biblScope unit="page" from="3" to="24">3--24</biblScope>
+<biblScope unit="volume">2</biblScope>
 </monogr>
 </biblStruct>
 <biblStruct type="incollection">
@@ -20004,6 +21233,24 @@
 <title level="s">Settimane di studio del Centro italiano di studi sull'alto medioevo</title>
 </series>
 </biblStruct>
+<biblStruct type="article">
+<analytic>
+<author>
+<forename>Régine</forename>
+<surname>Hennebicque</surname>
+</author>
+<title>Espaces sauvages et chasses royales dans le Nord de la Francie, VIIème-IXème siècles</title>
+<title type="short">R. Hennebicque, Espaces sauvages</title>
+</analytic>
+<monogr>
+<title level="j">Revue du Nord</title>
+<imprint>
+<date type="publicationDate">1980</date>
+</imprint>
+<biblScope unit="volume">62</biblScope>
+<biblScope unit="page" from="35" to="57">35--57</biblScope>
+</monogr>
+</biblStruct>
 <biblStruct type="incollection">
 <analytic>
 <author>
@@ -20114,6 +21361,24 @@
 <title level="s">MGH Schriften</title>
 </series>
 </biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Klaus</forename>
+<surname>Herding</surname>
+</editor>
+<editor>
+<forename>Bernhard</forename>
+<surname>Stumpfhaus</surname>
+</editor>
+<title>Pathos, Affekt, Gefühl: Die Emotionen in den Künsten</title>
+<title type="short">Herding, Stumpfhaus (Hg.) 2004 – Pathos, Affekt</title>
+<imprint>
+<pubPlace>Berlin [u.a.]</pubPlace>
+<date type="publicationDate">2004</date>
+</imprint>
+</monogr>
+</biblStruct>
 <biblStruct type="incollection">
 <analytic>
 <author>
@@ -20173,6 +21438,34 @@
 </imprint>
 <biblScope unit="page" from="1807" to="1821">1807--1821</biblScope>
 <biblScope unit="volume">1</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Hans-Georg</forename>
+<surname>Hermann</surname>
+</editor>
+<title>Von den leges barbarorum bis zum ius barbarum des Nationalsozialismus. Festschrift für Hermann Nehlsen zum 70. Geburtstag</title>
+<title type="short">Hermann (Hg.) 2008 – Von den leges barbarorum</title>
+<imprint>
+<pubPlace>Köln</pubPlace>
+<date type="publicationDate">2008</date>
+</imprint>
+</monogr>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Hans-Georg</forename>
+<surname>Hermann</surname>
+</editor>
+<title>Von den leges barbarorum bis zum ius barbarum des Nationalsozialismus. Festschrift für Hermann Nehlsen zum 70. Geburtstag</title>
+<title type="short">Hermann (Hg.) 2008 – Von den leges barbarorum</title>
+<imprint>
+<pubPlace>Köln</pubPlace>
+<date type="publicationDate">2008</date>
+</imprint>
 </monogr>
 </biblStruct>
 <biblStruct type="incollection">
@@ -20478,6 +21771,22 @@
 </biblStruct>
 <biblStruct type="book">
 <monogr>
+<author>
+<forename>Otto</forename>
+<surname>Hirschfeld</surname>
+</author>
+<title>Die kaiserlichen Verwaltungsbeamten bis auf Diocletian</title>
+<title type="short">O. Hirschfeld, Die kaiserlichen Verwaltungsbeamten</title>
+<edition>zweite neubearbeitete Auflage</edition>
+<imprint>
+<pubPlace>Berlin</pubPlace>
+<publisher>Weidmann</publisher>
+<date type="publicationDate">1905</date>
+</imprint>
+</monogr>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
 <editor>
 <forename>Otto</forename>
 <surname>Hirschfeld</surname>
@@ -20494,6 +21803,21 @@
 <series>
 <title level="s">Corpus inscriptionum Latinarum</title>
 <biblScope unit="volume">12</biblScope>
+</series>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>Historisches Seminar der Univ. Düsseldorf</editor>
+<title>Frieden in Geschichte und Gegenwart</title>
+<title type="short">Historisches Seminar der Univ. Düsseldorf (Hg.) 1985 – Frieden in Geschichte und Gegenwart</title>
+<imprint>
+<pubPlace>Düsseldorf</pubPlace>
+<date type="publicationDate">1985</date>
+</imprint>
+</monogr>
+<series>
+<title level="s">Kultur und Erkenntnis</title>
+<biblScope unit="volume">1</biblScope>
 </series>
 </biblStruct>
 <biblStruct type="book">
@@ -20557,6 +21881,28 @@
 </imprint>
 <biblScope unit="volume">10</biblScope>
 <biblScope unit="page" from="43" to="60">43--60</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Peter</forename>
+<surname>Hoeres</surname>
+</editor>
+<editor>
+<forename>Armin</forename>
+<surname>Owzar</surname>
+</editor>
+<editor>
+<forename>Christina</forename>
+<surname>Schröer</surname>
+</editor>
+<title>Herrschaftsverlust und Machtverfall</title>
+<title type="short">Hoeres, Owzar et al. (Hg.) 2013 – Herrschaftsverlust und Machtverfall</title>
+<imprint>
+<pubPlace>München</pubPlace>
+<date type="publicationDate">2013</date>
+</imprint>
 </monogr>
 </biblStruct>
 <biblStruct type="incollection">
@@ -20673,6 +22019,29 @@
 <publisher>Teubner</publisher>
 <date type="publicationDate">1965</date>
 </imprint>
+</monogr>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Heinz</forename>
+<surname>Holzhauer</surname>
+</author>
+<title>Art. Imperium</title>
+<title type="short">H. Holzhauer, Imperium</title>
+</analytic>
+<monogr>
+<title level="m">Handwörterbuch zur deutschen Rechtsgeschichte</title>
+<editor>
+<forename>Albrecht</forename>
+<surname>Cordes</surname>
+</editor>
+<imprint>
+<pubPlace>Berlin</pubPlace>
+<date type="publicationDate">2005-</date>
+</imprint>
+<biblScope unit="page" from="1192" to="1195">1192--1195</biblScope>
+<biblScope unit="volume">2 (2011)</biblScope>
 </monogr>
 </biblStruct>
 <biblStruct type="incollection">
@@ -21117,6 +22486,24 @@
 <biblScope unit="volume">4</biblScope>
 </series>
 </biblStruct>
+<biblStruct type="article">
+<analytic>
+<author>
+<forename>Reinhard</forename>
+<surname>Härtel</surname>
+</author>
+<title>Urkunden und Zeugen im Rechtsleben des Hochmittelalters</title>
+<title type="short">R. Härtel, Urkunden und Zeugen</title>
+</analytic>
+<monogr>
+<title level="j">Studia historica Brunensia</title>
+<imprint>
+<date type="publicationDate">2018</date>
+</imprint>
+<biblScope unit="volume">65</biblScope>
+<biblScope unit="page" from="5" to="18">5--18</biblScope>
+</monogr>
+</biblStruct>
 <biblStruct type="incollection">
 <analytic>
 <author>
@@ -21285,6 +22672,23 @@
 <series>
 <title level="s">Mitteilungen des Instituts für Österreichische Geschichtsforschung. Ergänzungsband</title>
 <biblScope unit="volume">24</biblScope>
+</series>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<author>
+<forename>Dominique</forename>
+<surname>Iogna-Prat</surname>
+</author>
+<title>La Maison Dieu: une histoire monumentale de l'Église au Moyen âge ; (v. 800 - v. 1200)</title>
+<title type="short">D. Iogna-Prat, La maison Dieu</title>
+<imprint>
+<pubPlace>Paris</pubPlace>
+<date type="publicationDate">2006</date>
+</imprint>
+</monogr>
+<series>
+<title level="s">L'univers historique</title>
 </series>
 </biblStruct>
 <biblStruct type="book">
@@ -21575,20 +22979,6 @@
 <biblScope unit="volume">3. Folge Nr. 83/84</biblScope>
 </series>
 </biblStruct>
-<biblStruct type="book">
-<monogr>
-<editor>
-<forename>Herbert</forename>
-<surname>Jankuhn</surname>
-</editor>
-<title>Das Dorf der Eisenzeit und des frühen Mittelalters: Siedlungsform, wirtschaftliche Funktion, soziale Struktur: Bericht über die Kolloquien der Kommission für die Altertumskunde Mittel- und Nordeuropas in den Jahren 1973 und 1974</title>
-<title type="short">Jankuhn (Ed.) 1977 – Das Dorf der Eisenzeit</title>
-<imprint>
-<pubPlace>Göttingen</pubPlace>
-<date type="publicationDate">1977</date>
-</imprint>
-</monogr>
-</biblStruct>
 <biblStruct type="incollection">
 <analytic>
 <author>
@@ -21609,6 +22999,20 @@
 <date type="publicationDate">1977</date>
 </imprint>
 <biblScope unit="page" from="147" to="152">147--152</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Herbert</forename>
+<surname>Jankuhn</surname>
+</editor>
+<title>Das Dorf der Eisenzeit und des frühen Mittelalters: Siedlungsform, wirtschaftliche Funktion, soziale Struktur: Bericht über die Kolloquien der Kommission für die Altertumskunde Mittel- und Nordeuropas in den Jahren 1973 und 1974</title>
+<title type="short">Jankuhn (Ed.) 1977 – Das Dorf der Eisenzeit</title>
+<imprint>
+<pubPlace>Göttingen</pubPlace>
+<date type="publicationDate">1977</date>
+</imprint>
 </monogr>
 </biblStruct>
 <biblStruct type="book">
@@ -21861,6 +23265,31 @@
 <title level="s">Histoire</title>
 </series>
 </biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Markus Friedrich</forename>
+<surname>Jeitler</surname>
+</author>
+<title>Wald und Waldnutzung im Frühmittelalter</title>
+<title type="short">M. F. Jeitler, Wald und Waldnutzung</title>
+</analytic>
+<monogr>
+<title level="m">Der Wald im Mittelalter: Funktion - Nutzung - Deutung</title>
+<editor>
+<forename>Elisabeth</forename>
+<surname>Vavra</surname>
+</editor>
+<imprint>
+<pubPlace>Berlin</pubPlace>
+<date type="publicationDate">2008</date>
+</imprint>
+<biblScope unit="page" from="12" to="27">12--27</biblScope>
+</monogr>
+<series>
+<title level="s">Das Mittelalter</title>
+</series>
+</biblStruct>
 <biblStruct type="book">
 <monogr>
 <author>
@@ -21899,6 +23328,20 @@
 <date type="publicationDate">1997</date>
 </imprint>
 <biblScope unit="page" from="497" to="509">497--509</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Jean-Pierre</forename>
+<surname>Jessenne</surname>
+</editor>
+<title>L'image de l'autre dans l'Europe du Nord-Ouest</title>
+<title type="short">Jessenne (Hg.) 1996 – L'image de l'autre dans l'Europe</title>
+<imprint>
+<pubPlace>Lille</pubPlace>
+<date type="publicationDate">1996</date>
+</imprint>
 </monogr>
 </biblStruct>
 <biblStruct type="book">
@@ -23472,6 +24915,32 @@
 <title level="s">Archiv für Diplomatik, Schriftgeschichte, Siegel- und Wappenkunde Beiheft</title>
 </series>
 </biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Thomas</forename>
+<surname>Kohl</surname>
+</editor>
+<editor>
+<forename>Steffen</forename>
+<surname>Patzold</surname>
+</editor>
+<editor>
+<forename>Bernhard</forename>
+<surname>Zeller</surname>
+</editor>
+<title>Kleine Welten: ländliche Gesellschaften im Karolingerreich</title>
+<title type="short">Kohl, Patzold et al. (Hg.) 2019 – Kleine Welten</title>
+<imprint>
+<pubPlace>Ostfildern</pubPlace>
+<date type="publicationDate">2019</date>
+</imprint>
+</monogr>
+<series>
+<title level="s">Vorträge und Forschungen</title>
+<biblScope unit="volume">87</biblScope>
+</series>
+</biblStruct>
 <biblStruct type="incollection">
 <analytic>
 <author>
@@ -23532,6 +25001,24 @@
 <date type="publicationDate">2001</date>
 </imprint>
 <biblScope unit="page" from="95" to="105">95--105</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="article">
+<analytic>
+<author>
+<forename>Heinrich</forename>
+<surname>Koller</surname>
+</author>
+<title>Die Bedeutung des Titels "princeps" in der Reichskanzlei unter den Saliern und Staufern</title>
+<title type="short">H. Koller, Die Bedeutung</title>
+</analytic>
+<monogr>
+<title level="j">Mitteilungen des Instituts für Österreichische Geschichtsforschung</title>
+<imprint>
+<date type="publicationDate">1960</date>
+</imprint>
+<biblScope unit="volume">68</biblScope>
+<biblScope unit="page" from="63" to="80">63--80</biblScope>
 </monogr>
 </biblStruct>
 <biblStruct type="incollection">
@@ -23637,6 +25124,28 @@
 </biblStruct>
 <biblStruct type="book">
 <monogr>
+<editor>
+<forename>Raymund</forename>
+<surname>Kottje</surname>
+</editor>
+<editor>
+<forename>Helmut</forename>
+<surname>Maurer</surname>
+</editor>
+<title>Monastische Reformen im 9. und 10. Jahrhundert</title>
+<title type="short">Kottje, Maurer (Hg.) 1989 – Monastische Reformen im 9</title>
+<imprint>
+<pubPlace>Sigmaringen</pubPlace>
+<date type="publicationDate">1989</date>
+</imprint>
+</monogr>
+<series>
+<title level="s">Vorträge und Forschungen</title>
+<biblScope unit="volume">38</biblScope>
+</series>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
 <author>
 <forename>Geoffrey Granter</forename>
 <surname>Koziol</surname>
@@ -23666,6 +25175,40 @@
 <title level="s">Untersuchungen zur deutschen Staats- und Rechtsgeschichte NF</title>
 <biblScope unit="volume">26</biblScope>
 </series>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Adelheid</forename>
+<surname>Krah</surname>
+</author>
+<title>Art. Heerbann</title>
+<title type="short">A. Krah, Heerbann</title>
+</analytic>
+<monogr>
+<title level="m">Handwörterbuch zur deutschen Rechtsgeschichte</title>
+<editor>
+<forename>Albrecht</forename>
+<surname>Cordes</surname>
+</editor>
+<editor>
+<forename>Heiner</forename>
+<surname>Lück</surname>
+</editor>
+<editor>
+<forename>Dieter</forename>
+<surname>Werkmüller</surname>
+</editor>
+<editor>
+<forename>Ruth</forename>
+<surname>Schmidt-Wiegand</surname>
+</editor>
+<imprint>
+<pubPlace>Berlin</pubPlace>
+<date type="publicationDate">2005-2016</date>
+</imprint>
+<biblScope unit="column" from="851" to="853">Sp. 851-853</biblScope>
+</monogr>
 </biblStruct>
 <biblStruct type="incollection">
 <analytic>
@@ -24473,27 +26016,6 @@
 </biblStruct>
 <biblStruct type="incollection">
 <analytic>
-<title>Annales qui dicuntur Einhardi</title>
-<title type="short">Annales Einhardi</title>
-</analytic>
-<monogr>
-<title level="m">Annales regni Francorum inde ab a. 741 usque ad a. 829, qui dicuntur Annales Laurissenses maiores et Einhardi</title>
-<editor>
-<forename>Friedrich</forename>
-<surname>Kurze</surname>
-</editor>
-<imprint>
-<pubPlace>Wiesbaden</pubPlace>
-<date type="publicationDate">1895</date>
-</imprint>
-<biblScope unit="page" from="xii" to="xiv">xii--xiv</biblScope>
-</monogr>
-<series>
-<title level="s">Monumenta Germaniae Historica Scriptores rerum Germanicarum in usum scholarum separatim editi</title>
-</series>
-</biblStruct>
-<biblStruct type="incollection">
-<analytic>
 <title>Annales regni Francorum</title>
 <title type="short">Annales regni Francorum</title>
 </analytic>
@@ -24508,6 +26030,27 @@
 <date type="publicationDate">1895</date>
 </imprint>
 <biblScope unit="volume">ix-xvi</biblScope>
+</monogr>
+<series>
+<title level="s">Monumenta Germaniae Historica Scriptores rerum Germanicarum in usum scholarum separatim editi</title>
+</series>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<title>Annales qui dicuntur Einhardi</title>
+<title type="short">Annales Einhardi</title>
+</analytic>
+<monogr>
+<title level="m">Annales regni Francorum inde ab a. 741 usque ad a. 829, qui dicuntur Annales Laurissenses maiores et Einhardi</title>
+<editor>
+<forename>Friedrich</forename>
+<surname>Kurze</surname>
+</editor>
+<imprint>
+<pubPlace>Wiesbaden</pubPlace>
+<date type="publicationDate">1895</date>
+</imprint>
+<biblScope unit="page" from="xii" to="xiv">xii--xiv</biblScope>
 </monogr>
 <series>
 <title level="s">Monumenta Germaniae Historica Scriptores rerum Germanicarum in usum scholarum separatim editi</title>
@@ -24747,25 +26290,6 @@
 <forename>Gerhard</forename>
 <surname>Köbler</surname>
 </author>
-<title>Art. Civis</title>
-<title type="short">G. Köbler, Civis</title>
-</analytic>
-<monogr>
-<title level="m">Lexikon des Mittelalters</title>
-<imprint>
-<pubPlace>München and Zürich</pubPlace>
-<date type="publicationDate">1980-1998</date>
-</imprint>
-<biblScope unit="page" from="2111" to="2111">2111</biblScope>
-<biblScope unit="volume">2</biblScope>
-</monogr>
-</biblStruct>
-<biblStruct type="incollection">
-<analytic>
-<author>
-<forename>Gerhard</forename>
-<surname>Köbler</surname>
-</author>
 <title>Art. Civitas. II. Zur Problematik von "civitas-Stadt" im Mittelalter</title>
 <title type="short">G. Köbler, civitas II</title>
 </analytic>
@@ -24776,6 +26300,25 @@
 <date type="publicationDate">1980-1998</date>
 </imprint>
 <biblScope unit="page" from="2113" to="2114">2113--2114</biblScope>
+<biblScope unit="volume">2</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Gerhard</forename>
+<surname>Köbler</surname>
+</author>
+<title>Art. Civis</title>
+<title type="short">G. Köbler, Civis</title>
+</analytic>
+<monogr>
+<title level="m">Lexikon des Mittelalters</title>
+<imprint>
+<pubPlace>München and Zürich</pubPlace>
+<date type="publicationDate">1980-1998</date>
+</imprint>
+<biblScope unit="page" from="2111" to="2111">2111</biblScope>
 <biblScope unit="volume">2</biblScope>
 </monogr>
 </biblStruct>
@@ -24836,6 +26379,31 @@
 <biblScope unit="page" from="1418" to="1418">1418</biblScope>
 <biblScope unit="volume">6</biblScope>
 </monogr>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Gerhard</forename>
+<surname>Köbler</surname>
+</author>
+<title>Welchen Gottes Urteil ist das Gottesurteil des Mittelalters?</title>
+<title type="short">G. Köbler, Welchen Gottes Urteil</title>
+</analytic>
+<monogr>
+<title level="m">Vom mittelalterlichen Recht zur neuzeitlichen Rechtswissenschaft. Bedingungen, Wege und Probleme der europäischen Rechtsgeschichte. Winfried Trusen zum 70. Geburtstag</title>
+<editor>
+<forename>Norbert</forename>
+<surname>Brieskorn</surname>
+</editor>
+<imprint>
+<pubPlace>Paderborn</pubPlace>
+<date type="publicationDate">1994</date>
+</imprint>
+<biblScope unit="page" from="89" to="108">89--108</biblScope>
+</monogr>
+<series>
+<title level="s">Rechts- und staatswissenschaftliche Veröffentlichungen der Görres-Gesellschaft</title>
+</series>
 </biblStruct>
 <biblStruct type="book">
 <monogr>
@@ -25097,7 +26665,47 @@
 <biblScope unit="page" from="154" to="194">154--194</biblScope>
 </monogr>
 </biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Hiram</forename>
+<surname>Kümper</surname>
+</author>
+<title>Keuschheit. Zur Geschichte einer Idee</title>
+<title type="short">H. Kümper, Keuschheit</title>
+</analytic>
+<monogr>
+<title level="m">Im Korsett der Tugenden: Moral und Geschlecht im kulturhistorischen Kontext</title>
+<editor>
+<forename>Mariacarla</forename>
+<surname>Gadebusch Bondio</surname>
+</editor>
+<editor>
+<forename>Andrea</forename>
+<surname>Bettels</surname>
+</editor>
+<imprint>
+<pubPlace>Hildesheim u.a.</pubPlace>
+<date type="publicationDate">2013</date>
+</imprint>
+<biblScope unit="page" from="265" to="286">265--286</biblScope>
+</monogr>
+</biblStruct>
 <biblStruct type="book" xml:id="BL-L">
+<monogr>
+<title>L'étranger</title>
+<title type="short">L'étranger 1958</title>
+<imprint>
+<pubPlace>Bruxelles</pubPlace>
+<date type="publicationDate">1958</date>
+</imprint>
+</monogr>
+<series>
+<title level="s">Recueils de la Société Jean Bodin</title>
+<biblScope unit="volume">9-10</biblScope>
+</series>
+</biblStruct>
+<biblStruct type="book">
 <monogr>
 <title>L'homme et la route en Europe occidentale au Moyen Âge et aux temps modernes. Deuxième journées internationales d'histoire, 20-22 septembre 1980</title>
 <title type="short">L'homme et la route en 1982</title>
@@ -25153,6 +26761,20 @@
 <series>
 <title level="s">Munera. Studi storici sulla Tarda Antichità</title>
 <biblScope unit="volume">8</biblScope>
+</series>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<title>La Preuve</title>
+<title type="short">La Preuve 1963-1965</title>
+<imprint>
+<pubPlace>Brüssel</pubPlace>
+<date type="publicationDate">1963-1965</date>
+</imprint>
+</monogr>
+<series>
+<title level="s">Recueils de la Société Jean Bodin</title>
+<biblScope unit="volume">16-19</biblScope>
 </series>
 </biblStruct>
 <biblStruct type="book">
@@ -25242,6 +26864,57 @@
 </monogr>
 <series>
 <title level="s">Collection Haut Moyen Âge</title>
+</series>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Peter</forename>
+<surname>Landau</surname>
+</author>
+<title>Das Weihehindernis der Illegitimität in der Geschichte des kanonischen Rechts</title>
+<title type="short">P. Landau, Das Weihehindernis</title>
+</analytic>
+<monogr>
+<title level="m">Illegitimität im Spätmittelalter</title>
+<editor>
+<forename>Ludwig</forename>
+<surname>Schmugge</surname>
+</editor>
+<imprint>
+<pubPlace>München</pubPlace>
+<date type="publicationDate">1994</date>
+</imprint>
+<biblScope unit="page" from="41" to="53">41--53</biblScope>
+</monogr>
+<series>
+<title level="s">Schriften des Historischen Kollegs. Kolloquien</title>
+</series>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Peter</forename>
+<surname>Landau</surname>
+</editor>
+<editor>
+<forename>Hermann</forename>
+<surname>Nehlsen</surname>
+</editor>
+<editor>
+<forename>Mathias</forename>
+<surname>Schmoeckel</surname>
+</editor>
+<title>Karl von Amira zum Gedächtnis</title>
+<title type="short">Landau, Nehlsen et al. (Hg.) 1999 – Karl von Amira zum Gedächtnis</title>
+<imprint>
+<pubPlace>Frankfurt a. M</pubPlace>
+<date type="publicationDate">1999</date>
+</imprint>
+</monogr>
+<series>
+<title level="s">Rechtshistorische Reihe</title>
+<biblScope unit="volume">206</biblScope>
 </series>
 </biblStruct>
 <biblStruct type="incollection">
@@ -25457,6 +27130,20 @@
 </imprint>
 </monogr>
 </biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Johannes</forename>
+<surname>Laudage</surname>
+</editor>
+<title>Frömmigkeitsformen in Mittelalter und Renaissance</title>
+<title type="short">Laudage (Ed.) 2004 – Frömmigkeitsformen in Mittelalter und Renaissance</title>
+<imprint>
+<pubPlace>Düsseldorf</pubPlace>
+<date type="publicationDate">2004</date>
+</imprint>
+</monogr>
+</biblStruct>
 <biblStruct type="incollection">
 <analytic>
 <author>
@@ -25477,20 +27164,6 @@
 <date type="publicationDate">2004</date>
 </imprint>
 <biblScope unit="page" from="48" to="95">48--95</biblScope>
-</monogr>
-</biblStruct>
-<biblStruct type="book">
-<monogr>
-<editor>
-<forename>Johannes</forename>
-<surname>Laudage</surname>
-</editor>
-<title>Frömmigkeitsformen in Mittelalter und Renaissance</title>
-<title type="short">Laudage (Ed.) 2004 – Frömmigkeitsformen in Mittelalter und Renaissance</title>
-<imprint>
-<pubPlace>Düsseldorf</pubPlace>
-<date type="publicationDate">2004</date>
-</imprint>
 </monogr>
 </biblStruct>
 <biblStruct type="book">
@@ -25699,6 +27372,28 @@
 <title level="s">ublications de la Sorbonne. Série Histoire ancienne et médiévale</title>
 <biblScope unit="volume">33</biblScope>
 </series>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Régine</forename>
+<surname>Le Jan</surname>
+</author>
+<title>Remarques sur l'étranger au haut Moyen Âge</title>
+<title type="short">R. Le Jan, Remarques</title>
+</analytic>
+<monogr>
+<title level="m">L'image de l'autre dans l'Europe du Nord-Ouest</title>
+<editor>
+<forename>Jean-Pierre</forename>
+<surname>Jessenne</surname>
+</editor>
+<imprint>
+<pubPlace>Lille</pubPlace>
+<date type="publicationDate">1996</date>
+</imprint>
+<biblScope unit="page" from="23" to="32">23--32</biblScope>
+</monogr>
 </biblStruct>
 <biblStruct type="incollection">
 <analytic>
@@ -26080,6 +27775,24 @@
 </biblStruct>
 <biblStruct type="book">
 <monogr>
+<author>
+<forename>Anke</forename>
+<surname>Leineweber</surname>
+</author>
+<title>Die rechtliche Beziehung des nichtehelichen Kindes zu seinem Erzeuger in der Geschichte des Privatrechts</title>
+<title type="short">A. Leineweber, Die rechtliche Beziehung</title>
+<imprint>
+<pubPlace>Königstein im Taunus</pubPlace>
+<date type="publicationDate">1978</date>
+</imprint>
+</monogr>
+<series>
+<title level="s">Beiträge zur neueren Privatrechtsgeschichte</title>
+<biblScope unit="volume">7</biblScope>
+</series>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
 <editor>
 <forename>Jean-Loup</forename>
 <surname>Lemaître</surname>
@@ -26213,6 +27926,33 @@
 </imprint>
 <biblScope unit="page" from="520" to="521">520--521</biblScope>
 <biblScope unit="volume">9</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Hans</forename>
+<surname>Lentze</surname>
+</author>
+<title>Art. andelang</title>
+<title type="short">H. Lentze, Andelang</title>
+</analytic>
+<monogr>
+<title level="m">Handwörterbuch zur deutschen Rechtsgeschichte</title>
+<editor>
+<forename>Adalbert</forename>
+<surname>Erler</surname>
+</editor>
+<editor>
+<forename>Ekkehard</forename>
+<surname>Kaufmann</surname>
+</editor>
+<imprint>
+<pubPlace>Berlin</pubPlace>
+<date type="publicationDate">1971-1998</date>
+</imprint>
+<biblScope unit="page" from="158" to="159">158--159</biblScope>
+<biblScope unit="volume">1 (1971)</biblScope>
 </monogr>
 </biblStruct>
 <biblStruct type="book">
@@ -26644,9 +28384,9 @@
 <biblStruct type="book">
 <monogr>
 <title>Lexikon des Mittelalters</title>
-<title type="short">Lexikon des Mittelalters 1998</title>
+<title type="short">Lexikon des Mittelalters 1997</title>
 <imprint>
-<date type="publicationDate">1998</date>
+<date type="publicationDate">1997</date>
 </imprint>
 </monogr>
 </biblStruct>
@@ -26655,6 +28395,26 @@
 <title>Lexikon des Mittelalters</title>
 <title type="short">Lexikon des Mittelalters 1998</title>
 <imprint>
+<date type="publicationDate">1998</date>
+</imprint>
+</monogr>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<title>Lexikon des Mittelalters: Teilband 9</title>
+<title type="short">Lexikon des Mittelalters 1998</title>
+<imprint>
+<date type="publicationDate">1998</date>
+</imprint>
+</monogr>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<title>Lexikon für Theologie und Kirche</title>
+<title type="short">Lexikon für Theologie und Kirche 1998</title>
+<imprint>
+<pubPlace>Freiburg and Basel and Wien [u.a.]</pubPlace>
+<publisher>Herder</publisher>
 <date type="publicationDate">1998</date>
 </imprint>
 </monogr>
@@ -26842,6 +28602,23 @@
 <biblScope unit="page" from="286" to="311">286--311</biblScope>
 </monogr>
 </biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Detlef</forename>
+<surname>Liebs</surname>
+</author>
+<title>Öffentliches und Privatstrafrecht in der römischen Kaiserzeit.</title>
+<title type="short">D. Liebs, Öffentliches und Privatstrafrecht</title>
+</analytic>
+<monogr>
+<title level="m">Hoheitliches Strafen in der Spätantike und im frühen Mittelalter</title>
+<imprint>
+<date type="publicationDate">2002</date>
+</imprint>
+<biblScope unit="page" from="11" to="25">11--25</biblScope>
+</monogr>
+</biblStruct>
 <biblStruct type="book">
 <monogr>
 <author>
@@ -26859,23 +28636,6 @@
 <title level="s">Freiburger rechtsgeschichtliche Abhandlungen</title>
 <biblScope unit="volume">38</biblScope>
 </series>
-</biblStruct>
-<biblStruct type="incollection">
-<analytic>
-<author>
-<forename>Detlef</forename>
-<surname>Liebs</surname>
-</author>
-<title>Öffentliches und Privatstrafrecht in der römischen Kaiserzeit.</title>
-<title type="short">D. Liebs, Öffentliches und Privatstrafrecht</title>
-</analytic>
-<monogr>
-<title level="m">Hoheitliches Strafen in der Spätantike und im frühen Mittelalter</title>
-<imprint>
-<date type="publicationDate">2002</date>
-</imprint>
-<biblScope unit="page" from="11" to="25">11--25</biblScope>
-</monogr>
 </biblStruct>
 <biblStruct type="incollection">
 <analytic>
@@ -27114,6 +28874,20 @@
 <biblScope unit="page" from="16" to="59">16--59</biblScope>
 </monogr>
 </biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Lester Knox</forename>
+<surname>Little</surname>
+</editor>
+<title>Plague and the end of antiquity. The pandemic of 541 - 750</title>
+<title type="short">Little (Ed.) 2007 – Plague and the end</title>
+<imprint>
+<pubPlace>Cambridge</pubPlace>
+<date type="publicationDate">2007</date>
+</imprint>
+</monogr>
+</biblStruct>
 <biblStruct type="incollection">
 <analytic>
 <author>
@@ -27134,20 +28908,6 @@
 <date type="publicationDate">2007</date>
 </imprint>
 <biblScope unit="page" from="3" to="32">3--32</biblScope>
-</monogr>
-</biblStruct>
-<biblStruct type="book">
-<monogr>
-<editor>
-<forename>Lester Knox</forename>
-<surname>Little</surname>
-</editor>
-<title>Plague and the end of antiquity. The pandemic of 541 - 750</title>
-<title type="short">Little (Ed.) 2007 – Plague and the end</title>
-<imprint>
-<pubPlace>Cambridge</pubPlace>
-<date type="publicationDate">2007</date>
-</imprint>
 </monogr>
 </biblStruct>
 <biblStruct type="book">
@@ -27216,6 +28976,40 @@
 </imprint>
 <biblScope unit="volume">7</biblScope>
 <biblScope unit="page" from="146" to="164">146--164</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Sönke</forename>
+<surname>Lorenz</surname>
+</author>
+<title>Der Königsforst ("forestis") in den Quellen der Merowinger- und Karolingerzeit. Prolegomena zu einer Geschichte mittelalterlicher Nutzwälder</title>
+<title type="short">S. Lorenz, Der Königsforst</title>
+</analytic>
+<monogr>
+<title level="m">Mönchtum - Kirche - Herrschaft 750-1000. Josef Semmler zum 65. Geburtstag</title>
+<editor>
+<forename>Dieter R.</forename>
+<surname>Bauer</surname>
+</editor>
+<editor>
+<forename>Rudolf</forename>
+<surname>Hiestand</surname>
+</editor>
+<editor>
+<forename>Brigitte</forename>
+<surname>Kasten</surname>
+</editor>
+<editor>
+<forename>Sönke</forename>
+<surname>Lorenz</surname>
+</editor>
+<imprint>
+<pubPlace>Sigmaringen</pubPlace>
+<date type="publicationDate">1998</date>
+</imprint>
+<biblScope unit="page" from="261" to="285">261--285</biblScope>
 </monogr>
 </biblStruct>
 <biblStruct type="book">
@@ -30024,24 +31818,6 @@
 <forename>Theodor</forename>
 <surname>Mayer-Maly</surname>
 </author>
-<title>Kauf, Tausch und Pacta als Instrumente des Güterverkehrs im Übergang zwischen Altertum und Mittelalter</title>
-<title type="short">T. Mayer-Maly, Kauf, Tausch und pacta</title>
-</analytic>
-<monogr>
-<title level="j">Klio. Beiträge zur alten Geschichte</title>
-<imprint>
-<date type="publicationDate">1991</date>
-</imprint>
-<biblScope unit="volume">73</biblScope>
-<biblScope unit="page" from="606" to="611">606--611</biblScope>
-</monogr>
-</biblStruct>
-<biblStruct type="article">
-<analytic>
-<author>
-<forename>Theodor</forename>
-<surname>Mayer-Maly</surname>
-</author>
 <title>Pactum, Tausch und laesio enormis in den sog. leges Barbarorum</title>
 <title type="short">T. Mayer-Maly, Pactum</title>
 </analytic>
@@ -30052,6 +31828,24 @@
 </imprint>
 <biblScope unit="volume">108</biblScope>
 <biblScope unit="page" from="213" to="233">213--233</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="article">
+<analytic>
+<author>
+<forename>Theodor</forename>
+<surname>Mayer-Maly</surname>
+</author>
+<title>Kauf, Tausch und Pacta als Instrumente des Güterverkehrs im Übergang zwischen Altertum und Mittelalter</title>
+<title type="short">T. Mayer-Maly, Kauf, Tausch und pacta</title>
+</analytic>
+<monogr>
+<title level="j">Klio. Beiträge zur alten Geschichte</title>
+<imprint>
+<date type="publicationDate">1991</date>
+</imprint>
+<biblScope unit="volume">73</biblScope>
+<biblScope unit="page" from="606" to="611">606--611</biblScope>
 </monogr>
 </biblStruct>
 <biblStruct type="book">
@@ -30081,6 +31875,24 @@
 <date type="publicationDate">2016</date>
 </imprint>
 </monogr>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Thomas A. J.</forename>
+<surname>McGinn</surname>
+</editor>
+<title>Obligations in Roman law: past, present, and future</title>
+<title type="short">McGinn (Hg.) 2012 – Obligations in Roman law</title>
+<imprint>
+<pubPlace>Ann Arbor, Mich.</pubPlace>
+<date type="publicationDate">2012</date>
+</imprint>
+</monogr>
+<series>
+<title level="s">Papers and monographs of the American Academy in Rome</title>
+<biblScope unit="volume">33</biblScope>
+</series>
 </biblStruct>
 <biblStruct type="book">
 <monogr>
@@ -30605,6 +32417,20 @@
 </imprint>
 </monogr>
 <ref type="url">https://referenceworks.brillonline.com/entries/der-neue-pauly/notar-rwg-e1509060?s.num=0&amp;s.f.s2_parent=s.f.book.der-neue-pauly&amp;s.q=notar</ref>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<author>
+<forename>Elizabeth A.</forename>
+<surname>Meyer</surname>
+</author>
+<title>Legitimacy and law in the Roman world: tabulae in Roman belief and practice</title>
+<title type="short">E. A. Meyer, Legitimacy</title>
+<imprint>
+<pubPlace>Cambridge u.a.</pubPlace>
+<date type="publicationDate">2004</date>
+</imprint>
+</monogr>
 </biblStruct>
 <biblStruct type="book">
 <monogr>
@@ -31583,6 +33409,27 @@
 </biblStruct>
 <biblStruct type="incollection">
 <analytic>
+<title>Synode von Vaison 442</title>
+<title type="short">Synode von Vaison 442</title>
+</analytic>
+<monogr>
+<title level="m">Concilia Galliae</title>
+<editor>
+<forename>Charles</forename>
+<surname>Munier</surname>
+</editor>
+<imprint>
+<pubPlace>Turnhout</pubPlace>
+<date type="publicationDate">1963</date>
+</imprint>
+<biblScope unit="page" from="94" to="104">94--104</biblScope>
+</monogr>
+<series>
+<title level="s">CCSL</title>
+</series>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
 <title>Collectio canonica concilium Arelatense secundum nuncupata a. 442-506</title>
 <title type="short">Konzil von Arles 490-502</title>
 </analytic>
@@ -31639,27 +33486,6 @@
 <date type="publicationDate">1963</date>
 </imprint>
 <biblScope unit="page" from="35" to="45">35--45</biblScope>
-</monogr>
-<series>
-<title level="s">CCSL</title>
-</series>
-</biblStruct>
-<biblStruct type="incollection">
-<analytic>
-<title>Synode von Vaison 442</title>
-<title type="short">Synode von Vaison 442</title>
-</analytic>
-<monogr>
-<title level="m">Concilia Galliae</title>
-<editor>
-<forename>Charles</forename>
-<surname>Munier</surname>
-</editor>
-<imprint>
-<pubPlace>Turnhout</pubPlace>
-<date type="publicationDate">1963</date>
-</imprint>
-<biblScope unit="page" from="94" to="104">94--104</biblScope>
 </monogr>
 <series>
 <title level="s">CCSL</title>
@@ -33011,20 +34837,6 @@
 <biblScope unit="volume">6</biblScope>
 </monogr>
 </biblStruct>
-<biblStruct type="book">
-<monogr>
-<editor>
-<forename>Otto Gerhard</forename>
-<surname>Oexle</surname>
-</editor>
-<title>Memoria als Kultur</title>
-<title type="short">O. G. Oexle, Memoria als Kultur</title>
-<imprint>
-<pubPlace>Göttingen</pubPlace>
-<date type="publicationDate">1995</date>
-</imprint>
-</monogr>
-</biblStruct>
 <biblStruct type="incollection">
 <analytic>
 <author>
@@ -33045,6 +34857,20 @@
 <date type="publicationDate">1995</date>
 </imprint>
 <biblScope unit="page" from="9" to="78">9--78</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Otto Gerhard</forename>
+<surname>Oexle</surname>
+</editor>
+<title>Memoria als Kultur</title>
+<title type="short">O. G. Oexle, Memoria als Kultur</title>
+<imprint>
+<pubPlace>Göttingen</pubPlace>
+<date type="publicationDate">1995</date>
+</imprint>
 </monogr>
 </biblStruct>
 <biblStruct type="book">
@@ -33153,6 +34979,32 @@
 </imprint>
 <biblScope unit="page" from="399" to="404">399--404</biblScope>
 <biblScope unit="volume">5</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Werner</forename>
+<surname>Ogris</surname>
+</author>
+<title>Art. Wille, Willenserklärung</title>
+<title type="short">W. Ogris, Wille, Willenserklärung</title>
+</analytic>
+<monogr>
+<title level="m">Handwörterbuch zur deutschen Rechtsgeschichte</title>
+<editor>
+<forename>Adalbert</forename>
+<surname>Erler</surname>
+</editor>
+<editor>
+<forename>Ekkehard</forename>
+<surname>Kaufmann</surname>
+</editor>
+<imprint>
+<pubPlace>Berlin</pubPlace>
+<date type="publicationDate">1998</date>
+</imprint>
+<biblScope unit="page" from="1424" to="1427">1424--1427</biblScope>
 </monogr>
 </biblStruct>
 <biblStruct type="incollection">
@@ -33422,6 +35274,20 @@
 <date type="publicationDate">1941</date>
 </imprint>
 </monogr>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<title>Ordinamenti militari in Occidente nell'alto medioevo</title>
+<title type="short">Ordinamenti militari in Occidente nell'alto 1968</title>
+<imprint>
+<pubPlace>Spoleto</pubPlace>
+<date type="publicationDate">1968</date>
+</imprint>
+</monogr>
+<series>
+<title level="s">Settimane di studio del Centro italiano di studi sull'alto medioevo</title>
+<biblScope unit="volume">15</biblScope>
+</series>
 </biblStruct>
 <biblStruct type="book">
 <monogr>
@@ -34028,6 +35894,31 @@
 <forename>Steffen</forename>
 <surname>Patzold</surname>
 </author>
+<title>Consensus - Concordia - Unitas. Überlegungen zu einem politisch-religiösen Ideal der Karolingerzeit</title>
+<title type="short">S. Patzold, Consensus</title>
+</analytic>
+<monogr>
+<title level="m">Exemplaris imago: Ideale in Mittelalter und Früher Neuzeit</title>
+<editor>
+<forename>Nikolaus</forename>
+<surname>Staubach</surname>
+</editor>
+<imprint>
+<pubPlace>Frankfurt a. M. [u.a.]</pubPlace>
+<date type="publicationDate">2012</date>
+</imprint>
+<biblScope unit="page" from="31" to="56">31--56</biblScope>
+</monogr>
+<series>
+<title level="s">Tradition - Reform - Innovation</title>
+</series>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Steffen</forename>
+<surname>Patzold</surname>
+</author>
 <title>Die Bischöfe im Gallien der Transformationszeit: Eine sozial homogene Gruppe von Amtsträgern?</title>
 <title type="short">S. Patzold, Bischöfe im Gallien der Transformationszeit</title>
 </analytic>
@@ -34545,28 +36436,6 @@
 <forename>Wolfgang</forename>
 <surname>Pfeifer</surname>
 </author>
-<title>Art. Meineid</title>
-<title type="short">W. Pfeifer, „Meineid“</title>
-</analytic>
-<monogr>
-<title level="m">Etymologisches Wörterbuch des Deutschen, M-Z</title>
-<editor>
-<forename>Wolfgang</forename>
-<surname>Pfeifer</surname>
-</editor>
-<imprint>
-<pubPlace>Berlin</pubPlace>
-<date type="publicationDate">1993</date>
-</imprint>
-<biblScope unit="page" from="856f." to="856f.">856f.</biblScope>
-</monogr>
-</biblStruct>
-<biblStruct type="incollection">
-<analytic>
-<author>
-<forename>Wolfgang</forename>
-<surname>Pfeifer</surname>
-</author>
 <title>Art. gemein</title>
 <title type="short">W. Pfeifer, „gemein“</title>
 </analytic>
@@ -34581,6 +36450,28 @@
 <date type="publicationDate">1993</date>
 </imprint>
 <biblScope unit="page" from="421" to="421">421</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Wolfgang</forename>
+<surname>Pfeifer</surname>
+</author>
+<title>Art. Meineid</title>
+<title type="short">W. Pfeifer, „Meineid“</title>
+</analytic>
+<monogr>
+<title level="m">Etymologisches Wörterbuch des Deutschen, M-Z</title>
+<editor>
+<forename>Wolfgang</forename>
+<surname>Pfeifer</surname>
+</editor>
+<imprint>
+<pubPlace>Berlin</pubPlace>
+<date type="publicationDate">1993</date>
+</imprint>
+<biblScope unit="page" from="856f." to="856f.">856f.</biblScope>
 </monogr>
 </biblStruct>
 <biblStruct type="book">
@@ -35582,6 +37473,23 @@
 </imprint>
 </monogr>
 </biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Francois-Xavier</forename>
+<surname>Putallaz</surname>
+</author>
+<title>Art. Wille</title>
+<title type="short">F.-X. Putallaz, Wille</title>
+</analytic>
+<monogr>
+<title level="m">Lexikon des Mittelalters: Teilband 9</title>
+<imprint>
+<date type="publicationDate">1998</date>
+</imprint>
+<biblScope unit="page" from="203" to="206">203--206</biblScope>
+</monogr>
+</biblStruct>
 <biblStruct type="book" xml:id="BL-Q">
 <monogr>
 <author>
@@ -35709,6 +37617,24 @@
 <title level="s">Bonner Jahrbücher. Beihefte</title>
 <biblScope unit="volume">55</biblScope>
 </series>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Erwin</forename>
+<surname>Rauner</surname>
+</author>
+<title>Art. Tabula(e)</title>
+<title type="short">E. Rauner, Tabulae</title>
+</analytic>
+<monogr>
+<title level="m">Lexikon des Mittelalters</title>
+<imprint>
+<date type="publicationDate">1997</date>
+</imprint>
+<biblScope unit="page" from="398" to="398">398</biblScope>
+<biblScope unit="volume">8</biblScope>
+</monogr>
 </biblStruct>
 <biblStruct type="incollection">
 <analytic>
@@ -35944,20 +37870,6 @@
 <biblScope unit="page" from="1" to="35">1--35</biblScope>
 </monogr>
 </biblStruct>
-<biblStruct type="book">
-<monogr>
-<editor>
-<forename>Annie</forename>
-<surname>Renoux</surname>
-</editor>
-<title>"Aux marches du palais" Qu'est-ce qu'un palais médiéval? Actes du VIIe Congrès international d'Archéologie Médiévale, Le Mans -Mayenne 9-11 septembre 1999</title>
-<title type="short">Renoux (Hg.) 2001 – Aux marches du palais Qu'est-ce</title>
-<imprint>
-<pubPlace>Le Mans</pubPlace>
-<date type="publicationDate">2001</date>
-</imprint>
-</monogr>
-</biblStruct>
 <biblStruct type="incollection">
 <analytic>
 <author>
@@ -35978,6 +37890,20 @@
 <date type="publicationDate">2001</date>
 </imprint>
 <biblScope unit="page" from="9" to="21">9--21</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Annie</forename>
+<surname>Renoux</surname>
+</editor>
+<title>"Aux marches du palais" Qu'est-ce qu'un palais médiéval? Actes du VIIe Congrès international d'Archéologie Médiévale, Le Mans -Mayenne 9-11 septembre 1999</title>
+<title type="short">Renoux (Hg.) 2001 – Aux marches du palais Qu'est-ce</title>
+<imprint>
+<pubPlace>Le Mans</pubPlace>
+<date type="publicationDate">2001</date>
+</imprint>
 </monogr>
 </biblStruct>
 <biblStruct type="book">
@@ -36047,21 +37973,6 @@
 <biblScope unit="page" from="13" to="35">13--35</biblScope>
 </monogr>
 </biblStruct>
-<biblStruct type="book">
-<monogr>
-<editor>
-<forename>Timothy</forename>
-<surname>Reuter</surname>
-</editor>
-<title>Medieval polities and modern mentalities</title>
-<title type="short">Reuter (Ed.) 2006 – Medieval polities and modern mentalities</title>
-<imprint>
-<pubPlace>Cambridge</pubPlace>
-<publisher>Cambridge University Press</publisher>
-<date type="publicationDate">2006</date>
-</imprint>
-</monogr>
-</biblStruct>
 <biblStruct type="incollection">
 <analytic>
 <author>
@@ -36083,6 +37994,21 @@
 <date type="publicationDate">2006</date>
 </imprint>
 <biblScope unit="page" from="413" to="431">413--431</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Timothy</forename>
+<surname>Reuter</surname>
+</editor>
+<title>Medieval polities and modern mentalities</title>
+<title type="short">Reuter (Ed.) 2006 – Medieval polities and modern mentalities</title>
+<imprint>
+<pubPlace>Cambridge</pubPlace>
+<publisher>Cambridge University Press</publisher>
+<date type="publicationDate">2006</date>
+</imprint>
 </monogr>
 </biblStruct>
 <biblStruct type="incollection">
@@ -36281,6 +38207,49 @@
 <date type="publicationDate">1999</date>
 </imprint>
 </monogr>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Roger Edward</forename>
+<surname>Reynolds</surname>
+</author>
+<title>Clerics in the early Middle Ages: hierarchies and functions</title>
+<title type="short">R. E. Reynolds, Clerics in the early Middle Ages</title>
+</analytic>
+<monogr>
+<title level="m">Clerics in the early Middle Ages: hierarchy and image</title>
+<editor>
+<forename>Roger Edward</forename>
+<surname>Reynolds</surname>
+</editor>
+<imprint>
+<pubPlace>Aldershot</pubPlace>
+<date type="publicationDate">1999</date>
+</imprint>
+<biblScope unit="page" from="1" to="31">1--31</biblScope>
+</monogr>
+<series>
+<title level="s">Variorum collected studies series</title>
+</series>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Roger Edward</forename>
+<surname>Reynolds</surname>
+</editor>
+<title>Clerics in the early Middle Ages: hierarchy and image</title>
+<title type="short">R. E. Reynolds, Clerics in the early Middle Ages: hierarchy and image</title>
+<imprint>
+<pubPlace>Aldershot</pubPlace>
+<date type="publicationDate">1999</date>
+</imprint>
+</monogr>
+<series>
+<title level="s">Variorum collected studies series</title>
+<biblScope unit="volume">669</biblScope>
+</series>
 </biblStruct>
 <biblStruct type="incollection">
 <analytic>
@@ -37131,6 +39100,23 @@
 </imprint>
 <biblScope unit="page" from="259" to="272">259--272</biblScope>
 </monogr>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<author>
+<forename>Aline</forename>
+<surname>Rousselle</surname>
+</author>
+<title>Porneia: on desire and the body in antiquity</title>
+<title type="short">A. Rousselle, Porneia</title>
+<imprint>
+<pubPlace>Oxford [u.a.]</pubPlace>
+<date type="publicationDate">1988</date>
+</imprint>
+</monogr>
+<series>
+<title level="s">Family, sexuality and social relations in past times</title>
+</series>
 </biblStruct>
 <biblStruct type="book">
 <monogr>
@@ -38086,38 +40072,6 @@
 <forename>Dietmar</forename>
 <surname>Schanbacher</surname>
 </author>
-<title>Dominus</title>
-<title type="short">D. Schanbacher, "Dominus"</title>
-</analytic>
-<monogr>
-<title level="m">Der neue Pauly: Enzyklopädie der Antike</title>
-<editor>
-<forename>Hubert</forename>
-<surname>Cancik</surname>
-</editor>
-<editor>
-<forename>Helmuth</forename>
-<surname>Schneider</surname>
-</editor>
-<editor>
-<forename>Manfred</forename>
-<surname>Landfester</surname>
-</editor>
-<imprint>
-<pubPlace>Stuttgart</pubPlace>
-<publisher>Metzler</publisher>
-<date type="publicationDate">1996-2010</date>
-<date type="urldate">09.05.2019</date>
-</imprint>
-</monogr>
-<ref type="url">https://referenceworks.brillonline.com/entries/der-neue-pauly/dominus-e322340?s.num=0&amp;s.f.s2_parent=s.f.book.der-neue-pauly&amp;s.q=dominus</ref>
-</biblStruct>
-<biblStruct type="incollection">
-<analytic>
-<author>
-<forename>Dietmar</forename>
-<surname>Schanbacher</surname>
-</author>
 <title>Ususfructus</title>
 <title type="short">D. Schanbacher, "Ususfructus"</title>
 </analytic>
@@ -38143,6 +40097,38 @@
 </imprint>
 </monogr>
 <ref type="url">https://referenceworks.brillonline.com/entries/der-neue-pauly/ususfructus-e1226430?s.num=0&amp;s.f.s2_parent=s.f.book.der-neue-pauly&amp;s.q=Ususfructus</ref>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Dietmar</forename>
+<surname>Schanbacher</surname>
+</author>
+<title>Dominus</title>
+<title type="short">D. Schanbacher, "Dominus"</title>
+</analytic>
+<monogr>
+<title level="m">Der neue Pauly: Enzyklopädie der Antike</title>
+<editor>
+<forename>Hubert</forename>
+<surname>Cancik</surname>
+</editor>
+<editor>
+<forename>Helmuth</forename>
+<surname>Schneider</surname>
+</editor>
+<editor>
+<forename>Manfred</forename>
+<surname>Landfester</surname>
+</editor>
+<imprint>
+<pubPlace>Stuttgart</pubPlace>
+<publisher>Metzler</publisher>
+<date type="publicationDate">1996-2010</date>
+<date type="urldate">09.05.2019</date>
+</imprint>
+</monogr>
+<ref type="url">https://referenceworks.brillonline.com/entries/der-neue-pauly/dominus-e322340?s.num=0&amp;s.f.s2_parent=s.f.book.der-neue-pauly&amp;s.q=dominus</ref>
 </biblStruct>
 <biblStruct type="incollection">
 <analytic>
@@ -38272,6 +40258,37 @@
 <date type="publicationDate">2005-2016</date>
 </imprint>
 <biblScope unit="page" from="1665" to="1679">1665--1679</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Wolfgang</forename>
+<surname>Schieder</surname>
+</author>
+<title>Art. Brüderlichkeit (Bruderschaft, Brüderschaft, Verbrüderung, Bruderliebe)</title>
+<title type="short">W. Schieder, Brüderlichkeit</title>
+</analytic>
+<monogr>
+<title level="m">Geschichtliche Grundbegriffe. Historisches Lexikon zur politisch-sozialen Sprache in Deutschland</title>
+<editor>
+<forename>Otto</forename>
+<surname>Brunner</surname>
+</editor>
+<editor>
+<forename>Werner</forename>
+<surname>Conze</surname>
+</editor>
+<editor>
+<forename>Reinhart</forename>
+<surname>Koselleck</surname>
+</editor>
+<imprint>
+<pubPlace>Stuttgart</pubPlace>
+<date type="publicationDate">1972-1997</date>
+</imprint>
+<biblScope unit="page" from="552" to="581">552--581</biblScope>
+<biblScope unit="volume">1</biblScope>
 </monogr>
 </biblStruct>
 <biblStruct type="book">
@@ -38680,6 +40697,35 @@
 </imprint>
 </monogr>
 </biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Karl</forename>
+<surname>Schmid</surname>
+</author>
+<title>Mönchtum und Verbrüderung</title>
+<title type="short">K. Schmid, Mönchtum und Verbrüderung</title>
+</analytic>
+<monogr>
+<title level="m">Monastische Reformen im 9. und 10. Jahrhundert</title>
+<editor>
+<forename>Raymund</forename>
+<surname>Kottje</surname>
+</editor>
+<editor>
+<forename>Helmut</forename>
+<surname>Maurer</surname>
+</editor>
+<imprint>
+<pubPlace>Sigmaringen</pubPlace>
+<date type="publicationDate">1989</date>
+</imprint>
+<biblScope unit="page" from="117" to="146">117--146</biblScope>
+</monogr>
+<series>
+<title level="s">Vorträge und Forschungen</title>
+</series>
+</biblStruct>
 <biblStruct type="article">
 <analytic>
 <author>
@@ -38702,6 +40748,28 @@
 <biblScope unit="page" from="365" to="405">365--405</biblScope>
 </monogr>
 </biblStruct>
+<biblStruct type="article">
+<analytic>
+<author>
+<forename>Karl</forename>
+<surname>Schmid</surname>
+</author>
+<author>
+<forename>Joachim</forename>
+<surname>Wollasch</surname>
+</author>
+<title>Societas et Fraternitas. Begründung eines kommentierten Quellenwerkes zur Erforschung der Personen und Personengruppen des Mittelalters</title>
+<title type="short">K. Schmid/J. Wollasch, Societas et fraternitas</title>
+</analytic>
+<monogr>
+<title level="j">Frühmittelalterliche Studien</title>
+<imprint>
+<date type="publicationDate">1975</date>
+</imprint>
+<biblScope unit="volume">9</biblScope>
+<biblScope unit="page" from="1" to="48">1--48</biblScope>
+</monogr>
+</biblStruct>
 <biblStruct type="book">
 <monogr>
 <author>
@@ -38712,6 +40780,28 @@
 <forename>Joachim</forename>
 <surname>Wollasch</surname>
 </author>
+<title>"Memoria". Der geschichtliche Zeugniswert</title>
+<title type="short">K. Schmid/J. Wollasch, Memoria</title>
+<imprint>
+<pubPlace>München</pubPlace>
+<date type="publicationDate">1984</date>
+</imprint>
+</monogr>
+<series>
+<title level="s">Münstersche Mittelalter-Schriften</title>
+<biblScope unit="volume">48</biblScope>
+</series>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Karl</forename>
+<surname>Schmid</surname>
+</editor>
+<editor>
+<forename>Joachim</forename>
+<surname>Wollasch</surname>
+</editor>
 <title>"Memoria". Der geschichtliche Zeugniswert</title>
 <title type="short">K. Schmid/J. Wollasch, Memoria</title>
 <imprint>
@@ -39004,7 +41094,7 @@
 <surname>Schmitz</surname>
 </author>
 <title>Ursprung und Geschichte der Devotionsformeln bis zu ihrer Aufnahme in die fränkische Königsurkunde</title>
-<title type="short">K. Schmitz, Ursprung und Geschichte</title>
+<title type="short">K. Schmitz, Ursprung und Geschichte der Devotionsformeln</title>
 <imprint>
 <pubPlace>Stuttgart</pubPlace>
 <date type="publicationDate">1913</date>
@@ -39022,7 +41112,7 @@
 <surname>Schmitz</surname>
 </author>
 <title>Ursprung und Geschichte der Devotionsformeln bis zu ihrer Aufnahme in die fränkische Königsurkunde</title>
-<title type="short">K. Schmitz, Ursprung und Geschichte der Devotionsformeln</title>
+<title type="short">K. Schmitz, Ursprung und Geschichte</title>
 <imprint>
 <pubPlace>Stuttgart</pubPlace>
 <date type="publicationDate">1913</date>
@@ -39086,6 +41176,79 @@
 <biblScope unit="volume">23</biblScope>
 <biblScope unit="page" from="762" to="763">762--763</biblScope>
 </monogr>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Mathias</forename>
+<surname>Schmoeckel</surname>
+</author>
+<title>Glaube und Glaubwürdigkeit vor Gericht. Ordale im Spannungfeld von Recht und Gesellschaft</title>
+<title type="short">M. Schmoeckel, Glaube und Glaubwürdigkeit</title>
+</analytic>
+<monogr>
+<title level="m">Karl von Amira zum Gedächtnis</title>
+<editor>
+<forename>Peter</forename>
+<surname>Landau</surname>
+</editor>
+<editor>
+<forename>Hermann</forename>
+<surname>Nehlsen</surname>
+</editor>
+<editor>
+<forename>Mathias</forename>
+<surname>Schmoeckel</surname>
+</editor>
+<imprint>
+<pubPlace>Frankfurt a. M</pubPlace>
+<date type="publicationDate">1999</date>
+</imprint>
+<biblScope unit="page" from="291" to="308">291--308</biblScope>
+</monogr>
+<series>
+<title level="s">Rechtshistorische Reihe</title>
+</series>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Mathias</forename>
+<surname>Schmoeckel</surname>
+</author>
+<title>Die Überzeugungskraft der Ordale in merowingischer Zeit</title>
+<title type="short">M. Schmoeckel, Die Überzeugungskraft</title>
+</analytic>
+<monogr>
+<title level="m">Von den leges barbarorum bis zum ius barbarum des Nationalsozialismus. Festschrift für Hermann Nehlsen zum 70. Geburtstag</title>
+<editor>
+<forename>Hans-Georg</forename>
+<surname>Hermann</surname>
+</editor>
+<imprint>
+<pubPlace>Köln</pubPlace>
+<date type="publicationDate">2008</date>
+</imprint>
+<biblScope unit="page" from="198" to="223">198--223</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Ludwig</forename>
+<surname>Schmugge</surname>
+</editor>
+<title>Illegitimität im Spätmittelalter</title>
+<title type="short">Schmugge (Hg.) 1994 – Illegitimität im Spätmittelalter</title>
+<imprint>
+<pubPlace>München</pubPlace>
+<date type="publicationDate">1994</date>
+</imprint>
+</monogr>
+<series>
+<title level="s">Schriften des Historischen Kollegs. Kolloquien</title>
+<biblScope unit="volume">29</biblScope>
+</series>
 </biblStruct>
 <biblStruct type="incollection">
 <analytic>
@@ -39450,20 +41613,6 @@
 <biblScope unit="page" from="403" to="457">403--457</biblScope>
 </monogr>
 </biblStruct>
-<biblStruct type="book">
-<monogr>
-<editor>
-<forename>Percy Ernst</forename>
-<surname>Schramm</surname>
-</editor>
-<title>Kaiser, Könige und Päpste. Gesammelte Aufsätze zur Geschichte des Mittelalters. Bd. 1: Von der Spätantike bis zum Tode Karls des Großen (814)</title>
-<title type="short">Schramm (Ed.) 1968 – Kaiser, Könige und Päpste</title>
-<imprint>
-<pubPlace>Stuttgart</pubPlace>
-<date type="publicationDate">1968</date>
-</imprint>
-</monogr>
-</biblStruct>
 <biblStruct type="incollection">
 <analytic>
 <author>
@@ -39484,6 +41633,20 @@
 <date type="publicationDate">1968</date>
 </imprint>
 <biblScope unit="page" from="287" to="305">287--305</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Percy Ernst</forename>
+<surname>Schramm</surname>
+</editor>
+<title>Kaiser, Könige und Päpste. Gesammelte Aufsätze zur Geschichte des Mittelalters. Bd. 1: Von der Spätantike bis zum Tode Karls des Großen (814)</title>
+<title type="short">Schramm (Ed.) 1968 – Kaiser, Könige und Päpste</title>
+<imprint>
+<pubPlace>Stuttgart</pubPlace>
+<date type="publicationDate">1968</date>
+</imprint>
 </monogr>
 </biblStruct>
 <biblStruct type="incollection">
@@ -39695,38 +41858,6 @@
 <forename>Heinz-Joachim</forename>
 <surname>Schulzki</surname>
 </author>
-<title>Pondo</title>
-<title type="short">H.-J. Schulzki, "Pondo"</title>
-</analytic>
-<monogr>
-<title level="m">Der neue Pauly: Enzyklopädie der Antike</title>
-<editor>
-<forename>Hubert</forename>
-<surname>Cancik</surname>
-</editor>
-<editor>
-<forename>Helmuth</forename>
-<surname>Schneider</surname>
-</editor>
-<editor>
-<forename>Manfred</forename>
-<surname>Landfester</surname>
-</editor>
-<imprint>
-<pubPlace>Stuttgart</pubPlace>
-<publisher>Metzler</publisher>
-<date type="publicationDate">1996-2010</date>
-<date type="urldate">09.05.2019</date>
-</imprint>
-</monogr>
-<ref type="url">https://referenceworks.brillonline.com/entries/der-neue-pauly/pondo-e1004040?s.num=0&amp;s.f.s2_parent=s.f.book.der-neue-pauly&amp;s.q=pondo</ref>
-</biblStruct>
-<biblStruct type="incollection">
-<analytic>
-<author>
-<forename>Heinz-Joachim</forename>
-<surname>Schulzki</surname>
-</author>
 <title>Libra</title>
 <title type="short">H.-J. Schulzki, "Libra"</title>
 </analytic>
@@ -39788,37 +41919,34 @@
 <biblStruct type="incollection">
 <analytic>
 <author>
-<forename>Eva</forename>
-<surname>Schumann</surname>
+<forename>Heinz-Joachim</forename>
+<surname>Schulzki</surname>
 </author>
-<title>Kompositionensystem</title>
-<title type="short">E. Schumann, Kompositionensystem</title>
+<title>Pondo</title>
+<title type="short">H.-J. Schulzki, "Pondo"</title>
 </analytic>
 <monogr>
-<title level="m">Handwörterbuch zur deutschen Rechtsgeschichte</title>
+<title level="m">Der neue Pauly: Enzyklopädie der Antike</title>
 <editor>
-<forename>Albrecht</forename>
-<surname>Cordes</surname>
+<forename>Hubert</forename>
+<surname>Cancik</surname>
 </editor>
 <editor>
-<forename>Heiner</forename>
-<surname>Lück</surname>
+<forename>Helmuth</forename>
+<surname>Schneider</surname>
 </editor>
 <editor>
-<forename>Dieter</forename>
-<surname>Werkmüller</surname>
-</editor>
-<editor>
-<forename>Ruth</forename>
-<surname>Schmidt-Wiegand</surname>
+<forename>Manfred</forename>
+<surname>Landfester</surname>
 </editor>
 <imprint>
-<pubPlace>Berlin</pubPlace>
-<date type="publicationDate">2005-2016</date>
+<pubPlace>Stuttgart</pubPlace>
+<publisher>Metzler</publisher>
+<date type="publicationDate">1996-2010</date>
+<date type="urldate">09.05.2019</date>
 </imprint>
-<biblScope unit="page" from="2003" to="2011">2003--2011</biblScope>
-<biblScope unit="volume">2</biblScope>
 </monogr>
+<ref type="url">https://referenceworks.brillonline.com/entries/der-neue-pauly/pondo-e1004040?s.num=0&amp;s.f.s2_parent=s.f.book.der-neue-pauly&amp;s.q=pondo</ref>
 </biblStruct>
 <biblStruct type="incollection">
 <analytic>
@@ -39855,6 +41983,41 @@
 <biblScope unit="volume">1</biblScope>
 </monogr>
 </biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Eva</forename>
+<surname>Schumann</surname>
+</author>
+<title>Kompositionensystem</title>
+<title type="short">E. Schumann, Kompositionensystem</title>
+</analytic>
+<monogr>
+<title level="m">Handwörterbuch zur deutschen Rechtsgeschichte</title>
+<editor>
+<forename>Albrecht</forename>
+<surname>Cordes</surname>
+</editor>
+<editor>
+<forename>Heiner</forename>
+<surname>Lück</surname>
+</editor>
+<editor>
+<forename>Dieter</forename>
+<surname>Werkmüller</surname>
+</editor>
+<editor>
+<forename>Ruth</forename>
+<surname>Schmidt-Wiegand</surname>
+</editor>
+<imprint>
+<pubPlace>Berlin</pubPlace>
+<date type="publicationDate">2005-2016</date>
+</imprint>
+<biblScope unit="page" from="2003" to="2011">2003--2011</biblScope>
+<biblScope unit="volume">2</biblScope>
+</monogr>
+</biblStruct>
 <biblStruct type="book">
 <monogr>
 <editor>
@@ -39875,24 +42038,6 @@
 <forename>Georg</forename>
 <surname>Schwaiger</surname>
 </author>
-<title>Art. Papsttum. I. Kirchengeschichtlich</title>
-<title type="short">G. Schwaiger, Papsttum I. Kirchengeschichtlich</title>
-</analytic>
-<monogr>
-<title level="m">Theologische Realenzyklopädie</title>
-<imprint>
-<date type="publicationDate">1995</date>
-</imprint>
-<biblScope unit="page" from="647" to="676">647--676</biblScope>
-<biblScope unit="volume">25</biblScope>
-</monogr>
-</biblStruct>
-<biblStruct type="incollection">
-<analytic>
-<author>
-<forename>Georg</forename>
-<surname>Schwaiger</surname>
-</author>
 <title>Art. Sedes apostolica</title>
 <title type="short">G. Schwaiger, Sedes apostolica</title>
 </analytic>
@@ -39903,6 +42048,24 @@
 </imprint>
 <biblScope unit="page" from="1664" to="1665">1664--1665</biblScope>
 <biblScope unit="volume">7</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Georg</forename>
+<surname>Schwaiger</surname>
+</author>
+<title>Art. Papsttum. I. Kirchengeschichtlich</title>
+<title type="short">G. Schwaiger, Papsttum I. Kirchengeschichtlich</title>
+</analytic>
+<monogr>
+<title level="m">Theologische Realenzyklopädie</title>
+<imprint>
+<date type="publicationDate">1995</date>
+</imprint>
+<biblScope unit="page" from="647" to="676">647--676</biblScope>
+<biblScope unit="volume">25</biblScope>
 </monogr>
 </biblStruct>
 <biblStruct type="book">
@@ -40206,6 +42369,54 @@
 <biblScope unit="volume">18199</biblScope>
 </series>
 </biblStruct>
+<biblStruct type="article">
+<analytic>
+<author>
+<forename>Rudolf</forename>
+<surname>Schützeichel</surname>
+</author>
+<title>Bezeichnungen für "Forst" und "Wald" im frühen Mittelalter</title>
+<title type="short">R. Schützeichel, Bezeichnungen</title>
+</analytic>
+<monogr>
+<title level="j">Zeitschrift für deutsches Altertum und deutsche Literatur</title>
+<imprint>
+<date type="publicationDate">1956-1957</date>
+</imprint>
+<biblScope unit="volume">87</biblScope>
+<biblScope unit="page" from="105" to="124">105--124</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Volker</forename>
+<surname>Scior</surname>
+</author>
+<title>Das offene Ohr des Herrschers. Vorstellungen über den Zugang zum König in der Karolingerzeit</title>
+<title type="short">V. Scior, Das offene Ohr</title>
+</analytic>
+<monogr>
+<title level="m">Geschichtsvorstellungen: Bilder, Texte und Begriffe aus dem Mittelalter</title>
+<editor>
+<forename>Steffen</forename>
+<surname>Patzold</surname>
+</editor>
+<editor>
+<forename>Anja</forename>
+<surname>Rathmann-Lutz</surname>
+</editor>
+<editor>
+<forename>Volker</forename>
+<surname>Scior</surname>
+</editor>
+<imprint>
+<pubPlace>Köln u.a.</pubPlace>
+<date type="publicationDate">2012</date>
+</imprint>
+<biblScope unit="page" from="299" to="325">299--325</biblScope>
+</monogr>
+</biblStruct>
 <biblStruct type="incollection">
 <analytic>
 <author>
@@ -40272,24 +42483,6 @@
 <biblScope unit="page" from="387" to="401">387--401</biblScope>
 </monogr>
 </biblStruct>
-<biblStruct type="article">
-<analytic>
-<author>
-<forename>Elmar</forename>
-<surname>Seebold</surname>
-</author>
-<title>Der germanische Rechtsterminus 'texaca' und die Entführung von Sklaven in der 'Lex Salica'</title>
-<title type="short">E. Seebold, Rechtsterminus Texaca</title>
-</analytic>
-<monogr>
-<title level="j">Beiträge zur Geschichte der deutschen Sprache und Literatur</title>
-<imprint>
-<date type="publicationDate">2008</date>
-</imprint>
-<biblScope unit="volume">130</biblScope>
-<biblScope unit="page" from="438" to="458">438--458</biblScope>
-</monogr>
-</biblStruct>
 <biblStruct type="book">
 <monogr>
 <author>
@@ -40308,6 +42501,24 @@
 <title level="s">Chronologisches Wörterbuch des deutschen Wortschatzes</title>
 <biblScope unit="volume">Band 2</biblScope>
 </series>
+</biblStruct>
+<biblStruct type="article">
+<analytic>
+<author>
+<forename>Elmar</forename>
+<surname>Seebold</surname>
+</author>
+<title>Der germanische Rechtsterminus 'texaca' und die Entführung von Sklaven in der 'Lex Salica'</title>
+<title type="short">E. Seebold, Rechtsterminus Texaca</title>
+</analytic>
+<monogr>
+<title level="j">Beiträge zur Geschichte der deutschen Sprache und Literatur</title>
+<imprint>
+<date type="publicationDate">2008</date>
+</imprint>
+<biblScope unit="volume">130</biblScope>
+<biblScope unit="page" from="438" to="458">438--458</biblScope>
+</monogr>
 </biblStruct>
 <biblStruct type="article">
 <analytic>
@@ -40474,6 +42685,28 @@
 </imprint>
 <biblScope unit="page" from="33" to="44">33--44</biblScope>
 </monogr>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Josef</forename>
+<surname>Semmler</surname>
+</author>
+<title>Eine Herrschaftsmaxime im Wandel: Pax und concordia im karolingischen Frankenreich</title>
+<title type="short">J. Semmler, Eine Herrschaftsmaxime</title>
+</analytic>
+<monogr>
+<title level="m">Frieden in Geschichte und Gegenwart</title>
+<editor>Historisches Seminar der Univ. Düsseldorf</editor>
+<imprint>
+<pubPlace>Düsseldorf</pubPlace>
+<date type="publicationDate">1985</date>
+</imprint>
+<biblScope unit="page" from="24" to="34">24--34</biblScope>
+</monogr>
+<series>
+<title level="s">Kultur und Erkenntnis</title>
+</series>
 </biblStruct>
 <biblStruct type="incollection">
 <analytic>
@@ -41458,6 +43691,24 @@
 <biblScope unit="page" from="228" to="244">228--244</biblScope>
 </monogr>
 </biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Karl-Heinz</forename>
+<surname>Spieß</surname>
+</editor>
+<title>Die Familie in der Gesellschaft des Mittelalters</title>
+<title type="short">Spieß (Hg.) 2009 – Die Familie in der Gesellschaft</title>
+<imprint>
+<pubPlace>Ostfildern</pubPlace>
+<date type="publicationDate">2009</date>
+</imprint>
+</monogr>
+<series>
+<title level="s">Vorträge und Forschungen</title>
+<biblScope unit="volume">71</biblScope>
+</series>
+</biblStruct>
 <biblStruct type="article">
 <analytic>
 <author>
@@ -41663,6 +43914,24 @@
 </imprint>
 <biblScope unit="page" from="285" to="334">285--334</biblScope>
 </monogr>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Nikolaus</forename>
+<surname>Staubach</surname>
+</editor>
+<title>Exemplaris imago: Ideale in Mittelalter und Früher Neuzeit</title>
+<title type="short">Staubach (Hg.) 2012 – Exemplaris imago</title>
+<imprint>
+<pubPlace>Frankfurt a. M. [u.a.]</pubPlace>
+<date type="publicationDate">2012</date>
+</imprint>
+</monogr>
+<series>
+<title level="s">Tradition - Reform - Innovation</title>
+<biblScope unit="volume">15</biblScope>
+</series>
 </biblStruct>
 <biblStruct type="book">
 <monogr>
@@ -42447,20 +44716,6 @@
 <biblScope unit="page" from="593" to="595">593--595</biblScope>
 </monogr>
 </biblStruct>
-<biblStruct type="book">
-<monogr>
-<editor>
-<forename>Nino</forename>
-<surname>Tamassia</surname>
-</editor>
-<title>Scritti di storia giuridica pubblicati a cura della Facoltà di Giurisprudenza dell'Università di Padova</title>
-<title type="short">Tamassia (Hg.) 1969 – Scritti di storia giuridica pubblicati</title>
-<imprint>
-<pubPlace>Padua</pubPlace>
-<date type="publicationDate">1969</date>
-</imprint>
-</monogr>
-</biblStruct>
 <biblStruct type="incollection">
 <analytic>
 <author>
@@ -42482,6 +44737,20 @@
 </imprint>
 <biblScope unit="page" from="609" to="657">609--657</biblScope>
 <biblScope unit="volume">3</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Nino</forename>
+<surname>Tamassia</surname>
+</editor>
+<title>Scritti di storia giuridica pubblicati a cura della Facoltà di Giurisprudenza dell'Università di Padova</title>
+<title type="short">Tamassia (Hg.) 1969 – Scritti di storia giuridica pubblicati</title>
+<imprint>
+<pubPlace>Padua</pubPlace>
+<date type="publicationDate">1969</date>
+</imprint>
 </monogr>
 </biblStruct>
 <biblStruct type="book">
@@ -42670,6 +44939,26 @@
 </imprint>
 <biblScope unit="page" from="1109" to="1110">1109--1110</biblScope>
 <biblScope unit="volume">1</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Michael</forename>
+<surname>Theobald</surname>
+</author>
+<title>Mysterium II. Biblisch-theologisch</title>
+<title type="short">M. Theobald, Mysterium II. Biblisch-theologisch</title>
+</analytic>
+<monogr>
+<title level="m">Lexikon für Theologie und Kirche</title>
+<imprint>
+<pubPlace>Freiburg and Basel and Wien [u.a.]</pubPlace>
+<publisher>Herder</publisher>
+<date type="publicationDate">1998</date>
+</imprint>
+<biblScope unit="page" from="577" to="579">577--579</biblScope>
+<biblScope unit="volume">7</biblScope>
 </monogr>
 </biblStruct>
 <biblStruct type="book">
@@ -44097,6 +46386,24 @@
 <biblStruct type="book" xml:id="BL-V">
 <monogr>
 <editor>
+<forename>Nancy</forename>
+<surname>van Deusen</surname>
+</editor>
+<title>Chastity: A Study in Perception, Ideals, Opposition</title>
+<title type="short">van Deusen (Hg.) 2008 – Chastity: A Study in Perception</title>
+<imprint>
+<pubPlace>Leiden</pubPlace>
+<date type="publicationDate">2008</date>
+</imprint>
+</monogr>
+<series>
+<title level="s">Presenting the past</title>
+<biblScope unit="volume">1</biblScope>
+</series>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
 <forename>Richard</forename>
 <surname>van Dülmen</surname>
 </editor>
@@ -44107,6 +46414,49 @@
 <publisher>Fischer Taschenbuch</publisher>
 <date type="publicationDate">1988</date>
 </imprint>
+</monogr>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Klaus</forename>
+<surname>van Eickels</surname>
+</author>
+<title>Der Bruder als Freund und Gefährte. Fraternitas als Konzept personaler Bindung im Mittelalter</title>
+<title type="short">K. van Eickels, Der Bruder</title>
+</analytic>
+<monogr>
+<title level="m">Die Familie in der Gesellschaft des Mittelalters</title>
+<editor>
+<forename>Karl-Heinz</forename>
+<surname>Spieß</surname>
+</editor>
+<imprint>
+<pubPlace>Ostfildern</pubPlace>
+<date type="publicationDate">2009</date>
+</imprint>
+<biblScope unit="page" from="195" to="222">195--222</biblScope>
+</monogr>
+<series>
+<title level="s">Vorträge und Forschungen</title>
+</series>
+</biblStruct>
+<biblStruct type="article">
+<analytic>
+<author>
+<forename>Dorine</forename>
+<surname>van Espelo</surname>
+</author>
+<title>A testimony of Carolingian rule? The Codex epistolaris carolinus, its historical context, and the meaning of imperium</title>
+<title type="short">D. van Espelo, A testimony</title>
+</analytic>
+<monogr>
+<title level="j">Early medieval Europe</title>
+<imprint>
+<date type="publicationDate">2013</date>
+</imprint>
+<biblScope unit="volume">21</biblScope>
+<biblScope unit="page" from="254" to="262">254--262</biblScope>
 </monogr>
 </biblStruct>
 <biblStruct type="book">
@@ -44145,6 +46495,24 @@
 <biblScope unit="page" from="1" to="35">1--35</biblScope>
 </monogr>
 </biblStruct>
+<biblStruct type="article">
+<analytic>
+<author>
+<forename>Eliasbeth Maria Cornelia</forename>
+<surname>van Houts</surname>
+</author>
+<title>Gender and authority of oral witnesses in Europe (800-1300)</title>
+<title type="short">E. van Houts, Gender and authority</title>
+</analytic>
+<monogr>
+<title level="j">Transactions of the Royal Historical Society</title>
+<imprint>
+<date type="publicationDate">1999</date>
+</imprint>
+<biblScope unit="volume">6</biblScope>
+<biblScope unit="page" from="201" to="220">201--220</biblScope>
+</monogr>
+</biblStruct>
 <biblStruct type="incollection">
 <analytic>
 <author>
@@ -44181,6 +46549,24 @@
 <biblScope unit="volume">16</biblScope>
 </series>
 <ref type="url">http://www.verlagdrkovac.de/3-8300-2379-0.htm</ref>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Elisabeth</forename>
+<surname>Vavra</surname>
+</editor>
+<title>Der Wald im Mittelalter: Funktion - Nutzung - Deutung</title>
+<title type="short">Vavra (Hg.) 2008 – Der Wald im Mittelalter</title>
+<imprint>
+<pubPlace>Berlin</pubPlace>
+<date type="publicationDate">2008</date>
+</imprint>
+</monogr>
+<series>
+<title level="s">Das Mittelalter</title>
+<biblScope unit="volume">13, 2</biblScope>
+</series>
 </biblStruct>
 <biblStruct type="article">
 <analytic>
@@ -45284,6 +47670,25 @@
 <biblStruct type="book">
 <monogr>
 <author>
+<forename>Adolfo</forename>
+<surname>Wegmann Stockebrand</surname>
+</author>
+<title>Obligatio re contracta: Ein Beitrag zur sogenannten Kategorie der Realverträge im römischen Recht</title>
+<title type="short">A. Wegmann Stockebrand, Obligatio re contracta</title>
+<imprint>
+<pubPlace>Tübingen</pubPlace>
+<publisher>Mohr Siebeck</publisher>
+<date type="publicationDate">2017</date>
+</imprint>
+</monogr>
+<series>
+<title level="s">Ius Romanum</title>
+<biblScope unit="volume">4</biblScope>
+</series>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<author>
 <forename>Margarete</forename>
 <surname>Weidemann</surname>
 </author>
@@ -45951,34 +48356,24 @@
 <forename>Dietmar</forename>
 <surname>Willoweit</surname>
 </author>
-<title>Art. Maiestas</title>
-<title type="short">D. Willoweit, Maiestas</title>
+<title>Von der natürlichen Kindschaft zur Illegitimität. Die nichtehelichen Kinder in den mittelalterlichen Rechtsordnungen</title>
+<title type="short">D. Willoweit, Von der natürlichen Kindschaft</title>
 </analytic>
 <monogr>
-<title level="m">Handwörterbuch zur deutschen Rechtsgeschichte</title>
+<title level="m">Illegitimität im Spätmittelalter</title>
 <editor>
-<forename>Albrecht</forename>
-<surname>Cordes</surname>
-</editor>
-<editor>
-<forename>Heiner</forename>
-<surname>Lück</surname>
-</editor>
-<editor>
-<forename>Dieter</forename>
-<surname>Werkmüller</surname>
-</editor>
-<editor>
-<forename>Ruth</forename>
-<surname>Schmidt-Wiegand</surname>
+<forename>Ludwig</forename>
+<surname>Schmugge</surname>
 </editor>
 <imprint>
-<pubPlace>Berlin</pubPlace>
-<date type="publicationDate">2005-2016</date>
+<pubPlace>München</pubPlace>
+<date type="publicationDate">1994</date>
 </imprint>
-<biblScope unit="page" from="1167" to="1171">1167--1171</biblScope>
-<biblScope unit="volume">3</biblScope>
+<biblScope unit="page" from="55" to="63">55--63</biblScope>
 </monogr>
+<series>
+<title level="s">Schriften des Historischen Kollegs. Kolloquien</title>
+</series>
 </biblStruct>
 <biblStruct type="incollection">
 <analytic>
@@ -46013,6 +48408,67 @@
 </imprint>
 <biblScope unit="page" from="74" to="76">74--76</biblScope>
 <biblScope unit="volume">3</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Dietmar</forename>
+<surname>Willoweit</surname>
+</author>
+<title>Art. Maiestas</title>
+<title type="short">D. Willoweit, Maiestas</title>
+</analytic>
+<monogr>
+<title level="m">Handwörterbuch zur deutschen Rechtsgeschichte</title>
+<editor>
+<forename>Albrecht</forename>
+<surname>Cordes</surname>
+</editor>
+<editor>
+<forename>Heiner</forename>
+<surname>Lück</surname>
+</editor>
+<editor>
+<forename>Dieter</forename>
+<surname>Werkmüller</surname>
+</editor>
+<editor>
+<forename>Ruth</forename>
+<surname>Schmidt-Wiegand</surname>
+</editor>
+<imprint>
+<pubPlace>Berlin</pubPlace>
+<date type="publicationDate">2005-2016</date>
+</imprint>
+<biblScope unit="page" from="1167" to="1171">1167--1171</biblScope>
+<biblScope unit="volume">3</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Aude</forename>
+<surname>Wirth-Jaillard</surname>
+</author>
+<title>Nommer la forêt</title>
+<title type="short">A. Wirth-Jaillard, Nommer la forêt</title>
+</analytic>
+<monogr>
+<title level="m">La forêt au Moyen Âge</title>
+<editor>
+<forename>Sylvie</forename>
+<surname>Bépoix</surname>
+</editor>
+<editor>
+<forename>Hervé</forename>
+<surname>Richard</surname>
+</editor>
+<imprint>
+<pubPlace>Paris</pubPlace>
+<date type="publicationDate">2019</date>
+</imprint>
+<biblScope unit="page" from="15" to="23">15--23</biblScope>
 </monogr>
 </biblStruct>
 <biblStruct type="book">
@@ -46191,6 +48647,35 @@
 <date type="publicationDate">1990</date>
 </imprint>
 </monogr>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<author>
+<forename>Joachim</forename>
+<surname>Wollasch</surname>
+</author>
+<title>Die mittelalterliche Lebensform der Verbrüderung</title>
+<title type="short">J. Wollasch, Die mittelalterliche Lebensform</title>
+</analytic>
+<monogr>
+<title level="m">"Memoria". Der geschichtliche Zeugniswert</title>
+<editor>
+<forename>Karl</forename>
+<surname>Schmid</surname>
+</editor>
+<editor>
+<forename>Joachim</forename>
+<surname>Wollasch</surname>
+</editor>
+<imprint>
+<pubPlace>München</pubPlace>
+<date type="publicationDate">1984</date>
+</imprint>
+<biblScope unit="page" from="215" to="232">215--232</biblScope>
+</monogr>
+<series>
+<title level="s">Münstersche Mittelalter-Schriften</title>
+</series>
 </biblStruct>
 <biblStruct type="book">
 <monogr>
@@ -46519,6 +49004,24 @@
 <forename>Peter</forename>
 <surname>Worm</surname>
 </author>
+<title>Beobachtungen zum Privilegierungsakt am Beispiel einer Urkunde Pippins II. von Aquitanien</title>
+<title type="short">P. Worm, Beobachtungen zum Privilegierungsakt</title>
+</analytic>
+<monogr>
+<title level="j">Archiv für Diplomatik</title>
+<imprint>
+<date type="publicationDate">2003</date>
+</imprint>
+<biblScope unit="volume">49</biblScope>
+<biblScope unit="page" from="15" to="48">15--48</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="article">
+<analytic>
+<author>
+<forename>Peter</forename>
+<surname>Worm</surname>
+</author>
 <title>Alte und neue Strategien der Beglaubigung. Öffentlichkeit und Königsurkunde im frühen Mittelalter</title>
 <title type="short">P. Worm, Alte und neue Strategien</title>
 </analytic>
@@ -46610,6 +49113,20 @@
 <imprint>
 <pubPlace>Oxford</pubPlace>
 <date type="publicationDate">1983</date>
+</imprint>
+</monogr>
+</biblStruct>
+<biblStruct type="book">
+<monogr>
+<editor>
+<forename>Roger</forename>
+<surname>Wright</surname>
+</editor>
+<title>Latin vulgaire - latin tardif VIII: actes du VIIIe Colloque International sur le Latin Vulgaire et Tardif, Oxford, 6 - 9 septembre 2006</title>
+<title type="short">Wright (Hg.) 2008 – Latin vulgaire</title>
+<imprint>
+<pubPlace>Hildesheim u.a.</pubPlace>
+<date type="publicationDate">2008</date>
 </imprint>
 </monogr>
 </biblStruct>
@@ -46936,6 +49453,78 @@
 </biblStruct>
 <biblStruct type="incollection">
 <analytic>
+<title>Formulae Imperiales e curia Ludovici Pii</title>
+<title type="short">Formulae Imperiales</title>
+</analytic>
+<monogr>
+<title level="m">Formulae Merowingici et Karolini aevi</title>
+<editor>
+<forename>Karl</forename>
+<surname>Zeumer</surname>
+</editor>
+<imprint>
+<pubPlace>Hannover</pubPlace>
+<date type="publicationDate">1886</date>
+</imprint>
+<biblScope unit="page" from="285" to="236">285-236</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<title>Formulae Marculfinae aevi Karolini</title>
+<title type="short">Formulae Marculfinae aevi Karolini</title>
+</analytic>
+<monogr>
+<title level="m">Formulae Merowingici et Karolini aevi</title>
+<editor>
+<forename>Karl</forename>
+<surname>Zeumer</surname>
+</editor>
+<imprint>
+<pubPlace>Hannover</pubPlace>
+<date type="publicationDate">1886</date>
+</imprint>
+<biblScope unit="page" from="113" to="127">113--127</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<title>Formulae Salicae Bignonianae</title>
+<title type="short">Formulae Salicae Bignonianae</title>
+</analytic>
+<monogr>
+<title level="m">Formulae Merowingici et Karolini aevi</title>
+<editor>
+<forename>Karl</forename>
+<surname>Zeumer</surname>
+</editor>
+<imprint>
+<pubPlace>Hannover</pubPlace>
+<date type="publicationDate">1886</date>
+</imprint>
+<biblScope unit="page" from="227" to="238">227--238</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
+<title>Formulae Salicae Lindenbrogianae</title>
+<title type="short">Formulae Salicae Lindenbrogianae</title>
+</analytic>
+<monogr>
+<title level="m">Formulae Merowingici et Karolini aevi</title>
+<editor>
+<forename>Karl</forename>
+<surname>Zeumer</surname>
+</editor>
+<imprint>
+<pubPlace>Hannover</pubPlace>
+<date type="publicationDate">1886</date>
+</imprint>
+<biblScope unit="page" from="265" to="281">265--281</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="incollection">
+<analytic>
 <title>Formulae Salicae Merkelianae</title>
 <title type="short">Formulae Salicae Merkelianae</title>
 </analytic>
@@ -47026,8 +49615,8 @@
 </biblStruct>
 <biblStruct type="incollection">
 <analytic>
-<title>Formulae Salicae Lindenbrogianae</title>
-<title type="short">Formulae Salicae Lindenbrogianae</title>
+<title>Formulae Extravagantes</title>
+<title type="short">Formulae Extravagantes</title>
 </analytic>
 <monogr>
 <title level="m">Formulae Merowingici et Karolini aevi</title>
@@ -47039,13 +49628,13 @@
 <pubPlace>Hannover</pubPlace>
 <date type="publicationDate">1886</date>
 </imprint>
-<biblScope unit="page" from="265" to="281">265--281</biblScope>
+<biblScope unit="page" from="533" to="571">533--571</biblScope>
 </monogr>
 </biblStruct>
 <biblStruct type="incollection">
 <analytic>
-<title>Formulae Salicae Bignonianae</title>
-<title type="short">Formulae Salicae Bignonianae</title>
+<title>Formulae Collectionis Sancti Dionysii</title>
+<title type="short">Collectio S. Dionysii</title>
 </analytic>
 <monogr>
 <title level="m">Formulae Merowingici et Karolini aevi</title>
@@ -47057,13 +49646,13 @@
 <pubPlace>Hannover</pubPlace>
 <date type="publicationDate">1886</date>
 </imprint>
-<biblScope unit="page" from="227" to="238">227--238</biblScope>
+<biblScope unit="page" from="493" to="500">493--500</biblScope>
 </monogr>
 </biblStruct>
 <biblStruct type="incollection">
 <analytic>
-<title>Formulae Imperiales e curia Ludovici Pii</title>
-<title type="short">Formulae Imperiales</title>
+<title>Formulae Arvernenses</title>
+<title type="short">Formulae Arvernenses</title>
 </analytic>
 <monogr>
 <title level="m">Formulae Merowingici et Karolini aevi</title>
@@ -47075,7 +49664,7 @@
 <pubPlace>Hannover</pubPlace>
 <date type="publicationDate">1886</date>
 </imprint>
-<biblScope unit="page" from="285" to="236">285-236</biblScope>
+<biblScope unit="page" from="26" to="31">26--31</biblScope>
 </monogr>
 </biblStruct>
 <biblStruct type="incollection">
@@ -47134,24 +49723,6 @@
 </biblStruct>
 <biblStruct type="incollection">
 <analytic>
-<title>Formulae Arvernenses</title>
-<title type="short">Formulae Arvernenses</title>
-</analytic>
-<monogr>
-<title level="m">Formulae Merowingici et Karolini aevi</title>
-<editor>
-<forename>Karl</forename>
-<surname>Zeumer</surname>
-</editor>
-<imprint>
-<pubPlace>Hannover</pubPlace>
-<date type="publicationDate">1886</date>
-</imprint>
-<biblScope unit="page" from="26" to="31">26--31</biblScope>
-</monogr>
-</biblStruct>
-<biblStruct type="incollection">
-<analytic>
 <title>Formulae Bituricenses</title>
 <title type="short">Formulae Bituricenses</title>
 </analytic>
@@ -47166,60 +49737,6 @@
 <date type="publicationDate">1886</date>
 </imprint>
 <biblScope unit="page" from="166" to="178">166--178</biblScope>
-</monogr>
-</biblStruct>
-<biblStruct type="incollection">
-<analytic>
-<title>Formulae Collectionis Sancti Dionysii</title>
-<title type="short">Collectio S. Dionysii</title>
-</analytic>
-<monogr>
-<title level="m">Formulae Merowingici et Karolini aevi</title>
-<editor>
-<forename>Karl</forename>
-<surname>Zeumer</surname>
-</editor>
-<imprint>
-<pubPlace>Hannover</pubPlace>
-<date type="publicationDate">1886</date>
-</imprint>
-<biblScope unit="page" from="493" to="500">493--500</biblScope>
-</monogr>
-</biblStruct>
-<biblStruct type="incollection">
-<analytic>
-<title>Formulae Extravagantes</title>
-<title type="short">Formulae Extravagantes</title>
-</analytic>
-<monogr>
-<title level="m">Formulae Merowingici et Karolini aevi</title>
-<editor>
-<forename>Karl</forename>
-<surname>Zeumer</surname>
-</editor>
-<imprint>
-<pubPlace>Hannover</pubPlace>
-<date type="publicationDate">1886</date>
-</imprint>
-<biblScope unit="page" from="533" to="571">533--571</biblScope>
-</monogr>
-</biblStruct>
-<biblStruct type="incollection">
-<analytic>
-<title>Formulae Marculfinae aevi Karolini</title>
-<title type="short">Formulae Marculfinae aevi Karolini</title>
-</analytic>
-<monogr>
-<title level="m">Formulae Merowingici et Karolini aevi</title>
-<editor>
-<forename>Karl</forename>
-<surname>Zeumer</surname>
-</editor>
-<imprint>
-<pubPlace>Hannover</pubPlace>
-<date type="publicationDate">1886</date>
-</imprint>
-<biblScope unit="page" from="113" to="127">113--127</biblScope>
 </monogr>
 </biblStruct>
 <biblStruct type="incollection">
@@ -47541,6 +50058,24 @@
 <date type="publicationDate">2017</date>
 </imprint>
 <biblScope unit="page" from="259" to="273">259--273</biblScope>
+</monogr>
+</biblStruct>
+<biblStruct type="article">
+<analytic>
+<author>
+<forename>Adolar</forename>
+<surname>Zumkeller</surname>
+</author>
+<title>Augustinus Verständnis des Wortpaares "castitas/castus" im religiösen Bereich</title>
+<title type="short">A. Zumkeller, Augustinus Verständnis</title>
+</analytic>
+<monogr>
+<title level="j">Augustiniana. Revue pour l'étude de Saint Augustin et de l'Ordre des Augustins</title>
+<imprint>
+<date type="publicationDate">1991</date>
+</imprint>
+<biblScope unit="volume">41</biblScope>
+<biblScope unit="page" from="829" to="846">829--846</biblScope>
 </monogr>
 </biblStruct>
 <biblStruct type="book">

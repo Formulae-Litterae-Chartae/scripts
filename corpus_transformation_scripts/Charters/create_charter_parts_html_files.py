@@ -335,7 +335,7 @@ for k, v in formel_zu_formel_dict.items():
     existing_refs = ['all' for x in v if x.startswith('urn:cts')]
     if len(existing_docs) > 1:
         formel_zu_formel_tabelle.append("""<tr><td><a class="internal-link" href="{{ url_for('InstanceNemo.r_multipassage', objectIds='""" + '+'.join(existing_docs) + """', subreferences='""" + '+'.join(existing_refs) + """') }}">""" + k + "</a></td>" + ''.join(existing_titles) + "</tr>")
-formel_zu_formel_html = """<table id="formel_zu_formel_tabelle" class="table table-sm table-hover table-bordered" aria-label="{{ _('Formel zu Formel Entsprechungen') }}"><tbody>""" + ''.join(formel_zu_formel_tabelle) + '</tbody></table>'
+formel_zu_formel_html = """<table id="formel_zu_formel_tabelle" class="table table-sm table-hover table-bordered" aria-label="{{ _('Formel zu Formel Entsprechungen') }}"><thead><tr><th scope="col">{{ _('Gruppennr.') }}</th></tr></thead><tbody>""" + ''.join(formel_zu_formel_tabelle) + '</tbody></table>'
 
 formel_zu_urkunden_tabelle = list()
 for k, v in formel_zu_urkunden_dict.items():
@@ -344,7 +344,7 @@ for k, v in formel_zu_urkunden_dict.items():
     existing_refs = ['all' for x in v if x.startswith('urn:cts')]
     if len(existing_docs) > 1:
         formel_zu_urkunden_tabelle.append("""<tr><td><a class="internal-link" href="{{ url_for('InstanceNemo.r_multipassage', objectIds='""" + '+'.join(existing_docs) + """', subreferences='""" + '+'.join(existing_refs) + """') }}">""" + k + "</a></td>" + ''.join(existing_titles) + "</tr>")
-formel_zu_urkunden_html = """<table id="formel_zu_urkunde_tabelle" class="table table-sm table-hover table-bordered" aria-label="{{ _('Formel zu Urkunde Entsprechungen') }}"><tbody>""" + ''.join(formel_zu_urkunden_tabelle) + '</tbody></table>'
+formel_zu_urkunden_html = """<table id="formel_zu_urkunde_tabelle" class="table table-sm table-hover table-bordered" aria-label="{{ _('Formel zu Urkunde Entsprechungen') }}"><thead><tr><th scope="col">{{ _('Gruppennr.') }}</th></tr></thead><tbody>""" + ''.join(formel_zu_urkunden_tabelle) + '</tbody></table>'
 
 with open('/home/matt/formulae-capitains-nemo/templates/main/all_parts_table.html', mode='w') as f:
     f.write(''.join(all_part_template))

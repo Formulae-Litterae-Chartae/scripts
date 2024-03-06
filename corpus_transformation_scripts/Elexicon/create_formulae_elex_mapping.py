@@ -7,7 +7,7 @@ import re
 import sys
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-home_dir = environ.get('HOME', '')
+home_dir = os.environ.get('HOME', '')
 corpus_dir = sys.argv[1] if len(sys.argv) > 1 else home_dir + '/formulae-corpora/'
 
 forms = sorted([x for x in glob(corpus_dir + 'data/**/*.xml', recursive=True) if '__capitains__' not in x])
