@@ -86,6 +86,12 @@ def produce_form_num(filename):
             form_num = '2_capitula'
         elif ' Ko2' in filename:
             form_num = '3_capitula'
+    elif 'Sens' in filename:
+        if 'Incipit' in filename:
+            form_num = 'form_a_000'
+        else:
+            sens_parts = re.search(r'Sens ([A-C]) (\d+) ?([a-m])?', filename)
+            form_num = 'form_{}_{:03}{}'.format(sens_parts[1].lower(), int(sens_parts[2]), sens_parts[3] if sens_parts[3] else '')
     elif 'Incipit' in filename:
         form_num = '1_incipit'
         if 'II' in filename:

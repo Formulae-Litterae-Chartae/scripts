@@ -176,7 +176,7 @@
                         <xsl:when test="matches($tempTitle, ' 0 ')">
                             <xsl:value-of select="replace($tempTitle, ' Deutsch| Übersetzung|\.xml| 0|\[|\]', '')"/>
                         </xsl:when>
-                        <xsl:when test="matches($tempTitle, 'Weltzeitalter|Capitula|Incipit|Praefatio|Ergänzung|Flavigny|Formula Marculfina|Bourges')">
+                        <xsl:when test="matches($tempTitle, 'Weltzeitalter|Capitula|Incipit|Praefatio|Ergänzung|Flavigny|Formula Marculfina|Bourges|Sens')">
                             <xsl:value-of select="replace($tempTitle, ' Deutsch| Übersetzung|\.xml', '')"/>
                             <xsl:if test="matches($tempTitle, 'Formula Marculfina')">
                                 <xsl:choose>
@@ -217,6 +217,14 @@
                     <xsl:otherwise><xsl:text>0_</xsl:text></xsl:otherwise>
                 </xsl:choose>
                 <xsl:text>capitula</xsl:text>
+            </xsl:when>
+            <xsl:when test="contains($formTitle/tei:ref[@type='form-name'], 'Sens')">
+                <xsl:choose>
+                    <xsl:when test="contains($formTitle, 'Incipit')"><xsl:text>form_a_000</xsl:text></xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>form_</xsl:text><xsl:value-of select="lower-case(replace($formTitle/tei:ref[@type='form-name'], 'Sens ([A-C]) (\d+) ?([a-m]?).*', '$1'))"/><xsl:text>_</xsl:text><xsl:number value="replace($formTitle/tei:ref[@type='form-name'], 'Sens ([A-C]) (\d+) ?([a-m]?).*', '$2')" format="001"/><xsl:value-of select="replace($formTitle/tei:ref[@type='form-name'], 'Sens ([A-C]) (\d+) ?([a-m]?).*', '$3')"/>
+                    </xsl:otherwise>
+                </xsl:choose>
             </xsl:when>
             <xsl:when test="contains($formTitle, 'Incipit')">
                 <xsl:choose><xsl:when test="contains($formTitle/tei:ref[@type='form-name'], 'II')"><xsl:text>2_</xsl:text></xsl:when><xsl:otherwise><xsl:text>1_</xsl:text></xsl:otherwise></xsl:choose><xsl:text>incipit</xsl:text>

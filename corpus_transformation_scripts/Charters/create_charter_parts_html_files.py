@@ -276,6 +276,7 @@ for sub_group, charters in sorted(arengenfamilien_dict.items(), key=sort_st_gall
     part_template = part_template.replace('GROUP_HERE', 'arengenfamilien' + sub_group.replace(' ', '_'))
     all_rows = list()
     for charter in sorted(charters):
+        charter = charter.replace('formulae:fulda.', 'formulae:fulda_stengel.')
         if charter not in title_dict:
             print(charter + ' not found')
             continue
