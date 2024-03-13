@@ -155,10 +155,10 @@
                     <xsl:when test="ancestor::tei:label">
                         <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:value-of select="upper-case($pString)"/></xsl:element>
                     </xsl:when>
-                    <xsl:when test="ancestor::tei:hi[@rend = 'italic']">
+                    <xsl:when test="ancestor::tei:hi[@rend = 'italic'] or ancestor::tei:seg[@rend = 'italic']">
                         <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0">
                             <xsl:attribute name="type">latin-word</xsl:attribute>
-                            <xsl:attribute name="lemmaRef"><xsl:value-of select="translate(lower-case(translate(normalize-space(string-join(ancestor::tei:hi[contains(@rend, 'italic')]//text(), ' ')), ' ', '_')), $pSeparators, '')"/></xsl:attribute>
+                            <xsl:attribute name="lemmaRef"><xsl:value-of select="translate(lower-case(translate(normalize-space(string-join(ancestor::*[contains(@rend, 'italic')]//text(), ' ')), ' ', '_')), $pSeparators, '')"/></xsl:attribute>
                             <xsl:value-of select="$pString"/>
                         </xsl:element>
                     </xsl:when>

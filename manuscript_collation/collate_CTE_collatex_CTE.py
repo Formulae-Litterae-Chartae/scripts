@@ -57,7 +57,7 @@ def collate_to_csv(formula, work_folder, baseline_sigla, collatex_location, spec
     os.system('{java_exe} -jar {collatex} -f json -t -o {output} {input}'.format(java_exe=java_exe, collatex=collatex_location, output=json_output_filename, input=json_input_filename))
 
     # Produce the CSV file with the results 
-    csv_output_filename = json_output_filename.replace('.json', '.csv')
+    csv_output_filename = json_output_filename.replace('.json', '.txt')
     with open(json_output_filename) as f:
         r = json.load(f)
     with open(csv_output_filename, mode="w") as f:

@@ -12,7 +12,7 @@
         indent="yes"/>
     
     <xsl:output omit-xml-declaration="yes" indent="yes"/>
-    <xsl:param name="biblFile">/home/matt/results/Bibliographie_E-Lexikon.xml</xsl:param>
+    <xsl:param name="biblFile">../../bibliography/formulae_bibliographie.xml</xsl:param>
     <!-- Brings in the bibliographic information from the bibliography -->
     <xsl:template match="tei:bibl">
         <xsl:param name="punct">[„“"'’]</xsl:param>
