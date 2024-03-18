@@ -27,13 +27,13 @@ pattern = re.compile(r'{}'.format('|'.join(manuscript_list)))
 
 if corpus_name == 'all':
     # The following rebuilds the files for all corpora. NB this will probably take several hours to complete.
-    xmls = [x for x in glob(os.path.join(orig, 'data/**/*lat*.xml'), recursive=True) if not re.search(pattern, x)] + [x for x in glob(os.path.join(orig, 'data/**/*deu001.xml'), recursive=True) if re.search(r'elexicon', x)]
+    xmls = [x for x in glob(os.path.join(orig, 'data/**/*lat*.xml'), recursive=True) if not re.search(pattern, x)] + [x for x in glob(os.path.join(orig, 'data/elexicon/*/*deu001.xml'), recursive=True)]
 elif corpus_name == 'elexicon':
     # The following processes all the files for the elexicon
-    xmls = [x for x in glob(os.path.join(orig, 'data/**/*deu001.xml'), recursive=True) if re.search(r'elexicon', x)]
+    xmls = [x for x in glob(os.path.join(orig, 'data/elexicon/*/*deu001.xml'), recursive=True) if re.search(r'elexicon', x)]
 else:
     # The following processes a single charter or formulae corpus
-    xmls = [x for x in glob(os.path.join(orig, 'data/**/*lat*.xml'), recursive=True) if re.search(corpus_name, x)]
+    xmls = [x for x in glob(os.path.join(orig, 'data/{}/**/*lat*.xml'.format(corpus_name)), recursive=True)]
     if xmls == []:
         raise Exception('Corpus ' + corpus_name + ' does not exist')
 
