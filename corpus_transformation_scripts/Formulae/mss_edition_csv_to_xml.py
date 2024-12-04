@@ -4,10 +4,33 @@ from sys import argv
 from lxml.builder import E
 from lxml import etree
 import os
+import logging
+logging.basicConfig(encoding='utf-8', level=logging.INFO)
 
-csv_file = argv[1]
+input_path = argv[1]
 formulae_collections_md_file = argv[2]
 manuscript_collections_md_file = argv[3]
+output_folder_hss_editionen = '/home/thorben.schomacker/git/scripts/formel_transform/output/auvergne/hss_editionen.xml' #argv[3]
+
+input_encoding = 'utf-8'
+
+def find_csv(input_path):
+    import fnmatch
+    csv_list = []
+    for file in os.listdir(input_path):
+        if fnmatch.fnmatch(file, '*.csv'):
+            csv_list.append(os.path.join(input_path, file))
+    if 1==len(csv_list): return csv_list[0]
+    if 0==len(csv_list): raise Exception("No csv-file found")
+    if 1<len(csv_list): raise Exception("There is more than one csv-file")
+
+if not 'csv' in input_path:
+    csv_file = find_csv(input_path)
+    
+else:
+    csv_file = input_path
+
+logging.info('csv-file:'+csv_file)
 
 ns = {'tei': 'http://www.tei-c.org/ns/1.0', 'cpt': 'http://purl.org/capitains/ns/1.0#', 'dc': 'http://purl.org/dc/elements/1.1/', 'dct': 'http://purl.org/dc/terms/', 'bib': 'http://bibliotek-o.org/1.0/ontology/'}
 
@@ -22,6 +45,7 @@ ed_bib_info = {'Zeu': ('Zeu', 'Zeumer, Karl: Formulae Merowingici et Karolini ae
                'Rio': ('Rio', 'Rio, Alice: The formularies of Angers and Marculf: Two Merovingian legal handbooks, Liverpool 2008 (Translated texts for historians 46).'),
                'Par': ('Par', "Pardessus, Jean-Marie: Notice sur les manuscrits de formules relatives au droit observé dans l'Empire des Francs, suivie de quatorze formules inédites, in: Bibliothèque de l’école des chartes 4 (1843), S. 1-22."),
                'Bis': ('Bis', 'Bischoff, Bernhard: Epitaphienformeln für Äbtissinnen (Achtes Jahrhundert), in: Ders. (Hg.), Anecdota Novissima. Texte des vierten bis sechszehnten Jahrhunderts, Stuttgart 1984, S. 152')}
+
 
 def build_urn(s): 
     roman_mapping = {'I': '1', 'II': '2'} 
@@ -113,7 +137,8 @@ def build_editions(s, ed_dict):
 
 form_ms_ed_xml = E.xml()
 
-with open(csv_file) as f:
+
+with open(csv_file, encoding=input_encoding) as f:
     rows = f.readlines()
 
 # Map titles to URNs
@@ -154,7 +179,18 @@ for r in rows[1:]:
 
 xml_string = etree.tostring(form_ms_ed_xml, pretty_print=True, encoding='unicode')
 xml_string = xml_string.replace('&amp;', '&')
+# for an unknown reason matt used ampersand encoding
+xml_string = xml_string.replace('&lt;', '<')
+xml_string = xml_string.replace('&gt;', '>')
+xml_path = csv_file.replace('.csv', '.xml')
 
-with open(csv_file.replace('.csv', '.xml'), mode='w') as f:
+with open(xml_path, mode='w',encoding='utf-8') as f:
     #json.dump(form_ms_ed_dict, f, ensure_ascii=False, indent='\t')
+    
+    
     f.write(xml_string)
+    logging.info('Done! The file was written to: '+xml_path)
+
+with open(output_folder_hss_editionen, mode='w+',encoding='utf-8') as f:
+    f.write(xml_string)
+    logging.info('Done! The file was written to: '+output_folder_hss_editionen)

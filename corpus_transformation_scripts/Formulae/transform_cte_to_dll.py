@@ -6,13 +6,36 @@ import os.path
 import sys
 from lxml import etree
 from collections import defaultdict
+import logging
+import argparse
 
 home_dir = environ.get('HOME', '')
-saxon_location = sys.argv[1] or home_dir + '/Downloads/SaxonHE10-1J/saxon-he-10.1.jar'
-text_transformation_xslt = home_dir + '/scripts/corpus_transformation_scripts/Formulae/transform_cte_to_dll.xsl'
-metadata_transformation_xslt = home_dir + '/scripts/corpus_transformation_scripts/Formulae/create_capitains_files.xsl'
-collection_metadata_xslt = home_dir + '/scripts/corpus_transformation_scripts/Formulae/create_collection_capitains_files.xsl'
-corpus_name = sys.argv[2] or 'andecavensis' # Used to build the folder structure
+
+parser=argparse.ArgumentParser(description="Script to transform CTE-XML files to ???")
+default_saxon_location = home_dir + '/Downloads/SaxonHE10-1J/saxon-he-10.1.jar'
+parser.add_argument("saxon_location", type=str,default=default_saxon_location)
+parser.add_argument("corpus_name", type=str,default='andecavensis')
+parser.add_argument("formulae_collections_md_file", type=str,default='/home/matt/formulae-corpora/data/formulae_collection/__capitains__.xml')
+default_scripts_folder = home_dir + '/scripts'
+parser.add_argument("scripts_folder", type=str, default=default_scripts_folder, 
+                    help='Path to your local copy of https://github.com/Formulae-Litterae-Chartae/scripts')
+args=parser.parse_args()
+
+logging.basicConfig(format='%(asctime)s %(levelname)s %(filename)s:%(lineno)s - %(message)s', 
+                    encoding='utf-8', datefmt='%H:%M:%S')
+# TODO: set the level via cl argument
+logging.getLogger().setLevel('INFO')
+
+saxon_location = args.saxon_location
+
+scripts_folder = args.scripts_folder
+
+
+text_transformation_xslt = scripts_folder + '/corpus_transformation_scripts/Formulae/transform_cte_to_dll.xsl'
+metadata_transformation_xslt = scripts_folder + '/corpus_transformation_scripts/Formulae/create_capitains_files.xsl'
+collection_metadata_xslt = scripts_folder + '/corpus_transformation_scripts/Formulae/create_collection_capitains_files.xsl'
+corpus_name = args.corpus_name # Used to build the folder structure
+logging.debug('corpus_name: '+corpus_name)
 destination_folder = getcwd() # The base folder where the corpus folder structure should be built
 latins = glob(destination_folder + '/Latin/*.xml')
 germans = glob(destination_folder + '/Deutsch/*.xml')
@@ -20,7 +43,7 @@ transcriptions = glob(destination_folder + '/Transkripte/*.xml', recursive=True)
 temp_files = []
 ns = {'dct': "http://purl.org/dc/terms/", 'dc': "http://purl.org/dc/elements/1.1/", 'cpt': "http://purl.org/capitains/ns/1.0#", 'tei': 'http://www.tei-c.org/ns/1.0'}
 
-formulae_collections_md_file = '/home/matt/formulae-corpora/data/formulae_collection/__capitains__.xml'
+formulae_collections_md_file = args.formulae_collections_md_file
 form_coll_md = etree.parse(formulae_collections_md_file)
 mss_edition_dict = defaultdict(set)
 title_id_dict = dict()
@@ -41,9 +64,25 @@ for f_c in form_coll_md.xpath('/cpt:collection/cpt:members/cpt:collection', name
                 if mss.xpath('dc:type', namespaces=ns)[0].text == 'transcription':
                     mss_edition_dict[mss.xpath('cpt:identifier', namespaces=ns)[0].text].add(form_md.xpath('/cpt:collection/cpt:identifier', namespaces=ns)[0].text)
 
+# sanity checks
+if not (len(transcriptions)  >= len(latins)):
+    logging.warning("The number of transcriptions ({}) should be greater or equal to the number of latins ({})".format(len(transcriptions), len(latins)))
+
+if not ( len(germans) == len(latins) ):
+    logging.warning("The number of germans ({}) should be equal to the number of latins ({})".format(len(germans), len(latins)))
+
+
+
+
 def remove_space_before_note(filename):
-    with open(filename) as f:
-        text = f.read()
+    #logging.info(filename+' exists: '+str(os.path.isfile(filename)))
+    try:
+        with open(filename) as f:
+            text = f.read()
+    except FileNotFoundError as e:
+        logging.error('Failed to upload to ftp: %s', repr(e))
+        logging.error('This file should have been created with one the subprocess.run commands. This indicates an error with the jar file.' )
+        raise e
     text = re.sub(r'\s+<note', '<note', text)
     text = re.sub(r'<seg type="italic;"><w>([^<]+)</w></seg>', r'<w><seg type="italic;">\1</seg></w>', text)
     text = re.sub(r'</w><w>', '', text)
@@ -53,6 +92,7 @@ def remove_space_before_note(filename):
         #text = re.sub(patt_1, r'<seg type="italic;">\1</seg></w>', text)
         #text = re.sub(patt_2, r'\1\2', text)
     with open(filename, mode="w") as f:
+        #logging.info("write: "+filename)
         f.write(text)
     # Add urn and title to title_id_dict
     xml = etree.parse(filename)
@@ -60,7 +100,7 @@ def remove_space_before_note(filename):
     title = xml.xpath('/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title', namespaces=ns)[0].text
     title_id_dict[urn] = title
         
-def remove_tei_dtd_reference(filename):
+def remove_tei_dtd_reference(filename):    
     with open(filename) as f:
         text = f.read()
     if "Please register the Classical Text Editor to get more" in text:
@@ -128,25 +168,93 @@ def produce_form_num(filename):
             form_num = 'form' + form_num
     return form_num
 
+
+def subprocess_run(commands:list, name:str=''):
+    """
+    Wrapping method for all subproces.run calls
+    To standardize the error handling behavior.
+    For more information about the available flags: https://www.saxonica.com/documentation9.5/using-xsl/commandline.html
+    """
+
+    import os.path
+    xml_file_path = commands[3].replace('-s:','')
+    if not os.path.isfile(xml_file_path):
+        logging.warning(xml_file_path+' does not exist!')
+    #commands.append('-explain:tree.xml')
+    #commands.append('-expand:on')
+    #commands.append('-traceout:#out')
+    trace_out_file=str(os.path.join('..','results','transform_'+name+".log"))
+    #commands.append('-T')
+    #commands.append('-Tlevel:'+'none')
+    #commands.append('-Tout:'+trace_out_file)
+
+    #print(commands)
+    try:
+        completed_process = subprocess.run(commands, check=True, stdout=subprocess.PIPE)
+        return completed_process
+    except Exception as e:
+        logging.warning(' '.join(commands)+' failed')
+        try:
+            # -t flag to get more detailed information why the process failes
+            commands.append('-t')
+            completed_process = subprocess.run(commands, check=True, stdout=subprocess.PIPE)
+            return completed_process
+        except Exception as e:
+            if '' in commands:
+                logging.warning('The list of commands contains empty commands.')
+            logging.error('The following subprocess command raised an exception. Try running it directly in the terminal for more detailed information.')
+            logging.error(' '.join(commands))
+            raise e
+
+logging.info("Start with German(s)")
 for german in germans:
-    print(german)
+    logging.debug("Processing: "+german)
     remove_tei_dtd_reference(german)
     form_num = produce_form_num(german)
     new_name = '{base_folder}/data/{corpus}/{form}/{corpus}.{form}.deu001.xml'.format(base_folder=destination_folder, corpus=corpus_name, form=form_num)
-    subprocess.run(['java', '-jar',  saxon_location, '{}'.format(german), text_transformation_xslt])
+    # This subprocess creates the location for the files. 
+    subprocess_run(['java', '-jar',  saxon_location, '-s:{}'.format(german), text_transformation_xslt])
     remove_space_before_note(new_name)
+
+
+def check_regesten_format():
+    import re
+    pattern = re.compile("[0-9][0-9][1-9]")
+
+    from bs4 import BeautifulSoup
+    soup_file = os.path.join(destination_folder,'regesten/urn:cts:formulae:'+corpus_name+'_regesten.xml')
     
+    with open(soup_file) as fp:
+        doc_ids=[]
+        soup = BeautifulSoup(fp, 'xml')
+        for link in soup.find_all('regest'):
+            doc_ids.append(link.get('docId'))
+        if 0==len(doc_ids):
+            logging.error('No docId found in '+str(soup_file))
+        else:
+            for doc_id in doc_ids:
+                malformed_doc_ids=False
+                if not pattern.match(doc_id):
+                    malformed_doc_ids=True
+                    logging.error('docId: '+doc_id+' is malformed.')
+    if not malformed_doc_ids:
+        logging.info('Regest files exists and is properly formatted at '+soup_file)
+
+check_regesten_format()
+
+if 0==len(transcriptions):logging.warning("No transcriptions found!")
+logging.info("Start with transcription(s)")
 for transcription in sorted(transcriptions):
-    print(transcription)
+    logging.debug("Processing: "+transcription)
     remove_tei_dtd_reference(transcription)
     form_num = produce_form_num(transcription)
     try:
         manuscript = re.search(r'\((\w+)\)\Z', transcription.replace('.xml', '')).group(1).lower()
     except:
         print(transcription)
-        raise(AttributeError)
+        raise AttributeError
     transcript_folders = glob('{base_folder}/data/{manuscript}/*'.format(base_folder=destination_folder, manuscript=manuscript))
-    subprocess.run(['java', '-jar',  saxon_location, '{}'.format(transcription), text_transformation_xslt])
+    subprocess_run(['java', '-jar',  saxon_location, '{}'.format(transcription), text_transformation_xslt])
     new_file = glob(destination_folder + '/temp/*.xml')[0]
     filename_parts = new_file.split('/')[-1].split('.')[:-1]
     new_name = destination_folder + '/data/{man}/{fols}/{man}.{fols}.{ed}.xml'.format(man=filename_parts[0], fols=filename_parts[1], ed=filename_parts[2])
@@ -165,7 +273,7 @@ for transcription in sorted(transcriptions):
         for edition_div in xml.xpath('/tei:TEI/tei:text/tei:body/tei:div[@type="edition"]', namespaces={'tei': 'http://www.tei-c.org/ns/1.0'}):
             edition_div.set('n', new_urn)
         xml.write(new_name, encoding='utf-8', pretty_print=True)
-    subprocess.run(['java', '-jar',  saxon_location, '{}'.format(new_name), metadata_transformation_xslt, '-o:{folder}/__capitains__.xml'.format(folder=new_folder)])
+    subprocess_run(['java', '-jar',  saxon_location, '{}'.format(new_name), metadata_transformation_xslt, '-o:{folder}/__capitains__.xml'.format(folder=new_folder)])
     md_xml = etree.parse('{folder}/__capitains__.xml'.format(folder=new_folder))
     for is_version_of in md_xml.xpath('//dct:isVersionOf', namespaces={'dct': 'http://purl.org/dc/terms/'}):
         is_version_of.text = 'urn:cts:formulae:{}.{}'.format(corpus_name, form_num)
@@ -185,16 +293,30 @@ for transcription in sorted(transcriptions):
     temp_file = '{base_folder}/data/{corpus}/{entry}/{man_filename}'.format(base_folder=destination_folder, corpus=corpus_name, entry=form_num, man_filename='.'.join(filename_parts) + '.xml')
     temp_files.append(temp_file)
     with open(temp_file, mode="w") as f:
+        logging.debug("write: "+temp_file)
         f.write('<xml/>')
     remove_space_before_note(new_name)
 
+
+
+
+if 0==len(latins):logging.warning("No Latin documents found!")
+logging.info("Start with latin(s)")
 for latin in latins:
-    print(latin)
+    
+    if not bool(re.match(r"^[A-Z][a-z]+\s[0-9]+[.]xml", latin.split('/')[-1])): 
+        logging.error(latin+' is not named properly. This will cause errors in processing the file')
+    
     remove_tei_dtd_reference(latin)
     form_num = produce_form_num(latin)
     new_name = '{base_folder}/data/{corpus}/{entry}/{corpus}.{entry}.lat001.xml'.format(base_folder=destination_folder, corpus=corpus_name, entry=form_num)
-    subprocess.run(['java', '-jar',  saxon_location, '{}'.format(latin), text_transformation_xslt])
-    subprocess.run(['java', '-jar',  saxon_location, '{}'.format(new_name), metadata_transformation_xslt, '-o:{base_folder}/data/{corpus}/{entry}/__capitains__.xml'.format(base_folder=destination_folder, corpus=corpus_name, entry=form_num)])
+    # does latin exist?
+    logging.debug('Process: {}'.format(latin))
+    logging.debug('Transform the text...')
+    subprocess_run(['java', '-jar',  saxon_location, '{}'.format(latin), text_transformation_xslt])
+    logging.debug('Transform the metadata...')
+    subprocess_run(['java', '-jar',  saxon_location, '{}'.format(new_name), metadata_transformation_xslt, 
+                                        '-o:{base_folder}/data/{corpus}/{entry}/__capitains__.xml'.format(base_folder=destination_folder, corpus=corpus_name, entry=form_num)], form_num)
     remove_space_before_note(new_name)
     
 # Delete the temporary files
@@ -208,6 +330,7 @@ for sub_folder in sub_folders:
     new_meta_filename = sub_folder + '/__capitains__.xml'
     if not os.path.isfile(meta_filename):
         with open(meta_filename, mode="w") as f:
+            logging.debug("meta_filename: "+temp_file)
             f.write('<xml/>')
     subprocess.run(['java', '-jar',  saxon_location, '{}'.format(meta_filename), collection_metadata_xslt, '-o:{}'.format(meta_filename)])
     rename(meta_filename, new_meta_filename)
