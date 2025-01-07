@@ -217,9 +217,13 @@ for german in germans:
     remove_space_before_note(new_name)
 
 
-def check_regesten_format():
+def check_regesten_format(destination_folder):
+    """
+    checks whether the regest have the proper format to be further processed 
+    as a form of sanity check
+    """
     import re
-    pattern = re.compile("[0-9][0-9][1-9]")
+    docid_pattern_without_prefixes = re.compile("[0-9][0-9][1-9]") #e.g., <regest docId="001">
 
     from bs4 import BeautifulSoup
     soup_file = os.path.join(destination_folder,'regesten/urn:cts:formulae:'+corpus_name+'_regesten.xml')
@@ -227,6 +231,7 @@ def check_regesten_format():
     with open(soup_file) as fp:
         doc_ids=[]
         soup = BeautifulSoup(fp, 'xml')
+        parsable_docids = []
         for link in soup.find_all('regest'):
             doc_ids.append(link.get('docId'))
         if 0==len(doc_ids):
@@ -234,13 +239,28 @@ def check_regesten_format():
         else:
             for doc_id in doc_ids:
                 malformed_doc_ids=False
-                if not pattern.match(doc_id):
+                #e.g., <regest docId="urn:cts:formulae:auvergne.form001"> --> ['urn','cts','formulae','auvergne.form001']
+                doc_id_components = doc_id.split(':')
+                if 4 == len(doc_id_components):
+                    #e.g., ['urn','cts','formulae','auvergne.form001'] -> ['auvergne', 'form001']
+                    doc_id_title_components = doc_id_components[-1].split('.')
+                    if 2 == len(doc_id_title_components):
+                        formel_number = doc_id_title_components[1].replace('form','')
+                    else:
+                        logging.warning(str(doc_id_title_components)+' is malformed.')
+                        formel_number = doc_id
+                else:
+                    logging.warning(doc_id+" is missing 'urn','cts' or 'formulae'")
+                    formel_number = doc_id
+                if not docid_pattern_without_prefixes.match(formel_number):
                     malformed_doc_ids=True
-                    logging.error('docId: '+doc_id+' is malformed.')
+                    logging.error('docId: '+formel_number+' is malformed.')
+                else:
+                    parsable_docids.append(formel_number)
     if not malformed_doc_ids:
-        logging.info('Regest files exists and is properly formatted at '+soup_file)
+        logging.info('Regest files exists and is properly formatted at '+soup_file+'. It has the following docIds: '+str(parsable_docids))
 
-check_regesten_format()
+check_regesten_format(destination_folder)
 
 if 0==len(transcriptions):logging.warning("No transcriptions found!")
 logging.info("Start with transcription(s)")
@@ -297,7 +317,25 @@ for transcription in sorted(transcriptions):
         f.write('<xml/>')
     remove_space_before_note(new_name)
 
+def check_if_notes_exist(input_file, transformed_file):
+    from bs4 import BeautifulSoup
+    with open(input_file, 'r') as f:
+        file = f.read() 
+        soup = BeautifulSoup(file, 'xml')
+        input_apparatus_notes = soup.find_all("note", type="a1")
+        input_apparatus_notes_unique_target_ends = set([ note['targetEnd'] for note in input_apparatus_notes ])
+    
+    with open(transformed_file, 'r') as f:
+        file = f.read() 
+        soup = BeautifulSoup(file, 'xml')
+        transformed_apparatus_notes = soup.find_all("note", type="a1")
+        transformed_apparatus_notes_unique_target_ends = set([note['targetEnd'] for note in transformed_apparatus_notes ])
 
+    if not input_apparatus_notes_unique_target_ends == transformed_apparatus_notes_unique_target_ends:
+        logging.error('Not all notes where transformed from {} ({}) to {} ({})'.format(input_file, 
+                                                                                        input_apparatus_notes_unique_target_ends,
+                                                                                        transformed_file,
+                                                                                        transformed_apparatus_notes_unique_target_ends))
 
 
 if 0==len(latins):logging.warning("No Latin documents found!")
@@ -313,11 +351,14 @@ for latin in latins:
     # does latin exist?
     logging.debug('Process: {}'.format(latin))
     logging.debug('Transform the text...')
-    subprocess_run(['java', '-jar',  saxon_location, '{}'.format(latin), text_transformation_xslt])
+    new_name_existed_before_transforming = os.path.isfile(new_name)
+    subprocess_run(['java', '-jar',  saxon_location, '-s:{}'.format(latin), text_transformation_xslt])
+    if not new_name_existed_before_transforming and os.path.isfile(new_name): logging.info('{} was created.'.format(new_name))
     logging.debug('Transform the metadata...')
-    subprocess_run(['java', '-jar',  saxon_location, '{}'.format(new_name), metadata_transformation_xslt, 
+    subprocess_run(['java', '-jar',  saxon_location, '-s:{}'.format(new_name), metadata_transformation_xslt, 
                                         '-o:{base_folder}/data/{corpus}/{entry}/__capitains__.xml'.format(base_folder=destination_folder, corpus=corpus_name, entry=form_num)], form_num)
     remove_space_before_note(new_name)
+    check_if_notes_exist(input_file='{}'.format(latin),transformed_file='{}'.format(new_name))
     
 # Delete the temporary files
 for temp_file in temp_files:

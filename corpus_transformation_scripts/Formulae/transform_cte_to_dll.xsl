@@ -13,7 +13,11 @@
     
     <xsl:output omit-xml-declaration="yes" indent="yes"/>
     
-    <xsl:param name="pSeparators">&#xA;&#x9;&#x20;&#8230;&#8221;,.;:?!()'"„“‚‘|+</xsl:param>
+    <!-- <xsl:param name="pSeparators">&#xA;&#x9;&#x20;&#8230;&#8221;,.;:?!()'"„“‚‘|+</xsl:param> -->
+    <!-- <xsl:param name="pSeparators">&#xA;&#x9;&#x20;&#8230;&#8221;&#8739;,.;:?!()'"„“‚‘|+</xsl:param> -->
+    <!-- Thorben, 18.12.24: I think | is not a valid separator of a word. A pipe indicate a new page. 
+            Since words can be split across two pages, it is not really a separator -->
+    <xsl:param name="pSeparators">&#xA;&#x9;&#x20;&#8230;&#8221;,.;:?!()'"„“‚‘+</xsl:param>
     <xsl:param name="formTitle">
         <xsl:variable name="tempTitle"><xsl:value-of select="replace(replace(normalize-space(replace(replace(tokenize(base-uri(), '/')[last()], '%20', ' '), '.xml', '')), 'Paris,? BNF (\d)', 'Paris BnF Lat. $1'), 'Markulf', 'Marculf')"/></xsl:variable>
         <xsl:choose>
@@ -598,6 +602,7 @@
         <xsl:param name="pString" select="."/>
         <xsl:param name="pMask"
             select="translate(.,translate(.,$pSeparators,''),'')"/>
+            <!-- https://www.data2type.de/xml-xslt-xslfo/xslt/xslt-und-xpath-referenz/alphabetische-liste/translate -->
 <!--        <xsl:param name="pCount" select="1"/>-->
         <xsl:choose>
             <xsl:when test="//tei:milestone[@unit='chapter'] and not(preceding::tei:milestone[@unit='chapter'])"></xsl:when>
@@ -672,9 +677,13 @@
         </xsl:for-each>
     </xsl:template>
     
-    <!-- Place note element after the @targetEnd seg element -->
-    <xsl:template match="tei:seg[@xml:id]">
+    <!-- Place note element after the @targetEnd seg or anchor element -->
+<!--    <xsl:template match="tei:seg[@xml:id]">-->
+    <xsl:template match="tei:anchor[@xml:id] | tei:seg[@xml:id]">
         <xsl:variable name="target_end"><xsl:text>#</xsl:text><xsl:value-of select="@xml:id"/></xsl:variable>
+        <!-- If empty anchors or segs are causing errors in the future, please change this line to <xsl:apply-templates select="node()|comment()"/> -->
+        <!-- Expected error behavior are empty footnotes in the nemo application -->
+ 
         <xsl:copy><xsl:attribute name="xml:id" select="@xml:id"></xsl:attribute><xsl:apply-templates/></xsl:copy>
         <xsl:for-each select="//tei:note[@targetEnd=$target_end]">
             <xsl:copy>
@@ -719,10 +728,11 @@
         </xsl:choose>
     </xsl:template>-->
     
+    <!--The following lines moved to 684 and should be deleted in the near future-->
     <!-- In the CTE output, the anchors for notes when they are footnotes appear to be repeated after the note. This should remove the following anchor -->
-    <xsl:template match="tei:anchor[preceding-sibling::*[1][self::tei:note]]">
+<!--    <xsl:template match="tei:anchor[preceding-sibling::*[1][self::tei:note]]">
         <xsl:apply-templates select="node()|comment()"/>
-    </xsl:template>
+    </xsl:template>-->
     
     <!-- Replace all <hi> elements with <seg> and transfer the @rendition attribute to @type -->
     <xsl:template match="tei:hi">
