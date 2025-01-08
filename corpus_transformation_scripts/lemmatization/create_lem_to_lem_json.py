@@ -14,9 +14,11 @@ tsv_files = list()
 if os.path.isfile(argv[1]):
     tsv_files.append(argv[1])
     dest_file_pattern = os.path.splitext(argv[1])[0]
+    result_dir = os.path.join(os.path.dirname(argv[1]), 'results')
 elif os.path.isdir(argv[1]):
     tsv_files += glob(os.path.join(argv[1], '*.tsv'))
     dest_file_pattern = os.path.join(argv[1], 'all_files')
+    result_dir = os.path.join(argv[1], 'results')
 else:
     raise SyntaxError('\n**The first argument must be either a .tsv file or a directory containing multiple .tsv files.**\n')
 
@@ -24,7 +26,7 @@ dest_folder = ''
 if len(argv) > 2:
     dest_folder = argv[2]
 
-result_dir = os.path.join(os.path.dirname(argv[1]), 'results')
+
 os.makedirs(result_dir, exist_ok=True)
 lem_to_lem_mapping = defaultdict(set)
 inflected_to_primary_lem = dict()
@@ -38,6 +40,7 @@ german_lemmas = ['Personenname', 'Ortsname', 'Volksstamm', 'Monatsname', 'Tagesb
 german_lemmas += [x.lower() for x in german_lemmas]
 all_lines = ['form\tlemma\tPOS\tmorph\n']
 
+print('open '+str(len(tsv_files))+' tsv files')
 for tsv_file in sorted(tsv_files):
     try:
         with open(tsv_file) as f:
@@ -125,5 +128,7 @@ with open(dest_file_7, mode="w") as f:
     dump(inflected_to_lem_mapping, f, ensure_ascii=False, sort_keys=True, indent='\t')
 
 for form, mapping in inflected_to_primary_lem.items():
-    with open(os.path.join(result_dir, form.replace('.txt', '') + '.txt'), mode="w") as f:
+    file_path = os.path.join(result_dir, form.replace('.txt', '') + '.txt')
+    print('write: '+str(file_path))
+    with open(file_path, mode="w") as f:
         f.write('\n'.join(['{}\t{}\t{}'.format(x, y, z) for x, y, z in mapping]))
