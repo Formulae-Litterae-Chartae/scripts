@@ -88,15 +88,6 @@ def test_text(lemmas: list, orig: list, xml_file=None) -> list | str:
         lemmas_inflected = [n.split('\t')[0] for n in lemmas]
         lemmas_text = list()
         orig_text = list()
-        # | indicate a page break. They are quasi punctuation and should not be lemmatized. This can solve some conflicts.
-        # obtaining the indices is only used for logging purposes
-        pipe_indices = [i for i, orig_word in enumerate(orig_inflected) if orig_word == "|"]
-        if pipe_indices:
-            orig_inflected = [element for element in orig_inflected if element != '|']
-            if len(lemmas_inflected) == len(orig_inflected):
-                logging.info('Resolved: Length mismatch removed all "|" that where found in orig_text at indices: {}'.format(pipe_indices))
-            else: 
-                logging.warning('Length mismatch continues after having removed all "|" that where found in orig_text at indices: {} but there are still {} lemmas_inflected and {} originals'.format(pipe_indices, len(lemmas_inflected), len(orig_inflected)))
         for i, w in enumerate(lemmas_inflected):
             if i >= len(orig_inflected):
                 logging.warning('Index i: {} exceeded length of orig_inflected: {}. Therefore no lemmatization is done. After every "!!!" is one error in the following output:'.format(i, len(orig_inflected)))
@@ -133,11 +124,7 @@ def test_text(lemmas: list, orig: list, xml_file=None) -> list | str:
         tried = []
         # left side -> pyrrha ; right side -> word from xml file
         if inflected.lower().replace('v', 'u') != re.sub(r'[{}«»„“‚‘’”\[\]…|]'.format(punctuation), '', ''.join(orig[i].xpath('.//text()', namespaces=ns)).lower().replace('v', 'u')):
-        # I am not sure, why the xml_strings are obtained a second time. Maybe because of the namespace attribute
-        # Anyhow the | need to be removed again
-        #word_from_xml = clean_string(orig[i])
-        #if inflected != word_from_xml:
-            not_found.append((inflected, i, word_from_xml))
+            not_found.append((inflected, i))
             continue
         #try:
             #while inflected.lower().replace('v', 'u') != re.sub(r'[{}«»„“‚‘’”\[\]]'.format(punctuation), '', ''.join(orig[i].xpath('.//text()', namespaces=ns)).lower().replace('v', 'u')):
@@ -216,10 +203,7 @@ for xml_file in sorted(xmls):
             logging.warning('not_found: '+str(not_found))
         else:
             logging.info('Not found is empty. This indicates a successful lematization process.')
-            # if xml.xpath('//tei:w[@lemma and normalize-space(text())="|")]', namespaces=ns):
-            #     logging.error('| got a lemma in'+xml_file)
             if xml.xpath('//tei:w[not(@lemma) and not(@type="no-search")]', namespaces=ns):
-                #print(xml_file)
                 logging.error(xml_file+ " has 'w'-node(s) that are neither no-search nor have lemma. This indicates an incomplete lemmatization process:\n\t" +
                 '; '.join(x.text for x in xml.xpath('//tei:w[not(@lemma)]', namespaces=ns)))
             else:
