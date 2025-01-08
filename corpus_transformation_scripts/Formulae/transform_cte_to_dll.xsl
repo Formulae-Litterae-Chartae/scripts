@@ -680,11 +680,31 @@
     <!-- Place note element after the @targetEnd seg or anchor element -->
 <!--    <xsl:template match="tei:seg[@xml:id]">-->
     <xsl:template match="tei:anchor[@xml:id] | tei:seg[@xml:id]">
-        <xsl:variable name="target_end"><xsl:text>#</xsl:text><xsl:value-of select="@xml:id"/></xsl:variable>
+        <xsl:variable name="target_end">
+            <xsl:text>#</xsl:text>
+            <xsl:value-of select="@xml:id"/>
+        </xsl:variable>
         <!-- If empty anchors or segs are causing errors in the future, please change this line to <xsl:apply-templates select="node()|comment()"/> -->
         <!-- Expected error behavior are empty footnotes in the nemo application -->
  
-        <xsl:copy><xsl:attribute name="xml:id" select="@xml:id"></xsl:attribute><xsl:apply-templates/></xsl:copy>
+<!--        <xsl:copy><xsl:attribute name="xml:id" select="@xml:id"></xsl:attribute><xsl:apply-templates/></xsl:copy>-->
+        <!--elements without targetEnd should not be considered as notes but as seg with the idented id-->
+        
+        <xsl:choose>
+            <xsl:when test="not(@targetEnd)">       
+                <!--A proper seg element should look this: <seg xml:id="w11"><w>nascuntur</w> </seg>-->
+                <seg>
+                    <xsl:attribute name="xml:id" select="@xml:id"/>
+                    <!--                        <xsl:apply-templates select="node()|comment()"/>-->
+                </seg>
+                <xsl:apply-templates select="node()|comment()"/>
+            </xsl:when >
+            <xsl:otherwise>
+<!--                <xsl:apply-templates select="node()|comment()"/>-->
+            </xsl:otherwise>
+        </xsl:choose>
+        
+        
         <xsl:for-each select="//tei:note[@targetEnd=$target_end]">
             <xsl:copy>
                 <xsl:if test="@targetEnd"><xsl:attribute name="targetEnd" select="@targetEnd"/></xsl:if>
