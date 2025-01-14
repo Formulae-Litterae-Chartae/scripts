@@ -599,7 +599,13 @@
     
     
     <!-- Surround every token in the body that is not in a <note> element with a <w> tag -->
-    <xsl:template match="tei:body//*[not(ancestor-or-self::tei:note) and not(ancestor-or-self::tei:locus) and not(ancestor-or-self::tei:title)]/text()" name="tokenize">
+<!--    <xsl:template match="tei:body//*[not(ancestor-or-self::tei:note) and not(ancestor-or-self::tei:locus) and not(ancestor-or-self::tei:title)]/text()" name="tokenize">-->
+<!--        <xsl:template match="tei:body//*[not(ancestor-or-self::tei:note) and not(ancestor-or-self::tei:locus) and not(ancestor-or-self::tei:title)][not(normalize-space(.) and following-sibling::*[1][self::tei:anchor])]/text()" name="tokenize">-->
+            <xsl:template match="tei:body//*[not(ancestor-or-self::tei:note) 
+                and not(ancestor-or-self::tei:locus) 
+                and not(ancestor-or-self::tei:title)]/text()
+                [not(normalize-space(.) and following-sibling::*[1][self::tei:anchor])]" 
+                name="tokenize">
         <xsl:param name="pString" select="."/>
         <xsl:param name="pMask"
             select="translate(.,translate(.,$pSeparators,''),'')"/>
@@ -643,20 +649,113 @@
                     <xsl:when test="ancestor::tei:hi[@style='font-size:10pt;' or @rend='font-size:10pt;']">
                         <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="function">from-other</xsl:attribute><xsl:value-of select="$pString"/></xsl:element>
                     </xsl:when>
-                    <xsl:when test="following-sibling::*[1][self::tei:anchor]">
+<!--                    <xsl:when test="following-sibling::*[1][self::tei:anchor]">
                         <xsl:element name="seg" namespace="http://www.tei-c.org/ns/1.0">
-                            <xsl:attribute name="xml:id">
+                            <xsl:attribute name="i_should_not_exist">
                                 <xsl:value-of select="following-sibling::tei:anchor[1]/@xml:id"/>
                             </xsl:attribute>
                             <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:value-of select="$pString"/></xsl:element>
                         </xsl:element>
-                    </xsl:when>
+                    </xsl:when>-->
                     <xsl:otherwise>
                         <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:value-of select="$pString"/></xsl:element>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:otherwise>
         </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template match="tei:body//*[not(ancestor-or-self::tei:note) 
+        and not(ancestor-or-self::tei:locus) 
+        and not(ancestor-or-self::tei:title)]/text()
+        [normalize-space(.) and following-sibling::*[1][self::tei:anchor]]" 
+        name="tokenize_words_with_anchor">
+        
+        <xsl:param name="pString" select="."/>
+        <xsl:param name="pMask"
+            select="translate(.,translate(.,$pSeparators,''),'')"/>
+        <!-- https://www.data2type.de/xml-xslt-xslfo/xslt/xslt-und-xpath-referenz/alphabetische-liste/translate -->
+        <!--        <xsl:param name="pCount" select="1"/>-->
+        <xsl:param name="anchor_id">
+            <xsl:value-of select="following-sibling::tei:anchor[1]/@xml:id"/>
+        </xsl:param>
+            
+        <xsl:element name="seg" namespace="http://www.tei-c.org/ns/1.0">
+            <xsl:attribute name="xml:id">
+                <xsl:value-of select="following-sibling::tei:anchor[1]/@xml:id"/>
+            </xsl:attribute>
+
+            <xsl:choose>
+                <xsl:when test="//tei:milestone[@unit='chapter'] and not(preceding::tei:milestone[@unit='chapter'])"></xsl:when>
+                <xsl:when test="not($pString)"/>
+                <xsl:when test="$pMask">
+                    <xsl:variable name="vSeparator"
+                        select="substring($pMask,1,1)"/>
+                    <xsl:variable name="vString"
+                        select="substring-before($pString,$vSeparator)"/>
+                    <xsl:call-template name="tokenize">
+                        <xsl:with-param name="pString" select="$vString"/>
+                        <xsl:with-param name="pMask"/>
+                        <!--                    <xsl:with-param name="pCount" select="$pCount"/>-->
+                    </xsl:call-template>
+                    <xsl:value-of select="$vSeparator"/>
+                    <xsl:call-template name="tokenize">
+                        <xsl:with-param name="pString"
+                            select="substring-after($pString,$vSeparator)"/>
+                        <xsl:with-param name="pMask"
+                            select="substring($pMask,2)"/>
+                        <!--<xsl:with-param name="pCount"
+                        select="$pCount + number(boolean($vString))"/>-->
+                    </xsl:call-template>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:choose>
+                        <xsl:when test="not(matches($pString, '\w'))"><xsl:value-of select="$pString"/></xsl:when>
+                        <xsl:when test="ancestor::tei:hi[contains(@rend, 'text-transform:uppercase;')]">
+                            <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:value-of select="upper-case($pString)"/></xsl:element>
+                        </xsl:when>
+                        <xsl:when test="ancestor::tei:label">
+                            <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:value-of select="upper-case($pString)"/></xsl:element>
+                        </xsl:when>
+                        <xsl:when test="ancestor::tei:hi[@style='font-size:14pt;' or @rend='font-size:14pt;']">
+                            <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="type">no-search</xsl:attribute><xsl:value-of select="$pString"/></xsl:element>
+                        </xsl:when>
+                        <xsl:when test="ancestor::tei:hi[@style='font-size:10pt;' or @rend='font-size:10pt;']">
+                            <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="function">from-other</xsl:attribute><xsl:value-of select="$pString"/></xsl:element>
+                        </xsl:when>
+                        
+<!--                        <xsl:when test="following-sibling::*[1][self::tei:anchor]">
+                            <xsl:element name="seg" namespace="http://www.tei-c.org/ns/1.0">
+                                <xsl:attribute name="i_should_not_exist">
+                                    <xsl:value-of select="following-sibling::tei:anchor[1]/@xml:id"/>
+                                </xsl:attribute>
+                                <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:value-of select="$pString"/></xsl:element>
+                            </xsl:element>
+                        </xsl:when>-->
+                        
+                        <xsl:otherwise>
+                            <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:value-of select="$pString"/></xsl:element>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:otherwise>
+            </xsl:choose>   
+        </xsl:element>
+        <!-- Place note element after the @targetEnd seg element -->
+        
+        <xsl:variable name="target_end" select="concat('#', $anchor_id)"/>
+        <xsl:for-each select="//tei:note[@targetEnd=$target_end]">
+            <xsl:copy>
+                <xsl:if test="@targetEnd"><xsl:attribute name="targetEnd" select="@targetEnd"/></xsl:if>
+                <xsl:choose>
+                    <xsl:when test="@type"><xsl:attribute name="type" select="@type"/></xsl:when>
+                    <xsl:otherwise><xsl:attribute name="type">n1</xsl:attribute></xsl:otherwise>
+                </xsl:choose>
+                <xsl:attribute name="place" select="@place"/>
+                <xsl:if test="@n"><xsl:attribute name="n" select="@n"/></xsl:if>
+                <xsl:attribute name="xml:id"><xsl:value-of select="generate-id(.)"/></xsl:attribute>
+                <xsl:apply-templates select="node()|comment()"/>
+            </xsl:copy>
+        </xsl:for-each>
     </xsl:template>
     
 <!--    <xsl:template 
@@ -818,6 +917,24 @@
         </seg>
     </xsl:template>-->
     
+    <!-- Place note element after the @targetEnd seg element -->
+    <xsl:template match="tei:seg[@xml:id]">
+        <xsl:variable name="target_end"><xsl:text>#</xsl:text><xsl:value-of select="@xml:id"/></xsl:variable>
+        <xsl:copy><xsl:attribute name="xml:id" select="@xml:id"></xsl:attribute><xsl:apply-templates/></xsl:copy>
+        <xsl:for-each select="//tei:note[@targetEnd=$target_end]">
+            <xsl:copy>
+                <xsl:if test="@targetEnd"><xsl:attribute name="targetEnd" select="@targetEnd"/></xsl:if>
+                <xsl:choose>
+                    <xsl:when test="@type"><xsl:attribute name="type" select="@type"/></xsl:when>
+                    <xsl:otherwise><xsl:attribute name="type">n1</xsl:attribute></xsl:otherwise>
+                </xsl:choose>
+                <xsl:attribute name="place" select="@place"/>
+                <xsl:if test="@n"><xsl:attribute name="n" select="@n"/></xsl:if>
+                <xsl:attribute name="xml:id"><xsl:value-of select="generate-id(.)"/></xsl:attribute>
+                <xsl:apply-templates select="node()|comment()"/>
+            </xsl:copy>
+        </xsl:for-each>
+    </xsl:template>
 
         
         
