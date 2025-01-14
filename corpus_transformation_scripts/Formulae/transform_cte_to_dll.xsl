@@ -597,6 +597,7 @@
         </xsl:copy>
     </xsl:template>
     
+    
     <!-- Surround every token in the body that is not in a <note> element with a <w> tag -->
     <xsl:template match="tei:body//*[not(ancestor-or-self::tei:note) and not(ancestor-or-self::tei:locus) and not(ancestor-or-self::tei:title)]/text()" name="tokenize">
         <xsl:param name="pString" select="."/>
@@ -642,6 +643,14 @@
                     <xsl:when test="ancestor::tei:hi[@style='font-size:10pt;' or @rend='font-size:10pt;']">
                         <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="function">from-other</xsl:attribute><xsl:value-of select="$pString"/></xsl:element>
                     </xsl:when>
+                    <xsl:when test="following-sibling::*[1][self::tei:anchor]">
+                        <xsl:element name="seg" namespace="http://www.tei-c.org/ns/1.0">
+                            <xsl:attribute name="xml:id">
+                                <xsl:value-of select="following-sibling::tei:anchor[1]/@xml:id"/>
+                            </xsl:attribute>
+                            <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:value-of select="$pString"/></xsl:element>
+                        </xsl:element>
+                    </xsl:when>
                     <xsl:otherwise>
                         <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:value-of select="$pString"/></xsl:element>
                     </xsl:otherwise>
@@ -649,6 +658,23 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
+    
+<!--    <xsl:template 
+        match="tei:body//*[not(ancestor-or-self::tei:note) 
+        and not(ancestor-or-self::tei:locus) 
+        and not(ancestor-or-self::tei:title)]/text()
+        [following-sibling::tei:anchor]" 
+        name="processTextWithAnchor">
+        <new_seg>
+            <xsl:attribute name="new_id">
+                <xsl:value-of select="following-sibling::tei:anchor[1]/@xml:id"/>
+            </xsl:attribute>
+            
+            <new_w>
+                <xsl:value-of select="normalize-space(.)"/>
+            </new_w>
+        </new_seg>
+    </xsl:template>-->
     
     <!-- Clean up the unnecessary attributes on the note elements. -->
     <xsl:template match="tei:note" name="buildNotes">
@@ -677,34 +703,89 @@
         </xsl:for-each>
     </xsl:template>
     
-    <!-- Place note element after the @targetEnd seg or anchor element -->
-<!--    <xsl:template match="tei:seg[@xml:id]">-->
+<!--    <!-\- Place note element after the @targetEnd seg or anchor element -\->
+<!-\-    <xsl:template match="tei:seg[@xml:id]">-\->
     <xsl:template match="tei:anchor[@xml:id] | tei:seg[@xml:id]">
-        <xsl:variable name="target_end">
+<!-\-        <xsl:variable name="target_end">
             <xsl:text>#</xsl:text>
             <xsl:value-of select="@xml:id"/>
-        </xsl:variable>
-        <!-- If empty anchors or segs are causing errors in the future, please change this line to <xsl:apply-templates select="node()|comment()"/> -->
-        <!-- Expected error behavior are empty footnotes in the nemo application -->
+        </xsl:variable>-\->
+        <!-\- If empty anchors or segs are causing errors in the future, please change this line to <xsl:apply-templates select="node()|comment()"/> -\->
+        <!-\- Expected error behavior are empty footnotes in the nemo application -\->
  
-<!--        <xsl:copy><xsl:attribute name="xml:id" select="@xml:id"></xsl:attribute><xsl:apply-templates/></xsl:copy>-->
-        <!--elements without targetEnd should not be considered as notes but as seg with the idented id-->
+<!-\-        <xsl:copy><xsl:attribute name="xml:id" select="@xml:id"></xsl:attribute><xsl:apply-templates/></xsl:copy>-\->
+        <!-\-elements without targetEnd should not be considered as notes but as seg with the idented id-\->
         
         <xsl:choose>
             <xsl:when test="not(@targetEnd)">       
-                <!--A proper seg element should look this: <seg xml:id="w11"><w>nascuntur</w> </seg>-->
+                <!-\-A proper seg element should look this: <seg xml:id="w11"><w>nascuntur</w> </seg>
+                or this: ,<seg xmlns="" xml:id="w251"><w>iniunxit</w></seg>-\->
                 <seg>
-                    <xsl:attribute name="xml:id" select="@xml:id"/>
-                    <!--                        <xsl:apply-templates select="node()|comment()"/>-->
+                    <xsl:attribute name="xml:id">
+                        <xsl:value-of select="@xml:id"/>
+                    </xsl:attribute>
+                    
+                    <xsl:attribute name="word">
+                        <xsl:value-of select="preceding-sibling::text()[last()]"/>
+                    </xsl:attribute>
+                    <w>
+                        <xsl:value-of select="preceding-sibling::text()[last()]"/>
+                        <xsl:apply-templates select="node()|comment()"/>
+                    </w>
                 </seg>
-                <xsl:apply-templates select="node()|comment()"/>
+<!-\-                <seg>
+                    <xsl:attribute name="xml:id" select="@xml:id"/>
+                    <!-\\-                        <xsl:apply-templates select="node()|comment()"/>-\\->
+                </seg>-\->
+                
+<!-\-                <xsl:apply-templates select="node()|comment()"/>-\->
             </xsl:when >
             <xsl:otherwise>
-<!--                <xsl:apply-templates select="node()|comment()"/>-->
+                <xsl:variable name="target_end">
+                    <xsl:text>#</xsl:text>
+                    <xsl:value-of select="@xml:id"/>
+                </xsl:variable>
+                <xsl:for-each select="//tei:note[@targetEnd=$target_end]">
+                    <xsl:copy>
+                        <xsl:if test="@targetEnd"><xsl:attribute name="targetEnd" select="@targetEnd"/></xsl:if>
+                        <xsl:choose>
+                            <xsl:when test="@type"><xsl:attribute name="type" select="@type"/></xsl:when>
+                            <xsl:otherwise><xsl:attribute name="type">n1</xsl:attribute></xsl:otherwise>
+                        </xsl:choose>
+                        <xsl:attribute name="place" select="@place"/>
+                        <xsl:if test="@n"><xsl:attribute name="n" select="@n"/></xsl:if>
+                        <xsl:attribute name="xml:id"><xsl:value-of select="generate-id(.)"/></xsl:attribute>
+                        <xsl:apply-templates select="node()|comment()"/>
+                    </xsl:copy>
+                </xsl:for-each>
+                
+<!-\-                <xsl:apply-templates select="node()|comment()"/>-\->
             </xsl:otherwise>
         </xsl:choose>
         
         
+<!-\-        <xsl:for-each select="//tei:note[@targetEnd=$target_end]">
+            <xsl:copy>
+                <xsl:if test="@targetEnd"><xsl:attribute name="targetEnd" select="@targetEnd"/></xsl:if>
+                <xsl:choose>
+                    <xsl:when test="@type"><xsl:attribute name="type" select="@type"/></xsl:when>
+                    <xsl:otherwise><xsl:attribute name="type">n1</xsl:attribute></xsl:otherwise>
+                </xsl:choose>
+                <xsl:attribute name="place" select="@place"/>
+                <xsl:if test="@n"><xsl:attribute name="n" select="@n"/></xsl:if>
+                <xsl:attribute name="xml:id"><xsl:value-of select="generate-id(.)"/></xsl:attribute>
+                <xsl:apply-templates select="node()|comment()"/>
+            </xsl:copy>
+        </xsl:for-each>-\->
+    </xsl:template>-->
+    
+    <!-- Place note element after the @targetEnd seg or anchor element -->
+    <!--    <xsl:template match="tei:seg[@xml:id]">-->
+    <xsl:template match="tei:anchor[@xml:id and @targetEnd]">
+        <xsl:variable name="target_end">
+            <xsl:text>#</xsl:text>
+            <xsl:value-of select="@xml:id"/>
+        </xsl:variable>
         <xsl:for-each select="//tei:note[@targetEnd=$target_end]">
             <xsl:copy>
                 <xsl:if test="@targetEnd"><xsl:attribute name="targetEnd" select="@targetEnd"/></xsl:if>
@@ -720,6 +801,26 @@
         </xsl:for-each>
     </xsl:template>
     
+    <!-- Match anchor elements only if preceded by a text node -->
+<!--    <xsl:template match="tei:anchor[@xml:id and preceding-sibling::text()[normalize-space()] and not(@targetEnd)]">
+        <seg>
+            <xsl:attribute name="xml:id">
+                <xsl:value-of select="@xml:id"/>
+            </xsl:attribute>
+            <xsl:variable name="precedingWord" select="preceding-sibling::text()[last()]"/>
+<!-\-            <xsl:variable name="precedingWord" select="normalize-space(preceding-sibling::text()[normalize-space()][last()])"/>-\->
+            <xsl:attribute name="preceding"><xsl:value-of select="preceding-sibling::text()[last()]"/></xsl:attribute>
+            
+            <line807_w>
+                <xsl:value-of select="$precedingWord"/>
+                <xsl:apply-templates select="node()|comment()"/>
+            </line807_w>
+        </seg>
+    </xsl:template>-->
+    
+
+        
+        
     <!-- Delete note elements that are inside other note elements -->
     <xsl:template match="tei:note//tei:note" />
     
