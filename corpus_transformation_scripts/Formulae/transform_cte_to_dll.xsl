@@ -649,14 +649,6 @@
                     <xsl:when test="ancestor::tei:hi[@style='font-size:10pt;' or @rend='font-size:10pt;']">
                         <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="function">from-other</xsl:attribute><xsl:value-of select="$pString"/></xsl:element>
                     </xsl:when>
-<!--                    <xsl:when test="following-sibling::*[1][self::tei:anchor]">
-                        <xsl:element name="seg" namespace="http://www.tei-c.org/ns/1.0">
-                            <xsl:attribute name="i_should_not_exist">
-                                <xsl:value-of select="following-sibling::tei:anchor[1]/@xml:id"/>
-                            </xsl:attribute>
-                            <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:value-of select="$pString"/></xsl:element>
-                        </xsl:element>
-                    </xsl:when>-->
                     <xsl:otherwise>
                         <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:value-of select="$pString"/></xsl:element>
                     </xsl:otherwise>
@@ -672,8 +664,7 @@
         name="tokenize_words_with_anchor">
         
         <xsl:param name="pString" select="."/>
-        <xsl:param name="pMask"
-            select="translate(.,translate(.,$pSeparators,''),'')"/>
+        <xsl:param name="pMask" select="translate(.,translate(.,$pSeparators,''),'')"/>
         <!-- https://www.data2type.de/xml-xslt-xslfo/xslt/xslt-und-xpath-referenz/alphabetische-liste/translate -->
         <!--        <xsl:param name="pCount" select="1"/>-->
         <xsl:param name="anchor_id">
@@ -682,8 +673,17 @@
             
         <xsl:element name="seg" namespace="http://www.tei-c.org/ns/1.0">
             <xsl:attribute name="xml:id">
-                <xsl:value-of select="following-sibling::tei:anchor[1]/@xml:id"/>
+                <xsl:value-of select="$anchor_id"/>
             </xsl:attribute>
+            <xsl:choose>
+                <xsl:when test="following-sibling::tei:anchor[1]/@type">
+                    <xsl:attribute name="type" select="following-sibling::tei:anchor[1]/@type"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:attribute name="type">note-begin-marker</xsl:attribute>
+                    <xsl:attribute name="n" select="generate-id(.)"></xsl:attribute>
+                </xsl:otherwise>
+            </xsl:choose>
 
             <xsl:choose>
                 <xsl:when test="//tei:milestone[@unit='chapter'] and not(preceding::tei:milestone[@unit='chapter'])"></xsl:when>
@@ -723,16 +723,6 @@
                         <xsl:when test="ancestor::tei:hi[@style='font-size:10pt;' or @rend='font-size:10pt;']">
                             <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="function">from-other</xsl:attribute><xsl:value-of select="$pString"/></xsl:element>
                         </xsl:when>
-                        
-<!--                        <xsl:when test="following-sibling::*[1][self::tei:anchor]">
-                            <xsl:element name="seg" namespace="http://www.tei-c.org/ns/1.0">
-                                <xsl:attribute name="i_should_not_exist">
-                                    <xsl:value-of select="following-sibling::tei:anchor[1]/@xml:id"/>
-                                </xsl:attribute>
-                                <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:value-of select="$pString"/></xsl:element>
-                            </xsl:element>
-                        </xsl:when>-->
-                        
                         <xsl:otherwise>
                             <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:value-of select="$pString"/></xsl:element>
                         </xsl:otherwise>
@@ -740,14 +730,18 @@
                 </xsl:otherwise>
             </xsl:choose>   
         </xsl:element>
-        <!-- Place note element after the @targetEnd seg element -->
         
+        <!-- Place note element after the @targetEnd seg element -->
         <xsl:variable name="target_end" select="concat('#', $anchor_id)"/>
         <xsl:for-each select="//tei:note[@targetEnd=$target_end]">
             <xsl:copy>
-                <xsl:if test="@targetEnd"><xsl:attribute name="targetEnd" select="@targetEnd"/></xsl:if>
+                <xsl:if test="@targetEnd">
+                    <xsl:attribute name="targetEnd" select="@targetEnd"/>
+                </xsl:if>
                 <xsl:choose>
-                    <xsl:when test="@type"><xsl:attribute name="type" select="@type"/></xsl:when>
+                    <xsl:when test="@type">
+                        <xsl:attribute name="type" select="@type"/>
+                    </xsl:when>
                     <xsl:otherwise><xsl:attribute name="type">n1</xsl:attribute></xsl:otherwise>
                 </xsl:choose>
                 <xsl:attribute name="place" select="@place"/>
@@ -776,7 +770,7 @@
     </xsl:template>-->
     
     <!-- Clean up the unnecessary attributes on the note elements. -->
-    <xsl:template match="tei:note" name="buildNotes">
+<!---->    <xsl:template match="tei:note" name="buildNotes">
         <xsl:variable name="previous_get_id" select="concat('#', preceding::tei:seg[position()=1]/@xml:id)"/>
         <xsl:variable name="new_note_tag">
             <xsl:copy>
@@ -793,7 +787,7 @@
         <xsl:choose>
             <xsl:when test="@type='n1'"><xsl:copy-of select="$new_note_tag"/></xsl:when>
             <xsl:when test="@targetEnd">
-                <xsl:element name="seg" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="type">note-begin-marker</xsl:attribute><xsl:attribute name="n" select="generate-id(.)"></xsl:attribute></xsl:element>
+<!--                <xsl:element name="seg" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="type">note-begin-marker</xsl:attribute><xsl:attribute name="n" select="generate-id(.)"></xsl:attribute></xsl:element>-->
             </xsl:when>
             <xsl:otherwise><xsl:copy-of select="$new_note_tag"/></xsl:otherwise>
         </xsl:choose>
