@@ -599,9 +599,7 @@
     
     
     <!-- Surround every token in the body that is not in a <note> element with a <w> tag -->
-<!--    <xsl:template match="tei:body//*[not(ancestor-or-self::tei:note) and not(ancestor-or-self::tei:locus) and not(ancestor-or-self::tei:title)]/text()" name="tokenize">-->
-<!--        <xsl:template match="tei:body//*[not(ancestor-or-self::tei:note) and not(ancestor-or-self::tei:locus) and not(ancestor-or-self::tei:title)][not(normalize-space(.) and following-sibling::*[1][self::tei:anchor])]/text()" name="tokenize">-->
-            <xsl:template match="tei:body//*[not(ancestor-or-self::tei:note) 
+      <xsl:template match="tei:body//*[not(ancestor-or-self::tei:note) 
                 and not(ancestor-or-self::tei:locus) 
                 and not(ancestor-or-self::tei:title)]/text()
                 [not(normalize-space(.) and following-sibling::*[1][self::tei:anchor])]" 
@@ -613,7 +611,7 @@
 <!--        <xsl:param name="pCount" select="1"/>-->
         <xsl:choose>
             <xsl:when test="//tei:milestone[@unit='chapter'] and not(preceding::tei:milestone[@unit='chapter'])"></xsl:when>
-            <xsl:when test="not($pString)"/>
+            <xsl:when test="not($pString)"></xsl:when>
             <xsl:when test="$pMask">
                 <xsl:variable name="vSeparator"
                     select="substring($pMask,1,1)"/>
@@ -660,17 +658,29 @@
     <xsl:template match="tei:body//*[not(ancestor-or-self::tei:note) 
         and not(ancestor-or-self::tei:locus) 
         and not(ancestor-or-self::tei:title)]/text()
-        [normalize-space(.) and following-sibling::*[1][self::tei:anchor]]" 
-        name="tokenize_words_with_anchor">
+        [normalize-space(.) and following-sibling::*[1][self::tei:anchor or self::tei:segment]]" 
+        name="tokenizeWordsBeforeAnchorOrSegment">
+        
         
         <xsl:param name="pString" select="."/>
         <xsl:param name="pMask" select="translate(.,translate(.,$pSeparators,''),'')"/>
         <!-- https://www.data2type.de/xml-xslt-xslfo/xslt/xslt-und-xpath-referenz/alphabetische-liste/translate -->
         <!--        <xsl:param name="pCount" select="1"/>-->
         <xsl:param name="anchor_id">
-            <xsl:value-of select="following-sibling::tei:anchor[1]/@xml:id"/>
+            <xsl:choose>
+                <xsl:when test="following-sibling::tei:seg[1]">
+                    <xsl:value-of select="following-sibling::tei:seg[1]/@xml:id"/>
+                </xsl:when>
+                <xsl:when test="following-sibling::tei:anchor[1]">
+                    <xsl:value-of select="following-sibling::tei:anchor[1]/@xml:id"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text></xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
         </xsl:param>
-            
+        
+        
         <xsl:element name="seg" namespace="http://www.tei-c.org/ns/1.0">
             <xsl:attribute name="xml:id">
                 <xsl:value-of select="$anchor_id"/>
@@ -678,6 +688,9 @@
             <xsl:choose>
                 <xsl:when test="following-sibling::tei:anchor[1]/@type">
                     <xsl:attribute name="type" select="following-sibling::tei:anchor[1]/@type"/>
+                </xsl:when>
+                <xsl:when test="following-sibling::tei:segment[1]/@type">
+                    <xsl:attribute name="type" select="following-sibling::tei:segment[1]/@type"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:attribute name="type">note-begin-marker</xsl:attribute>
