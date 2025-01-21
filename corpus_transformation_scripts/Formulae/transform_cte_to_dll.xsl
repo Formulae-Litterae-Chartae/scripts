@@ -724,9 +724,12 @@
                 <xsl:otherwise>
                     <xsl:choose>
                         <xsl:when test="not(matches($pString, '\w'))"><xsl:value-of select="$pString"/></xsl:when>
+                        <!-- Uppercase transformation -->
                         <xsl:when test="ancestor::tei:hi[contains(@rend, 'text-transform:uppercase;')]">
                             <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:value-of select="upper-case($pString)"/></xsl:element>
                         </xsl:when>
+                        
+                        <!-- Font-size transformations -->
                         <xsl:when test="ancestor::tei:label">
                             <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:value-of select="upper-case($pString)"/></xsl:element>
                         </xsl:when>
