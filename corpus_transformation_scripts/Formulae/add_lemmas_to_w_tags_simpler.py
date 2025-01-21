@@ -175,6 +175,7 @@ def set_lemmaRef(orig, lemma, next_lem, prev_lem):
     return False
 
 logging.info('Parse '+str(len(xmls))+' xml files from '+str(lemmatized_corpora))
+success_count = 0 # increased for each successful lemmatization. Used for logging.
 for xml_file in sorted(xmls):
     #print(xml_file)
     
@@ -202,13 +203,25 @@ for xml_file in sorted(xmls):
                 logging.warning('not_found has '+str(len(not_found))+' items for '+xml_file)
             logging.warning('not_found: '+str(not_found))
         else:
-            logging.info('Not found is empty. This indicates a successful lematization process.')
-            if xml.xpath('//tei:w[not(@lemma) and not(@type="no-search")]', namespaces=ns):
-                logging.error(xml_file+ " has 'w'-node(s) that are neither no-search nor have lemma. This indicates an incomplete lemmatization process:\n\t" +
-                '; '.join(x.text for x in xml.xpath('//tei:w[not(@lemma)]', namespaces=ns)))
+            logging.debug('Not found is empty. This is a sign of a working lematization process.')
+            # w-nodes, that should have been lemmatized but were not
+            unlemmatized_w = xml.xpath('//tei:w[not(@lemma) and not(@type="no-search")]', namespaces=ns)
+            unlemmatized_w_texts = [x.text for x in unlemmatized_w]
+
+            if 0 < len(unlemmatized_w_texts):
+                unlemmatized_w_texts_without_pipes = [w for w in unlemmatized_w_texts if w != '|']
+                if 0 == len(unlemmatized_w_texts_without_pipes):
+                    logging.error(" {} hs {} 'w'-node(s) without type='no-search'. This indicates a failed lemmatization process:\n {}".format(
+                        xml_file, len(unlemmatized_w_texts), ";".join(str(x) for x in unlemmatized_w_texts)))
+                    logging.error('Consider replacing all <w>|</w> with <w type="no-search">|</w> as a hotfix.')
+                else:
+                    logging.error(" {} has {} 'w'-node(s) that are neither no-search nor have lemma. This indicates a failed lemmatization process:\n\t{}".format(xml_file, len(unlemmatized_w), '; '.join(x for x in unlemmatized_w_texts)))
             else:
+                logging.debug('All w-nodes where successfully lemmatized.')
                 xml.getroottree().write(xml_file, encoding='utf-8')
-                print('written to '+xml_file)
+                #print('written to '+xml_file)
+                logging.info('written to '+xml_file)
+                success_count += 1 
     else:
         latin_words = xml.xpath('//tei:seg[@type="latin-word;"]/tei:w', namespaces=ns)
         for i, w in enumerate(latin_words):
@@ -219,4 +232,5 @@ for xml_file in sorted(xmls):
                 set_lemmaRef(w, w.text.lower(), latin_words[i + 1].text.lower() if len(latin_words) > i + 1 else ' ', latin_words[i - 1].text.lower() if i > 0 else ' ')
         xml.getroottree().write(xml_file, encoding='utf-8')
 
-print('Done! Please the logs for more information:'+str(log_file_path))
+total_latin_documents = len( [ xml_file for xml_file in xmls if 'lat001' in xml_file])
+print('Done! '+ str(success_count) + '/' +str(total_latin_documents)+' where lemmatized. See the log for more information:'+str(log_file_path))

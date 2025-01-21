@@ -70,8 +70,7 @@
         <xsl:param name="long-regest">
             <xsl:choose>
                 <xsl:when test="matches(string-join($urn, '.'), 'form[\d_]')">
-                    <!-- <xsl:value-of select="document(concat(replace($folderName, '/data/.*', '/regesten/'), $urn[1], '_regesten.xml'))/xml/regest[@docId=concat($urn[1], '.', $urn[2])]/longDesc/text()"/> -->
-                    <xsl:value-of select="document(concat(replace($folderName, '/data/.*', '/regesten/'), $urn[1], '_regesten.xml'))/xml/regest[@docId='001']/longDesc/text()"/>
+                    <xsl:value-of select="document(concat(replace($folderName, '/data/.*', '/regesten/'), $urn[1], '_regesten.xml'))/xml/regest[@docId=concat($urn[1], '.', $urn[2])]/longDesc/text()"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="/tei:TEI/tei:text/tei:front/tei:div[@subtype='regest']//text()"/>

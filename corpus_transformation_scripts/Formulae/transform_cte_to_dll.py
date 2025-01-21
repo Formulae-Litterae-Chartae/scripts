@@ -91,6 +91,8 @@ def remove_space_before_note(filename):
     #while re.search(patt_1, text) or re.search(patt_2, text):
         #text = re.sub(patt_1, r'<seg type="italic;">\1</seg></w>', text)
         #text = re.sub(patt_2, r'\1\2', text)
+
+    # @TODO: add a line that replace seg with anchor. Needs to be checked
     with open(filename, mode="w") as f:
         #logging.info("write: "+filename)
         f.write(text)
