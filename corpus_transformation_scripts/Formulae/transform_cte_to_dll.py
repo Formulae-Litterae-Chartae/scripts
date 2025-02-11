@@ -295,6 +295,7 @@ for transcription in sorted(transcriptions):
         for edition_div in xml.xpath('/tei:TEI/tei:text/tei:body/tei:div[@type="edition"]', namespaces={'tei': 'http://www.tei-c.org/ns/1.0'}):
             edition_div.set('n', new_urn)
         xml.write(new_name, encoding='utf-8', pretty_print=True)
+    logging.info('Create the capitains file for {} in {}'.format(new_name,new_folder))
     subprocess_run(['java', '-jar',  saxon_location, '{}'.format(new_name), metadata_transformation_xslt, '-o:{folder}/__capitains__.xml'.format(folder=new_folder)])
     md_xml = etree.parse('{folder}/__capitains__.xml'.format(folder=new_folder))
     for is_version_of in md_xml.xpath('//dct:isVersionOf', namespaces={'dct': 'http://purl.org/dc/terms/'}):
@@ -338,10 +339,11 @@ def check_if_notes_exist(input_file, transformed_file):
                                                                                         input_apparatus_notes_unique_target_ends,
                                                                                         transformed_file,
                                                                                         transformed_apparatus_notes_unique_target_ends))
-
+from hss_editionen_tool import check_hss_editionen
 
 if 0==len(latins):logging.warning("No Latin documents found!")
 logging.info("Start with latin(s)")
+check_hss_editionen()
 for latin in latins:
     
     if not bool(re.match(r"^[A-Z][a-z]+\s[0-9]+[.]xml", latin.split('/')[-1])): 
@@ -356,7 +358,7 @@ for latin in latins:
     new_name_existed_before_transforming = os.path.isfile(new_name)
     subprocess_run(['java', '-jar',  saxon_location, '-s:{}'.format(latin), text_transformation_xslt])
     if not new_name_existed_before_transforming and os.path.isfile(new_name): logging.info('{} was created.'.format(new_name))
-    logging.debug('Transform the metadata...')
+    logging.info('Create {base_folder}/data/{corpus}/{entry}/__capitains__.xml'.format(base_folder=destination_folder, corpus=corpus_name, entry=form_num))
     subprocess_run(['java', '-jar',  saxon_location, '-s:{}'.format(new_name), metadata_transformation_xslt, 
                                         '-o:{base_folder}/data/{corpus}/{entry}/__capitains__.xml'.format(base_folder=destination_folder, corpus=corpus_name, entry=form_num)], form_num)
     remove_space_before_note(new_name)
