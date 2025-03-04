@@ -8,6 +8,7 @@ from lxml import etree
 from collections import defaultdict
 import logging
 import argparse
+from tqdm import tqdm
 
 home_dir = environ.get('HOME', '')
 
@@ -24,7 +25,7 @@ args=parser.parse_args()
 logging.basicConfig(format='%(asctime)s %(levelname)s %(filename)s:%(lineno)s - %(message)s', 
                     encoding='utf-8', datefmt='%H:%M:%S')
 # TODO: set the level via cl argument
-logging.getLogger().setLevel('INFO')
+logging.getLogger().setLevel('DEBUG')
 
 saxon_location = args.saxon_location
 
@@ -66,13 +67,33 @@ for f_c in form_coll_md.xpath('/cpt:collection/cpt:members/cpt:collection', name
 
 # sanity checks
 if not (len(transcriptions)  >= len(latins)):
-    logging.warning("The number of transcriptions ({}) should be greater or equal to the number of latins ({})".format(len(transcriptions), len(latins)))
+    logging.warning("The number of transcriptions ({}) should always be greater or equal to the number of latins ({})".format(len(transcriptions), len(latins)))
 
 if not ( len(germans) == len(latins) ):
-    logging.warning("The number of germans ({}) should be equal to the number of latins ({})".format(len(germans), len(latins)))
+    logging.warning("The number of germans ({}) should always be equal to the number of latins ({})".format(len(germans), len(latins)))
 
-
-
+def check_xml_file_names(file_name:str) -> bool:
+    file_name=file_name.split('/')[-1]
+    # German matching
+    if re.match(r"[a-zA-Z]+ [A-Z]*[0-9 ]+[ ]*Deutsch.xml", file_name):
+        return True
+    # Latin matching
+    elif re.match(r"[a-zA-Z]+ [A-Z]*[0-9 ]+[ ]*.xml", file_name):
+        return True
+    # German matching
+    if re.match(r"[a-zA-Z]+ [A-Z]*[0-9 ]+\(Incipit\)[ ]*Deutsch.xml", file_name):
+        return True
+    # Latin matching
+    elif re.match(r"[a-zA-Z]+ [A-Z]*[0-9 ]+[ ]*.xml", file_name):
+        return True
+    else:
+        raise ValueError("{} does not met the file naming conventions. Leaving this name unchanged will cause errors later.".format(file_name))
+    
+for file_name in germans+latins:
+    try:
+        check_xml_file_names(file_name)
+    except ValueError as e:
+        logging.error('{}'.format(e))
 
 def remove_space_before_note(filename):
     #logging.info(filename+' exists: '+str(os.path.isfile(filename)))
@@ -80,7 +101,19 @@ def remove_space_before_note(filename):
         with open(filename) as f:
             text = f.read()
     except FileNotFoundError as e:
-        logging.error('Failed to upload to ftp: %s', repr(e))
+        # try: 
+        #     from pathlib import Path
+        #     file_path = Path(filename)
+        #     try:
+        #         file_path.touch(exist_ok=True)
+        #         logging.info('file {} created'.format(filename))
+        #     except IsADirectoryError as e: 
+        #         filename.mkdir(parents=True, exist_ok=True)
+        #         logging.info('directory {} created'.format(filename))
+        #     with open(filename) as f:
+        #         text = f.read()
+        # except FileNotFoundError as e:
+        logging.error('Failed to open {} with this error: {}'.format(filename, repr(e)))
         logging.error('This file should have been created with one the subprocess.run commands. This indicates an error with the jar file.' )
         raise e
     text = re.sub(r'\s+<note', '<note', text)
@@ -193,6 +226,7 @@ def subprocess_run(commands:list, name:str=''):
     #print(commands)
     try:
         completed_process = subprocess.run(commands, check=True, stdout=subprocess.PIPE)
+        logging.info(str(commands))
         return completed_process
     except Exception as e:
         logging.warning(' '.join(commands)+' failed')
@@ -209,7 +243,7 @@ def subprocess_run(commands:list, name:str=''):
             raise e
 
 logging.info("Start with German(s)")
-for german in germans:
+for german in tqdm(germans, desc="Process German translation(s)"):
     logging.debug("Processing: "+german)
     remove_tei_dtd_reference(german)
     form_num = produce_form_num(german)

@@ -19,16 +19,23 @@
             Since words can be split across two pages, it is not really a separator -->
     <xsl:param name="pSeparators">&#xA;&#x9;&#x20;&#8230;&#8221;,.;:?!()'"„“‚‘+</xsl:param>
     <xsl:param name="formTitle">
-        <xsl:variable name="tempTitle"><xsl:value-of select="replace(replace(normalize-space(replace(replace(tokenize(base-uri(), '/')[last()], '%20', ' '), '.xml', '')), 'Paris,? BNF (\d)', 'Paris BnF Lat. $1'), 'Markulf', 'Marculf')"/></xsl:variable>
+        <xsl:variable name="tempTitle">
+            <xsl:value-of select="replace(replace(normalize-space(replace(replace(tokenize(base-uri(), '/')[last()], '%20', ' '), '.xml', '')), 'Paris,? BNF (\d)', 'Paris BnF Lat. $1'), 'Markulf', 'Marculf')"/>
+        </xsl:variable>
         <xsl:choose>
             <xsl:when test="contains($tempTitle, 'Tours 40')">
                 <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="type">form-name</xsl:attribute>
                     <xsl:value-of select="replace($tempTitle, '(Tours 40\(.\)).*', '$1')"/>
                 </xsl:element>
+                
                 <xsl:choose>
-                    <xsl:when test="matches($tempTitle, 'Deutsch|Übersetzung')"><xsl:element name="xml:lang">deu</xsl:element></xsl:when>
-                    <xsl:otherwise><xsl:element name="xml:lang">lat</xsl:element></xsl:otherwise>
+                    <xsl:when test="matches($tempTitle, 'Deutsch|Übersetzung')">
+                        <xsl:element name="xml:lang">deu</xsl:element>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:element name="xml:lang">lat</xsl:element>
+                    </xsl:otherwise>
                 </xsl:choose>
                 <xsl:if test="contains($tempTitle, '(Wa1)')">
                     <xsl:variable name="folia" select="/tei:TEI/tei:text/tei:body/tei:p[starts-with(., '[fol.')]"/>
@@ -85,6 +92,15 @@
                 </xsl:choose>
             </xsl:when>-->
             <xsl:when test="contains($tempTitle, '(')">
+            
+                <xsl:choose>
+                    <xsl:when test="matches($tempTitle, 'Deutsch|Übersetzung')">
+                        <xsl:element name="xml:lang">deu</xsl:element>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:element name="xml:lang">lat</xsl:element>
+                    </xsl:otherwise>
+                </xsl:choose>
                 <xsl:variable name="folia" select="/tei:TEI/tei:text/tei:body/tei:p[starts-with(., '[p.') or starts-with(., '[fol.')]"/>
                 <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="type">form-name</xsl:attribute>
@@ -126,6 +142,18 @@
                         </xsl:when>
                         <xsl:when test="matches($tempTitle, 'Bourges')">
                             <xsl:value-of select="normalize-space(replace(substring-before($tempTitle, '('), 'Bourges \w \d+ ?\w? (.*)', '$1'))"/>
+                        </xsl:when>
+                        <xsl:when test="matches($tempTitle, 'Sens')">
+                            <xsl:value-of select="normalize-space(replace(substring-before($tempTitle, '('), 'Sens \w \d+ ?\w? (.*)', '$1'))"/>
+                            
+                            <xsl:choose>
+                                <xsl:when test="matches($tempTitle, 'Deutsch|Übersetzung')">
+                                    <xsl:element name="xml:lang">deu</xsl:element>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:element name="xml:lang">lat</xsl:element>
+                                </xsl:otherwise>
+                            </xsl:choose>
                         </xsl:when>
                         <xsl:otherwise>
                             <xsl:value-of select="normalize-space(string-join(subsequence(tokenize(substring-before($tempTitle, '('), '\s+'), 3), ' '))"/>
@@ -203,6 +231,19 @@
     </xsl:param>
     <xsl:param name="formNumber">
         <xsl:choose>
+            <!--            Thorben (04.03.25): I needed to move this one up-->
+            <xsl:when test="contains($formTitle, 'Sens')">
+                <xsl:choose>
+                    <xsl:when test="contains($formTitle, 'Incipit')"><xsl:text>form_a_000</xsl:text></xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>form_</xsl:text>
+                        <xsl:value-of select="lower-case(replace($formTitle/tei:ref[@type='form-name'], 'Sens ([A-C]) (\d+) ?([a-m]?).*', '$1'))"/>
+                        <xsl:text>_</xsl:text>
+                        <xsl:number value="replace($formTitle/tei:ref[@type='form-name'], 'Sens ([A-C]) (\d+) ?([a-m]?).*', '$2')" format="001"/>
+                        <xsl:value-of select="replace($formTitle/tei:ref[@type='form-name'], 'Sens ([A-C]) (\d+) ?([a-m]?).*', '$3')"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:when>
             <xsl:when test="$formTitle/tei:ref[@type='folia']">
                 <xsl:value-of select="normalize-space(replace($formTitle/tei:ref[@type='folia'], '(fol|p)\.\s*|-', ''))"/>
             </xsl:when>
@@ -231,7 +272,14 @@
                 </xsl:choose>
             </xsl:when>
             <xsl:when test="contains($formTitle, 'Incipit')">
-                <xsl:choose><xsl:when test="contains($formTitle/tei:ref[@type='form-name'], 'II')"><xsl:text>2_</xsl:text></xsl:when><xsl:otherwise><xsl:text>1_</xsl:text></xsl:otherwise></xsl:choose><xsl:text>incipit</xsl:text>
+                <xsl:choose>
+                    <xsl:when test="contains($formTitle/tei:ref[@type='form-name'], 'II')">
+                        <xsl:text>2_</xsl:text>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>1_</xsl:text></xsl:otherwise>
+                </xsl:choose>
+                <xsl:text>incipit</xsl:text>
             </xsl:when>
             <xsl:when test="contains($formTitle, 'Praefatio')">
                 <xsl:text>form000</xsl:text>
@@ -299,6 +347,10 @@
     <xsl:param name="biblFile">../../bibliography/formulae_bibliographie.xml</xsl:param>
     <xsl:param name="collection">
         <xsl:choose>
+<!--            Thorben (04.03.25: I needed the following when in order to process the incipit-->
+            <xsl:when test="matches(lower-case($formTitle/tei:ref[@type='form-name']), 'sens')">
+                <xsl:text>sens</xsl:text>
+            </xsl:when>
             <xsl:when test="$formTitle/tei:ref[@type='siglum']">
                 <xsl:value-of select="lower-case($formTitle/tei:ref[@type='siglum'])"/>
             </xsl:when>
@@ -341,12 +393,20 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:param>
-    
+<!--    Thorben: I think the following lines are responsible for saving the file-->
     <xsl:template match="/">
         <xsl:choose>
+            <xsl:when test="matches($collection, 'sens')">
+                <xsl:result-document format="general" href="./data/{$collection}/{$formNumber}/{$collection}.{$formNumber}.{$manuscript}.xml" validation="strip">
+                    <xsl:processing-instruction name="xml-model">href="https://digitallatin.github.io/guidelines/critical-editions.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"</xsl:processing-instruction>
+                    <xsl:apply-templates select="node()|comment()"/>
+                </xsl:result-document>
+            </xsl:when>
             <xsl:when test="$formTitle/tei:ref[@type='folia']">
                 <xsl:result-document format="general" href="./temp/{$collection}.{$formNumber}.{$manuscript}.xml" validation="strip">
-                    <xsl:processing-instruction name="xml-model">href="https://digitallatin.github.io/guidelines/critical-editions.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"</xsl:processing-instruction>
+                    <xsl:processing-instruction name="xml-model">
+                        href="https://digitallatin.github.io/guidelines/critical-editions.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"
+                    </xsl:processing-instruction>
                     <xsl:apply-templates select="node()|comment()"/>
                 </xsl:result-document>
             </xsl:when>

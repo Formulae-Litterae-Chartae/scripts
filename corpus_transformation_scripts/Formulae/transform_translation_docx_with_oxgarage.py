@@ -3,7 +3,7 @@ import os
 from sys import argv
 import logging
 from util import make_proper_path, get_logger
-
+from tqdm import tqdm
 
 logging = get_logger()
 docx_folder = make_proper_path(argv[1])
@@ -15,7 +15,7 @@ os.makedirs(os.path.join(docx_folder, 'oxgarage_results'), exist_ok=True)
 if len(docx) < 1: logging.error('No docx-files found in {}. So no files will be transformed.'.format(docx_folder))
 if len(docx) > len(uebersetzung_files): logging.warning('Not all docx-files (n={}) contain Übersetzung (n={})'.format(len(docx), len(uebersetzung_files)))
 
-for doc in uebersetzung_files:
+for doc in tqdm(uebersetzung_files):
     entry_name = doc.split('/')[-1].replace('.docx', '')
     new_name = doc.replace(',', '-')
     os.rename(doc, new_name)

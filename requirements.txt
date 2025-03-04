@@ -1,3 +1,5 @@
 lxml
 pandas
 openpyxl
+tqdm
+beautifulsoup4
