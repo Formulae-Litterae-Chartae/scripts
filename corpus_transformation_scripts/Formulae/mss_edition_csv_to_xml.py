@@ -16,7 +16,7 @@ def xslsx_to_csv(input_path,logging=None) -> str:
     import pandas as pd 
     df = pd.DataFrame(pd.read_excel(input_file))
     output_file = input_file.replace('xlsx', 'csv') 
-    df.to_csv(output_file)
+    df.to_csv(output_file, sep="\t", index=False)
     if logging is not None:
         logging.info('converted {input} to {output}'.format(input=input_file,output=output_file))
     return output_file
@@ -125,17 +125,33 @@ def get_csv(input_path:str,logging) -> str:
         try:
             return find_csv(input_path)
         except FileNotFoundError:
-            return xslsx_to_csv(input_path,logging)
+            return xslsx_to_csv(input_path, logging)
     else:
         return input_path
-
+def make_temp_id(title:str) -> str:
+    """
+    workaround method for mapping a title to an identifier
+    Should be solved otherwise in the future
+    """
+    title_components = title.split(' ')
+    if 2< len(title_components) < 5:
+        corpus = title_components[0].lower()
+        subcorpus = title_components[1].lower()
+        number = title_components[2].zfill(3)
+        identifier="urn:cts:formulae:{corpus}.form_{subcorpus}_{number}.lat001".format(corpus=corpus , subcorpus=subcorpus, number=number)
+        return identifier
+    else:
+        raise ValueError("{} is malformatted.".format(title))
 
 def main():
-    logging = get_logger()
+    logger = get_logger()
+    logger.setLevel('DEBUG')
     input_path = argv[1]
     formulae_collections_md_file = argv[2]
     manuscript_collections_md_file = argv[3]
-    output_folder_hss_editionen = '/home/thorben.schomacker/git/scripts/formel_transform/output/auvergne/hss_editionen.xml' #argv[3]
+    corpus_name = os.path.split(input_path)[-1]
+
+    output_folder_hss_editionen = '/home/thorben.schomacker/git/scripts/formel_transform/output/{corpus}/hss_editionen.xml'.format(corpus=corpus_name) #argv[3]
 
     input_encoding = 'utf-8'
 
@@ -165,7 +181,7 @@ def main():
 
     with open(csv_file, encoding=input_encoding) as f:
         rows = f.readlines()
-
+        if len(rows)==0: raise ValueError('{} appears to be empty, since it has no rows'.format(csv_file))
     # Map titles to URNs
     form_coll_md = etree.parse(formulae_collections_md_file)
     title_id_dict = dict()
@@ -173,25 +189,39 @@ def main():
         form_corp_md_path = os.path.normpath(os.path.join(os.path.dirname(formulae_collections_md_file), f_c.get('path')))
         if not os.path.isfile(form_corp_md_path): raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), form_corp_md_path)
         form_corp_md = etree.parse(form_corp_md_path)
-        for f_corp in form_corp_md.xpath('/cpt:collection/cpt:members/cpt:collection', namespaces=ns):
+        database_entries = form_corp_md.xpath('/cpt:collection/cpt:members/cpt:collection', namespaces=ns)
+        if len(database_entries)==0: logging.warning('{} entries found within {}'.format(len(database_entries),form_corp_md_path))
+        for f_corp in database_entries:
             form_md_path = os.path.normpath(os.path.join(os.path.dirname(form_corp_md_path), f_corp.get('path')))
+            if not os.path.isfile(form_md_path): raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), form_md_path)
             form_md = etree.parse(form_md_path)
             for c in form_md.xpath('/cpt:collection/cpt:members/cpt:collection', namespaces=ns):
                 for t in c.xpath('./dc:type/text()', namespaces=ns):
                     if t  == 'cts:edition':
-                        title_id_dict[re.sub(r' \(lat\).*', '', c.xpath('./dc:title/text()', namespaces=ns)[0])] = c.xpath('./cpt:identifier/text()', namespaces=ns)[0]
-                        title_id_dict[c.xpath('./dc:title/text()', namespaces=ns)[0].replace(' (lat)', '')] = c.xpath('./cpt:identifier/text()', namespaces=ns)[0]
+                        identifier = c.xpath('./cpt:identifier/text()', namespaces=ns)[0]
+                        
+                        key_1 = re.sub(r' \(lat\).*', '', c.xpath('./dc:title/text()', namespaces=ns)[0])
+                        title_id_dict[key_1] = identifier
+
+                        key_2=c.xpath('./dc:title/text()', namespaces=ns)[0].replace(' (lat)', '')
+                        title_id_dict[key_2] = identifier
+    if len(title_id_dict) == 0: logging.error('No title ids found. This will cause an empty result file.') 
 
     # Map MS sigla to the HTML needed to show them properly
+    if not os.path.isfile(manuscript_collections_md_file): raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), manuscript_collections_md_file)
     ms_coll_md = etree.parse(manuscript_collections_md_file)
     sigla_html_dict = {'Fu†': '&lt;span data-toggle="tooltip" data-boundary="window" id="Fu-verloren-note-tooltip" data-container="body" title="Verlorene Handschrift aus Fulda vgl. Bibliothekskatalog Fulda 16. Jhd. (Vatikan BAV Pal. Lat. 1928) Nr. 238"&gt;&lt;a href="https://digi.ub.uni-heidelberg.de/diglit/bav_pal_lat_1928/0099/image,info" target="_blank"&gt;Fu† ↗&lt;/a&gt;&lt;/span&gt;'}
     for f_c in ms_coll_md.xpath('/cpt:collection/cpt:members/cpt:collection', namespaces=ns):
         ms_corp_md_path = os.path.normpath(os.path.join(os.path.dirname(manuscript_collections_md_file), f_c.get('path')))
+        if not os.path.isfile(ms_corp_md_path): raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), ms_corp_md_path)
         ms_corp_md = etree.parse(ms_corp_md_path)
         ms_title = ms_corp_md.xpath('/cpt:collection/dc:title/text()', namespaces=ns)[0]
         ms_siglum = ms_corp_md.xpath('/cpt:collection/cpt:structured-metadata/bib:AbbreviatedTitle/text()', namespaces=ns)[0].replace('class="manuscript-number"', 'class="subscript smaller-text"').replace('class="verso-recto"', 'class="superscript smaller-text"')
         ms_html = '&lt;span data-toggle="tooltip" data-boundary="window" id="{htmlID}" data-container="body" title="{ms_title}"&gt;{ms_siglum}&lt;/span&gt;'.format(htmlID=re.sub(R'<[^>]+>', '', ms_siglum) + '-note-tooltip', ms_title=ms_title, ms_siglum=ms_siglum.replace('<', '&lt;').replace('>', '&gt;'))
         sigla_html_dict[re.sub(r'<[^>]+>', '', ms_siglum)] = ms_html
+
+
+    
 
     for r in rows[1:]:
         cells = r.strip().split('\t')
@@ -200,8 +230,18 @@ def main():
             if len(cells) > 3:
                 info_string += '**' + '**'.join(cells[3:])
             cells[0] = re.sub(r'Flavigny Pa 7 (\D)', r'Flavigny Pa 7\1', cells[0])
-            form_ms_ed_xml.append(E.formula(info_string, n=title_id_dict[cells[0].strip()]))
+            title= cells[0].strip()
+            try:
+                obtained_id = title_id_dict[title]
+            except KeyError as ke: 
+                logging.warning('Did not find the {} in title_id_dict, which is based on {}. If this collection is brand new, this behavior is maybe expected. A temporary id will be generated.'.format(title, formulae_collections_md_file))
+                obtained_id=make_temp_id(title)
+                #raise ke
+            
+            form_ms_ed_xml.append(E.formula(info_string, n=obtained_id))
+                
         # form_ms_ed_dict[build_urn(formula)] = {'manuscripts': build_sigla(mss), 'editions': build_editions(eds)}
+    if len(form_ms_ed_xml) == 0: logging.error('form_ms_ed_xml is empty. This can be caused by a malformatted csv-file.') 
 
     xml_string = etree.tostring(form_ms_ed_xml, pretty_print=True, encoding='unicode')
     xml_string = xml_string.replace('&amp;', '&')

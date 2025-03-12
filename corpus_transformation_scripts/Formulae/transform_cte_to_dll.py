@@ -9,6 +9,8 @@ from collections import defaultdict
 import logging
 import argparse
 from tqdm import tqdm
+from util import subprocess_run
+from util import get_logger
 
 home_dir = environ.get('HOME', '')
 
@@ -25,7 +27,7 @@ args=parser.parse_args()
 logging.basicConfig(format='%(asctime)s %(levelname)s %(filename)s:%(lineno)s - %(message)s', 
                     encoding='utf-8', datefmt='%H:%M:%S')
 # TODO: set the level via cl argument
-logging.getLogger().setLevel('DEBUG')
+logging.getLogger().setLevel('WARNING')
 
 saxon_location = args.saxon_location
 
@@ -45,6 +47,8 @@ temp_files = []
 ns = {'dct': "http://purl.org/dc/terms/", 'dc': "http://purl.org/dc/elements/1.1/", 'cpt': "http://purl.org/capitains/ns/1.0#", 'tei': 'http://www.tei-c.org/ns/1.0'}
 
 formulae_collections_md_file = args.formulae_collections_md_file
+if not os.path.isfile(formulae_collections_md_file): raise FileNotFoundError(formulae_collections_md_file)
+logging.info('Parse: {}'.format(formulae_collections_md_file))
 form_coll_md = etree.parse(formulae_collections_md_file)
 mss_edition_dict = defaultdict(set)
 title_id_dict = dict()
@@ -148,7 +152,10 @@ def remove_tei_dtd_reference(filename):
     with open(filename, mode="w") as f:
         f.write(text)
         
-def produce_form_num(filename):
+def produce_form_num(filename) -> str:
+    """
+    Extract the number of the form by a pattern matching process
+    """
     if 'Weltzeitalter' in filename:
         form_num = 'computus'
     elif 'Capitula' in filename:
@@ -201,55 +208,19 @@ def produce_form_num(filename):
             form_num = 'form1_' + form_num
         else:
             form_num = 'form' + form_num
+    
+    logging.debug('Generated {} as form_num of {}'.format(form_num,filename))
     return form_num
 
 
-def subprocess_run(commands:list, name:str=''):
-    """
-    Wrapping method for all subproces.run calls
-    To standardize the error handling behavior.
-    For more information about the available flags: https://www.saxonica.com/documentation9.5/using-xsl/commandline.html
-    """
-
-    import os.path
-    xml_file_path = commands[3].replace('-s:','')
-    if not os.path.isfile(xml_file_path):
-        logging.warning(xml_file_path+' does not exist!')
-    #commands.append('-explain:tree.xml')
-    #commands.append('-expand:on')
-    #commands.append('-traceout:#out')
-    trace_out_file=str(os.path.join('..','results','transform_'+name+".log"))
-    #commands.append('-T')
-    #commands.append('-Tlevel:'+'none')
-    #commands.append('-Tout:'+trace_out_file)
-
-    #print(commands)
-    try:
-        completed_process = subprocess.run(commands, check=True, stdout=subprocess.PIPE)
-        logging.info(str(commands))
-        return completed_process
-    except Exception as e:
-        logging.warning(' '.join(commands)+' failed')
-        try:
-            # -t flag to get more detailed information why the process failes
-            commands.append('-t')
-            completed_process = subprocess.run(commands, check=True, stdout=subprocess.PIPE)
-            return completed_process
-        except Exception as e:
-            if '' in commands:
-                logging.warning('The list of commands contains empty commands.')
-            logging.error('The following subprocess command raised an exception. Try running it directly in the terminal for more detailed information.')
-            logging.error(' '.join(commands))
-            raise e
-
 logging.info("Start with German(s)")
-for german in tqdm(germans, desc="Process German translation(s)"):
+for german in tqdm(germans, desc="Process German translation(s)", display=(get_logger().getEffectiveLevel() <30)):
     logging.debug("Processing: "+german)
     remove_tei_dtd_reference(german)
     form_num = produce_form_num(german)
     new_name = '{base_folder}/data/{corpus}/{form}/{corpus}.{form}.deu001.xml'.format(base_folder=destination_folder, corpus=corpus_name, form=form_num)
     # This subprocess creates the location for the files. 
-    subprocess_run(['java', '-jar',  saxon_location, '-s:{}'.format(german), text_transformation_xslt])
+    subprocess_run(['java', '-jar',  saxon_location, '-s:{}'.format(german), text_transformation_xslt],logging)
     remove_space_before_note(new_name)
 
 
@@ -262,45 +233,53 @@ def check_regesten_format(destination_folder):
     docid_pattern_without_prefixes = re.compile("[0-9][0-9][1-9]") #e.g., <regest docId="001">
 
     from bs4 import BeautifulSoup
-    soup_file = os.path.join(destination_folder,'regesten/urn:cts:formulae:'+corpus_name+'_regesten.xml')
-    
-    with open(soup_file) as fp:
-        doc_ids=[]
-        soup = BeautifulSoup(fp, 'xml')
-        parsable_docids = []
-        for link in soup.find_all('regest'):
-            doc_ids.append(link.get('docId'))
-        if 0==len(doc_ids):
-            logging.error('No docId found in '+str(soup_file))
-        else:
-            for doc_id in doc_ids:
-                malformed_doc_ids=False
-                #e.g., <regest docId="urn:cts:formulae:auvergne.form001"> --> ['urn','cts','formulae','auvergne.form001']
-                doc_id_components = doc_id.split(':')
-                if 4 == len(doc_id_components):
-                    #e.g., ['urn','cts','formulae','auvergne.form001'] -> ['auvergne', 'form001']
-                    doc_id_title_components = doc_id_components[-1].split('.')
-                    if 2 == len(doc_id_title_components):
-                        formel_number = doc_id_title_components[1].replace('form','')
+    path_pattern = os.path.join(destination_folder,'regesten/urn:cts:formulae:*_regesten.xml')
+    import glob
+    regesten_identified = glob.glob(path_pattern)
+    if len(regesten_identified) ==0:
+        logging.error("There are no regests in this directory. This will produces errors in later steps.")
+    for soup_file in regesten_identified:
+        with open(soup_file) as fp:
+            doc_ids=[]
+            soup = BeautifulSoup(fp, 'xml')
+            parsable_docids = []
+            for link in soup.find_all('regest'):
+                doc_ids.append(link.get('docId'))
+            if 0==len(doc_ids):
+                logging.error('No docId found in '+str(soup_file))
+            else:
+                for doc_id in doc_ids:
+                    malformed_doc_ids=False
+                    #e.g., <regest docId="urn:cts:formulae:auvergne.form001"> --> ['urn','cts','formulae','auvergne.form001']
+                    doc_id_components = doc_id.split(':')
+                    if 4 == len(doc_id_components):
+                        #e.g., ['urn','cts','formulae','auvergne.form001'] -> ['auvergne', 'form001']
+                        doc_id_title_components = doc_id_components[-1].split('.')
+                        if 2 == len(doc_id_title_components):
+                            formel_number = doc_id_title_components[1].replace('form','')
+                        else:
+                            logging.warning(str(doc_id_title_components)+' is malformed.')
+                            formel_number = doc_id
                     else:
-                        logging.warning(str(doc_id_title_components)+' is malformed.')
+                        logging.warning(doc_id+" is missing 'urn','cts' or 'formulae'")
                         formel_number = doc_id
-                else:
-                    logging.warning(doc_id+" is missing 'urn','cts' or 'formulae'")
-                    formel_number = doc_id
-                if not docid_pattern_without_prefixes.match(formel_number):
-                    malformed_doc_ids=True
-                    logging.error('docId: '+formel_number+' is malformed.')
-                else:
-                    parsable_docids.append(formel_number)
-    if not malformed_doc_ids:
-        logging.info('Regest files exists and is properly formatted at '+soup_file+'. It has the following docIds: '+str(parsable_docids))
+                    if not docid_pattern_without_prefixes.match(formel_number):
+                        malformed_doc_ids=True
+                        logging.error('docId: '+formel_number+' is malformed.')
+                    else:
+                        parsable_docids.append(formel_number)
+        if not malformed_doc_ids:
+            logging.info('Regest files exists and is properly formatted at '+soup_file+'. It has the following docIds: '+str(parsable_docids))
 
+# Since all following steps rely on the existance and format of the regesten file. It should be checked!
 check_regesten_format(destination_folder)
 
 if 0==len(transcriptions):logging.warning("No transcriptions found!")
 logging.info("Start with transcription(s)")
-for transcription in sorted(transcriptions):
+for transcription in tqdm(sorted(transcriptions), desc="Process transcription(s)"):
+    
+    if not corpus_name in os.path.split(transcription)[-1].lower(): raise ValueError("The file name of {} does not include the corpus name {}. This will cause errors later.".format(transcription, corpus_name))
+
     logging.debug("Processing: "+transcription)
     remove_tei_dtd_reference(transcription)
     form_num = produce_form_num(transcription)
@@ -309,9 +288,17 @@ for transcription in sorted(transcriptions):
     except:
         print(transcription)
         raise AttributeError
+    logging.debug('manuscript: '+manuscript)
     transcript_folders = glob('{base_folder}/data/{manuscript}/*'.format(base_folder=destination_folder, manuscript=manuscript))
-    subprocess_run(['java', '-jar',  saxon_location, '{}'.format(transcription), text_transformation_xslt])
-    new_file = glob(destination_folder + '/temp/*.xml')[0]
+    
+    subprocess_run(['java', '-jar',  saxon_location, '{}'.format(transcription), text_transformation_xslt], get_logger())
+    allocated_temp_files= glob(destination_folder + '/temp/*.xml')
+    if len(allocated_temp_files) > 0: 
+        logging.debug('Allocated new files: {} at {}'.format(allocated_temp_files, destination_folder + '/temp/*.xml'))
+    else:
+        logging.error('There are no file {} at {}. This will immediately cause an error. This resulted from the previous not been done properly.'.format(allocated_temp_files, destination_folder + '/temp/*.xml'))
+    
+    new_file = allocated_temp_files[0]
     filename_parts = new_file.split('/')[-1].split('.')[:-1]
     new_name = destination_folder + '/data/{man}/{fols}/{man}.{fols}.{ed}.xml'.format(man=filename_parts[0], fols=filename_parts[1], ed=filename_parts[2])
     fol_add = 1
@@ -330,21 +317,42 @@ for transcription in sorted(transcriptions):
             edition_div.set('n', new_urn)
         xml.write(new_name, encoding='utf-8', pretty_print=True)
     logging.info('Create the capitains file for {} in {}'.format(new_name,new_folder))
-    subprocess_run(['java', '-jar',  saxon_location, '{}'.format(new_name), metadata_transformation_xslt, '-o:{folder}/__capitains__.xml'.format(folder=new_folder)])
-    md_xml = etree.parse('{folder}/__capitains__.xml'.format(folder=new_folder))
+    subprocess_run(['java', '-jar',  saxon_location, '{}'.format(new_name), 
+                    metadata_transformation_xslt, '-o:{folder}/__capitains__.xml'.format(folder=new_folder)],logging)
+    capitains_file_path = os.path.join(new_folder, '__capitains__.xml')
+    if not os.path.isfile(capitains_file_path): raise FileNotFoundError(capitains_file_path)
+    logging.info(capitains_file_path)
+    md_xml = etree.parse(capitains_file_path)
     for is_version_of in md_xml.xpath('//dct:isVersionOf', namespaces={'dct': 'http://purl.org/dc/terms/'}):
         is_version_of.text = 'urn:cts:formulae:{}.{}'.format(corpus_name, form_num)
     mss_urn = 'urn:cts:formulae:{}.{}.{}'.format(filename_parts[0], filename_parts[1], filename_parts[2])
     if new_urn:
         mss_urn = new_urn
         filename_parts[1] = filename_parts[1] + str(fol_add)
-    mss_edition_dict[mss_urn].add('urn:cts:formulae:{}.{}'.format(corpus_name, form_num))
+    
+    id_of_corresponding_document = 'urn:cts:formulae:{}.{}'.format(corpus_name, form_num)
+
+    mss_edition_dict[mss_urn].add(id_of_corresponding_document)
+    logging.debug("Transcription: "+mss_urn+" mapped to this document:"+ id_of_corresponding_document)
     for s_md in md_xml.xpath('//cpt:structured-metadata', namespaces=ns):
         for mss_edition in mss_edition_dict[mss_urn]:
             new_element = etree.Element('{http://purl.org/dc/terms/}isVersionOf', nsmap=ns)
             new_element.text = mss_edition
             s_md.append(new_element)
-    md_xml.xpath('/cpt:collection/dc:title', namespaces=ns)[0].text = md_xml.xpath('/cpt:collection/dc:title', namespaces=ns)[0].text + ': ' + '/'.join([title_id_dict[form_id + '.lat001'] for form_id in mss_edition_dict[mss_urn]])
+    from mss_edition_csv_to_xml import make_temp_id
+    #logging.info('mss_edition_dict:'+str(mss_edition_dict))
+    
+    
+    #form_id_list =  [make_temp_id(mss_urn)]
+    for title_id in title_id_dict.keys():
+        if corpus_name in title_id and form_num in title_id:
+            logging.debug('Matching entry found: '+title_id)
+
+    form_id_list = mss_edition_dict[mss_urn]
+    title_value =  md_xml.xpath('/cpt:collection/dc:title', namespaces=ns)[0].text + ': ' + '/'.join([title_id_dict[form_id + '.lat001'] for form_id in form_id_list])
+    logging.info('title_value: '+title_value)
+    md_xml.xpath('/cpt:collection/dc:title', namespaces=ns)[0].text = title_value 
+    
     md_xml.write('{folder}/__capitains__.xml'.format(folder=new_folder), encoding='utf-8', pretty_print=True)
     makedirs('{base_folder}/data/{corpus}/{entry}'.format(base_folder=destination_folder, corpus=corpus_name, entry=form_num), exist_ok=True)
     temp_file = '{base_folder}/data/{corpus}/{entry}/{man_filename}'.format(base_folder=destination_folder, corpus=corpus_name, entry=form_num, man_filename='.'.join(filename_parts) + '.xml')
@@ -377,11 +385,8 @@ from hss_editionen_tool import check_hss_editionen
 
 if 0==len(latins):logging.warning("No Latin documents found!")
 logging.info("Start with latin(s)")
-check_hss_editionen()
-for latin in latins:
-    
-    if not bool(re.match(r"^[A-Z][a-z]+\s[0-9]+[.]xml", latin.split('/')[-1])): 
-        logging.error(latin+' is not named properly. This will cause errors in processing the file')
+#check_hss_editionen()
+for latin in tqdm(latins):
     
     remove_tei_dtd_reference(latin)
     form_num = produce_form_num(latin)
@@ -390,11 +395,11 @@ for latin in latins:
     logging.debug('Process: {}'.format(latin))
     logging.debug('Transform the text...')
     new_name_existed_before_transforming = os.path.isfile(new_name)
-    subprocess_run(['java', '-jar',  saxon_location, '-s:{}'.format(latin), text_transformation_xslt])
+    subprocess_run(['java', '-jar',  saxon_location, '-s:{}'.format(latin), text_transformation_xslt],get_logger())
     if not new_name_existed_before_transforming and os.path.isfile(new_name): logging.info('{} was created.'.format(new_name))
     logging.info('Create {base_folder}/data/{corpus}/{entry}/__capitains__.xml'.format(base_folder=destination_folder, corpus=corpus_name, entry=form_num))
     subprocess_run(['java', '-jar',  saxon_location, '-s:{}'.format(new_name), metadata_transformation_xslt, 
-                                        '-o:{base_folder}/data/{corpus}/{entry}/__capitains__.xml'.format(base_folder=destination_folder, corpus=corpus_name, entry=form_num)], form_num)
+                                        '-o:{base_folder}/data/{corpus}/{entry}/__capitains__.xml'.format(base_folder=destination_folder, corpus=corpus_name, entry=form_num)], get_logger())
     remove_space_before_note(new_name)
     check_if_notes_exist(input_file='{}'.format(latin),transformed_file='{}'.format(new_name))
     
@@ -403,13 +408,15 @@ for temp_file in temp_files:
     remove(temp_file)
 
 # Create collection-level capitains create_capitains_files
+from util import check_capitains_rng
+check_capitains_rng()
 sub_folders = glob(destination_folder + '/data/*')
 for sub_folder in sub_folders:
     meta_filename = sub_folder + '/temp.xml'
     new_meta_filename = sub_folder + '/__capitains__.xml'
     if not os.path.isfile(meta_filename):
         with open(meta_filename, mode="w") as f:
-            logging.debug("meta_filename: "+temp_file)
+            logging.debug("meta_filename: "+meta_filename)
             f.write('<xml/>')
     subprocess.run(['java', '-jar',  saxon_location, '{}'.format(meta_filename), collection_metadata_xslt, '-o:{}'.format(meta_filename)])
     rename(meta_filename, new_meta_filename)

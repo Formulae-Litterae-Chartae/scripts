@@ -232,15 +232,37 @@
     <xsl:param name="formNumber">
         <xsl:choose>
             <!--            Thorben (04.03.25): I needed to move this one up-->
-            <xsl:when test="contains($formTitle, 'Sens')">
+            <xsl:when test="contains($formTitle, 'SensDEPRECATED')">
                 <xsl:choose>
                     <xsl:when test="contains($formTitle, 'Incipit')"><xsl:text>form_a_000</xsl:text></xsl:when>
                     <xsl:otherwise>
                         <xsl:text>form_</xsl:text>
-                        <xsl:value-of select="lower-case(replace($formTitle/tei:ref[@type='form-name'], 'Sens ([A-C]) (\d+) ?([a-m]?).*', '$1'))"/>
+                        <!--Extract the subcollection letter. e.g., A and makes it lower case: a-->
+                        <xsl:value-of select="lower-case(replace($formTitle/tei:ref[@type='form-name'], '.*?sens ([A-C]).*', '$1', 'i'))"/>
                         <xsl:text>_</xsl:text>
-                        <xsl:number value="replace($formTitle/tei:ref[@type='form-name'], 'Sens ([A-C]) (\d+) ?([a-m]?).*', '$2')" format="001"/>
-                        <xsl:value-of select="replace($formTitle/tei:ref[@type='form-name'], 'Sens ([A-C]) (\d+) ?([a-m]?).*', '$3')"/>
+                        <!--Extract the form number. e.g., 1 and fill with zeroes until 3 digits, e.g., 001-->
+                        <!-- <xsl:number value="replace($formTitle/tei:ref[@type='form-name'], 'Sens ([A-C]) (\d+) ?([a-m]?).*', '$2')" format="001"/> -->
+                        <!-- <xsl:variable name="numberString" select="replace($formTitle/tei:ref[@type='form-name'], '.*Sens\s*([A-C])\s*(\d+).*', '$2')" /> -->
+                        <!-- <xsl:variable name="numberString" select="replace($formTitle/tei:ref[@type='form-name'], '.*Sens.*[A-C].*(\d+).*', '$1', 'i')" /> -->
+                        <xsl:variable name="numberString" select="replace($formTitle/tei:ref[@type='form-name'], '.*?(\d+).*', '$1')" />
+                            <xsl:choose>
+                            <xsl:when test="matches($numberString, '^\d+$')">
+                                <xsl:number value="$numberString" format="001" />
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <!-- Optional: safe fallback if no number is found -->
+                                <!-- <xsl:text>999</xsl:text> -->
+                                <xsl:text>_error_unable_to_convert-</xsl:text>
+                                <xsl:value-of select="$numberString"/>
+                                <xsl:text>-</xsl:text>
+                                <xsl:text>-</xsl:text>
+                                <xsl:value-of select="$formTitle"/>
+                                <xsl:text>-</xsl:text>
+                            </xsl:otherwise>
+                            </xsl:choose>
+
+                        <!-- Thorben (12.03.25): I do not think this last line is necessary-->
+                        <!-- <xsl:value-of select="replace($formTitle/tei:ref[@type='form-name'], 'Sens ([A-C]) (\d+) ?([a-m]?).*', '$3')"/> -->
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:when>
@@ -396,14 +418,14 @@
 <!--    Thorben: I think the following lines are responsible for saving the file-->
     <xsl:template match="/">
         <xsl:choose>
-            <xsl:when test="matches($collection, 'sens')">
-                <xsl:result-document format="general" href="./data/{$collection}/{$formNumber}/{$collection}.{$formNumber}.{$manuscript}.xml" validation="strip">
+            <!-- <xsl:when test="matches($collection, 'sens')">
+               <xsl:result-document format="general" href="./data/{$collection}/{$formNumber}/{$collection}.{$formNumber}.{$manuscript}.xml" validation="strip">
                     <xsl:processing-instruction name="xml-model">href="https://digitallatin.github.io/guidelines/critical-editions.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"</xsl:processing-instruction>
                     <xsl:apply-templates select="node()|comment()"/>
                 </xsl:result-document>
-            </xsl:when>
+            </xsl:when> -->
             <xsl:when test="$formTitle/tei:ref[@type='folia']">
-                <xsl:result-document format="general" href="./temp/{$collection}.{$formNumber}.{$manuscript}.xml" validation="strip">
+                 <xsl:result-document format="general" href="./temp/{$collection}.{$formNumber}.{$manuscript}.xml" validation="strip"> 
                     <xsl:processing-instruction name="xml-model">
                         href="https://digitallatin.github.io/guidelines/critical-editions.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"
                     </xsl:processing-instruction>
