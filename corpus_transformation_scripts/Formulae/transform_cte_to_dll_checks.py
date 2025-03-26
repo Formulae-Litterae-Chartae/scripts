@@ -63,10 +63,12 @@ def check_if_notes_exist(input_file, transformed_file,logger):
         transformed_apparatus_notes_unique_target_ends = set([note['targetEnd'] for note in transformed_apparatus_notes ])
 
     if not input_apparatus_notes_unique_target_ends == transformed_apparatus_notes_unique_target_ends:
-        logger.error('Not all notes where transformed from {} ({}) to {} ({})'.format(input_file, 
-                                                                                        input_apparatus_notes_unique_target_ends,
-                                                                                        transformed_file,
-                                                                                        transformed_apparatus_notes_unique_target_ends))
+        # logger.error('Not all notes where transformed from {} ({}) to {} ({})'.format(input_file, 
+        #                                                                                 input_apparatus_notes_unique_target_ends,
+        #                                                                                 transformed_file,
+        #                                                                                 transformed_apparatus_notes_unique_target_ends))
+        logger.error('The notes: {} where not transformed from {} to {}. '.format(input_apparatus_notes_unique_target_ends-transformed_apparatus_notes_unique_target_ends,
+            input_file, transformed_file))
 
 
 
@@ -139,11 +141,13 @@ def check_output_regesten_existance(corpus_folder:str, logger:logging.Logger, sa
         elif 'complete' == sampling_method:
             short_regesten_found = 0
             long_regest_found = 0
+            no_short_regest = []
             for subfolder in subfolders:
                 capitains_found = False
                 for subsubpath in os.scandir(subfolder):
                     if "__capitains__.xml" == os.path.split(subsubpath)[-1]:
                         capitains_found = True
+                        short_regesten_found_in_capitains = False
                         import xml.etree.ElementTree as ET
                         tree = ET.parse(subsubpath)
                         root = tree.getroot()
@@ -152,16 +156,24 @@ def check_output_regesten_existance(corpus_folder:str, logger:logging.Logger, sa
                             if regesten_text is not None:
                                 if 0 < len(regesten_text):
                                     short_regesten_found += 1
+                                    short_regesten_found_in_capitains = True
                                     break
                             else:
                                 ET.indent(description)
                                 logger.debug("{} is empty {}".format(subsubpath.path, ET.tostring(description, encoding='unicode')))
-                        
+                        # a capitains, can have multiple description elements
+                        # If at least has text, all others will also mostly have texts
+                        if short_regesten_found_in_capitains:
+                            #short_regesten_found +=1
+                            pass
+                        else:
+                            no_short_regest.append(subsubpath)[-2]
                         for abstract in root.findall('.//{*}abstract'):
                             regesten_text = abstract.text
                             if regesten_text is not None:
                                 if 0 < len(regesten_text):
                                     long_regest_found += 1
+                                    break
                             else:
                                 ET.indent(description)
                                 logger.debug("{} is empty {}".format(subsubpath, ET.tostring(description, encoding='unicode')))
@@ -170,16 +182,19 @@ def check_output_regesten_existance(corpus_folder:str, logger:logging.Logger, sa
                     logger.warning("No capitains file found in {}".format(subfolder))
             
             if short_regesten_found == len(subfolders) and long_regest_found == len(subfolders):
-                logger.info("Success! All {} entries have a short regest and a long regest".format(short_regesten_found))
+                logger.info("Success! All {} entries have exactly one short regest and one long regest".format(short_regesten_found))
+                print("Success! All {} entries have exactly one short regest and one long regest".format(short_regesten_found))
                 return True
-            elif short_regesten_found == len(subfolders): 
-                logger.error("All entries have short regests but only {} of all {} entries have long regests, but all of them should have one.".format(long_regest_found, len(subfolders)))
-                return False
-            elif long_regest_found == len(subfolders): 
-                logger.error("All entries have long regests but only {} of all {} entries have short regests, but all of them should have one.".format(short_regesten_found, len(subfolders)))
-                return False
             else:
-                logger.error("Only {} short regests and {} long regests for {} entries. But each entry should have  one short and one long regest.".format(long_regest_found, short_regesten_found, len(subfolders)))
+                if short_regesten_found == len(subfolders) and long_regest_found != len(subfolders): 
+                    logger.error("All entries have short regests but only {} of all {} entries have long regests, but all of them should have one.".format(long_regest_found, len(subfolders)))
+                if short_regesten_found != len(subfolders) and long_regest_found == len(subfolders): 
+                    logger.error("All entries have long regests but only {} of all {} entries have short regests, but all of them should have one.".format(short_regesten_found, len(subfolders)))
+                    logger.error("{} have no short regest".format(no_short_regest))
+                if short_regesten_found != len(subfolders) and long_regest_found != len(subfolders):
+                    logger.error("Only {} short regests and {} long regests for {} entries. But each entry should have  one short and one long regest.".format(long_regest_found, short_regesten_found, len(subfolders)))
+                    logger.error("{} have no short regest".format(no_short_regest))
+
                 return False
     else:
         raise ValueError("{} is not a valid value for sampling_method. Please one of these options: {}".format(sampling_method, sampling_method_options))
