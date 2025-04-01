@@ -9,6 +9,7 @@ import argparse
 from tqdm import tqdm
 from util import subprocess_run, get_logger
 from bs4 import BeautifulSoup
+from transform_cte_to_dll_checks import check_if_notes_exist, check_paths_in_capitains, check_transcriptions_got_proper_names, check_if_collection_exists
 
 home_dir = environ.get('HOME', '')
 
@@ -74,26 +75,46 @@ if not (len(transcriptions)  >= len(latins)):
 if not ( len(germans) == len(latins) ):
     logger.warning("The number of germans ({}) should always be equal to the number of latins ({})".format(len(germans), len(latins)))
 
-def check_xml_file_names(file_name:str) -> bool:
+def check_xml_file_name(file_name:str, logger:logging.Logger, is_transcription=False) -> bool:
+    """
+    Checks wether the given file_name matches the patterns later required in the transformation process.
+    Although the regex could be optimized in terms of execution time - readability of the code should be kept in mind.
+    """
     file_name=file_name.split('/')[-1]
     # German matching
     if re.match(r"[a-zA-Z]+ [A-Z]*[0-9 ]+[ ]*Deutsch.xml", file_name):
         return True
-    # Latin matching
-    elif re.match(r"[a-zA-Z]+ [A-Z]*[0-9 ]+[ ]*.xml", file_name):
+    if re.match(r"[a-zA-Z]+ [A-Z]*[0-9 ]+Incipit+[ ]+Deutsch.xml", file_name):
         return True
-    # German matching
-    if re.match(r"[a-zA-Z]+ [A-Z]*[0-9 ]+\(Incipit\)[ ]*Deutsch.xml", file_name):
+    if re.match(r"Sens Ergänzung Deutsch.xml", file_name):
         return True
     # Latin matching
-    elif re.match(r"[a-zA-Z]+ [A-Z]*[0-9 ]+[ ]*.xml", file_name):
+    if re.match(r"[a-zA-Z]+ [A-Z]*[0-9 ]+Incipit.xml", file_name):
         return True
-    else:
-        raise ValueError("{} does not met the file naming conventions. Leaving this name unchanged will cause errors later.".format(file_name))
+    if re.match(r"[a-zA-Z]+ [A-Z]*[0-9 ]+[ ]*.xml", file_name):
+        return True
+    if re.match(r"Sens Ergänzung.xml", file_name):
+        return True
+    # Transcription matching
+    if '(' in file_name or ')' in file_name:
+        if is_transcription:
+            if re.match(r".*\(.*\).xml", file_name):
+                return True
+            else:
+                ValueError("{} does not met the file naming conventions for transcriptions. Leaving it unchanged will cause errors later.".format(file_name))
+        else:
+            ValueError("{} does not met the file naming conventions. Only transcriptions should contain '(' and ')'".format(file_name))
+    # Fallback case, when none of the previous patterns matched
+    raise ValueError("{} does not met the file naming conventions. Leaving this name unchanged will cause errors later.".format(file_name))
     
 for file_name in germans+latins:
     try:
-        check_xml_file_names(file_name)
+        check_xml_file_name(file_name, logger)
+    except ValueError as e:
+        logger.error('{}'.format(e))
+for file_name in transcriptions:
+    try:
+        check_xml_file_name(file_name, logger, is_transcription=True)
     except ValueError as e:
         logger.error('{}'.format(e))
 
@@ -133,7 +154,11 @@ def remove_space_before_note(filename):
         f.write(text)
     # Add urn and title to title_id_dict
     xml = etree.parse(filename)
-    urn = xml.xpath('/tei:TEI/tei:text/tei:body/tei:div/@n', namespaces=ns)[0].replace('deu001', 'lat001')
+    try:
+        urn = xml.xpath('/tei:TEI/tei:text/tei:body/tei:div/@n', namespaces=ns)[0].replace('deu001', 'lat001')
+    except IndexError as ie:
+        logger.error("There was an error, when processing {}".format(filename))
+        raise ie
     title = xml.xpath('/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title', namespaces=ns)[0].text
     title_id_dict[urn] = title
         
@@ -150,7 +175,7 @@ def remove_tei_dtd_reference(filename):
     with open(filename, mode="w") as f:
         f.write(text)
         
-def produce_form_num(filename) -> str:
+def produce_form_num(filename:str) -> str:
     """
     Extract the number of the form by a pattern matching process
     """
@@ -169,6 +194,8 @@ def produce_form_num(filename) -> str:
     elif 'Sens' in filename:
         if 'Incipit' in filename:
             form_num = 'form_a_000'
+        elif 'Ergänzung' in filename:
+            form_num = 'form_b_ergaenzung'
         else:
             sens_parts = re.search(r'Sens ([A-C]) (\d+) ?([a-m])?', filename)
             form_num = 'form_{}_{:03}{}'.format(sens_parts[1].lower(), int(sens_parts[2]), sens_parts[3] if sens_parts[3] else '')
@@ -231,14 +258,14 @@ from transform_cte_to_dll_checks import check_input_regesten_format
 
 # Since all following steps rely on the existance and format of the regesten file. It should be checked!
 check_input_regesten_format(destination_folder, logger)
-
+logger.setLevel('DEBUG')
 if 0==len(transcriptions):logger.warning("No transcriptions found!")
 logger.info("Start with transcription(s)")
 for transcription in tqdm(sorted(transcriptions), desc="Process transcription(s)"):
     
     if not corpus_name in os.path.split(transcription)[-1].lower(): raise ValueError("The file name of {} does not include the corpus name {}. This will cause errors later.".format(transcription, corpus_name))
 
-    logging.debug("Processing: "+transcription)
+    logging.debug("process transcription: "+transcription)
     remove_tei_dtd_reference(transcription)
     form_num = produce_form_num(transcription)
     try:
@@ -264,9 +291,13 @@ for transcription in tqdm(sorted(transcriptions), desc="Process transcription(s)
     if man != manuscript: 
         logger.warning("manuscript ({}) and man ({}) differ, but should be the same !".format(man, manuscript))
         if man == corpus_name:
-            logging.debug("corpus_name and man have the same value: {} . They should differ!".format(man))
-        man = manuscript
-        logging.debug("Assigned as: {} the value for man based on manuscript".format(man))
+            logging.warning("corpus_name and man have the same value: {} . They should differ!".format(man))
+    try: 
+        check_if_collection_exists(collection=man)
+    except FileNotFoundError as fe:
+        logger.error(str(fe))
+        #man = manuscript
+        #logging.debug("Assigned as: {} the value for man based on manuscript".format(man))
     
     new_name = destination_folder + '/data/{man}/{fols}/{man}.{fols}.{ed}.xml'.format(man=man, fols=filename_parts[1], ed=filename_parts[2])
     fol_add = 1
@@ -284,6 +315,11 @@ for transcription in tqdm(sorted(transcriptions), desc="Process transcription(s)
         for edition_div in xml.xpath('/tei:TEI/tei:text/tei:body/tei:div[@type="edition"]', namespaces={'tei': 'http://www.tei-c.org/ns/1.0'}):
             edition_div.set('n', new_urn)
         xml.write(new_name, encoding='utf-8', pretty_print=True)
+        logger.debug('Changed urn to {} in {} using the regest file.'.format(new_urn, new_name))
+    else:
+        # Am I not sure, whether this is an error
+        logger.warning('No urn detected for {}.'.format(new_name))
+
     logger.debug('Create the capitains file for {} in {} using the regest file.'.format(new_name,new_folder))
     subprocess_run(['java', '-jar',  saxon_location, '{}'.format(new_name), 
                     metadata_transformation_xslt, '-o:{folder}/__capitains__.xml'.format(folder=new_folder)],logging)
@@ -320,23 +356,29 @@ for transcription in tqdm(sorted(transcriptions), desc="Process transcription(s)
     title_value =  md_xml.xpath('/cpt:collection/dc:title', namespaces=ns)[0].text + ': ' + '/'.join([title_id_dict[form_id + '.lat001'] for form_id in form_id_list])
     logger.info('title_value: '+title_value)
     md_xml.xpath('/cpt:collection/dc:title', namespaces=ns)[0].text = title_value 
-    
+
     md_xml.write('{folder}/__capitains__.xml'.format(folder=new_folder), encoding='utf-8', pretty_print=True)
     makedirs('{base_folder}/data/{corpus}/{entry}'.format(base_folder=destination_folder, corpus=corpus_name, entry=form_num), exist_ok=True)
     temp_file = '{base_folder}/data/{corpus}/{entry}/{man_filename}'.format(base_folder=destination_folder, corpus=corpus_name, entry=form_num, man_filename='.'.join(filename_parts) + '.xml')
     temp_files.append(temp_file)
+    # Thorben (01.04.25): Why do we need these empty temp files?
     with open(temp_file, mode="w") as f:
         logging.debug("write: "+temp_file)
+        f.write('<!--I am a temp file, that should have been deleted.-->\n')
         f.write('<xml/>')
     remove_space_before_note(new_name)
+    try:
+        check_transcriptions_got_proper_names(manuscript, new_name, logger)
+    except Exception as e:
+        logger.error(str(e))
 
 from hss_editionen_tool import check_hss_editionen
-from transform_cte_to_dll_checks import check_if_notes_exist
+logger.setLevel('WARNING')
 if 0==len(latins):logger.warning("No Latin documents found!")
 logger.info("Start with latin(s)")
 #check_hss_editionen()
 for latin in tqdm(latins, desc="Process latin(s)", disable=tqdm_switch, leave=not tqdm_switch):
-    
+    if 'Ergänzung' in latin: print('Process:'+latin)
     remove_tei_dtd_reference(latin)
     form_num = produce_form_num(latin)
     new_name = '{base_folder}/data/{corpus}/{entry}/{corpus}.{entry}.lat001.xml'.format(base_folder=destination_folder, corpus=corpus_name, entry=form_num)
@@ -345,15 +387,32 @@ for latin in tqdm(latins, desc="Process latin(s)", disable=tqdm_switch, leave=no
     new_name_existed_before_transforming = os.path.isfile(new_name)
     subprocess_run(['java', '-jar',  saxon_location, '-s:{}'.format(latin), text_transformation_xslt],logger)
     if not new_name_existed_before_transforming and os.path.isfile(new_name): logger.info('{} was created.'.format(new_name))
-    logger.info('Create {base_folder}/data/{corpus}/{entry}/__capitains__.xml'.format(base_folder=destination_folder, corpus=corpus_name, entry=form_num))
+    if not os.path.isfile(new_name): logger.error('{} does not exist. It have been created previously.'.format(new_name))
+    if 'Ergänzung' in latin: print('new_name:'+new_name)
+    
+    capitains_file_output_path = '{base_folder}/data/{corpus}/{entry}/__capitains__.xml'.format(base_folder=destination_folder, corpus=corpus_name, entry=form_num)
+    logger.info('Create '+capitains_file_output_path)
+    
     subprocess_run(['java', '-jar',  saxon_location, '-s:{}'.format(new_name), metadata_transformation_xslt, 
                                         '-o:{base_folder}/data/{corpus}/{entry}/__capitains__.xml'.format(base_folder=destination_folder, corpus=corpus_name, entry=form_num)], logger)
+    # if True:
+    #     print(new_name)
+    #     tree = ET.parse(new_name)
+    #     root = tree.getroot()
+    #     all_checks_passed = True
+    #     for collection in root.findall('.//{*}collection'):
+        
     remove_space_before_note(new_name)
     check_if_notes_exist(input_file='{}'.format(latin),transformed_file='{}'.format(new_name), logger=logger)
-    
+    try:
+        check_paths_in_capitains(capitains_file_output_path,logger)
+    except Exception as e:
+        logger.error(str(e))
 # Delete the temporary files
-for temp_file in temp_files:
-    remove(temp_file)
+keep_temp_files_for_debugging = False
+if not keep_temp_files_for_debugging:
+    for temp_file in temp_files:
+        remove(temp_file)
 
 # Create collection-level capitains create_capitains_files
 from util import check_capitains_rng

@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import os
 import re 
 import logging
+import xml.etree.ElementTree as ET
 
 # This file holds all checks for the cte to dll transformation process
 # In theory these could be the basis for unit tests. 
@@ -69,6 +70,87 @@ def check_if_notes_exist(input_file, transformed_file,logger):
         #                                                                                 transformed_apparatus_notes_unique_target_ends))
         logger.error('The notes: {} where not transformed from {} to {}. '.format(input_apparatus_notes_unique_target_ends-transformed_apparatus_notes_unique_target_ends,
             input_file, transformed_file))
+        
+def check_transcriptions_got_proper_names(manuscript:str, transcription_path: str, logger:logging.Logger) -> bool:
+    tree = ET.parse(transcription_path)
+    root = tree.getroot()
+    all_checks_passed = True
+    #   <text>
+    #  <body>
+    #     <div type="edition"
+    #          xml:lang="lat"
+    #          n="urn:cts:formulae:p14.47r48v.lat001"
+    #          subtype="transcription">
+    # /tei:TEI/tei:text/tei:body/tei:div/@n
+    proper_name_found = False
+    transcription_elements = root.findall('.//*[@subtype="transcription"]')
+    if 1 > len(transcription_elements): 
+        raise ValueError("No transcription found")
+    
+    for div in transcription_elements:
+        path_pattern_string = "urn:cts:formulae:"+manuscript+"\.[\w\d]*\.lat001"
+        path_pattern = re.compile(path_pattern_string)
+        extracted_path = div.get("n")
+        if not path_pattern.match(extracted_path):
+            raise ValueError("{} does not met the pattern: {}".format(extracted_path, path_pattern_string))
+        else:
+            logger.debug("Found proper transcription name: {}".format(extracted_path))
+            proper_name_found = True 
+    
+    return proper_name_found
+
+def check_paths_in_capitains(capitains_path:str, logger:logging.Logger) -> bool:
+    """
+    """
+    
+    tree = ET.parse(capitains_path)
+    root = tree.getroot()
+    all_checks_passed = True
+    for collection in root.findall('.//{*}collection'):
+        extracted_path = collection.get('path')
+        # this case applies for all transcriptions
+        # Example of a valid transcription entry:
+        # <collection path="../../p14/47r48v/__capitains__.xml" identifier="urn:cts:formulae:p14.47r48v"/>
+        if 'form' not in extracted_path:
+            collection_string = ET.tostring(collection)
+            if "identifier" not in collection.keys():
+                logger.error("{} has no identifier. This means there was an error in the processing. ".format(capitains_path))
+                all_checks_passed = False
+            else:
+                extracted_identifier = collection.get("identifier")
+                extracted_path_components = extracted_path.split('/')
+                if 3 > len(extracted_path_components):
+                    logger.error("Path has not enough components: {}".format(extracted_path_components))
+                    all_checks_passed = False
+                    break
+                expected_identifier = "urn:cts:formulae:{}.{}".format(extracted_path_components[-3],extracted_path_components[-2])
+                if extracted_identifier != expected_identifier:
+                    logger.error("The identifier: {} should look like this {} based on {}".format(extracted_identifier, expected_identifier, capitains_path))
+            extracted_path_manipulated = extracted_path.replace("../../","")
+            if not os.path.isfile(extracted_path_manipulated):
+                logger.error("{} from {} does not exist. This means there was an error in the processing. ".format(extracted_path_manipulated, capitains_path))
+                all_checks_passed = False
+    return all_checks_passed
+
+
+def check_if_collection_exists(collection:str, path_to_corpora="/home/thorben.schomacker/git/formulae-corpora/data") -> bool:
+    """
+    All new collections (including transcriptions) do need to have:
+    one folder with in the formulae-corpora directory with a capitains file and 
+    one entry in the corresponding overall capitains file (e.g., formulae-corpora/data/manuscript_collection/__capitains__.xml)
+    """
+
+    collection_path = os.path.join(path_to_corpora, collection)
+    if os.path.isdir(collection_path):
+        capitains_path= os.path.join(collection_path, "__capitains__.xml")
+        if os.path.isfile(capitains_path):
+            return True
+        else:
+            raise FileNotFoundError("{} does not exist. This will cause errors later.".format(capitains_path))
+    else:
+        raise FileNotFoundError("{} does not exist. This will cause errors later.".format(collection_path))
+
+                
 
 
 
@@ -167,7 +249,7 @@ def check_output_regesten_existance(corpus_folder:str, logger:logging.Logger, sa
                             #short_regesten_found +=1
                             pass
                         else:
-                            no_short_regest.append(subsubpath)[-2]
+                            no_short_regest.append(os.path.split(subsubpath)[-2])
                         for abstract in root.findall('.//{*}abstract'):
                             regesten_text = abstract.text
                             if regesten_text is not None:

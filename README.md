@@ -16,3 +16,8 @@ Source: https://docs.python.org/3/library/logging.html#logging-levels
 1. activate the virtualenv (e.g., `source .venv/bin/activate`) 
 2. install the requirements via `pip install -r requirements.txt` within in the venv
 3. If the requirements have been installed properly, you can launch `python3 <your_script>.py` 
+#### transform_cte_to_dll
+```shell
+cd ~/git/scripts/formel_transform/output/sens
+python3 ~/git/scripts/corpus_transformation_scripts/Formulae/transform_cte_to_dll.py ~/Downloads/SaxonHE9-8-0-11J/saxon9he.jar sens ~/git/formulae-corpora/data/formulae_collection/__capitains__.xml ~/git/scripts 
+```

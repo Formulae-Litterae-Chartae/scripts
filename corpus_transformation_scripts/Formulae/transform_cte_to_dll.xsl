@@ -23,6 +23,7 @@
             <xsl:value-of select="replace(replace(normalize-space(replace(replace(tokenize(base-uri(), '/')[last()], '%20', ' '), '.xml', '')), 'Paris,? BNF (\d)', 'Paris BnF Lat. $1'), 'Markulf', 'Marculf')"/>
         </xsl:variable>
         <xsl:choose>
+
             <xsl:when test="contains($tempTitle, 'Tours 40')">
                 <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="type">form-name</xsl:attribute>
@@ -105,6 +106,9 @@
                 <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="type">form-name</xsl:attribute>
                     <xsl:choose>
+                     <!--   <xsl:when test="contains($tempTitle, 'Sens A 0 (Incipit)')">
+                                Sans A 0
+                        </xsl:when>-->
                         <xsl:when test="matches($tempTitle, 'Weltzeitalter|Capitula|Incipit|Praefatio|Ergänzung|Flavigny')">
                             <xsl:value-of select="normalize-space(substring-before($tempTitle, '('))"/>
                         </xsl:when>
@@ -144,6 +148,7 @@
                             <xsl:value-of select="normalize-space(replace(substring-before($tempTitle, '('), 'Bourges \w \d+ ?\w? (.*)', '$1'))"/>
                         </xsl:when>
                         <xsl:when test="matches($tempTitle, 'Sens')">
+<!--                            <xsl:value-of select="normalize-space(replace(substring-before($tempTitle, '('), 'Sens \w \d+ ?\w? (.*)', '$1'))"/>-->
                             <xsl:value-of select="normalize-space(replace(substring-before($tempTitle, '('), 'Sens \w \d+ ?\w? (.*)', '$1'))"/>
                             
                             <xsl:choose>
@@ -266,6 +271,9 @@
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:when>
+            
+            <xsl:when test="contains($formTitle, 'Incipit')"><xsl:text>form_a_000</xsl:text></xsl:when>
+            <xsl:when test="contains($formTitle, 'Sens') and matches($formTitle, 'Ergänzung|Erg%C3%A4nzung')"><xsl:text>form_b_ergaenzung</xsl:text></xsl:when>
             <xsl:when test="$formTitle/tei:ref[@type='folia']">
                 <xsl:value-of select="normalize-space(replace($formTitle/tei:ref[@type='folia'], '(fol|p)\.\s*|-', ''))"/>
             </xsl:when>
@@ -370,11 +378,14 @@
     <xsl:param name="collection">
         <xsl:choose>
 <!--            Thorben (04.03.25: I needed the following when in order to process the incipit-->
-            <xsl:when test="matches(lower-case($formTitle/tei:ref[@type='form-name']), 'sens')">
+            <!-- <xsl:when test="matches(lower-case($formTitle/tei:ref[@type='form-name']), 'sens')">
                 <xsl:text>sens</xsl:text>
-            </xsl:when>
+            </xsl:when> -->
             <xsl:when test="$formTitle/tei:ref[@type='siglum']">
                 <xsl:value-of select="lower-case($formTitle/tei:ref[@type='siglum'])"/>
+            </xsl:when>
+            <xsl:when test="matches(lower-case($formTitle/tei:ref[@type='form-name']), 'sens')">
+                <xsl:text>sens</xsl:text>
             </xsl:when>
             <xsl:when test="matches(lower-case($formTitle/tei:ref[@type='form-name']), 'marculf |markulf ')">
                 <xsl:text>marculf</xsl:text>
@@ -395,6 +406,9 @@
     </xsl:param>
     <xsl:param name="urnStart">
         <xsl:choose>
+            <xsl:when test="matches(lower-case($formTitle/tei:ref[@type='form-name']), 'sens')">
+                <xsl:text>urn:cts:formulae:sens.</xsl:text>
+            </xsl:when>
             <xsl:when test="$formTitle/tei:ref[@type='siglum']">
                 <xsl:text>urn:cts:formulae:</xsl:text><xsl:value-of select="lower-case($formTitle/tei:ref[@type='siglum'])"/><xsl:text>.</xsl:text>
             </xsl:when>
@@ -424,7 +438,10 @@
                     <xsl:apply-templates select="node()|comment()"/>
                 </xsl:result-document>
             </xsl:when> -->
-            <xsl:when test="$formTitle/tei:ref[@type='folia']">
+            <!--            Thorben (26.03.25): I dont see the the point in this folia exception-->
+                        <xsl:when test="$formTitle/tei:ref[@type='folia']">
+<!--            <xsl:when test="$formTitle/tei:ref[@type='folia'] and not(contains($formTitle,'Incipit')) and not(contains($manuscript,'deu'))">-->
+<!--            <xsl:when test="$formTitle/tei:ref[@type='folia'] and not(contains($manuscript,'deu'))">-->
                  <xsl:result-document format="general" href="./temp/{$collection}.{$formNumber}.{$manuscript}.xml" validation="strip"> 
                     <xsl:processing-instruction name="xml-model">
                         href="https://digitallatin.github.io/guidelines/critical-editions.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"
@@ -452,6 +469,7 @@
                 <xsl:element name="fileDesc" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:element name="titleStmt" namespace="http://www.tei-c.org/ns/1.0">
                         <xsl:choose>
+<!--                            Assign transcriptions a special title and subtitle-->
                             <xsl:when test="$formTitle/tei:ref[@type='manuscript-desc']">
                                 <xsl:element name="title" namespace="http://www.tei-c.org/ns/1.0">
                                     <xsl:value-of select="$formTitle/tei:ref[@type='manuscript-desc']"/>
@@ -479,7 +497,10 @@
                     <xsl:element name="editionStmt" namespace="http://www.tei-c.org/ns/1.0">
                         <xsl:choose>
                             <xsl:when test="$formTitle/tei:ref[@type='manuscript-desc']">
-                                <xsl:element name="edition" namespace="http://www.tei-c.org/ns/1.0">Digitale Transkription von <xsl:value-of select="$formTitle/tei:ref[@type='manuscript-desc']"/> [<xsl:value-of select="$formTitle/tei:ref[@type='markedUpFolia']"/>]</xsl:element>
+                                <xsl:element name="edition" namespace="http://www.tei-c.org/ns/1.0">Digitale Transkription von 
+                                    <xsl:value-of select="$formTitle/tei:ref[@type='manuscript-desc']"/> 
+                                    [<xsl:value-of select="$formTitle/tei:ref[@type='markedUpFolia']"/>]
+                                </xsl:element>
                             </xsl:when>
                             <xsl:when test="$manuscript = 'lat001'">
                                 <xsl:element name="edition" namespace="http://www.tei-c.org/ns/1.0">Digitale Edition von <xsl:value-of select="$formTitle/tei:ref[@type='form-name']"/></xsl:element>

@@ -91,9 +91,13 @@
             </dc:title>
             <dc:type>cts:work</dc:type>
             <members>
+                <!-- iterate over all XMLs in a folder -->
                 <xsl:for-each select="collection(concat($folderName, '?select=*.xml;on-error=ignore'))">
                     <xsl:if test="not(matches(document-uri(.), '__capitains__|__cts__'))">
                         <xsl:choose>
+                            
+                            <!-- This block checks whether a child XML document belongs to a different CTS URN than its parent, and if so, generates a <collection> element in the Capitains/CTS format to represent that relationship. -->
+                            <!-- This means, that this block only applies to transcriptions -->
                             <xsl:when test="substring-before(tokenize(document-uri(.), '/')[last()], '.') != tokenize(tokenize($parentUrn, '\.')[1], ':')[last()]">
                                 <xsl:variable name="childUrn" select="tokenize(tokenize(document-uri(.), '/')[last()], '\.')"/>
                                 <xsl:element name="collection" namespace="http://purl.org/capitains/ns/1.0#">
@@ -137,6 +141,8 @@
         <xsl:param name="shortRegest"/>
         <xsl:param name="mss-editions"/>
         <xsl:param name="textFile" select="document($textURI)"/>
+        <!-- Extracts the CTS URN from the TEI file's <div> element within <body>. The value is retrieved from the 'n' attribute of the first <div> inside <tei:text>/<tei:body>. The URN string is then tokenized (split) on the '.' character to form
+        a sequence of parts.Example Input: <div n="urn:cts:formulae:auvergne1"> -->
         <xsl:param name="urn" select="tokenize($textFile/tei:TEI/tei:text/tei:body/tei:div/@n, '\.')"/>
         <xsl:param name="lang" select="$textFile/tei:TEI/tei:text/tei:body/tei:div/@xml:lang"/>
         <xsl:param name="title">
