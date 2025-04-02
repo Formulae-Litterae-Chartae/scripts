@@ -250,7 +250,7 @@ def process_german(german:str, logger:logging.Logger) -> None:
     remove_space_before_note(new_name)
 
 
-for german in tqdm(germans, desc="Process German translation(s)", disable=(logger.getEffectiveLevel() >30)):
+for german in tqdm(germans, desc="Process German translation(s)", disable=(logger.getEffectiveLevel() > 30)):
     process_german(german, logger)
 
 
@@ -258,9 +258,11 @@ from transform_cte_to_dll_checks import check_input_regesten_format
 
 # Since all following steps rely on the existance and format of the regesten file. It should be checked!
 check_input_regesten_format(destination_folder, logger)
-logger.setLevel('DEBUG')
+logger.setLevel('WARNING')
 if 0==len(transcriptions):logger.warning("No transcriptions found!")
 logger.info("Start with transcription(s)")
+collections_not_found = set()
+collections_found = set()
 for transcription in tqdm(sorted(transcriptions), desc="Process transcription(s)"):
     
     if not corpus_name in os.path.split(transcription)[-1].lower(): raise ValueError("The file name of {} does not include the corpus name {}. This will cause errors later.".format(transcription, corpus_name))
@@ -292,10 +294,11 @@ for transcription in tqdm(sorted(transcriptions), desc="Process transcription(s)
         logger.warning("manuscript ({}) and man ({}) differ, but should be the same !".format(man, manuscript))
         if man == corpus_name:
             logging.warning("corpus_name and man have the same value: {} . They should differ!".format(man))
-    try: 
-        check_if_collection_exists(collection=man)
-    except FileNotFoundError as fe:
-        logger.error(str(fe))
+    
+    if check_if_collection_exists(man, "transcription"):
+        collections_found.add(man)
+    else:
+        collections_not_found.add(man)
         #man = manuscript
         #logging.debug("Assigned as: {} the value for man based on manuscript".format(man))
     
@@ -317,8 +320,8 @@ for transcription in tqdm(sorted(transcriptions), desc="Process transcription(s)
         xml.write(new_name, encoding='utf-8', pretty_print=True)
         logger.debug('Changed urn to {} in {} using the regest file.'.format(new_urn, new_name))
     else:
-        # Am I not sure, whether this is an error
-        logger.warning('No urn detected for {}.'.format(new_name))
+        # Am I not sure, whether this is an error or expected behavior
+        logger.debug('No urn detected for {}.'.format(new_name))
 
     logger.debug('Create the capitains file for {} in {} using the regest file.'.format(new_name,new_folder))
     subprocess_run(['java', '-jar',  saxon_location, '{}'.format(new_name), 
@@ -372,6 +375,12 @@ for transcription in tqdm(sorted(transcriptions), desc="Process transcription(s)
     except Exception as e:
         logger.error(str(e))
 
+if collections_not_found: 
+    logger.error("{} collections not found: {}".format(len(collections_not_found), collections_not_found))
+else:
+    logger.info("All collections found! {}".format(collections_found))
+
+
 from hss_editionen_tool import check_hss_editionen
 logger.setLevel('WARNING')
 if 0==len(latins):logger.warning("No Latin documents found!")
@@ -410,9 +419,12 @@ for latin in tqdm(latins, desc="Process latin(s)", disable=tqdm_switch, leave=no
         logger.error(str(e))
 # Delete the temporary files
 keep_temp_files_for_debugging = False
-if not keep_temp_files_for_debugging:
+if (not keep_temp_files_for_debugging) and logger.getEffectiveLevel() > 19:
     for temp_file in temp_files:
         remove(temp_file)
+else:
+    logger.debug("Temp files kept for debugging purposes. "
+                 "They have to be removed eventually, at least before copying the files to the corpora directory.")
 
 # Create collection-level capitains create_capitains_files
 from util import check_capitains_rng

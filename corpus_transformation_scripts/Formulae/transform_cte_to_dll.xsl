@@ -406,11 +406,11 @@
     </xsl:param>
     <xsl:param name="urnStart">
         <xsl:choose>
-            <xsl:when test="matches(lower-case($formTitle/tei:ref[@type='form-name']), 'sens')">
-                <xsl:text>urn:cts:formulae:sens.</xsl:text>
-            </xsl:when>
             <xsl:when test="$formTitle/tei:ref[@type='siglum']">
                 <xsl:text>urn:cts:formulae:</xsl:text><xsl:value-of select="lower-case($formTitle/tei:ref[@type='siglum'])"/><xsl:text>.</xsl:text>
+            </xsl:when>
+            <xsl:when test="matches(lower-case($formTitle/tei:ref[@type='form-name']), 'sens')">
+                <xsl:text>urn:cts:formulae:sens.</xsl:text>
             </xsl:when>
             <xsl:when test="matches(lower-case($formTitle/tei:ref[@type='form-name']), 'marculf |markulf ')">
                 <xsl:text>urn:cts:formulae:marculf.</xsl:text>

@@ -4,6 +4,8 @@ import os
 import re 
 import logging
 import xml.etree.ElementTree as ET
+from util import make_proper_path
+from lxml import etree
 
 # This file holds all checks for the cte to dll transformation process
 # In theory these could be the basis for unit tests. 
@@ -50,6 +52,8 @@ def check_if_notes_exist(input_file, transformed_file,logger):
     """
     sanity check to see whether all notes from the input file found their way into the transformed_file
     """
+    # This is a list of id that are ignored by the xslt process
+    known_exceptions = ['#w3']
     from bs4 import BeautifulSoup
     with open(input_file, 'r') as f:
         file = f.read() 
@@ -126,30 +130,55 @@ def check_paths_in_capitains(capitains_path:str, logger:logging.Logger) -> bool:
                 expected_identifier = "urn:cts:formulae:{}.{}".format(extracted_path_components[-3],extracted_path_components[-2])
                 if extracted_identifier != expected_identifier:
                     logger.error("The identifier: {} should look like this {} based on {}".format(extracted_identifier, expected_identifier, capitains_path))
-            extracted_path_manipulated = extracted_path.replace("../../","")
+            
+            extracted_path_manipulated =  make_proper_path(extracted_path.replace("../../",""))
             if not os.path.isfile(extracted_path_manipulated):
-                logger.error("{} from {} does not exist. This means there was an error in the processing. ".format(extracted_path_manipulated, capitains_path))
+                logger.debug("{} from {} does not exist. This means there was an error in the processing. ".format(extracted_path_manipulated, capitains_path))
                 all_checks_passed = False
     return all_checks_passed
 
 
-def check_if_collection_exists(collection:str, path_to_corpora="/home/thorben.schomacker/git/formulae-corpora/data") -> bool:
+def check_if_collection_exists(collection_id:str, collection_type:str, path_to_corpora="/home/thorben.schomacker/git/formulae-corpora/data", raise_errors=False) -> bool:
     """
-    All new collections (including transcriptions) do need to have:
-    one folder with in the formulae-corpora directory with a capitains file and 
-    one entry in the corresponding overall capitains file (e.g., formulae-corpora/data/manuscript_collection/__capitains__.xml)
+    All collections (including transcriptions) do need to have:
+        one folder with in the formulae-corpora directory with a capitains file and 
+        one entry in the corresponding overall capitains file (e.g., formulae-corpora/data/manuscript_collection/__capitains__.xml)
     """
 
-    collection_path = os.path.join(path_to_corpora, collection)
+    collection_path = os.path.join(path_to_corpora, collection_id)
     if os.path.isdir(collection_path):
         capitains_path= os.path.join(collection_path, "__capitains__.xml")
         if os.path.isfile(capitains_path):
-            return True
-        else:
-            raise FileNotFoundError("{} does not exist. This will cause errors later.".format(capitains_path))
-    else:
-        raise FileNotFoundError("{} does not exist. This will cause errors later.".format(collection_path))
+            if collection_type == "transcription":
+                collection_of_collections_path = os.path.join(path_to_corpora, 'manuscript_collection', '__capitains__.xml')
+            else:
+                raise ValueError(collection_type+" is not a valid collection type.")    
+            
+            
+            ns = {'dct': "http://purl.org/dc/terms/", 'dc': "http://purl.org/dc/elements/1.1/", 'cpt': "http://purl.org/capitains/ns/1.0#", 'tei': 'http://www.tei-c.org/ns/1.0'}
 
+            collection_of_collections = etree.parse(collection_of_collections_path)
+            
+            #for collection_id in collection_of_collections.xpath("/cpt:collection/cpt:members/cpt:collection[identifier='urn:cts:formulae:{}']".format(collection_id), namespaces=ns):
+            list_of_identifiers = []
+            # For more information on the naming conventions please visit: https://formulae-litterae-chartae.github.io/formulae-capitains-nemo/naming 
+            identifier_pattern_string = "urn:cts:formulae:"+collection_id+"s*"
+            identifier_pattern = re.compile(identifier_pattern_string)
+
+            for collection in collection_of_collections.xpath("/cpt:collection/cpt:members/cpt:collection", namespaces=ns):
+                identifier = collection.get('identifier')
+                if identifier_pattern.match(identifier):
+                    return True
+                else:
+                    list_of_identifiers.append(identifier)
+            raise ValueError("{} not found in the list identifiers - {} -  from {}".format(collection_id, list_of_identifiers,collection_of_collections))
+
+        else:
+            if raise_errors: raise FileNotFoundError("{} does not exist. This will cause errors later.".format(capitains_path))
+            return False
+    else:
+        if raise_errors: raise FileNotFoundError("{} does not exist. This will cause errors later.".format(collection_path))
+        return False
                 
 
 
