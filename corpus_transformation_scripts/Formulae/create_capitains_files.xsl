@@ -38,6 +38,9 @@
                 <xsl:when test="matches(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)], 'Bourges')">
                     <xsl:value-of select="replace(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)], 'Bourges ', '')"/>
                 </xsl:when>
+                <xsl:when test="matches(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)], 'Sens')">
+                    <xsl:value-of select="replace(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)], 'Sens ', '')"/>
+                </xsl:when>
                 <xsl:when test="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:sourceDesc/tei:msDesc">
                     <xsl:value-of select="replace(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title[not(@type)], '.*?\[(.*)\]$', '$1')"/>
                 </xsl:when>
