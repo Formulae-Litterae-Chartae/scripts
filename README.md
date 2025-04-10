@@ -21,3 +21,12 @@ Source: https://docs.python.org/3/library/logging.html#logging-levels
 cd ~/git/scripts/formel_transform/output/sens
 python3 ~/git/scripts/corpus_transformation_scripts/Formulae/transform_cte_to_dll.py ~/Downloads/SaxonHE9-8-0-11J/saxon9he.jar sens ~/git/formulae-corpora/data/formulae_collection/__capitains__.xml ~/git/scripts 
 ```
+
+## Documentation
+In the future, all public repositories of the project could benefit from a SPHINX documentation to encourage the re-usability by others. 
+There I decided the following documentation style guide for python code:
+1. Use type hints as in [PEP484](https://peps.python.org/pep-0484/): `def func_pep484_annotations(param1: int) -> bool`
+2. `import`-statements should be at the top of a file. Never within classes or methods.
+3. One class per file
+4. Prefer logging over print
+5. If not further specified specified, stick to https://google.github.io/styleguide/pyguide.html
