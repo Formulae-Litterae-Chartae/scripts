@@ -148,9 +148,9 @@
                             <xsl:value-of select="normalize-space(replace(substring-before($tempTitle, '('), 'Bourges \w \d+ ?\w? (.*)', '$1'))"/>
                         </xsl:when>
                         <xsl:when test="matches($tempTitle, 'Sens')">
-<!--                            <xsl:value-of select="normalize-space(replace(substring-before($tempTitle, '('), 'Sens \w \d+ ?\w? (.*)', '$1'))"/>-->
+
                             <xsl:value-of select="normalize-space(replace(substring-before($tempTitle, '('), 'Sens \w \d+ ?\w? (.*)', '$1'))"/>
-                            
+<!--                            
                             <xsl:choose>
                                 <xsl:when test="matches($tempTitle, 'Deutsch|Übersetzung')">
                                     <xsl:element name="xml:lang">deu</xsl:element>
@@ -158,7 +158,7 @@
                                 <xsl:otherwise>
                                     <xsl:element name="xml:lang">lat</xsl:element>
                                 </xsl:otherwise>
-                            </xsl:choose>
+                            </xsl:choose>-->
                         </xsl:when>
                         <xsl:otherwise>
                             <xsl:value-of select="normalize-space(string-join(subsequence(tokenize(substring-before($tempTitle, '('), '\s+'), 3), ' '))"/>
@@ -272,8 +272,12 @@
                 </xsl:choose>
             </xsl:when>
             
-            <xsl:when test="contains($formTitle, 'Incipit')"><xsl:text>form_a_000</xsl:text></xsl:when>
-            <xsl:when test="contains($formTitle, 'Sens') and matches($formTitle, 'Ergänzung|Erg%C3%A4nzung')"><xsl:text>form_b_ergaenzung</xsl:text></xsl:when>
+            <xsl:when test="contains($formTitle, 'Incipit')">
+                <xsl:text>form_a_000</xsl:text>
+            </xsl:when>
+            <xsl:when test="contains($formTitle, 'Sens') and matches($formTitle, 'Ergänzung|Erg%C3%A4nzung')">
+                <xsl:text>form_b_ergaenzung</xsl:text>
+            </xsl:when>
             <xsl:when test="$formTitle/tei:ref[@type='folia']">
                 <xsl:value-of select="normalize-space(replace($formTitle/tei:ref[@type='folia'], '(fol|p)\.\s*|-', ''))"/>
             </xsl:when>
@@ -469,9 +473,11 @@
                 <xsl:element name="fileDesc" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:element name="titleStmt" namespace="http://www.tei-c.org/ns/1.0">
                         <xsl:choose>
-<!--                            Assign transcriptions a special title and subtitle-->
                             <xsl:when test="$formTitle/tei:ref[@type='manuscript-desc']">
+                              
+                                <!-- Assign to transcriptions a special title and subtitle-->
                                 <xsl:element name="title" namespace="http://www.tei-c.org/ns/1.0">
+                                    <!-- Example: Paris BnF Lat. 4627-->
                                     <xsl:value-of select="$formTitle/tei:ref[@type='manuscript-desc']"/>
                                     <xsl:text> </xsl:text>
                                     <xsl:text>[</xsl:text>
