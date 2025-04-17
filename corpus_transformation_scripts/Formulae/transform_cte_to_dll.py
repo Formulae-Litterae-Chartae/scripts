@@ -382,7 +382,7 @@ else:
 
 
 from hss_editionen_tool import check_hss_editionen
-logger.setLevel('WARNING')
+logger.setLevel('DEBUG')
 if 0==len(latins):logger.warning("No Latin documents found!")
 logger.info("Start with latin(s)")
 #check_hss_editionen()
@@ -419,9 +419,10 @@ for latin in tqdm(latins, desc="Process latin(s)", disable=tqdm_switch, leave=no
         logger.error(str(e))
 # Delete the temporary files
 keep_temp_files_for_debugging = False
-if (not keep_temp_files_for_debugging) and logger.getEffectiveLevel() > 19:
+if (not keep_temp_files_for_debugging) or logger.getEffectiveLevel() > 19:
     for temp_file in temp_files:
         remove(temp_file)
+    logger.debug("{} temp_files have been removed".format(len(temp_files)))
 else:
     logger.debug("Temp files kept for debugging purposes. "
                  "They have to be removed eventually, at least before copying the files to the corpora directory.")

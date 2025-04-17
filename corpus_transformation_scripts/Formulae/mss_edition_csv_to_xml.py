@@ -245,9 +245,9 @@ def main():
 
     xml_string = etree.tostring(form_ms_ed_xml, pretty_print=True, encoding='unicode')
     xml_string = xml_string.replace('&amp;', '&')
-    # for an unknown reason matt used ampersand encoding
-    xml_string = xml_string.replace('&lt;', '<')
-    xml_string = xml_string.replace('&gt;', '>')
+    # Important to have proper ampersand notations
+    xml_string = xml_string.replace('&amplt;', '&lt;')
+    xml_string = xml_string.replace('&ampgt;', '&gt;')
     xml_path = csv_file.replace('.csv', '.xml')
 
     with open(xml_path, mode='w',encoding='utf-8') as f:

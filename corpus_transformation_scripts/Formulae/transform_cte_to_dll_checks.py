@@ -143,6 +143,8 @@ def check_if_collection_exists(collection_id:str, collection_type:str, path_to_c
     All collections (including transcriptions) do need to have:
         one folder with in the formulae-corpora directory with a capitains file and 
         one entry in the corresponding overall capitains file (e.g., formulae-corpora/data/manuscript_collection/__capitains__.xml)
+    If both conditions are met  -> True
+    Otherwise                   -> False
     """
 
     collection_path = os.path.join(path_to_corpora, collection_id)
@@ -309,3 +311,7 @@ def check_output_regesten_existance(corpus_folder:str, logger:logging.Logger, sa
                 return False
     else:
         raise ValueError("{} is not a valid value for sampling_method. Please one of these options: {}".format(sampling_method, sampling_method_options))
+    
+def check_mss_edition_file(check_mss_edition_file_path:str, sampling_method:str='complete') -> bool:
+    # <xml><formula n="urn:cts:formulae:sens.form_a_000.lat001">&lt;b&gt;&lt;span data-toggle="tooltip" data-boundary="window" id="P12-note-tooltip" data-container="body" title="Paris BnF Lat. 4627"&gt;P&lt;span class="subscript smaller-text"&gt;12&lt;/span&gt;&lt;/span&gt;&lt;/b&gt;**&lt;span data-toggle="tooltip" id="Zeu" data-html="true" data-container="body" title="Zeumer, Karl: Formulae Merowingici et Karolini aevi, Hannover 1882."&gt;&lt;b&gt;Zeu&lt;/b&gt;&lt;/span&gt;: Cart. Sen. Inc.</formula>
+    return True
