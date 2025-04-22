@@ -14,23 +14,75 @@ manuscript_information = {"p12":
                             #"url":"https://gallica.bnf.fr/ark:/12148/btv1b52515201k", 
                             #      https://gallica.bnf.fr/iiif/ark:/12148/btv1b52515201k/canvas/f213
                             #      https://gallica.bnf.fr/iiif/ark:/12148/btv1b52515201k/canvas/f59
-                            "url":"https://gallica.bnf.fr/iiif/ark:/12148/btv1b52515201k",
+                            "url":"https://gallica.bnf.fr/iiif/ark:/12148/btv1b52515201k"
+                            #,
+                            #"browser_url": "https://gallica.bnf.fr/ark:/12148/btv1b52515201k/f13",
+                            #"folio_number_pattern": r'folio \d{1,3}[r|v]',
                            # holds the number of 'empty' pages before the 'real' folios start
-                           "overhead":10}
+                           #"overhead":10}
                           }
 
 
 
-def _get_page_number(image_id:str, transcription_collection_id:str) -> int:
-    
-    folio_number = int(re.sub(r'[r|v]','',image_id))
-    # corrects the shift in in th page enumeration during the digitization
-    folio_number = folio_number + manuscript_information[transcription_collection_id]['overhead'] + folio_number-1
-    # pages with an v are on the 'right' side so their page number is 1 higher than their left-handed counterparts
-    if 'v' in image_id: folio_number += 1
-    return folio_number
+# def _get_page_number(image_id:str, transcription_collection_id:str) -> int:
+#     folio_number = int(re.sub(r'[r|v]','',image_id))
+#     # corrects the shift in in th page enumeration during the digitization
+#     folio_number = folio_number + manuscript_information[transcription_collection_id]['overhead'] + folio_number-1
+#     # pages with an v are on the 'right' side so their page number is 1 higher than their left-handed counterparts
+#     if 'v' in image_id: folio_number += 1
+#     return folio_number
 
-def _make_images_dict(title_urn:str, logger:logging.Logger) -> dict[str:str]:
+# def _get_folio_id_from_url(transcription_collection_id: str, page_number:int) -> str:
+#     """
+#     Fetches and extracts the folio id from a manuscript viewer page.
+
+#     Given a transcription collection ID and a page number, this function:
+#     1. Constructs the folio viewer URL using `manuscript_information`.
+#     2. Sends an HTTP GET request to retrieve the page content.
+#     3. Applies a regular expression (also from `manuscript_information`) to extract 
+#        the folio id from the page's HTML.
+#     4. Validates and returns the folio id in the format like '12r' or '7v'.
+
+#     Args:
+#         transcription_collection_id (str): The key identifying the manuscript collection.
+#         page_number (int): The page number to fetch the folio for.
+
+#     Returns:
+#         str: The cleaned folio id (e.g., '45r', '23v').
+
+#     Raises:
+#         ValueError: If the HTTP request fails or the folio id cannot be extracted.
+#     """
+
+#     folio_url = manuscript_information[transcription_collection_id]['browser_url']+"/f"+str(page_number)
+#     response = requests.get(folio_url)
+#     if response.status_code != requests.codes.ok:
+#         raise ValueError("{} from {}".format(response.status_code, folio_url))
+#     import re
+    
+#     #'\"bindUrl\":\"\",\"url\":\"https://gallica.bnf.fr/services/ajax/mode/SINGLE/ark:/12148/btv1b52515201k/f282/f282.item..SINGLE\",\"etat\":\"\"},\"IsPageVerticalDisplay\":false,\"changed\":true},\"contenu\":\"135v'
+    
+#     #folio_number_pattern = re.compile(manuscript_information[transcription_collection_id]['folio_number_pattern'])
+#     folio_number_pattern_raw = r'\"bindUrl\\":\\"\\",\\"url\\":\\"https:\/\/gallica\.bnf\.fr\/services\/ajax\/mode\/SINGLE\/ark:\/12148\/btv1b52515201k\/f\d{1,3}\/f\d{1,3}\.item\.\.SINGLE\\",\\"etat\\":\\"\\"},\\"IsPageVerticalDisplay\\":false,\\"changed\\":true},\\"contenu\\":\\"\d{1,3}[r|v]'
+#     #folio_number_pattern_raw = r'\"bindUrl\\":\\"\\",\\"url\\":\\"https:\/\/gallica\.bnf\.fr\/services\/ajax\/mode\/SINGLE\/ark:\/12148\/btv1b52515201k\/f\d{1,3}\/f\d{1,3}\.item\.\.SINGLE\\",\\"etat\\":\\"\\"},\\"IsPageVerticalDisplay\\":false,\\"changed\\":true},\\"contenu\\":\\"\d{1,3}[r|v]'
+#     print(folio_number_pattern_raw)
+#     folio_number_pattern = re.compile(folio_number_pattern_raw)
+#     folio_numbers = folio_number_pattern.findall(response.text)
+#     if len(folio_numbers) == 1: 
+#         clean_folio_number_pattern = r'\d{1,3}[r|v]'
+#         return clean_folio_number_pattern.findall(folio_numbers[0])[0]
+#     else:
+#         raise NameError("folio_numbers:", folio_numbers, folio_url)
+
+def _create_folio_id_url_map(manifest_url:str) -> dict[str, str]:
+    folio_id_url_map = dict()
+    response = requests.get(manifest_url)
+    manifest_json = response.json()
+    for canvas in manifest_json["sequences"][0]["canvases"]:
+        folio_id_url_map[canvas["label"]] = canvas["@id"]
+    return folio_id_url_map
+
+def _make_images_dict(folio_id_url_map,  title_urn:str, logger:logging.Logger) -> dict[str:str]:
     """Function that creates a dict, that holds url to the manuscript images.
     Every URL is checked beforehand and only included if it returns content.
 
@@ -41,35 +93,65 @@ def _make_images_dict(title_urn:str, logger:logging.Logger) -> dict[str:str]:
     Returns:
         A dict similar to this:
         {'images': 
-            {<folio number>: <url to the manuscript image>}
+            {<folio id>: <url to the manuscript image>}
         }
 
     """
-
-    #title_from_xml = re.sub(".+lat \[fol\.", "", title_from_xml)
-    #title_from_xml = re.sub("<span.+", "", title_from_xml)
     title_parts = title_urn.replace("urn:cts:formulae:",'').split('.')
-    transcription_collection_id = title_parts[0]
 
     folio_ids = re.findall(r'\d+[r|v]', title_parts[1])
     if folio_ids == []: raise ValueError("No folio ids found in "+title_urn)
 
     images_dict = dict()
     for folio_id in folio_ids:
-        page_number = _get_page_number(folio_id, transcription_collection_id)
-        folio_url = manuscript_information[transcription_collection_id]['url']+"/canvas/f"+str(page_number)
-        response = requests.get(folio_url)
-        if response.status_code == requests.codes.ok:
-            images_dict[folio_id] = folio_url
-        else:
-            logger.warning("{} from {}".format(response.status_code, folio_url))
-            #print("{} from {}".format(response.status_code, folio_url))
-            images_dict[folio_id] = folio_url
-
+        images_dict[folio_id] = folio_id_url_map[folio_id]
     return images_dict
 
 
-def _merge_with_existing_json(transcription_dict_list:dict[str:str], corpora_folder:str, collection_id:str, logger:logging.Logger) -> dict[str:str]:
+# def _make_images_dict_deprecated(title_urn:str, logger:logging.Logger) -> dict[str:str]:
+#     """Function that creates a dict, that holds url to the manuscript images.
+#     Every URL is checked beforehand and only included if it returns content.
+
+#     Args:
+#         title_urn: 
+#         logger: 
+
+#     Returns:
+#         A dict similar to this:
+#         {'images': 
+#             {<folio id>: <url to the manuscript image>}
+#         }
+
+#     """
+
+#     #title_from_xml = re.sub(".+lat \[fol\.", "", title_from_xml)
+#     #title_from_xml = re.sub("<span.+", "", title_from_xml)
+#     title_parts = title_urn.replace("urn:cts:formulae:",'').split('.')
+#     transcription_collection_id = title_parts[0]
+
+#     folio_ids = re.findall(r'\d+[r|v]', title_parts[1])
+#     if folio_ids == []: raise ValueError("No folio ids found in "+title_urn)
+
+#     folio_id_mismatches = list[tuple]
+
+#     images_dict = dict()
+#     for folio_id in folio_ids:
+#         page_number = _get_page_number(folio_id, transcription_collection_id)
+#         folio_url = manuscript_information[transcription_collection_id]['url']+"/canvas/f"+str(page_number)
+#         response = requests.get(folio_url)
+#         if response.status_code == requests.codes.ok:
+#             images_dict[folio_id] = folio_url
+#         else:
+#             logger.debug("{} from {}".format(response.status_code, folio_url))
+#             #print("{} from {}".format(response.status_code, folio_url))
+#             images_dict[folio_id] = folio_url
+#         obtained_folio_number = _get_folio_id_from_url(transcription_collection_id, page_number)
+#         if obtained_folio_number != folio_id:
+#             folio_id_mismatches.append((folio_id, obtained_folio_number, folio_url))
+#     return images_dict, folio_id_mismatches
+
+
+def _append_to_existing_json(transcription_dict_list:dict[str:str], corpora_folder:str, collection_id:str, logger:logging.Logger) -> dict[str:str]:
     """
     Merges an a newly created iiif json file with an existing one for the same manuscript collection. 
     """
@@ -104,8 +186,11 @@ def main(data_folder:str,output_folder:str, corpora_folder:str, logger) -> dict[
         if collection_id not in manuscript_information.keys():
             logger.warning(collection_id+" is not part of the catalog.")
         else:
+            folio_id_url_map = _create_folio_id_url_map(manuscript_information[collection_id]['url']+"/manifest.json")
             for transcription in tqdm(os.listdir(os.path.join(data_folder, collection_id)),desc="Text(s) from "+collection_id): 
                 transcription_folder_path = os.path.join(data_folder, collection_id, transcription)
+                #transcription_folio_id_mismatches = list[tuple]
+
                 if os.path.isdir(transcription_folder_path):
                     for file in os.listdir(transcription_folder_path):
                         if fnmatch.fnmatch(file, '*.lat001.xml'):
@@ -116,7 +201,9 @@ def main(data_folder:str,output_folder:str, corpora_folder:str, logger) -> dict[
                             title_urn = etree.parse(file_path).xpath('//tei:div[@subtype="transcription"]/@n', 
                                                                      namespaces={'tei': 'http://www.tei-c.org/ns/1.0'})[0]
                             try:
-                                images_dict = _make_images_dict(title_urn, logger)
+                                images_dict = _make_images_dict(folio_id_url_map,  title_urn, logger)
+                                #images_dict, folio_id_mismatches = _make_images_dict(title_urn, logger)
+                                #transcription_folio_id_mismatches = transcription_folio_id_mismatches + folio_id_mismatches
                                 result_dict = {
                                             "title": title_urn,
                                             "codex_name": (title_from_xml).split(" [f")[0],
@@ -127,7 +214,7 @@ def main(data_folder:str,output_folder:str, corpora_folder:str, logger) -> dict[
                             except ValueError as ve:
                                 logging.exception("Unable to create a iff json entry for {}. Caused by {} {}".format(file, type(ve).__name__, ve))
 
-            transcription_dict_list = _merge_with_existing_json(transcription_dict_list, corpora_folder, collection_id, logger)
+            transcription_dict_list = _append_to_existing_json(transcription_dict_list, corpora_folder, collection_id, logger)
             
             collections[collection_id] = transcription_dict_list
             output_file_path = os.path.join(output_folder, collection_id+".json")
@@ -135,9 +222,17 @@ def main(data_folder:str,output_folder:str, corpora_folder:str, logger) -> dict[
                 main_json = {collection_id.capitalize() : transcription_dict_list}
                 file.write(json.dumps(main_json, indent=4))
                 logger.info("Exported to: "+output_file_path)
+            
+            # export folio id mismatches
+            # output_file_path = os.path.join(output_folder, collection_id+"_mismatches.csv")
+            # with open(output_file_path, 'w') as file:
+            #     file.write(transcription_folio_id_mismatches)
+            #     logger.info("{} mismatched folio ids found. Exported complete list to: {}".format(len(transcription_folio_id_mismatches),output_file_path))
+
     return collections
 
 # python3 ~/git/scripts/corpus_transformation_scripts/Formulae/generate_iiif_json.py -h
+# python3 ~/git/scripts/corpus_transformation_scripts/Formulae/generate_iiif_json.py -i
 if __name__ == "__main__":
     parser=argparse.ArgumentParser(description="Script to to create a IIIF ingestion json file for manuscript images."
                                    "Please note, that this method relies on adding the url and overhead information manually."
