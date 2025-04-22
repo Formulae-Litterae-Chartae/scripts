@@ -382,6 +382,12 @@ else:
 
 
 from hss_editionen_tool import check_hss_editionen
+from transform_cte_to_dll_checks import check_hss_editionen_file
+try:
+    check_hss_editionen_file(hss_editionen_file_path='~/git/scripts/formel_transform/output/sens/hss_editionen.xml', logger=logger) 
+except Exception as e:
+    logger.error(e)
+
 logger.setLevel('DEBUG')
 if 0==len(latins):logger.warning("No Latin documents found!")
 logger.info("Start with latin(s)")

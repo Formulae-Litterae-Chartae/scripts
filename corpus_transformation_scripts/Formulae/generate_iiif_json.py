@@ -10,7 +10,11 @@ import json
 import argparse
 
 manuscript_information = {"p12": 
-                          {"url":"https://gallica.bnf.fr/ark:/12148/btv1b52515201k", 
+                          {
+                            #"url":"https://gallica.bnf.fr/ark:/12148/btv1b52515201k", 
+                            #      https://gallica.bnf.fr/iiif/ark:/12148/btv1b52515201k/canvas/f213
+                            #      https://gallica.bnf.fr/iiif/ark:/12148/btv1b52515201k/canvas/f59
+                            "url":"https://gallica.bnf.fr/iiif/ark:/12148/btv1b52515201k",
                            # holds the number of 'empty' pages before the 'real' folios start
                            "overhead":10}
                           }
@@ -47,21 +51,48 @@ def _make_images_dict(title_urn:str, logger:logging.Logger) -> dict[str:str]:
     title_parts = title_urn.replace("urn:cts:formulae:",'').split('.')
     transcription_collection_id = title_parts[0]
 
+    folio_ids = re.findall(r'\d+[r|v]', title_parts[1])
+    if folio_ids == []: raise ValueError("No folio ids found in "+title_urn)
+
     images_dict = dict()
-    for folio_id in re.findall(r'\d+[r|v]', title_parts[1]):
+    for folio_id in folio_ids:
         page_number = _get_page_number(folio_id, transcription_collection_id)
-        
         folio_url = manuscript_information[transcription_collection_id]['url']+"/canvas/f"+str(page_number)
         response = requests.get(folio_url)
         if response.status_code == requests.codes.ok:
             images_dict[folio_id] = folio_url
         else:
             logger.warning("{} from {}".format(response.status_code, folio_url))
+            #print("{} from {}".format(response.status_code, folio_url))
+            images_dict[folio_id] = folio_url
+
     return images_dict
 
 
+def _merge_with_existing_json(transcription_dict_list:dict[str:str], corpora_folder:str, collection_id:str, logger:logging.Logger) -> dict[str:str]:
+    """
+    Merges an a newly created iiif json file with an existing one for the same manuscript collection. 
+    """
+    collection_id_capitalize = collection_id.capitalize()
+    if corpora_folder != "":
+        existing_json_file_path = os.path.join(corpora_folder, 'iiif', collection_id_capitalize+'.json')
+        if os.path.isfile(existing_json_file_path):
+            with open(existing_json_file_path) as existing_json_file:
+                existing_json = json.load(existing_json_file)
+            if collection_id_capitalize in existing_json.keys():
+                existing_transcription_dicts = existing_json[collection_id_capitalize]
+                transcription_dict_list = existing_transcription_dicts + transcription_dict_list
+                logging.info("merged with "+existing_json_file_path)
+                return transcription_dict_list
+                
+            else:
+                logging.debug(collection_id_capitalize+" not found in "+existing_json_file_path)
+        else:
+            logging.debug("File not found: "+existing_json_file_path)
+    return transcription_dict_list
 
-def main(data_folder:str,output_folder:str, logger) -> dict[str:list[dict[str:str]]]:
+
+def main(data_folder:str,output_folder:str, corpora_folder:str, logger) -> dict[str:list[dict[str:str]]]:
     """
     Parameter:
         transcription_folder
@@ -80,20 +111,30 @@ def main(data_folder:str,output_folder:str, logger) -> dict[str:list[dict[str:st
                         if fnmatch.fnmatch(file, '*.lat001.xml'):
                             file_path = os.path.join(transcription_folder_path, file)
                             #<div type="edition" xml:lang="lat" n="urn:cts:formulae:p12.2r2v.lat001" subtype="transcription">
-                            title_from_xml = etree.parse(file_path).xpath('//tei:title[not(@type)]/text()', namespaces={'tei': 'http://www.tei-c.org/ns/1.0'})[0]
-                            title_urn = etree.parse(file_path).xpath('//tei:div[@subtype="transcription"]/@n', namespaces={'tei': 'http://www.tei-c.org/ns/1.0'})[0]
-                            result_dict = {
+                            title_from_xml = etree.parse(file_path).xpath('//tei:title[not(@type)]/text()', 
+                                                                          namespaces={'tei': 'http://www.tei-c.org/ns/1.0'})[0]
+                            title_urn = etree.parse(file_path).xpath('//tei:div[@subtype="transcription"]/@n', 
+                                                                     namespaces={'tei': 'http://www.tei-c.org/ns/1.0'})[0]
+                            try:
+                                images_dict = _make_images_dict(title_urn, logger)
+                                result_dict = {
                                             "title": title_urn,
-                                            "codex_name": (title_from_xml).split("lat [f")[0],
+                                            "codex_name": (title_from_xml).split(" [f")[0],
                                             "manifest_link": manuscript_information[collection_id]['url']+"/manifest.json", 
-                                            "images": _make_images_dict(title_urn, logger)
+                                            "images": images_dict
                                             }
-                            transcription_dict_list.append(result_dict)
-            collections[collection_id] = transcription_dict_list
-    
+                                transcription_dict_list.append(result_dict)
+                            except ValueError as ve:
+                                logging.exception("Unable to create a iff json entry for {}. Caused by {} {}".format(file, type(ve).__name__, ve))
+
+            transcription_dict_list = _merge_with_existing_json(transcription_dict_list, corpora_folder, collection_id, logger)
             
-            with open(os.path.join(output_folder, collection_id+".json"), 'w') as file:
-                file.write(json.dumps(transcription_dict_list, indent=4))
+            collections[collection_id] = transcription_dict_list
+            output_file_path = os.path.join(output_folder, collection_id+".json")
+            with open(output_file_path, 'w') as file:
+                main_json = {collection_id.capitalize() : transcription_dict_list}
+                file.write(json.dumps(main_json, indent=4))
+                logger.info("Exported to: "+output_file_path)
     return collections
 
 # python3 ~/git/scripts/corpus_transformation_scripts/Formulae/generate_iiif_json.py -h
@@ -104,7 +145,11 @@ if __name__ == "__main__":
     parser.add_argument("--input_folder","-i", type=str,default='~/git/scripts/formel_transform/output/sens/data', 
                         help='Folder with the transcription files.')
     parser.add_argument("--output_folder","-o", type=str,default='~/git/scripts/formel_transform/output/sens/iiif', 
-                        help='Folder for the resultung json files.')
+                        help='Folder for the resulting json files.')
+
+    parser.add_argument("--corpora_folder","-c", type=str,default='~/git/formulae-corpora', 
+                        help='Folder which holds the formulae corpora. '
+                        'If this attribute is set, existing iiif json files are merge with the new ones. the resulting json files.')
     parser.add_argument("--logging_level","-l", type=str, help="Logging level", default="DEBUG")
     args=parser.parse_args()
 
@@ -114,4 +159,4 @@ if __name__ == "__main__":
     
     logger = get_logger()
     logger.setLevel(args.logging_level)
-    main(args.input_folder, args.output_folder, logger)
+    main(make_proper_path(args.input_folder), make_proper_path(args.output_folder), make_proper_path(args.corpora_folder), logger)

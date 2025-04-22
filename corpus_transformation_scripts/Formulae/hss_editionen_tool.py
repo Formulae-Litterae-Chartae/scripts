@@ -15,6 +15,8 @@ def find_hss_editionen(hss_editionen_file_name=DEFAULT_HSS_EDITIONEN_FILE_NAME):
 def check_hss_editionen(hss_editionen_file_name=DEFAULT_HSS_EDITIONEN_FILE_NAME,logging=None):
     return check_for_illegal_strings_in_hss_editionen(find_hss_editionen(),logging)
 
+@DeprecationWarning
+# should be merged with its equivalent in the transform_cte_to_dll_checks
 def check_for_illegal_strings_in_hss_editionen(hss_editionen_file_path, logging=None):
     with open(hss_editionen_file_path) as file:
         content = file.read()

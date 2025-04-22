@@ -239,7 +239,11 @@
             <!--            Thorben (04.03.25): I needed to move this one up-->
             <xsl:when test="contains($formTitle, 'SensDEPRECATED')">
                 <xsl:choose>
-                    <xsl:when test="contains($formTitle, 'Incipit')"><xsl:text>form_a_000</xsl:text></xsl:when>
+                    <!-- <xsl:when test="contains($formTitle, 'Incipit')"><xsl:text>form_a_000</xsl:text></xsl:when> -->
+                    <!-- Assign 'form_a_000' for both the German and the Latin version of the incipit of sense, but not to the transcription -->
+                    <xsl:when test="matches($formTitle, 'Sens') and not(matches($formTitle, '[\(\)]'))">
+                        <xsl:text>form_a_000</xsl:text>
+                    </xsl:when>
                     <xsl:otherwise>
                         <xsl:text>form_</xsl:text>
                         <!--Extract the subcollection letter. e.g., A and makes it lower case: a-->
@@ -272,12 +276,16 @@
                 </xsl:choose>
             </xsl:when>
             
-            <xsl:when test="contains($formTitle, 'Incipit')">
+            <!-- Assign 'form_a_000' for Sens' incipit (but skip transcriptions with parentheses) -->
+            <!-- <xsl:when test="matches($formTitle, 'Sens') and not(contains($formTitle, '(')) and not(contains($formTitle, ')'))">
                 <xsl:text>form_a_000</xsl:text>
-            </xsl:when>
-            <xsl:when test="contains($formTitle, 'Sens') and matches($formTitle, 'Ergänzung|Erg%C3%A4nzung')">
+            </xsl:when> -->
+
+            <!-- Assign 'form_b_ergaenzung' for the Ergänzung in Sens B -->
+            <!-- <xsl:when test="matches($formTitle, 'Sens') and matches($formTitle, 'Ergänzung|Erg%C3%A4nzung')">
                 <xsl:text>form_b_ergaenzung</xsl:text>
-            </xsl:when>
+            </xsl:when> -->
+
             <xsl:when test="$formTitle/tei:ref[@type='folia']">
                 <xsl:value-of select="normalize-space(replace($formTitle/tei:ref[@type='folia'], '(fol|p)\.\s*|-', ''))"/>
             </xsl:when>
@@ -300,6 +308,7 @@
             <xsl:when test="contains($formTitle/tei:ref[@type='form-name'], 'Sens')">
                 <xsl:choose>
                     <xsl:when test="contains($formTitle, 'Incipit')"><xsl:text>form_a_000</xsl:text></xsl:when>
+                    <xsl:when test="matches($formTitle, 'Ergänzung|Erg%C3%A4nzung')"><xsl:text>form_b_ergaenzung</xsl:text></xsl:when>
                     <xsl:otherwise>
                         <xsl:text>form_</xsl:text><xsl:value-of select="lower-case(replace($formTitle/tei:ref[@type='form-name'], 'Sens ([A-C]) (\d+) ?([a-m]?).*', '$1'))"/><xsl:text>_</xsl:text><xsl:number value="replace($formTitle/tei:ref[@type='form-name'], 'Sens ([A-C]) (\d+) ?([a-m]?).*', '$2')" format="001"/><xsl:value-of select="replace($formTitle/tei:ref[@type='form-name'], 'Sens ([A-C]) (\d+) ?([a-m]?).*', '$3')"/>
                     </xsl:otherwise>

@@ -312,6 +312,24 @@ def check_output_regesten_existance(corpus_folder:str, logger:logging.Logger, sa
     else:
         raise ValueError("{} is not a valid value for sampling_method. Please one of these options: {}".format(sampling_method, sampling_method_options))
     
-def check_mss_edition_file(check_mss_edition_file_path:str, sampling_method:str='complete') -> bool:
-    # <xml><formula n="urn:cts:formulae:sens.form_a_000.lat001">&lt;b&gt;&lt;span data-toggle="tooltip" data-boundary="window" id="P12-note-tooltip" data-container="body" title="Paris BnF Lat. 4627"&gt;P&lt;span class="subscript smaller-text"&gt;12&lt;/span&gt;&lt;/span&gt;&lt;/b&gt;**&lt;span data-toggle="tooltip" id="Zeu" data-html="true" data-container="body" title="Zeumer, Karl: Formulae Merowingici et Karolini aevi, Hannover 1882."&gt;&lt;b&gt;Zeu&lt;/b&gt;&lt;/span&gt;: Cart. Sen. Inc.</formula>
-    return True
+def check_hss_editionen_file(hss_editionen_file_path:str, logger:logging.Logger) -> bool:
+    forbidden_strings_regex = "[<|>]*amp"
+    hss_editionen = etree.parse(make_proper_path(hss_editionen_file_path))
+    formula_with_proper_n_element = 0
+    formula_with_proper_text = 0
+
+    formula_list = hss_editionen.xpath("/xml/formula")
+
+    for formula in formula_list:
+        if "n" in formula.keys():
+            n_str = formula.get('n')
+            formula_with_proper_n_element +=1
+        formula_text = formula.text
+        if not re.search(forbidden_strings_regex, formula_text):
+            formula_with_proper_text +=1
+    
+    if (len(formula_list) == formula_with_proper_text) and (len(formula_list) == formula_with_proper_n_element):
+        logger.info("Found {} formula entries. All have proper n-attributes and texts.".format(formula_with_proper_text))
+        return True
+    else:
+        logger.warning("Found {} formula entries. Only {} have proper n-attributes and {} have proper texts.".format(len(formula_list), formula_with_proper_n_element, formula_with_proper_text))
