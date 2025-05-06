@@ -143,6 +143,26 @@ def make_temp_id(title:str) -> str:
     else:
         raise ValueError("{} is malformatted.".format(title))
 
+import csv
+
+def read_limited_csv(file_path: str, csv_column_limit: int) -> list[list[str]]:
+    """
+    Reads a CSV file and returns only the first CSV_COLUMN_LIMIT columns of each row.
+
+    Args:
+        file_path (str): The path to the CSV file.
+
+    Returns:
+        list[list[str]]: A list of rows, each row being a list of up to CSV_COLUMN_LIMIT strings.
+    """
+    rows = []
+    with open(file_path, newline='', encoding='utf-8') as csv_file:
+        reader = csv.reader(csv_file, delimiter='\t')
+        for row in reader:
+            rows.append(row[:csv_column_limit])
+    return rows
+
+
 def main():
     logger = get_logger()
     logger.setLevel('DEBUG')
@@ -150,7 +170,8 @@ def main():
     formulae_collections_md_file = argv[2]
     manuscript_collections_md_file = argv[3]
     corpus_name = os.path.split(input_path)[-1]
-
+    # Number of columns from the CSV to consider during processing.
+    csv_column_limit: int = 3
     output_folder_hss_editionen = '/home/thorben.schomacker/git/scripts/formel_transform/output/{corpus}/hss_editionen.xml'.format(corpus=corpus_name) #argv[3]
 
     input_encoding = 'utf-8'
@@ -178,10 +199,9 @@ def main():
 
     form_ms_ed_xml = E.xml()
 
-
-    with open(csv_file, encoding=input_encoding) as f:
-        rows = f.readlines()
-        if len(rows)==0: raise ValueError('{} appears to be empty, since it has no rows'.format(csv_file))
+    rows = read_limited_csv(csv_file, csv_column_limit)
+    print(rows)
+    if len(rows)==0: raise ValueError('{} appears to be empty, since it has no rows'.format(csv_file))
     # Map titles to URNs
     form_coll_md = etree.parse(formulae_collections_md_file)
     title_id_dict = dict()
@@ -224,7 +244,8 @@ def main():
     
 
     for r in rows[1:]:
-        cells = r.strip().split('\t')
+        #cells = r.strip().split('\t')
+        cells = r
         if len(cells) > 1:
             info_string = build_sigla(cells[1].strip(), sigla_html_dict) + '**' + build_editions(cells[2], ed_bib_info)
             if len(cells) > 3:
