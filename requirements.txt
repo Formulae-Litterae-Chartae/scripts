@@ -3,3 +3,6 @@ pandas
 openpyxl
 tqdm
 beautifulsoup4
+bibtexparser
+trafilatura
+lxml_html_clean

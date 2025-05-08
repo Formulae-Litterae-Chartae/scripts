@@ -85,10 +85,12 @@ def build_urn(s):
                 form_num += '_' + num_parts.group(2).strip('()') 
     return '.'.join([coll_name, form_num, 'lat001'])
 
-def build_sigla(s, sigla_dict): 
+def build_sigla(s, sigla_dict, logger) -> str: 
     all_sigla = re.split(r',\s+', s) 
     formatted_sigla = list() 
     for sig in all_sigla: 
+        # escape '**' because it is used as a separator token later on
+        sig = sig.replace('**', '\*\*')
         pared_sig = re.sub(r'(\w+\d*\w?).*', r'\1', sig)
         remainder = re.sub(r'\w+\d*\w?(.*)', r'\1', sig)
         if sig == 'Fu†':
@@ -96,23 +98,27 @@ def build_sigla(s, sigla_dict):
             remainder = ''
         formatted_sigla.append('&lt;b&gt;' + sigla_dict.get(pared_sig, pared_sig) + '&lt;/b&gt;' + remainder)
         if pared_sig not in sigla_dict:
-            print(pared_sig + ' not found in siglen list')
+            logger.warning(pared_sig + ' not found in siglen list')
     return ', '.join(formatted_sigla)
 
-def build_editions(s, ed_dict): 
+def build_editions(s:str, ed_dict:dict[str:(str,str)], logger) -> str: 
+    """
+    creates mouse-over tooltips for all editions
+    """
     all_eds = re.split(r'; ', s) 
     formatted_eds = list() 
     for ed in all_eds: 
         try:
             editor, number = re.split(r': ', ed)
             formatted_editor = editor
+            editor = editor.strip().lstrip()
             biblio = ed_dict.get(editor, editor)
             if len(biblio) == 2:
                 formatted_editor = biblio[0]
                 biblio = biblio[1]
             formatted_eds.append('&lt;span data-toggle="tooltip" id="{editor}" data-html="true" data-container="body" title="{biblio}"&gt;&lt;b&gt;{formatted_editor}&lt;/b&gt;&lt;/span&gt;: {form_number}'.format(editor=editor, form_number=number, biblio=biblio, formatted_editor=formatted_editor))
             if editor not in ed_dict:
-                print(editor + ' not found in the list of editors')
+                logger.warning('"{}" not found in the list of editors'.format(editor))
         except ValueError:
             for w in ed.split():
                 if w in ed_dict:
@@ -192,7 +198,12 @@ def main():
                 'Mab': ('Mab', 'Mabillon, Jean: Librorum De Re Diplomatica Supplementum : In Quo Archetypa In His Libris pro regulis proposita, ipsaeque regulae denuo confirmantur, novisque speciminibus et argumentis et illustrantur, Paris 1704.'),
                 'Rio': ('Rio', 'Rio, Alice: The formularies of Angers and Marculf: Two Merovingian legal handbooks, Liverpool 2008 (Translated texts for historians 46).'),
                 'Par': ('Par', "Pardessus, Jean-Marie: Notice sur les manuscrits de formules relatives au droit observé dans l'Empire des Francs, suivie de quatorze formules inédites, in: Bibliothèque de l’école des chartes 4 (1843), S. 1-22."),
-                'Bis': ('Bis', 'Bischoff, Bernhard: Epitaphienformeln für Äbtissinnen (Achtes Jahrhundert), in: Ders. (Hg.), Anecdota Novissima. Texte des vierten bis sechszehnten Jahrhunderts, Stuttgart 1984, S. 152')}
+                'Bis': ('Bis', 'Bischoff, Bernhard: Epitaphienformeln für Äbtissinnen (Achtes Jahrhundert), in: Ders. (Hg.), Anecdota Novissima. Texte des vierten bis sechszehnten Jahrhunderts, Stuttgart 1984, S. 152'),
+                'Wal': ('Wal', 'Les cinq épîtres rimées dans l’appendice des Formules de Sens: Codex Parisinus Latinus 4627, fol. 27v–29r. La querelle des évêques Frodebert et Importun (an 665/666), hg. von Gerard Walstra (Leiden 1962).'),
+                'Tyr': ('Tyr', 'V. A. Tyrrell, Merovingian Letters and Letter Writers (Turnhout 2019), S. 70-80.'),
+                'Bal': ('Bal', 'Capitularia regum Francorum. Additae sunt Marculfi monachi et aliorum formulae veteres et notae doctissimorum virorum, 2 Bde., hg. von Étienne Baluze (Paris 1677).'),
+                'Bou': ('Bou', 'Cinq formules rhytmées et assonancées du VIIe siècle, hg. von Anatole Boucherie (Montpellier/Paris 1867).'),
+                'Sha': ('Sha', 'D. Shanzer, The tale of Frodebert’s tail, in: Dickey, E., Chahoud, A. (Hgg.), Colloquial and Literary Latin (Cambridge 2010), 377–405.')}
 
 
 
@@ -200,7 +211,6 @@ def main():
     form_ms_ed_xml = E.xml()
 
     rows = read_limited_csv(csv_file, csv_column_limit)
-    print(rows)
     if len(rows)==0: raise ValueError('{} appears to be empty, since it has no rows'.format(csv_file))
     # Map titles to URNs
     form_coll_md = etree.parse(formulae_collections_md_file)
@@ -230,7 +240,9 @@ def main():
     # Map MS sigla to the HTML needed to show them properly
     if not os.path.isfile(manuscript_collections_md_file): raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), manuscript_collections_md_file)
     ms_coll_md = etree.parse(manuscript_collections_md_file)
-    sigla_html_dict = {'Fu†': '&lt;span data-toggle="tooltip" data-boundary="window" id="Fu-verloren-note-tooltip" data-container="body" title="Verlorene Handschrift aus Fulda vgl. Bibliothekskatalog Fulda 16. Jhd. (Vatikan BAV Pal. Lat. 1928) Nr. 238"&gt;&lt;a href="https://digi.ub.uni-heidelberg.de/diglit/bav_pal_lat_1928/0099/image,info" target="_blank"&gt;Fu† ↗&lt;/a&gt;&lt;/span&gt;'}
+    sigla_html_dict = {
+        'Fu†': '&lt;span data-toggle="tooltip" data-boundary="window" id="Fu-verloren-note-tooltip" data-container="body" title="Verlorene Handschrift aus Fulda vgl. Bibliothekskatalog Fulda 16. Jhd. (Vatikan BAV Pal. Lat. 1928) Nr. 238"&gt;&lt;a href="https://digi.ub.uni-heidelberg.de/diglit/bav_pal_lat_1928/0099/image,info" target="_blank"&gt;Fu† ↗&lt;/a&gt;&lt;/span&gt;',
+        'Rg1': 'Regensburg, Staatliche Bibliothek, Inc. 2° 43 (Fragment aus St.Emmeram)'}
     for f_c in ms_coll_md.xpath('/cpt:collection/cpt:members/cpt:collection', namespaces=ns):
         ms_corp_md_path = os.path.normpath(os.path.join(os.path.dirname(manuscript_collections_md_file), f_c.get('path')))
         if not os.path.isfile(ms_corp_md_path): raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), ms_corp_md_path)
@@ -242,14 +254,14 @@ def main():
 
 
     
-
+    SEPERATOR_TOKEN = '**'
     for r in rows[1:]:
         #cells = r.strip().split('\t')
         cells = r
         if len(cells) > 1:
-            info_string = build_sigla(cells[1].strip(), sigla_html_dict) + '**' + build_editions(cells[2], ed_bib_info)
+            info_string = build_sigla(cells[1].strip(), sigla_html_dict, logger) + SEPERATOR_TOKEN + build_editions(cells[2], ed_bib_info, logger)
             if len(cells) > 3:
-                info_string += '**' + '**'.join(cells[3:])
+                info_string += SEPERATOR_TOKEN + SEPERATOR_TOKEN.join(cells[3:])
             cells[0] = re.sub(r'Flavigny Pa 7 (\D)', r'Flavigny Pa 7\1', cells[0])
             title= cells[0].strip()
             try:

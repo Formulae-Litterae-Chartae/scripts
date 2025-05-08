@@ -6,6 +6,8 @@ from bibtexparser.customization import convert_to_unicode
 import sys
 import re
 from os import environ, path
+from lxml import etree
+from trafilatura.xml import validate_tei
 
 home_dir = environ.get('HOME', '')
 current_dir = path.abspath(path.dirname(__file__))
@@ -206,9 +208,22 @@ for e in sorted(bib_database.entries, key=author_year_sort):
     entries.append(entry)
     
 
-tree = etree.parse(home_dir + '/scripts/internal/biblatex/tei_bibliography_template.xml')
+tree = etree.parse(home_dir + '/git/scripts/internal/biblatex/tei_bibliography_template.xml')
 tree.xpath('//tei:body', namespaces={'tei': "http://www.tei-c.org/ns/1.0"})[0].append(entries)
 xml_str = etree.tostring(tree, pretty_print=True, encoding="unicode")
 xml_str = xml_str.replace('><', '>\n<')
-with open(bib_source.replace('.bib', '.xml'), mode="w") as f:
+export_path = bib_source.replace('.bib', '.xml')
+with open(export_path, mode="w") as f:
     f.write(xml_str)
+print("Done! Exported to "+export_path)
+
+
+def validate_xml(export_path:str):
+    """
+    More information: https://trafilatura.readthedocs.io/en/latest/tutorial2.html#validating-existing-files
+    """
+    mytree = etree.parse(export_path)
+    if validate_tei(mytree):
+        print("Validation passed: "+export_path)
+
+validate_xml(export_path)
