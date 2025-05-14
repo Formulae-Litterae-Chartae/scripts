@@ -199,6 +199,11 @@
                     <xsl:variable name="lastFolio"><xsl:value-of select="normalize-space(replace($folia[last()], '.*?\[((fol|p).[^\]/]+).*', '$1'))"/></xsl:variable>
                     <xsl:variable name="bindingFirst"><xsl:value-of select="replace($folia[1], '.*?\[fol.[^\]/]+\]\s*', ' ')"/></xsl:variable>
                     <xsl:variable name="bindingLast"><xsl:value-of select="replace($folia[last()], '.*?\[fol.[^\]/]+\]\s*', ' ')"/></xsl:variable>
+                    
+                    <xsl:variable name="firstNum" select="replace($firstFolio, '\D*(\d+).*', '$1')"/>
+                    <xsl:variable name="firstSide" select="replace($firstFolio, '\D*\d+([a-z]+)', '$1')"/>
+                    <xsl:variable name="lastNum" select="replace($lastFolio, '\D*(\d+).*', '$1')"/>
+                    <xsl:variable name="lastSide" select="replace($lastFolio, '\D*\d+([a-z]+)', '$1')"/>
                     <xsl:attribute name="type">markedUpFolia</xsl:attribute>
                     <xsl:choose>
                         <xsl:when  test="contains($tempTitle, 'Sg2')">
@@ -212,15 +217,24 @@
                             <xsl:text>fol.</xsl:text>
                             <xsl:value-of select="replace($firstFolio, '\D+(\d+)([rvab]+)', '$1')"/>
                             <xsl:text>&lt;span class="verso-recto"&gt;</xsl:text>
-                            <xsl:value-of select="replace($firstFolio, '\D+(\d+)([rvab]+)', '$2')"/>
-                            <xsl:value-of select="normalize-space($bindingFirst)"/>
+                            <xsl:value-of select="$firstSide"/>
                             <xsl:text>&lt;/span&gt;</xsl:text>
-                            <xsl:if test="count($folia) > 1">
+<!--                            <xsl:value-of select="replace($firstFolio, '\D+(\d+)([rvab]+)', '$2')"/>-->
+<!--                            <xsl:value-of select="normalize-space($bindingFirst)"/>-->
+<!--                            <xsl:text>&lt;/span&gt;</xsl:text>-->
+<!--                            <xsl:if test="count($folia) > 1">
                                 <xsl:text>-</xsl:text>
                                 <xsl:value-of select="replace($lastFolio, '\D+(\d+)([rvab]+)', '$1')"/>
                                 <xsl:text>&lt;span class="verso-recto"&gt;</xsl:text>
                                 <xsl:value-of select="replace($lastFolio, '\D+(\d+)([rvab]+)', '$2')"/>
                                 <xsl:value-of select="normalize-space($bindingLast)"/>
+                                <xsl:text>&lt;/span&gt;</xsl:text>
+                            </xsl:if>-->
+                            <xsl:if test="count($folia) > 1">
+                                <xsl:text>-</xsl:text>
+                                <xsl:value-of select="$lastNum"/>
+                                <xsl:text>&lt;span class=&quot;verso-recto&quot;&gt;</xsl:text>
+                                <xsl:value-of select="$lastSide"/>
                                 <xsl:text>&lt;/span&gt;</xsl:text>
                             </xsl:if>
                         </xsl:otherwise>
