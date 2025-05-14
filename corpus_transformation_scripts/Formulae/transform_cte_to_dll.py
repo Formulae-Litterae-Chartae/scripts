@@ -255,7 +255,7 @@ for german in tqdm(germans, desc="Process German translation(s)", disable=(logge
 
 
 from transform_cte_to_dll_checks import check_input_regesten_format
-
+from transform_cte_to_dll_checks import check_fols
 # Since all following steps rely on the existance and format of the regesten file. It should be checked!
 check_input_regesten_format(destination_folder, logger)
 logger.setLevel('WARNING')
@@ -287,6 +287,7 @@ for transcription in tqdm(sorted(transcriptions), desc="Process transcription(s)
     
     new_file = allocated_temp_files[0]
     filename_parts = new_file.split('/')[-1].split('.')[:-1]
+    #filename_parts[1] = filename_parts[1].replace(" ", "")
     logging.debug("filename_parts {}".format(filename_parts))
     man = filename_parts[0]
     
@@ -302,6 +303,8 @@ for transcription in tqdm(sorted(transcriptions), desc="Process transcription(s)
         #man = manuscript
         #logging.debug("Assigned as: {} the value for man based on manuscript".format(man))
     
+    
+    check_fols(filename_parts[1], logger)
     new_name = destination_folder + '/data/{man}/{fols}/{man}.{fols}.{ed}.xml'.format(man=man, fols=filename_parts[1], ed=filename_parts[2])
     fol_add = 1
     new_urn = ''

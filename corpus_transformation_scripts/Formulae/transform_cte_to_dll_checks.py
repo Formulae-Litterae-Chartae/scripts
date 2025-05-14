@@ -333,3 +333,28 @@ def check_hss_editionen_file(hss_editionen_file_path:str, logger:logging.Logger)
         return True
     else:
         logger.warning("Found {} formula entries. Only {} have proper n-attributes and {} have proper texts.".format(len(formula_list), formula_with_proper_n_element, formula_with_proper_text))
+
+import re
+def check_fols(fols: str, logger:logging.Logger) -> bool:
+    """
+    Checks whether the given string matches the expected folio range pattern.
+
+    Valid formats include:
+        - "12r13v"
+        - "45bisr67bisv"
+        - "3v5r"
+
+    Returns:
+        bool: True if the format is valid, otherwise raises ValueError.
+
+    Raises:
+        ValueError: If the input does not match the expected folio pattern.
+    """
+    pattern_str = r"(\d{1,3}(bis)?[r|v][a|b]?){1,2}"
+
+    if not re.fullmatch(pattern_str, fols):
+        logger.error(f"{fols} does not match the naming pattern for transcriptions.")
+        raise ValueError(f"{fols} does not match the naming pattern for transcriptions.")
+        return False
+    else:
+        return True

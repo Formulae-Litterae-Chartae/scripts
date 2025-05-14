@@ -102,7 +102,28 @@
                         <xsl:element name="xml:lang">lat</xsl:element>
                     </xsl:otherwise>
                 </xsl:choose>
-                <xsl:variable name="folia" select="/tei:TEI/tei:text/tei:body/tei:p[starts-with(., '[p.') or starts-with(., '[fol.')]"/>
+                <!--This extracts the folios, which serve the transcription id later-->
+                <!--
+                  Select all <p> elements in the TEI body that start with either "[p." or "[fol."
+                  These typically mark folio or page references like "[fol. 28 bisr]"
+                -->
+                <xsl:variable name="folia_raw" select="/tei:TEI/tei:text/tei:body/tei:p[starts-with(., '[p.') or starts-with(., '[fol.')]"/>
+                <!--
+                  Clean and normalize those folio references:
+                  - Step 1: Extract the text inside square brackets, e.g. "[fol. 28 bisr]" → "fol. 28 bisr"
+                  - Step 2: Normalize whitespace (remove leading/trailing, collapse multiple spaces)
+                  - Step 3: Remove whitespace between the number and trailing letters (e.g. "28 bisr" → "28bisr")
+                  Result: A cleaned sequence like ("fol. 28bisr", "p. 9v")
+                -->
+                <xsl:variable name="folia" as="xs:string*" select="
+                    for $f in $folia_raw
+                    return
+                    replace(
+                    normalize-space(replace(string($f), '.*?\[((fol|p)\.\s*[^\]/]+).*', '$1')),
+                    '(\d+)\s+',
+                    '$1'
+                    )
+                    "/>
                 <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="type">form-name</xsl:attribute>
                     <xsl:choose>
