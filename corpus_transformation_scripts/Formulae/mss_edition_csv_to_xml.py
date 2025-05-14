@@ -85,83 +85,50 @@ def build_urn(s):
                 form_num += '_' + num_parts.group(2).strip('()') 
     return '.'.join([coll_name, form_num, 'lat001'])
 
-def extract_sigla(s: str) -> list[str]:
-    """
-    Extracts sigla from a string using both comma-splitting and pattern matching,
-    preserving any bracketed annotation like [Fragm.] and trailing symbols like †.
-
-    Duplicates are preserved.
-
-    :param s: The input string possibly containing sigla and bracket annotations.
-    :return: A list of sigla with annotations (may contain duplicates).
-    """
-    # Step 1: Extract content inside the outermost brackets, e.g., [Fragm.]
-    bracket_match = re.search(r'\[([^\[\]]+)\]', s)
-    bracket_content = bracket_match.group(0) if bracket_match else ''
-    
-    # Step 2: Get string before the bracket (remove annotation for clean matching)
-    before_bracket_content = (
-        s[:bracket_match.start()] + s[bracket_match.end():]
-        if bracket_match else s
-    )
-
-    # Step 3: Comma-split and strip
-    split_sigla = [
-        sig.strip() + bracket_content
-        for sig in re.split(r',\s*', before_bracket_content)
-        if sig.strip()
-    ]
-
-    # Step 4: Pattern extract sigla and re-attach bracket if found
-    pattern = re.compile(r'\b[A-Z][a-z]*\d+[a-z]?(?:†)?\b')
-    pattern_sigla = [
-        match + bracket_content
-        for match in pattern.findall(before_bracket_content)
-    ]
-
-    # Step 5: Combine both results (with possible duplicates)
-    return split_sigla + pattern_sigla
-
 
 def build_sigla(s: str, sigla_dict: dict[str, str], logger: logging.Logger) -> str:
     """
     Builds an HTML-formatted string of manuscript sigla.
 
-    Each siglum in the input string is looked up in a dictionary and wrapped in HTML bold tags. 
-    The function also escapes '**' (used later as a separator token), extracts a pared-down version 
-    for lookup, and logs an error if a siglum is not found in the dictionary.
+    This function parses a string of sigla, formats each siglum by wrapping it in HTML <b> tags
+    using a provided mapping, and handles alternative sigla enclosed in square brackets.
+    Special cases (e.g., sigla with fragments or non-standard endings) are explicitly handled.
 
     Parameters:
-        s (str): A comma-separated string of sigla (e.g., "M1, M2, Fu†").
-        sigla_dict (Dict[str, str]): A dictionary mapping base sigla to formatted display strings.
-        logger (logging.Logger): A logger instance for error reporting.
+        s (str): A comma-separated string of sigla, potentially with additional sigla (e.g., "M1, Fu† [auch in M2 und M3]").
+        sigla_dict (dict[str, str]): Mapping from base sigla to their formatted HTML representations.
+        logger (logging.Logger): Logger for reporting unknown sigla.
 
     Returns:
-        str: HTML-formatted string of sigla.
+        str: An HTML-formatted string with bolded sigla.
     """
-    # open to other possibilities
     possible_additional_sigla_indicator = [' [auch in ']
     split_regular_alternative_sigla = []
-    for additional_sigla_indicator in possible_additional_sigla_indicator:
-        if additional_sigla_indicator in s:
-            split_regular_alternative_sigla = s.split(additional_sigla_indicator)
+
+    for indicator in possible_additional_sigla_indicator:
+        if indicator in s:
+            split_regular_alternative_sigla = s.split(indicator)
             s = split_regular_alternative_sigla[0]
-            additional_sigla_indicator = additional_sigla_indicator
-            continue
+            additional_sigla_indicator = indicator
+            break  # use first match and exit
+
     all_sigla = re.split(r',\s+', s)
-    #[A-Z][a-z]*\d*(\*\*)?[a-z]?†?
-    #all_sigla = extract_sigla(s)
-    formatted_sigla = list()
+    formatted_sigla: list[str] = []
 
-    
+    def format_siglum(sig: str, sigla_dict: dict[str, str]) -> str:
+        """
+        Format a single siglum using the dictionary.
 
-    def format_siglum(sig, sigla_dict) -> str:
-        # Escape '**' because it's used later as a separator token
-        sig = sig.replace('**', r'\*\*')
-        sig = sig.strip()
+        Args:
+            sig (str): The siglum to format.
+            sigla_dict (dict[str, str]): Mapping from base sigla to HTML representation.
 
+        Returns:
+            str: HTML-formatted siglum.
+        """
+        sig = sig.replace('**', r'\*\*').strip()
 
-        # Exception for Sens A 63
+        # Handle special cases
         if sig == '(Sb†)':
             pared_sig = 'Sb†'
             remainder = ')'
@@ -171,61 +138,48 @@ def build_sigla(s: str, sigla_dict: dict[str, str], logger: logging.Logger) -> s
             remainder = ''
             pre_remainder = ''
         else:
-            pre_remainder=''
-            # Special case: exact match for "Fu†"
+            pre_remainder = ''
             if sig == 'Fu†':
                 pared_sig = 'Fu†'
                 remainder = ''
             else:
-                # Extract the base siglum (e.g., "M1" from "M1a" or "M1 something")
+                # Extract base siglum and suffix
                 pared_sig = re.sub(r'(\w+\d*\w?).*', r'\1', sig)
                 remainder = re.sub(r'\w+\d*\w?(.*)', r'\1', sig)
-                # Exception for Rg1[Fragm.]†
-                #remainder = remainder.replace('[Fragm.]', '&lt;span class="superscript smaller-text"&gt;[Fragm.]&lt;/span&gt;')
-                #remainder = remainder.replace('†', '[Fragm.]&lt;span class="superscript smaller-text"&gt;†&lt;/span&gt;')
-                if '[Fragm.]' == remainder: remainder ='&lt;span class="superscript smaller-text"&gt;[Fragm.]&lt;/span&gt;'
-                    #remainder = '[Fragm.]&lt;span class="superscript smaller-text"&gt;†&lt;/span&gt;'
-                    #print('remainder',remainder)
-                    #print('remainder',remainder.replace('[Fragm.]', '&lt;span class="superscript smaller-text"&gt;[Fragm.]&lt;/span&gt;'))
 
-                #     remainder = '[Fragm.]&lt;span class="superscript smaller-text"&gt;†&lt;/span&gt;'
-                #     print('sig',sig)
-                #     print('remainder',remainder)
+                if remainder == '[Fragm.]':
+                    remainder = '&lt;span class="superscript smaller-text"&gt;[Fragm.]&lt;/span&gt;'
 
         if pared_sig not in sigla_dict:
             logger.error(
                 f"{pared_sig} not found in siglen list. "
-                "This means it will not be displayed properly later. "
-                "If the collection is part of the project, it should appear in: manuscript_collections_md_file. "
-                "Otherwise it should be added to sigla_html_dict."
+                "It won't be displayed properly. If it's part of the project, it should appear in the manuscript_collections_md_file. "
+                "Otherwise, add it to sigla_html_dict."
             )
 
         return pre_remainder + '&lt;b&gt;' + sigla_dict.get(pared_sig, pared_sig) + '&lt;/b&gt;' + remainder
-    
+
     for sig in all_sigla:
         formatted_sigla.append(format_siglum(sig, sigla_dict))
 
     html_formatted_sigla = ', '.join(formatted_sigla)
-    formatted_sigla = None
-    if len(split_regular_alternative_sigla) ==2:
-        additional_sigla = split_regular_alternative_sigla[1]
-        additional_sigla = additional_sigla[:-1] if additional_sigla.endswith(']') else additional_sigla
-        additional_sigla = re.split(r',\s+', additional_sigla)
-        #print('additional_sigla', additional_sigla)
+
+    # Handle additional sigla (e.g., " [auch in M2 und M3]")
+    if len(split_regular_alternative_sigla) == 2:
+        additional_sigla_str = split_regular_alternative_sigla[1].rstrip(']')
+        additional_sigla = re.split(r',\s+', additional_sigla_str)
+
         pre_remainder = additional_sigla_indicator
         for sig in additional_sigla:
-
             if ' und ' in sig:
-                sig_splitted = sig.split(' und ') 
-                #print('additional_sigla_splitted', sig_splitted)
-                #print(format_siglum(sig_splitted[0], sigla_dict))
-                html_formatted_sigla= html_formatted_sigla + pre_remainder + format_siglum(sig_splitted[0], sigla_dict)
+                parts = sig.split(' und ')
+                html_formatted_sigla += pre_remainder + format_siglum(parts[0], sigla_dict)
                 pre_remainder = ' und '
-                sig = sig_splitted[1]
-            html_formatted_sigla= html_formatted_sigla + pre_remainder + format_siglum(sig, sigla_dict)
+                sig = parts[1]
+            html_formatted_sigla += pre_remainder + format_siglum(sig, sigla_dict)
             pre_remainder = ''
-        # close the bracket with the additional sigla
-        html_formatted_sigla = html_formatted_sigla + ']'
+        html_formatted_sigla += ']'
+
     return html_formatted_sigla
 
 def build_editions(s:str, ed_dict:dict[str:(str,str)], logger) -> str: 
