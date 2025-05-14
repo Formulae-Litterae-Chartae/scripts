@@ -85,21 +85,148 @@ def build_urn(s):
                 form_num += '_' + num_parts.group(2).strip('()') 
     return '.'.join([coll_name, form_num, 'lat001'])
 
-def build_sigla(s, sigla_dict, logger) -> str: 
-    all_sigla = re.split(r',\s+', s) 
-    formatted_sigla = list() 
-    for sig in all_sigla: 
-        # escape '**' because it is used as a separator token later on
-        sig = sig.replace('**', '\*\*')
-        pared_sig = re.sub(r'(\w+\d*\w?).*', r'\1', sig)
-        remainder = re.sub(r'\w+\d*\w?(.*)', r'\1', sig)
-        if sig == 'Fu†':
-            pared_sig = 'Fu†'
+def extract_sigla(s: str) -> list[str]:
+    """
+    Extracts sigla from a string using both comma-splitting and pattern matching,
+    preserving any bracketed annotation like [Fragm.] and trailing symbols like †.
+
+    Duplicates are preserved.
+
+    :param s: The input string possibly containing sigla and bracket annotations.
+    :return: A list of sigla with annotations (may contain duplicates).
+    """
+    # Step 1: Extract content inside the outermost brackets, e.g., [Fragm.]
+    bracket_match = re.search(r'\[([^\[\]]+)\]', s)
+    bracket_content = bracket_match.group(0) if bracket_match else ''
+    
+    # Step 2: Get string before the bracket (remove annotation for clean matching)
+    before_bracket_content = (
+        s[:bracket_match.start()] + s[bracket_match.end():]
+        if bracket_match else s
+    )
+
+    # Step 3: Comma-split and strip
+    split_sigla = [
+        sig.strip() + bracket_content
+        for sig in re.split(r',\s*', before_bracket_content)
+        if sig.strip()
+    ]
+
+    # Step 4: Pattern extract sigla and re-attach bracket if found
+    pattern = re.compile(r'\b[A-Z][a-z]*\d+[a-z]?(?:†)?\b')
+    pattern_sigla = [
+        match + bracket_content
+        for match in pattern.findall(before_bracket_content)
+    ]
+
+    # Step 5: Combine both results (with possible duplicates)
+    return split_sigla + pattern_sigla
+
+
+def build_sigla(s: str, sigla_dict: dict[str, str], logger: logging.Logger) -> str:
+    """
+    Builds an HTML-formatted string of manuscript sigla.
+
+    Each siglum in the input string is looked up in a dictionary and wrapped in HTML bold tags. 
+    The function also escapes '**' (used later as a separator token), extracts a pared-down version 
+    for lookup, and logs an error if a siglum is not found in the dictionary.
+
+    Parameters:
+        s (str): A comma-separated string of sigla (e.g., "M1, M2, Fu†").
+        sigla_dict (Dict[str, str]): A dictionary mapping base sigla to formatted display strings.
+        logger (logging.Logger): A logger instance for error reporting.
+
+    Returns:
+        str: HTML-formatted string of sigla.
+    """
+    # open to other possibilities
+    possible_additional_sigla_indicator = [' [auch in ']
+    split_regular_alternative_sigla = []
+    for additional_sigla_indicator in possible_additional_sigla_indicator:
+        if additional_sigla_indicator in s:
+            split_regular_alternative_sigla = s.split(additional_sigla_indicator)
+            s = split_regular_alternative_sigla[0]
+            additional_sigla_indicator = additional_sigla_indicator
+            continue
+    all_sigla = re.split(r',\s+', s)
+    #[A-Z][a-z]*\d*(\*\*)?[a-z]?†?
+    #all_sigla = extract_sigla(s)
+    formatted_sigla = list()
+
+    
+
+    def format_siglum(sig, sigla_dict) -> str:
+        # Escape '**' because it's used later as a separator token
+        sig = sig.replace('**', r'\*\*')
+        sig = sig.strip()
+
+
+        # Exception for Sens A 63
+        if sig == '(Sb†)':
+            pared_sig = 'Sb†'
+            remainder = ')'
+            pre_remainder = '('
+        elif sig == 'Rg1[Fragm.]†':
+            pared_sig = 'Rg1[Fragm.]†'
             remainder = ''
-        formatted_sigla.append('&lt;b&gt;' + sigla_dict.get(pared_sig, pared_sig) + '&lt;/b&gt;' + remainder)
+            pre_remainder = ''
+        else:
+            pre_remainder=''
+            # Special case: exact match for "Fu†"
+            if sig == 'Fu†':
+                pared_sig = 'Fu†'
+                remainder = ''
+            else:
+                # Extract the base siglum (e.g., "M1" from "M1a" or "M1 something")
+                pared_sig = re.sub(r'(\w+\d*\w?).*', r'\1', sig)
+                remainder = re.sub(r'\w+\d*\w?(.*)', r'\1', sig)
+                # Exception for Rg1[Fragm.]†
+                #remainder = remainder.replace('[Fragm.]', '&lt;span class="superscript smaller-text"&gt;[Fragm.]&lt;/span&gt;')
+                #remainder = remainder.replace('†', '[Fragm.]&lt;span class="superscript smaller-text"&gt;†&lt;/span&gt;')
+                if '[Fragm.]' == remainder: remainder ='&lt;span class="superscript smaller-text"&gt;[Fragm.]&lt;/span&gt;'
+                    #remainder = '[Fragm.]&lt;span class="superscript smaller-text"&gt;†&lt;/span&gt;'
+                    #print('remainder',remainder)
+                    #print('remainder',remainder.replace('[Fragm.]', '&lt;span class="superscript smaller-text"&gt;[Fragm.]&lt;/span&gt;'))
+
+                #     remainder = '[Fragm.]&lt;span class="superscript smaller-text"&gt;†&lt;/span&gt;'
+                #     print('sig',sig)
+                #     print('remainder',remainder)
+
         if pared_sig not in sigla_dict:
-            logger.warning(pared_sig + ' not found in siglen list')
-    return ', '.join(formatted_sigla)
+            logger.error(
+                f"{pared_sig} not found in siglen list. "
+                "This means it will not be displayed properly later. "
+                "If the collection is part of the project, it should appear in: manuscript_collections_md_file. "
+                "Otherwise it should be added to sigla_html_dict."
+            )
+
+        return pre_remainder + '&lt;b&gt;' + sigla_dict.get(pared_sig, pared_sig) + '&lt;/b&gt;' + remainder
+    
+    for sig in all_sigla:
+        formatted_sigla.append(format_siglum(sig, sigla_dict))
+
+    html_formatted_sigla = ', '.join(formatted_sigla)
+    formatted_sigla = None
+    if len(split_regular_alternative_sigla) ==2:
+        additional_sigla = split_regular_alternative_sigla[1]
+        additional_sigla = additional_sigla[:-1] if additional_sigla.endswith(']') else additional_sigla
+        additional_sigla = re.split(r',\s+', additional_sigla)
+        #print('additional_sigla', additional_sigla)
+        pre_remainder = additional_sigla_indicator
+        for sig in additional_sigla:
+
+            if ' und ' in sig:
+                sig_splitted = sig.split(' und ') 
+                #print('additional_sigla_splitted', sig_splitted)
+                #print(format_siglum(sig_splitted[0], sigla_dict))
+                html_formatted_sigla= html_formatted_sigla + pre_remainder + format_siglum(sig_splitted[0], sigla_dict)
+                pre_remainder = ' und '
+                sig = sig_splitted[1]
+            html_formatted_sigla= html_formatted_sigla + pre_remainder + format_siglum(sig, sigla_dict)
+            pre_remainder = ''
+        # close the bracket with the additional sigla
+        html_formatted_sigla = html_formatted_sigla + ']'
+    return html_formatted_sigla
 
 def build_editions(s:str, ed_dict:dict[str:(str,str)], logger) -> str: 
     """
@@ -242,7 +369,12 @@ def main():
     ms_coll_md = etree.parse(manuscript_collections_md_file)
     sigla_html_dict = {
         'Fu†': '&lt;span data-toggle="tooltip" data-boundary="window" id="Fu-verloren-note-tooltip" data-container="body" title="Verlorene Handschrift aus Fulda vgl. Bibliothekskatalog Fulda 16. Jhd. (Vatikan BAV Pal. Lat. 1928) Nr. 238"&gt;&lt;a href="https://digi.ub.uni-heidelberg.de/diglit/bav_pal_lat_1928/0099/image,info" target="_blank"&gt;Fu† ↗&lt;/a&gt;&lt;/span&gt;',
-        'Rg1': 'Regensburg, Staatliche Bibliothek, Inc. 2° 43 (Fragment aus St.Emmeram)'}
+        'Rg1[Fragm.]†': '&lt;span data-toggle="tooltip" data-boundary="window" id="Rg1-verloren-note-tooltip" data-container="body" title="Regensburg, Staatliche Bibliothek, Inc. 2° 43 (Fragment aus St.Emmeram)"&gt;Rg&lt;span class="subscript smaller-text"&gt;1&lt;/span&gt; &lt;span class="superscript smaller-text"&gt;[Fragm.]†&lt;/span&gt; &lt;/span&gt;',
+        # source: /FORMAKAD/Werkstatt/Formelsammlungen/Marculf/Die Marculfsammlung Einleitung_Stand_2025-04-11.docx
+        #'Sb†': 'Verlorene Handschrift aus Straßburg [vielleicht Straßburg, ehemalige Stadtbibliothek, C. V. 6†]',
+        'Sb†': '&lt;span data-toggle="tooltip" data-boundary="window" id="Sb-verloren-note-tooltip" data-container="body" title="Verlorene Handschrift aus Straßburg [vielleicht Straßburg, ehemalige Stadtbibliothek, C. V. 6†]"&gt;Sb&lt;span class="superscript smaller-text"&gt; † &lt;/span&gt; &lt;/span&gt;'
+        #'(Sb†)': '&lt;span data-toggle="tooltip" data-boundary="window" id="Sb-verloren-note-tooltip" data-container="body" title="Verlorene Handschrift aus ???"&gt;&lt;a href="" target="_blank"&gt; ( Sb &lt;span class="subscript smaller-text &gt; † &lt;/span&gt; ) ↗&lt;/a&gt;&lt;/span&gt;'
+        }
     for f_c in ms_coll_md.xpath('/cpt:collection/cpt:members/cpt:collection', namespaces=ns):
         ms_corp_md_path = os.path.normpath(os.path.join(os.path.dirname(manuscript_collections_md_file), f_c.get('path')))
         if not os.path.isfile(ms_corp_md_path): raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), ms_corp_md_path)
@@ -259,7 +391,11 @@ def main():
         #cells = r.strip().split('\t')
         cells = r
         if len(cells) > 1:
-            info_string = build_sigla(cells[1].strip(), sigla_html_dict, logger) + SEPERATOR_TOKEN + build_editions(cells[2], ed_bib_info, logger)
+            sigla = build_sigla(cells[1].strip(), sigla_html_dict, logger)
+            info_string = sigla + SEPERATOR_TOKEN + build_editions(cells[2], ed_bib_info, logger)
+            # if '63' in cells[0]:
+            #     print('cells[1]',cells[1])
+            #     print('sigla', sigla)
             if len(cells) > 3:
                 info_string += SEPERATOR_TOKEN + SEPERATOR_TOKEN.join(cells[3:])
             cells[0] = re.sub(r'Flavigny Pa 7 (\D)', r'Flavigny Pa 7\1', cells[0])
