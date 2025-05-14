@@ -78,7 +78,9 @@ def _create_folio_id_from_manifest(manifest_url:str) -> dict[str, str]:
     response = requests.get(manifest_url)
     manifest_json = response.json()
     for canvas in manifest_json["sequences"][0]["canvases"]:
-        folio_id_url_map[canvas["label"]] = canvas["@id"]
+        #"28bis r" -> "28bisr"
+        label = canvas["label"].replace(' ', '')
+        folio_id_url_map[label] = canvas["@id"]
     return folio_id_url_map
 
 
@@ -96,16 +98,24 @@ def _identify_folio_ids(title_urn:str) -> list[str]:
     """
 
     title_parts = title_urn.replace("urn:cts:formulae:",'').split('.')
-    folio_ids_borders = re.findall(r'\d+[r|v]', title_parts[1])
-    
-    
+    folio_ids_borders = re.findall(r'\d+(?:bis)?[rv]', title_parts[1])
+    #print(title_parts)
+    #print('folio_ids_borders',folio_ids_borders)
+    if 'bis' in title_parts[1]:
+        print(title_parts)
+        print(folio_ids_borders)
+        return folio_ids_borders
     match len(folio_ids_borders):
         case 0:
             raise ValueError("No folio ids found in "+title_urn)
         case 1:
             return folio_ids_borders
         case 2:
-            pass
+            if 'bis' in title_parts[1]:
+                print(folio_ids_borders)
+                return folio_ids_borders
+            else:
+                pass
         case _: # > 2
             raise ValueError("Too my folio ids found in "+title_urn)
     lower_border = folio_ids_borders[0]
