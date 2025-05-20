@@ -215,7 +215,8 @@
                         </xsl:when>
                         <xsl:otherwise>
                             <xsl:text>fol.</xsl:text>
-                            <xsl:value-of select="replace($firstFolio, '\D+(\d+)([rvab]+)', '$1')"/>
+                            <xsl:value-of select="$firstNum"/>
+<!--                            <xsl:value-of select="replace($firstFolio, '\D+(\d+)([rvab]+)', '$1')"/>-->
                             <xsl:text>&lt;span class="verso-recto"&gt;</xsl:text>
                             <xsl:value-of select="$firstSide"/>
                             <xsl:text>&lt;/span&gt;</xsl:text>
