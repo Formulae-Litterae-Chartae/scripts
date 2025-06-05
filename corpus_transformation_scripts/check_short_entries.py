@@ -45,16 +45,21 @@ add_bibl_xslt = scripts_folder+"/corpus_transformation_scripts/Formulae/add_miss
 
 kurz = [re.sub('[„“"\'’]', '', x) for x in etree.parse(scripts_folder + '/bibliography/formulae_bibliographie.xml').xpath('//tei:title[@type="short"]/text()', namespaces={'tei': 'http://www.tei-c.org/ns/1.0'})]
 
-texts = [x for x in glob(orig + '/data/**/*.xml', recursive=True) if '__capitains__' not in x]
+if 'data' in orig:
+    glob_str = orig + '/**/*.xml'
+else:
+    glob_str = orig + '/data/**/*.xml'
 
-problems = []
+texts = [x for x in glob(glob_str, recursive=True) if '__capitains__' not in x]
+
+problems:list[tuple] = []
 
 for text in sorted(texts):
     for title in etree.parse(text).xpath('//tei:bibl', namespaces={'tei': 'http://www.tei-c.org/ns/1.0'}):
         whole_title = ''.join(title.xpath('.//text()'))
         if re.sub('[„“"\'’]', '', whole_title.strip()) not in kurz:
             closest = get_close_matches(whole_title, kurz, n=1, cutoff=0.8)          
-            print(text, re.sub('[„“"\'’]', '', whole_title.strip()), closest)                                                       
+            logging.debug(text, re.sub('[„“"\'’]', '', whole_title.strip()), closest)                                                       
             problems.append((text.split('/')[-1], whole_title, closest[0] if closest else 'FEHLT'))
         elif title.get('n').strip() in ('', ','):
             subprocess.run(['java', '-jar',  saxon_location, '{}'.format(text), add_bibl_xslt, '-o:{}'.format(text)])
@@ -67,7 +72,9 @@ problem_path_location = Path(scripts_folder+'/results/elex_problems.txt')
 with open(problem_path_location, mode="w+") as f:
     f.write('\n'.join(['\t'.join(x) for x in problems]))
 
-if 0 == len(problems):
-    logging.info('No problems detected in '+orig)
+if 0 == len(texts):
+    logging.warning('No texts were found in {}. Please change the path'.format(glob_str))
+elif 0 == len(problems):
+    logging.info('No problems detected in {}. Identified {} texts {} kurz'.format(glob_str, len(texts), len(kurz)))
 else:
-    logging.warning('{} problems detected in {}. Please the error log at {}'.format(len(problems),orig, problem_path_location))
+    logging.warning('{} problems detected in {}. Please the error log at {}'.format(len(problems),glob_str, problem_path_location))
