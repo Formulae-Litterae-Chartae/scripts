@@ -194,53 +194,53 @@
                         <xsl:text>-</xsl:text><xsl:value-of select="normalize-space(replace($folia[last()], '.*?\[((fol|p).[^\]/]+).*', '$1'))"/>
                     </xsl:if>
                 </xsl:element>
+                <!-- Create a <ref> element in the TEI namespace to represent a folio range -->
                 <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
-                    <xsl:variable name="firstFolio"><xsl:value-of select="normalize-space(replace($folia[1], '.*?\[((fol|p).[^\]/]+).*', '$1'))"/></xsl:variable>
-                    <xsl:variable name="lastFolio"><xsl:value-of select="normalize-space(replace($folia[last()], '.*?\[((fol|p).[^\]/]+).*', '$1'))"/></xsl:variable>
-                    <xsl:variable name="bindingFirst"><xsl:value-of select="replace($folia[1], '.*?\[fol.[^\]/]+\]\s*', ' ')"/></xsl:variable>
-                    <xsl:variable name="bindingLast"><xsl:value-of select="replace($folia[last()], '.*?\[fol.[^\]/]+\]\s*', ' ')"/></xsl:variable>
                     
-                    <xsl:variable name="firstNum" select="replace($firstFolio, '\D*(\d+).*', '$1')"/>
-                    <xsl:variable name="firstSide" select="replace($firstFolio, '\D*\d+([a-z]+)', '$1')"/>
-                    <xsl:variable name="lastNum" select="replace($lastFolio, '\D*(\d+).*', '$1')"/>
-                    <xsl:variable name="lastSide" select="replace($lastFolio, '\D*\d+([a-z]+)', '$1')"/>
+                    <!-- Extract the first and last folio strings, e.g., "fol. 28bisr" -->
+                    <xsl:variable name="firstFolio" 
+                        select="normalize-space(replace($folia[1], '.*?\[((fol|p)\.\s*[^\]/]+).*', '$1'))"/>
+                    <xsl:variable name="lastFolio" 
+                        select="normalize-space(replace($folia[last()], '.*?\[((fol|p)\.\s*[^\]/]+).*', '$1'))"/>
+                    
+                    <!-- Extract the numeric part (e.g., '28') -->
+                    <xsl:variable name="firstNum" select="replace($firstFolio, '.*?(\d+).*', '$1')"/>
+                    <xsl:variable name="lastNum"  select="replace($lastFolio,  '.*?(\d+).*', '$1')"/>
+                    
+                    <!-- Extract the mid-part: only 'bis' is allowed -->
+                    <xsl:variable name="firstMid" select="replace($firstFolio, '.*?\d+(bis)?[rvab]$', '$1')"/>
+                    <xsl:variable name="lastMid"  select="replace($lastFolio,  '.*?\d+(bis)?[rvab]$', '$1')"/>
+                    
+                    <!-- Extract the side (r, v, a, b) -->
+                    <xsl:variable name="firstSide" select="replace($firstFolio, '.*?([rvab])$', '$1')"/>
+                    <xsl:variable name="lastSide"  select="replace($lastFolio,  '.*?([rvab])$', '$1')"/>
+                    
+                    <!-- Set the type attribute -->
                     <xsl:attribute name="type">markedUpFolia</xsl:attribute>
-                    <xsl:choose>
-                        <xsl:when  test="contains($tempTitle, 'Sg2')">
-                            <xsl:value-of select="$firstFolio"/>
-                            <xsl:if test="count($folia) > 1">
-                                <xsl:text>-</xsl:text>
-                                <xsl:value-of select="replace($lastFolio, '\D+(\d+)', '$1')"/>
-                            </xsl:if>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:text>fol.</xsl:text>
-                            <xsl:value-of select="$firstNum"/>
-<!--                            <xsl:value-of select="replace($firstFolio, '\D+(\d+)([rvab]+)', '$1')"/>-->
-                            <xsl:text>&lt;span class="verso-recto"&gt;</xsl:text>
-                            <xsl:value-of select="$firstSide"/>
-                            <xsl:text>&lt;/span&gt;</xsl:text>
-<!--                            <xsl:value-of select="replace($firstFolio, '\D+(\d+)([rvab]+)', '$2')"/>-->
-<!--                            <xsl:value-of select="normalize-space($bindingFirst)"/>-->
-<!--                            <xsl:text>&lt;/span&gt;</xsl:text>-->
-<!--                            <xsl:if test="count($folia) > 1">
-                                <xsl:text>-</xsl:text>
-                                <xsl:value-of select="replace($lastFolio, '\D+(\d+)([rvab]+)', '$1')"/>
-                                <xsl:text>&lt;span class="verso-recto"&gt;</xsl:text>
-                                <xsl:value-of select="replace($lastFolio, '\D+(\d+)([rvab]+)', '$2')"/>
-                                <xsl:value-of select="normalize-space($bindingLast)"/>
-                                <xsl:text>&lt;/span&gt;</xsl:text>
-                            </xsl:if>-->
-                            <xsl:if test="count($folia) > 1">
-                                <xsl:text>-</xsl:text>
-                                <xsl:value-of select="$lastNum"/>
-                                <xsl:text>&lt;span class=&quot;verso-recto&quot;&gt;</xsl:text>
-                                <xsl:value-of select="$lastSide"/>
-                                <xsl:text>&lt;/span&gt;</xsl:text>
-                            </xsl:if>
-                        </xsl:otherwise>
-                    </xsl:choose>
+                    
+                    <!-- Emit first folio: e.g., "fol. 28 bis<span class="verso-recto">r</span>" -->
+                    <xsl:text>fol. </xsl:text>
+                    <xsl:value-of select="$firstNum"/>
+                    <xsl:if test="$firstMid = 'bis'">
+                        <xsl:text> bis</xsl:text>
+                    </xsl:if>
+                    <xsl:text>&lt;span class="verso-recto"&gt;</xsl:text>
+                    <xsl:value-of select="$firstSide"/>
+                    <xsl:text>&lt;/span&gt;</xsl:text>
+                    
+                    <!-- If there's a folio range, emit the last folio -->
+                    <xsl:if test="count($folia) > 1">
+                        <xsl:text>-</xsl:text>
+                        <xsl:value-of select="$lastNum"/>
+                        <xsl:if test="$lastMid = 'bis'">
+                            <xsl:text> bis</xsl:text>
+                        </xsl:if>
+                        <xsl:text>&lt;span class=&quot;verso-recto&quot;&gt;</xsl:text>
+                        <xsl:value-of select="$lastSide"/>
+                        <xsl:text>&lt;/span&gt;</xsl:text>
+                    </xsl:if>
                 </xsl:element>
+                
             </xsl:when>
             <xsl:otherwise>
                 <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
