@@ -8,6 +8,7 @@ import subprocess
 import argparse
 import logging
 from pathlib import Path
+import pandas as pd
 
 home_dir = os.environ.get('HOME', '')
 
@@ -59,7 +60,7 @@ for text in sorted(texts):
         whole_title = ''.join(title.xpath('.//text()'))
         if re.sub('[„“"\'’]', '', whole_title.strip()) not in kurz:
             closest = get_close_matches(whole_title, kurz, n=1, cutoff=0.8)          
-            logging.debug(text, re.sub('[„“"\'’]', '', whole_title.strip()), closest)                                                       
+            logging.debug("{} {} {}".format(text, re.sub('[„“"\'’]', '', whole_title.strip()), closest))                                                       
             problems.append((text.split('/')[-1], whole_title, closest[0] if closest else 'FEHLT'))
         elif title.get('n').strip() in ('', ','):
             subprocess.run(['java', '-jar',  saxon_location, '{}'.format(text), add_bibl_xslt, '-o:{}'.format(text)])
@@ -68,9 +69,9 @@ for text in sorted(texts):
 
 problem_path_location = Path(scripts_folder+'/results/elex_problems.txt')
 
-
-with open(problem_path_location, mode="w+") as f:
-    f.write('\n'.join(['\t'.join(x) for x in problems]))
+df = pd.DataFrame.from_records(problems)
+df.to_csv(problem_path_location, sep='\t')
+df.to_excel(str(problem_path_location).replace('txt', 'xlsx')) 
 
 if 0 == len(texts):
     logging.warning('No texts were found in {}. Please change the path'.format(glob_str))
