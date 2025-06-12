@@ -14,8 +14,9 @@ home_dir = os.environ.get('HOME', '')
 
 parser=argparse.ArgumentParser(description="Script to transform CTE-XML files to ???")
 default_saxon_location = home_dir + '/Downloads/SaxonHE10-1J/saxon-he-10.1.jar'
-parser.add_argument("orig", type=str,default=default_saxon_location)
-parser.add_argument("saxon_location", type=str,default=default_saxon_location)
+default_orig_location = home_dir + '/git/formulae-corpora/data'
+parser.add_argument("orig", type=str, help='Source folder with all the xml-files, you want to check.', default=default_orig_location)
+parser.add_argument("saxon_location", type=str, default=default_saxon_location)
 
 current_dir = os.path.abspath(os.path.dirname(__file__))
 add_bibl_xslt_default = current_dir + "/Formulae/add_missing_bibl_links.xsl"

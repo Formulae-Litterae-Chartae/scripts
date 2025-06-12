@@ -8,6 +8,7 @@ import re
 from os import environ, path
 from lxml import etree
 from trafilatura.xml import validate_tei
+from tqdm import tqdm
 
 home_dir = environ.get('HOME', '')
 current_dir = path.abspath(path.dirname(__file__))
@@ -72,7 +73,7 @@ def author_year_sort(record):
 
 old_sort_letter = ""
 
-for e in sorted(bib_database.entries, key=author_year_sort):
+for e in tqdm(sorted(bib_database.entries, key=author_year_sort)):
     entry = E.biblStruct({'type': e['ENTRYTYPE']})
     author = ''
     new_sort_letter = ''
@@ -146,7 +147,11 @@ for e in sorted(bib_database.entries, key=author_year_sort):
             analytic.append(a)
         analytic.append(title)
         analytic.append(kurztitel)
-        monogr = E.monogr(E.title(e['booktitle'].replace(r'\textquotedbl', '"'), {'level': 'm'})) #, editor, imprint, pages)
+        try:
+            monogr = E.monogr(E.title(e['booktitle'].replace(r'\textquotedbl', '"'), {'level': 'm'})) #, editor, imprint, pages)
+        except KeyError as key_error:
+            print('No booktitle:', e)
+            continue
         for ed in editor:
             monogr.append(ed)
         monogr.append(imprint)

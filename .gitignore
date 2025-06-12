@@ -3,3 +3,5 @@ __pycache__
 internal
 formel_transform/*
 results/*
+bibliography/formulae_bibliographie.bib
+bibliography/formulae_bibliographie.xml
