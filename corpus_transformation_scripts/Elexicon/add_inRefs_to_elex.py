@@ -17,16 +17,33 @@ ns = {"ti": "http://chs.harvard.edu/xmlns/cts", "dct": "http://purl.org/dc/terms
 
 E = ElementMaker(namespace=ns['dct'] , nsmap=ns)
         
+# Iterate over all elexicon metadata XML files
 for filename in elex_md_files:
+    # Extract the collection key from the folder structure (assumes second last element is the key)
     key = filename.split('/')[-2]
+    
+    # If the key does not exist in the form_elex_mapping, skip this file
     if key not in form_elex_mapping:
         continue                                 
+
     xml = etree.parse(filename)                                                             
+
+    # Iterate over all readable sub-collections in the XML (readable="true")
     for readable in xml.xpath('/cpt:collection/cpt:members/cpt:collection[@readable="true"]', namespaces=ns):
+        # Select the structured metadata element for this sub-collection
         md = readable.xpath('cpt:structured-metadata', namespaces=ns)[0]
+        
+        # Remove all existing dct:isReferencedBy entries from the structured metadata
         is_refs = md.xpath('dct:isReferencedBy', namespaces=ns)
         for is_ref in is_refs:
             md.remove(is_ref)
+
+        # Insert new dct:isReferencedBy elements from the form_elex_mapping
+        # Each value is formatted with '%' as separators
         for ref, cit in form_elex_mapping[key].items():
-            md.append(E.isReferencedBy('%' + ref + '%' + '%'.join(cit)))
+            elem = E.isReferencedBy('%' + ref + '%' + '%'.join(cit))
+            elem.tail = '\n  '  # or adjust the number of spaces for indentation
+            md.append(elem)
+    
+    # Write the updated XML back to the original file with pretty formatting
     xml.write(filename, encoding='utf-8', pretty_print=True)
