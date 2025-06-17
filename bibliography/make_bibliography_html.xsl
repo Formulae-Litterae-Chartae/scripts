@@ -6,6 +6,9 @@
     version="2.0">
     
     <xsl:output omit-xml-declaration="yes" indent="yes"/>
+    
+    <!-- New date variable -->
+    <xsl:variable name="today" select="current-date()"/>
     <xsl:param name="navLetters">
         <xsl:for-each select="//@xml:id">
             <xsl:value-of select="replace(., 'BL-', '')"/>
@@ -25,6 +28,13 @@
                     <xsl:text>{{ _('Bibliographie') }}</xsl:text>
                 </xsl:element>
             </xsl:element>
+            
+            <xsl:element name="p">
+                <xsl:attribute name="class">text-center text-muted small</xsl:attribute>
+                <xsl:text>{{ _('letzte Änderung') }} </xsl:text>
+                <xsl:value-of select="format-date($today, '[D01].[M01].[Y0001]')" />
+            </xsl:element>
+            
             <h4 class="text-center">{{ _('Gehe zu Buchstabe:') }}</h4>
             <div class="row" id="elex-letters">
                 <div class="col text-center">
