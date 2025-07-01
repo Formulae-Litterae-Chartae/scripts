@@ -57,41 +57,61 @@ def remove_files(list_of_files:list[str], logger):
         else:
             logger.debug("{} does not exist. So, it could not be removed".format(file_path))
 
+import glob
+import os
+
+def get_regesten_files(collection: str, collection_title_case: str, file_type: str='docx') -> list[str]:
+    """
+    Returns a list of XML files matching the pattern:
+    ~/git/scripts/formel_transform/input/{collection}/Regesten {collection_title_case} [A|B|I|II|...].xml
+
+    :param collection: The lowercase collection name (e.g., 'sens')
+    :param collection_title_case: The title-case version (e.g., 'Sens')
+    :return: A list of matching file paths
+    """
+    base_dir = os.path.expanduser(f"~/git/scripts/formel_transform/input/{collection}")
+    #pattern = f"Regesten {collection_title_case} [ABI]*.{file_type}"
+    pattern = f"Regesten {collection_title_case} *.{file_type}"
+    search_path = os.path.join(base_dir, pattern)
+    return sorted(glob.glob(search_path))
+
+
 # python3 ~/git/scripts/corpus_transformation_scripts/Formulae/regesten_extract.py
 if __name__ == '__main__':
     parser=argparse.ArgumentParser(description="Script to transform DOCX files with regesten to a correspondig tei file")
     parser.add_argument('-preserve_temp_files', action='store_true', 
                         help="All temporarily created files should be preserved. If this flag is not set, they are deleted by default.")
+    parser.add_argument('-c', '--collection', required=True,
+                    help="Collection, that you want to ingest the regesten")
     args=parser.parse_args()
     default_saxon_location = make_proper_path("~/Downloads/SaxonHE9-8-0-11J/saxon9he.jar")
     logger = get_logger()
     logger.setLevel('DEBUG')
     saxon_location = default_saxon_location
+    collection = args.collection
+    collection_title_case = collection.title()
     transformation_file =  make_proper_path("~/git/scripts/corpus_transformation_scripts/Formulae/regesten_extract.xsl")
-    input_docx_path = make_proper_path("~/git/scripts/formel_transform/input/sens/Regesten Sens A.docx")
-
-    try:
-        input_tei_path = convert_docx_to_tei(input_docx_path)
-    except NotImplementedError:
-        logger.warning('please implement convert_docx_to_tei()')
-        input_tei_path = make_proper_path("~/git/scripts/formel_transform/input/sens/Regesten Sens A.xml")
+    #input_docx_path = make_proper_path("~/git/scripts/formel_transform/input/{}/Regesten {} A.docx".format(collection, collection_title_case))
+    input_docx_path_list = get_regesten_files(collection, collection_title_case)
+    logger.info("Found regesten files: {} for ".format(input_docx_path_list, ))
+    input_tei_path_list:list[str] = list()
+    for input_docx_path in input_docx_path_list:
+        tei_path = input_docx_path.replace('docx', 'xml')
+        convert_docx_to_tei(input_docx_path, tei_path)
+        input_tei_path_list.append(tei_path)
     
+    print(input_tei_path_list)
     
 
-    corpus_name, xml_trees, output_paths = create_subtrees([make_proper_path("~/git/scripts/formel_transform/input/sens/Regesten Sens A.xml"), 
-                           make_proper_path("~/git/scripts/formel_transform/input/sens/Regesten Sens B.xml")], logger=logger)
-    # tree_two = ET.parse(output_paths[1])
-    # root_two = tree_two.getroot()
-    # for child in root_two:
-    #     if "regest" == child.tag:
-    #         if "docId" in child.attrib.keys():
-    #             child.set('docId', "urn:cts:formulae:{corpus}.form{subcorpus}{form_num}".format(corpus=corpus_name, 
-    #                                                                                                         subcorpus=subcorpus_name,
-    #                                                                                                         form_num=child.get('docId')))
-    #             print(child.get('docId'))
+    corpus_name, xml_trees, output_paths = create_subtrees(input_tei_path_list=input_tei_path_list, 
+                            logger=logger)
+    
+    if 0 == len(xml_trees): raise FileNotFoundError('No tree found')
+
+    
+    main_tree = xml_trees[0]
+    main_root = xml_trees[0].getroot()
     if 1 < len(xml_trees):
-        main_tree = xml_trees[0]
-        main_root = xml_trees[0].getroot()
         # extend the first tree with all other trees
         for tree in xml_trees[1:]:
             additional_root = tree.getroot()
