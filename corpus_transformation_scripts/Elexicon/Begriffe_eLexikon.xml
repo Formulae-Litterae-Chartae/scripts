@@ -8,20 +8,35 @@
 	<lem elex="abbas">abba</lem>
 	<lem elex="abbas">abbas</lem>
 	
+	<!--accola-->
+	<lem elex="accola">accola</lem>
+	
+	<!--accusare-->
+	<lem elex="accusare">accusare</lem>
+	
 	<!--abbatissa-->
 	<lem elex="abbatissa">abbatissa</lem>
 	
 	<!--adoptio-->
 	<lem elex="adoptio">adoptio</lem>
 	
+	<!--advocatus-->
+	<lem elex="advocatus">advocatus</lem>
+
 	<!--aerarium-->
 	<lem elex="aerarium">aerarium</lem>
+
+	<!--affatomia-->
+	<lem elex="affatomia">affatomia</lem>
 	
 	<!--agnatio-->
 	<lem elex="agnatio">agnatio</lem>
 	
 	<!--agrarium-->
 	<lem elex="agrarium">agrarium</lem>
+	
+	<!--aicis-->
+	<lem elex="aicis">aicis</lem>
 	
 	<!--alienare-->
 	<lem elex="alienare">abalienare</lem>
@@ -37,6 +52,9 @@
 	<lem elex="allodium">allodium</lem>
 	<lem elex="allodium">allodis</lem>
 	<lem elex="allodium">alodis</lem>
+	
+	<!--altar-->
+	<lem elex="altar">altar</lem>
 	
 	<!--amanuensis-->
 	<lem elex="amanuensis">amanvensis</lem>
@@ -95,12 +113,18 @@
 	<lem elex="auditores">auditor</lem>
 	<lem elex="auditores">auditores</lem>
 	
+	<!--aqua aquarumve decursibus-->
+	<lem elex="aqua_aquarumve_decursibus">aqua aquarumve decursibus</lem>
+	
 	<!--bannus-->
 	<lem elex="bannus">bannus</lem>
 	
 	<!--basilica-->
 	<lem elex="basilica">basilica</lem>
 	<lem elex="basilica">basilica_ortsname</lem>
+	
+	<!--beatus-->
+	<lem elex="beatus">beatus</lem>
 	
 	<!--benedictio-->
 	<lem elex="benedictio">benedicere</lem>
@@ -148,6 +172,9 @@
 	<!--caritas-->
 	<lem elex="caritas">caritas</lem>
 	<lem elex="caritas">caritativus</lem>
+	
+	<!--carmen-->
+	<lem elex="carmen">carmen</lem>
 	
 	<!--carropera-->
 	<lem elex="carropera">carropera</lem>
@@ -309,6 +336,12 @@
 	<!--curtis-->
 	<lem elex="curtis">curtis</lem>
 	
+	<!--decanus-->
+	<lem elex="decanus">decanus</lem>
+	
+	<!--decima-->
+	<lem elex="decima">decima</lem>
+	
 	<!--defensor-->
 	<lem elex="defensor">defensor</lem>
 	
@@ -358,8 +391,10 @@
 	<!--dux-->
 	<lem elex="dux">dux</lem>
 	
-	<!--ehrentitel_und_epitheta-->
+	<!--elemosyna-->
+	<lem elex="elemosyna">elemosyna</lem>
 	
+	<!--ehrentitel_und_epitheta-->
 	
 	<!--episcopus-->
 	<lem elex="episcopus">episcopus</lem>
@@ -470,6 +505,10 @@
 	<lem elex="germanus">germanus_personenname</lem>
 	<lem elex="germanus">germanus_personenname_ortsname</lem>
 	
+	<!--natio-gens-->
+	<lem elex="gens">gens</lem>
+	<lem elex="gens">natio</lem>
+	
 	<!--gesta_municipalia-->
 	<lem elex="gesta_municipalia">gesta municipalia</lem>
 	<lem elex="gesta_municipalia">gesta municipalis</lem>
@@ -518,6 +557,9 @@
 	<!--imperium-->
 	<lem elex="imperium">imperium</lem>
 	
+	<!--indictio-->
+	<lem elex="indictio">indictio</lem>
+	
 	<!--in_domino_salutem-->
 	<!-- Automatisch bei "salutem" eingetragen -->
 	
@@ -527,8 +569,14 @@
 	<!--inquisitio-->
 	<lem elex="inquisitio">inquisitio</lem>
 	
+	<!--interpellare-->
+	<lem elex="interpellare">interpellare</lem>
+	
 	<!--introductio-->
 	<lem elex="introductio">introductio</lem>
+	
+	<!--iuctus-->
+	<lem elex="iuctus">iuctus</lem>
 	
 	<!--iudex-->
 	<lem elex="iudex">coniudex</lem>
@@ -548,6 +596,9 @@
 	
 	<!--latrocinium-->
 	<lem elex="latrocinium">latrocinium</lem>
+	
+	<!--leodi-->
+	<lem elex="leodi">leodi</lem>
 	
 	<!--leudes-->
 	<lem elex="leudes">leudis</lem>
@@ -667,6 +718,9 @@
 	<!--misericordia-->
 	<lem elex="misericordia">misericordia</lem>
 	
+	<!--missa-->
+	<lem elex="missa">missa</lem>
+	
 	<!--missus-->
 	<lem elex="missus">missus</lem>
 	<lem elex="missus">missusque</lem>
@@ -696,6 +750,9 @@
 	<!--mundeburdium-->
 	<lem elex="mundeburdium">mundeburdium</lem>
 	<lem elex="mundeburdium">mundeburdus</lem>
+	
+	<!--munus-->
+	<lem elex="munus">munus</lem>
 	
 	<!--mysterium-->
 	<lem elex="mysterium">mysterium</lem>
@@ -728,6 +785,9 @@
 	
 	<!--optimates-->
 	<lem elex="optimates">optimates</lem>
+	
+	<!--oratorium-->
+	<lem elex="oratorium">oratorium</lem>
 	
 	<!--ordinatio-->
 	<lem elex="ordinatio">ordinatio</lem>
@@ -770,6 +830,9 @@
 	<lem elex="parochia">parochia</lem>
 	<lem elex="parochia">parochialis</lem>
 	<lem elex="parochia">parochiula</lem>
+	
+	<!--patria-->
+	<lem elex="patria">patria</lem>
 	
 	<!--partiaricias-->
 	<lem elex="partiaricias">partiaricia</lem>
@@ -878,6 +941,9 @@
 	<!--privilegium_libertatis-->
 	<lem elex="privilegium_libertatis">privilegium libertatis</lem>
 	
+	<!--pro remedio animae-->
+	<lem elex="pro_remedio_animae">pro remedio animae</lem>
+	
 	<!--proceres-->
 	<lem elex="proceres">proceres</lem>
 	
@@ -907,6 +973,9 @@
 	<lem elex="pulveraticum">pulveraticum</lem>
 	<lem elex="pulveraticum">pulveraticus</lem>
 	
+	<!--purgatorium-->
+	<lem elex="purgatorium">purgatorium</lem>
+	
 	<!--rachinburgus-->
 	<lem elex="rachinburgus">rachinburgus</lem>
 	
@@ -918,8 +987,14 @@
 	<lem elex="raptus">raptum</lem>
 	<lem elex="raptus">raptus</lem>
 	
+	<!--reditus-->
+	<lem elex="reditus">reditus</lem>
+	
 	<!--referendarius-->
 	<lem elex="referendarius">referendarius</lem>
+	
+	<!--refrigerium-->
+	<lem elex="refrigerium">refrigerium</lem>
 	
 	<!--regnum-->
 	<lem elex="regnum">regnum</lem>
@@ -950,6 +1025,9 @@
 	
 	<!--sacri gradus-->
 	<lem elex="sacri gradus">sacri gradus</lem>
+	
+	<!--sacrificium-->
+	<lem elex="sacrificium">sacrificium</lem>
 	
 	<!--saltus-->
 	<lem elex="saltus">saltus</lem>
@@ -1086,6 +1164,9 @@
 	<lem elex="transscribere">transcribere</lem>
 	<lem elex="transscribere">transcribo</lem>
 	
+	<!--triens-->
+	<lem elex="triens">triens</lem>
+	
 	<!--tuitio-->
 	<lem elex="tuitio">tuitio</lem>
 	
@@ -1124,6 +1205,9 @@
 	<lem elex="vicarius">Vicarius_Personenname</lem>
 	<lem elex="vicarius">vigerius</lem>
 	
+	<!--vicini-->
+	<lem elex="vicini">vicini</lem>
+	
 	<!--vicus-->
 	<lem elex="vicus">vici</lem>
 	<lem elex="vicus">vicus</lem>
@@ -1161,6 +1245,9 @@
 	
 	<!--wadium-->
 	<lem elex="wadium">wadium</lem>
+	
+	<!--wadriscapis-->
+	<lem elex="wadriscapis">wadriscapis</lem>
 	
 	<!--weregeldus-->
 	<lem elex="weregeldus">weregeldus</lem>
