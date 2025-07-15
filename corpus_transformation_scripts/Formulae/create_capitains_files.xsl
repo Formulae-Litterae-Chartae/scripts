@@ -108,14 +108,18 @@
                                         <xsl:text>../../</xsl:text>
                                         <xsl:value-of select="$childUrn[1]"/>
                                         <xsl:text>/</xsl:text>
-                                        <xsl:value-of select="$childUrn[2]"/>
+                                        <!-- <xsl:value-of select="$childUrn[2]"/> -->
+                                        <xsl:value-of select="replace(normalize-space($childUrn[2]), '\s+', '')"/>
+                                        
                                         <xsl:text>/__capitains__.xml</xsl:text>
                                     </xsl:attribute>
                                     <xsl:attribute name="identifier">
                                         <xsl:text>urn:cts:formulae:</xsl:text>
                                         <xsl:value-of select="$childUrn[1]"/>
                                         <xsl:text>.</xsl:text>
-                                        <xsl:value-of select="$childUrn[2]"/>
+                                        <!-- <xsl:value-of select="$childUrn[2]"/> -->
+
+                                        <xsl:value-of select="replace(normalize-space($childUrn[2]), '\s+', '')"/>
                                     </xsl:attribute>
                                 </xsl:element>
                             </xsl:when>
