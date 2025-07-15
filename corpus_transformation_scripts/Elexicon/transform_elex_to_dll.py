@@ -6,14 +6,20 @@ from lxml.builder import ElementMaker
 import os
 from lxml import etree
 import sys
+from tqdm import tqdm
+
+#from corpus_transformation_scripts.Formulae.util import subprocess_run
 
 home_dir = os.environ.get('HOME', '')
 dest = str(sys.argv[1]) if len(sys.argv) > 1 else os.path.join(home_dir, 'formulae-corpora') 
 saxon_path = str(sys.argv[2]) if len(sys.argv) > 2 else os.path.join(home_dir, 'Downloads/SaxonHE9-8-0-11J/saxon9he.jar') # The path to the Saxon JAR file
 
+
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-lexes = glob(home_dir + '/results/oxgarage_results/elex/*.xml')
+xml_folder = str(sys.argv[3]) if len(sys.argv) > 3 else "~/git/scripts/formel_transform/input/elexicon/oxgarage_results"
+
+lexes = glob(xml_folder+'/*.xml')
 elex_translations = dict()
 with open(os.path.join(basedir, 'formulae_elexicon_mapping.json')) as f:
     form_elex_mapping = load(f)
@@ -55,18 +61,21 @@ def add_translations_to_cts(filename):
         md.append(E.alternative(elex_translations[key]))
     xml.write(filename, encoding='utf-8', pretty_print=True)
 
-for lex in lexes:
+for lex in tqdm(lexes):
+    print(lex)
     all_names = lex.split('/')[-1].replace('.xml', '').replace('  ', ' ').replace(' ', '_').lower().split('-')
     base_name = all_names[0]
     # I need to figure out if it makes sense to automate copying entries that have two terms to the second file automatically
     for entry_name in all_names:
         new_name = dest + '/data/elexicon/{entry}/elexicon.{entry}.deu001.xml'.format(entry=entry_name)
         subprocess.run(['java', '-jar',  saxon_path, '{}'.format(lex), os.path.join(basedir, 'transform_elex_to_dll.xsl'), '-o:{}'.format(new_name)])
+        
         xml = etree.parse(new_name)
         for d in xml.xpath('/tei:TEI/tei:text/tei:body/tei:div', namespaces=tei_ns):
             d.set('n', 'urn:cts:formulae:elexicon.{entry_name}.deu001'.format(entry_name=entry_name))
         xml.write(new_name, encoding='utf-8', pretty_print=True)
         subprocess.run(['java', '-jar',  saxon_path, '{}'.format(new_name), os.path.join(basedir, 'create_capitains_files_elex.xsl'), '-o:{dest}/data/elexicon/{entry}/__capitains__.xml'.format(dest=dest, entry=entry_name)])
+        print('Written to '+new_name)
         add_inRefs_to_cts('{dest}/data/elexicon/{entry}/__capitains__.xml'.format(dest=dest, entry=entry_name))
         add_translations_to_cts('{dest}/data/elexicon/{entry}/__capitains__.xml'.format(dest=dest, entry=entry_name))
         try:
@@ -79,6 +88,10 @@ for lex in lexes:
             for c in md_xml.xpath('/cpt:collection/cpt:members/cpt:collection[@readable="true"]', namespaces=ns):
                 c.set('path', '../{base_name}/elexicon.{base_name}.deu001.xml'.format(base_name=base_name))
             md_xml.write('{dest}/data/elexicon/{entry}/__capitains__.xml'.format(dest=dest, entry=entry_name), encoding='utf-8', pretty_print=True)
-            
+#/home/thorben.schomacker/git/formulae-corpora/data/elexicon/__capitains__.xml
+#source_capitains = '{dest}/data/elexicon/__capitains__.xml'.format(dest=dest)
+source_capitains = os.path.join(dest,'data','elexicon','__capitains__.xml')
+if not os.path.exists(source_capitains): raise FileNotFoundError(source_capitains)
 
-subprocess.run(['java', '-jar',  saxon_path, '{dest}/data/elexicon/__capitains__.xml'.format(dest=dest), os.path.join(basedir, '../create_textgroup_capitains_files.xsl'), '-o:{dest}/data/elexicon/__capitains__.xml'.format(dest=dest)])
+subprocess.run(['java', '-jar',  saxon_path, source_capitains, os.path.join(basedir, '../create_textgroup_capitains_files.xsl'), 
+                '-o:'+str(source_capitains)])

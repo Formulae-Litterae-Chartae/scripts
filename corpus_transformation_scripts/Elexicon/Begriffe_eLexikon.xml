@@ -507,7 +507,7 @@
 	
 	<!--natio-gens-->
 	<lem elex="gens">gens</lem>
-	<lem elex="gens">natio</lem>
+	<lem elex="natio">natio</lem>
 	
 	<!--gesta_municipalia-->
 	<lem elex="gesta_municipalia">gesta municipalia</lem>

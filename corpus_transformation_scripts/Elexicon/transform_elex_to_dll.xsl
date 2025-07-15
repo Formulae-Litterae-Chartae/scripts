@@ -19,6 +19,7 @@
         <abbr full="BQ &amp; AJ">BQ &amp; AJ</abbr>
         <abbr full="Franziska Quaas">FQ</abbr>
         <abbr full="Marieke Röben">MR</abbr>
+        <abbr full="Bahne Schmidt">BAS</abbr>
     </xsl:param>
     <xsl:param name="authorTags">
         <xsl:variable name="authorAbbr" select="normalize-space(/tei:TEI/tei:text/tei:body/tei:p[last()]//text())"/>
@@ -41,6 +42,9 @@
             </xsl:when>
             <xsl:when test="$authorAbbr = 'MR'">
                 <xsl:element name="author" namespace="http://www.tei-c.org/ns/1.0">Marieke Röben</xsl:element>
+            </xsl:when>
+            <xsl:when test="$authorAbbr = 'BAS'">
+                <xsl:element name="author" namespace="http://www.tei-c.org/ns/1.0">Bahne Schmidt</xsl:element>
             </xsl:when>
         </xsl:choose>
     </xsl:param>
