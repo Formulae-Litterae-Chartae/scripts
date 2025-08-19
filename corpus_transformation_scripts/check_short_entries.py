@@ -96,7 +96,8 @@ problems:list[tuple] = []
 for text in sorted(texts):
     for title in etree.parse(text).xpath('//tei:bibl', namespaces={'tei': 'http://www.tei-c.org/ns/1.0'}):
         whole_title = ''.join(title.xpath('.//text()'))
-        whole_title_cleaned = re.sub('[„“"\'’]', '', whole_title.strip())
+        # ‘
+        whole_title_cleaned = re.sub('[„“"\'’‘]', '', whole_title.strip())
         if whole_title_cleaned not in kurztitel_list:
             closest = get_close_matches(whole_title, kurztitel_list, n=1, cutoff=0.8)          
             logging.debug("{} {} {}".format(text, re.sub('[„“"\'’]', '', whole_title.strip()), closest))                                                       

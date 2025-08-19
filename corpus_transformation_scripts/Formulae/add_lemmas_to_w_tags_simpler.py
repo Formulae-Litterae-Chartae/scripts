@@ -62,6 +62,7 @@ def _export_lemma_comparison(lemmas_inflected,orig_inflected,xml_file):
             else:
                 tsv_writer.writerow([lemmas_inflected[i], ''])
     print('written to '+str(csv_file_path))
+    logging.info('Please check to see the errors: '+str(csv_file_path))
         
 def clean_string(input_str:str) -> str:
     """
@@ -75,7 +76,7 @@ def clean_string(input_str:str) -> str:
     if "" == unified_v_u: logging.error('"{}" is not a valid string and should have been removed from the list in previous steps.'.format(input_str))
     return unified_v_u
 
-def test_text(lemmas: list, orig: list, xml_file=None) -> list | str:
+def test_text(lemmas: list, orig: list[etree._Element], xml_file=None) -> list | str:
     """
     Compares lemmas and orig. Resulting in three scenarios:
         1) If it returns an empty list                  -> OK
@@ -84,26 +85,30 @@ def test_text(lemmas: list, orig: list, xml_file=None) -> list | str:
     """
     if len(lemmas) != len(orig):
         logging.info('Length mismatch: There are {} lemmas and {} originals. But these lists should match in size. Trying to resolve this issue.'.format(len(lemmas), len(orig)))
-        orig_inflected = [''.join(x.xpath('.//text()')) for x in orig]
-        lemmas_inflected = [n.split('\t')[0] for n in lemmas]
-        lemmas_text = list()
-        orig_text = list()
-        for i, w in enumerate(lemmas_inflected):
-            if i >= len(orig_inflected):
-                logging.warning('Index i: {} exceeded length of orig_inflected: {}. Therefore no lemmatization is done. After every "!!!" is one error in the following output:'.format(i, len(orig_inflected)))
-                return '\n{}\n{}'.format(' '.join(lemmas_text + ['!!!'] + [n.split('\t')[0] for n in lemmas[i:]]).lower(), ' '.join(orig_text + ['!!!']))
+    orig_inflected = [''.join(x.xpath('.//text()')) for x in orig]
+    lemmas_inflected = [n.split('\t')[0] for n in lemmas]
+    lemmas_text = list()
+    orig_text = list()
+    for i, w in enumerate(lemmas_inflected):
+        if i >= len(orig_inflected):
+            logging.warning('Index i: {} exceeded length of orig_inflected: {}. Therefore no lemmatization is done. After every "!!!" is one error in the following output:'.format(i, len(orig_inflected)))
+            return '\n{}\n{}'.format(' '.join(lemmas_text + ['!!!'] + [n.split('\t')[0] for n in lemmas[i:]]).lower(), ' '.join(orig_text + ['!!!']))
+        else:
+            clean_orig_inflected_element = clean_string(orig_inflected[i])
+            clean_lemmas_inflected_w_element = clean_string(w)
+            if clean_lemmas_inflected_w_element == clean_orig_inflected_element :
+                lemmas_text.append(w.lower().replace('v', 'u'))
+                orig_text.append(w.lower().replace('v', 'u'))
             else:
-                clean_orig_inflected_element = clean_string(orig_inflected[i])
-                clean_lemmas_inflected_w_element = clean_string(w)
-                if clean_lemmas_inflected_w_element == clean_orig_inflected_element :
-                    lemmas_text.append(w.lower().replace('v', 'u'))
-                    orig_text.append(w.lower().replace('v', 'u'))
-                else:
-                    logging.warning('There was mismatch at list index {} (w={} \t orig={}). Therefore no lemmatization is done. After every "!!!" is one error in the following output:'.format(i, clean_lemmas_inflected_w_element, clean_orig_inflected_element))
-                    logging.warning('orig_inflected={}'.format(orig_inflected))
-                    _export_lemma_comparison(lemmas_inflected,orig_inflected,xml_file)
-                    return '\n{}\n{}'.format(' '.join(lemmas_text + ['!!!'] + [n.split('\t')[0] for n in lemmas[i:]]).lower(), ' '.join(orig_text + ['!!!'] + [''.join(x.xpath('.//text()')) for x in orig[i:]]).lower())
+                logging.warning('There was mismatch at list index {} (w={} \t orig={}). Therefore no lemmatization is done. After every "!!!" is one error in the following output:'.format(i, clean_lemmas_inflected_w_element, clean_orig_inflected_element))
+                logging.warning('orig_inflected={}'.format(orig_inflected))
+                _export_lemma_comparison(lemmas_inflected,orig_inflected,xml_file)
+                return '\n{}\n{}'.format(' '.join(lemmas_text + ['!!!'] + [n.split('\t')[0] for n in lemmas[i:]]).lower(), ' '.join(orig_text + ['!!!'] + [''.join(x.xpath('.//text()')) for x in orig[i:]]).lower())
+    if len(lemmas) != len(orig):
+        logging.info('Length mismatch: There are {} lemmas and {} originals. But these lists should match in size. Trying to resolve this issue.'.format(len(lemmas), len(orig)))
         orig=orig_inflected
+    
+    # A list collecting all tokens (with their index) from the `lemmas` input  that could not be matched to the corresponding word in the `orig` XML list.
     not_found = []
     for i, word in enumerate(lemmas):
         inflected, lemma, display_lem = word.split('\t')[:3]
@@ -151,6 +156,8 @@ def test_text(lemmas: list, orig: list, xml_file=None) -> list | str:
                     orig[i].set('lemmaRef', lex_dict[lem])
             else:
                 set_lemmaRef(orig[i], lemma, next_lem, prev_lem)
+    if not_found:
+        _export_lemma_comparison(lemmas_inflected,orig_inflected,xml_file)
     return not_found
 
 
@@ -198,12 +205,11 @@ for xml_file in sorted(xmls):
         not_found = test_text(lems, xml.xpath('//tei:w[not(@type="no-search" or normalize-space(text())="|")]', namespaces=ns), xml_file)
         
         if not_found:
-            logging.warning('not_found is not empty for '+xml_file)
             if list == type(not_found):
-                logging.warning('not_found has '+str(len(not_found))+' items for '+xml_file)
+                logging.warning('not_found is not empty. It has '+str(len(not_found))+' items for '+xml_file)
             logging.warning('not_found: '+str(not_found))
         else:
-            logging.debug('Not found is empty. This is a sign of a working lematization process.')
+            logging.debug('Not found is empty. This is a sign of a well-working lematization process.')
             # w-nodes, that should have been lemmatized but were not
             unlemmatized_w = xml.xpath('//tei:w[not(@lemma) and not(@type="no-search")]', namespaces=ns)
             unlemmatized_w_texts = [x.text for x in unlemmatized_w]

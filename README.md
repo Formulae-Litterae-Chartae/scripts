@@ -32,8 +32,11 @@ python3 ~/git/scripts/corpus_transformation_scripts/Formulae/transform_cte_to_dl
 ```
 
 ## Contribution guide
+
 This collection of scripts consists of Python and xslt files.
+
 ### Python style guide and documentation
+
 In the future, all public repositories of the project could benefit from a SPHINX documentation to encourage the re-usability by others.
 There I decided the following documentation style guide for python code:
 
@@ -41,7 +44,11 @@ There I decided the following documentation style guide for python code:
 2. `import`-statements should be at the top of a file. Never within classes or methods.
 3. One class per file
 4. Prefer logging over print
-5. If not further specified specified, stick to https://google.github.io/styleguide/pyguide.html
+5. If not further specified, stick to https://google.github.io/styleguide/pyguide.html
 6. Use `match-case` [PEP634](https://docs.python.org/3.10/whatsnew/3.10.html#pep-634-structural-pattern-matching) when possible.
+7. Avoid direct system calls:
+   1. Prefer `requests.get` over `os.system('curl`
+
 ### XSLT programming
+
 Always restart your terminal when changing xslt-files. Otherwise the terminal uses a cached version.

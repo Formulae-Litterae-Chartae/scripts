@@ -21,12 +21,22 @@ parser.add_argument("formulae_collections_md_file", type=str,default='/home/matt
 default_scripts_folder = home_dir + '/scripts'
 parser.add_argument("scripts_folder", type=str, default=default_scripts_folder, 
                     help='Path to your local copy of https://github.com/Formulae-Litterae-Chartae/scripts')
+parser.add_argument("--log_file", type=str, default='/home/thorben.schomacker/git/scripts/results/transform_cte_to_dll.log',
+                    help='If set to a valid path: Path where the log is written to. Otherwise it will be the console.')
 args=parser.parse_args()
+
 
 
 logger = get_logger()
 # TODO: set the level via cl argument
 logger.setLevel('WARNING')
+log_file_path=args.log_file.lower()
+# create the log_file
+with open(log_file_path, 'w'): pass
+fh = logging.FileHandler(log_file_path)
+fh.setLevel('WARNING')
+logger.addHandler(fh)
+
 tqdm_switch = logger.getEffectiveLevel() > 30
 saxon_location = args.saxon_location
 
@@ -63,6 +73,8 @@ for f_c in form_coll_md.xpath('/cpt:collection/cpt:members/cpt:collection', name
                     title_id_dict[c.xpath('./cpt:identifier/text()', namespaces=ns)[0]] = c.xpath('./dc:title/text()', namespaces=ns)[0].replace(' (lat)', '')
         for c in form_md.xpath('/cpt:collection/cpt:members/cpt:collection[@identifier]', namespaces=ns):
             mss_path = os.path.normpath(os.path.join(os.path.dirname(form_md_path), c.get('path')))
+            if not os.path.isfile(mss_path):
+                raise FileNotFoundError(mss_path)
             mss_md = etree.parse(mss_path)
             for mss in mss_md.xpath('/cpt:collection/cpt:members/cpt:collection', namespaces=ns):
                 if mss.xpath('dc:type', namespaces=ns)[0].text == 'transcription':
@@ -81,6 +93,12 @@ def check_xml_file_name(file_name:str, logger:logging.Logger, is_transcription=F
     Although the regex could be optimized in terms of execution time - readability of the code should be kept in mind.
     """
     file_name=file_name.split('/')[-1]
+    # collection specific matching
+    if re.match(r"Marculf (I{1,2}|0),?[0-9]*[a-f]? ?(Capitulatio|Praefatio)?( Deutsch)?\.xml", file_name):
+        return True 
+    if re.match(r"Marculf Ergänzung [1-9],[1-9]?( Deutsch)?.xml", file_name):
+        return True 
+
     # German matching
     if re.match(r"[a-zA-Z]+ [A-Z]*[0-9 ]+[ ]*Deutsch.xml", file_name):
         return True
@@ -91,7 +109,7 @@ def check_xml_file_name(file_name:str, logger:logging.Logger, is_transcription=F
     # Latin matching
     if re.match(r"[a-zA-Z]+ [A-Z]*[0-9 ]+Incipit.xml", file_name):
         return True
-    if re.match(r"[a-zA-Z]+ [A-Z]*[0-9 ]+[ ]*.xml", file_name):
+    if re.match(r"Sens [A-Z]*[0-9 ]+[ ]*.xml", file_name):
         return True
     if re.match(r"Sens Ergänzung.xml", file_name):
         return True
@@ -240,10 +258,12 @@ def produce_form_num(filename:str) -> str:
 
 logger.info("Start with German(s)")
 
-def process_german(german:str, logger:logging.Logger) -> None:
+def process_german(german:str, corpus_name:str, logger:logging.Logger) -> None:
     logger.debug("Processing: "+german)
     remove_tei_dtd_reference(german)
     form_num = produce_form_num(german)
+    if corpus_name=='angers':
+        corpus_name='andecavensis'
     new_name = '{base_folder}/data/{corpus}/{form}/{corpus}.{form}.deu001.xml'.format(base_folder=destination_folder, corpus=corpus_name, form=form_num)
     # This subprocess creates the location for the files. 
     subprocess_run(['java', '-jar',  saxon_location, '-s:{}'.format(german), text_transformation_xslt],logging)
@@ -251,7 +271,7 @@ def process_german(german:str, logger:logging.Logger) -> None:
 
 
 for german in tqdm(germans, desc="Process German translation(s)", disable=(logger.getEffectiveLevel() > 30)):
-    process_german(german, logger)
+    process_german(german, corpus_name, logger)
 
 
 from transform_cte_to_dll_checks import check_input_regesten_format
@@ -265,7 +285,13 @@ collections_not_found = set()
 collections_found = set()
 for transcription in tqdm(sorted(transcriptions), desc="Process transcription(s)"):
     
-    if not corpus_name in os.path.split(transcription)[-1].lower(): raise ValueError("The file name of {} does not include the corpus name {}. This will cause errors later.".format(transcription, corpus_name))
+    if not corpus_name in os.path.split(transcription)[-1].lower(): 
+        if corpus_name == 'marculf' and 'markulf' in os.path.split(transcription)[-1].lower(): 
+            pass
+        elif corpus_name == 'andecavensis' and 'angers' in os.path.split(transcription)[-1].lower(): 
+            pass
+        else:
+            raise ValueError("The file name of {} does not include the corpus name {}. This will cause errors later.".format(transcription, corpus_name))
 
     logging.debug("process transcription: "+transcription)
     remove_tei_dtd_reference(transcription)
@@ -304,7 +330,7 @@ for transcription in tqdm(sorted(transcriptions), desc="Process transcription(s)
         #logging.debug("Assigned as: {} the value for man based on manuscript".format(man))
     
     
-    check_fols(filename_parts[1], logger)
+    check_fols(filename_parts[0], filename_parts[1], logger)
     new_name = destination_folder + '/data/{man}/{fols}/{man}.{fols}.{ed}.xml'.format(man=man, fols=filename_parts[1], ed=filename_parts[2])
     fol_add = 1
     new_urn = ''
@@ -391,7 +417,7 @@ try:
 except Exception as e:
     logger.error(e)
 
-logger.setLevel('DEBUG')
+logger.setLevel('WARNING')
 if 0==len(latins):logger.warning("No Latin documents found!")
 logger.info("Start with latin(s)")
 #check_hss_editionen()

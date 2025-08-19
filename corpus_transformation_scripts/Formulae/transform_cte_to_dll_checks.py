@@ -115,7 +115,7 @@ def check_paths_in_capitains(capitains_path:str, logger:logging.Logger) -> bool:
         # this case applies for all transcriptions
         # Example of a valid transcription entry:
         # <collection path="../../p14/47r48v/__capitains__.xml" identifier="urn:cts:formulae:p14.47r48v"/>
-        if 'form' not in extracted_path:
+        if not('form' in extracted_path or 'capitula' in extracted_path or 'incipit' in extracted_path):
             collection_string = ET.tostring(collection)
             if "identifier" not in collection.keys():
                 logger.error("{} has no identifier. This means there was an error in the processing. ".format(capitains_path))
@@ -192,6 +192,7 @@ def check_input_regesten_format(destination_folder,logger):
     """
 
     docid_pattern_without_prefixes = re.compile("[0-9][0-9][0-9]") #e.g., <regest docId="001">
+    marculf_docid_pattern_without_prefixes = re.compile("form_I{1,2}_[0-9]+") #e.g., <regest docId="001">
     formel_number_pattern = re.compile("form[0-9][0-9][0-9]")
     formel_number_pattern_with_subcorpus = re.compile("form_[a|b]_[0-9][0-9][0-9]")
     path_pattern = os.path.join(destination_folder,'regesten/urn:cts:formulae:*_regesten.xml')
@@ -230,9 +231,12 @@ def check_input_regesten_format(destination_folder,logger):
                     else:
                         logger.warning(doc_id+" is missing 'urn','cts' or 'formulae'")
                         formel_number = doc_id
-                    if not docid_pattern_without_prefixes.match(formel_number):
+                    if not marculf_docid_pattern_without_prefixes.match(formel_number):
                         malformed_doc_ids=True
-                        logger.error('docId: '+formel_number+' is malformed.')
+                        logger.error('docId: '+formel_number+' in '+ soup_file +' does not match the pattern: '+str(docid_pattern_without_prefixes))
+                    elif not docid_pattern_without_prefixes.match(formel_number):
+                        malformed_doc_ids=True
+                        logger.error('docId: '+formel_number+' in '+ soup_file +' does not match the pattern: '+str(docid_pattern_without_prefixes))
                     else:
                         parsable_docids.append(formel_number)
         if not malformed_doc_ids:
@@ -335,7 +339,7 @@ def check_hss_editionen_file(hss_editionen_file_path:str, logger:logging.Logger)
         logger.warning("Found {} formula entries. Only {} have proper n-attributes and {} have proper texts.".format(len(formula_list), formula_with_proper_n_element, formula_with_proper_text))
 
 import re
-def check_fols(fols: str, logger:logging.Logger) -> bool:
+def check_fols(man:str, fols: str, logger:logging.Logger) -> bool:
     """
     Checks whether the given string matches the expected folio range pattern.
 
@@ -352,9 +356,13 @@ def check_fols(fols: str, logger:logging.Logger) -> bool:
     """
     pattern_str = r"(\d{1,3}(bis)?[r|v][a|b]?){1,2}"
 
-    if not re.fullmatch(pattern_str, fols):
-        logger.error(f"{fols} does not match the naming pattern for transcriptions.")
-        raise ValueError(f"{fols} does not match the naming pattern for transcriptions.")
+    if "sg2" == man:
+        print("sg2 found")
+        if re.fullmatch(r"\d{2,4}", man):
+            return True
+    elif not re.fullmatch(pattern_str, fols):
+        logger.error(f"{man}.{fols} does not match the naming pattern for transcriptions.")
+        raise ValueError(f"{man}.{fols}  does not match the naming pattern for transcriptions.")
         return False
     else:
         return True

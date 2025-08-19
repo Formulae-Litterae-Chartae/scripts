@@ -21,6 +21,7 @@ def get_corpus_information(input_tei_path)-> dict:
         raise ValueError("{} has a wrong file name".format(input_tei_path))
     
 def create_subtrees(input_tei_path_list: list[str], logger):
+    if input_tei_path_list == []: raise ValueError('input_tei_path_list should not be empty')
     xml_trees = []
     output_paths = []
     for input_tei_path in input_tei_path_list:
@@ -71,7 +72,7 @@ def get_regesten_files(collection: str, collection_title_case: str, file_type: s
     """
     base_dir = os.path.expanduser(f"~/git/scripts/formel_transform/input/{collection}")
     #pattern = f"Regesten {collection_title_case} [ABI]*.{file_type}"
-    pattern = f"Regesten {collection_title_case} *.{file_type}"
+    pattern = f"Regesten {collection_title_case}*.{file_type}"
     search_path = os.path.join(base_dir, pattern)
     return sorted(glob.glob(search_path))
 
@@ -93,7 +94,7 @@ if __name__ == '__main__':
     transformation_file =  make_proper_path("~/git/scripts/corpus_transformation_scripts/Formulae/regesten_extract.xsl")
     #input_docx_path = make_proper_path("~/git/scripts/formel_transform/input/{}/Regesten {} A.docx".format(collection, collection_title_case))
     input_docx_path_list = get_regesten_files(collection, collection_title_case)
-    logger.info("Found regesten files: {} for ".format(input_docx_path_list, ))
+    logger.info("Found regesten files: {} for {}".format(input_docx_path_list, collection))
     input_tei_path_list:list[str] = list()
     for input_docx_path in input_docx_path_list:
         tei_path = input_docx_path.replace('docx', 'xml')

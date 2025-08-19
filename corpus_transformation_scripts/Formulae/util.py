@@ -6,6 +6,9 @@ import subprocess
 from subprocess import CompletedProcess
 
 def make_proper_path(str_path:str):
+    """Transforms 
+    
+    """
     return path.expanduser(path.normpath(str_path))
 
 def get_logger() -> Logger:
@@ -65,8 +68,35 @@ def subprocess_run(commands:list, logger:Logger) -> CompletedProcess:
             logger.error(' '.join(commands))
             raise e
         
-def convert_docx_to_tei(input_docx_path:str):
-    raise NotImplementedError
+import os
+import requests
+
+def convert_docx_to_tei(input_docx_path: str, output_tei_path: str):
+    """
+    Converts a DOCX file to TEI XML using the TEIGarage web service and writes the result to a file.
+
+    :param input_docx_path: Path to the input .docx file
+    :param output_tei_path: Path where the resulting TEI XML should be written
+    :raises requests.HTTPError: If the web service returns an error status
+    """
+    url = (
+        "https://teigarage.tei-c.org/ege-webservice/Conversions/"
+        "docx%3Aapplication%3Avnd.openxmlformats-officedocument.wordprocessingml.document/"
+        "TEI%3Atext%3Axml"
+    )
+
+    file_name = os.path.basename(input_docx_path)
+    content_type = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+
+    with open(input_docx_path, 'rb') as f:
+        files = {'fileToConvert': (file_name, f, content_type)}
+        response = requests.post(url, files=files)
+
+    response.raise_for_status()  # Raise if something went wrong
+
+    with open(output_tei_path, 'w', encoding='utf-8') as out_file:
+        out_file.write(response.content.decode('utf-8'))
+    
 
 def check_capitains_rng():
     """

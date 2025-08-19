@@ -7,6 +7,7 @@ from tqdm import tqdm
 import requests
 
 logging = get_logger()
+logging.setLevel("DEBUG")
 
 def determine_tei_garage_url() -> str:
     LIST_OF_POSSIBLE_HOSTS = ["http://fdm.awhamburg.de:17107", "http://localhost:8080"]
