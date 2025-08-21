@@ -100,12 +100,14 @@ for text in sorted(texts):
         whole_title_cleaned = re.sub('[„“"\'’‘]', '', whole_title.strip())
         if whole_title_cleaned not in kurztitel_list:
             closest = get_close_matches(whole_title, kurztitel_list, n=1, cutoff=0.8)          
-            logging.debug("{} {} {}".format(text, re.sub('[„“"\'’]', '', whole_title.strip()), closest))                                                       
-            problems.append((text.split('/')[-1], whole_title, closest[0] if closest else 'FEHLT'))
+            logging.debug("{} {} {}".format(text, re.sub('[„“"\'’]', '', whole_title.strip()), closest))          
+            identifier= text.split('/')[-1]                                              
+            problems.append((identifier, whole_title, closest[0] if closest else 'FEHLT'))
         elif title.get('n').strip() in ('', ','):
             subprocess.run(['java', '-jar',  saxon_location, '{}'.format(text), add_bibl_xslt, '-o:{}'.format(text)])
             
-
+#TODO: All entries appeared twice before
+problems = list(set(problems))
 
 problem_path_location = Path(scripts_folder+'/results/elex_problems.txt')
 

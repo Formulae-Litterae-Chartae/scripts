@@ -58,7 +58,11 @@ def add_translations_to_cts(filename):
     xml = etree.parse(filename)                                                             
     for readable in xml.xpath('/cpt:collection/cpt:members/cpt:collection[@readable="true"]', namespaces=ns):
         md = readable.xpath('cpt:structured-metadata', namespaces=ns)[0]
-        md.append(E.alternative(elex_translations[key]))
+        try:
+            alternative_key = elex_translations[key]
+        except KeyError as ke:
+            raise KeyError(key+ " not found in "+str(elex_translations.keys()))
+        md.append(E.alternative(alternative_key))
     xml.write(filename, encoding='utf-8', pretty_print=True)
 
 for lex in tqdm(lexes):
