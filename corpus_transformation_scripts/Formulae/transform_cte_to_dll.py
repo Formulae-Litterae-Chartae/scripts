@@ -94,10 +94,17 @@ def check_xml_file_name(file_name:str, logger:logging.Logger, is_transcription=F
     """
     file_name=file_name.split('/')[-1]
     # collection specific matching
-    if re.match(r"Marculf (I{1,2}|0),?[0-9]*[a-f]? ?(Capitulatio|Praefatio)?( Deutsch)?\.xml", file_name):
-        return True 
-    if re.match(r"Marculf Ergänzung [1-9],[1-9]?( Deutsch)?.xml", file_name):
-        return True 
+    ## Angers
+    if re.match(r"Angers [1-9][0-9]?( Deutsch)?.xml", file_name): return True 
+    if re.match(r"Angers 0 Titel( Deutsch)?.xml", file_name): return True 
+    if re.match(r"Angers Einschub Weltzeitalter, Schalttagsberechnung und computus( Deutsch)?.xml", file_name): return True 
+    ## Auvergne
+    if re.match(r"Auvergne [1-6]( Deutsch)?.xml", file_name): return True 
+    ## Bourges
+    if re.match(r"Bourges [A-C] [1-9][0-9]?( [a-m])?( Deutsch)?.xml", file_name): return True 
+    ## Marculf
+    if re.match(r"Marculf (I{1,2}|0),?[0-9]*[a-f]? ?(Capitulatio|Praefatio)?( Deutsch)?\.xml", file_name): return True 
+    if re.match(r"Marculf Ergänzung [1-9],[1-9]?( Deutsch)?.xml", file_name): return True 
 
     # German matching
     if re.match(r"[a-zA-Z]+ [A-Z]*[0-9 ]+[ ]*Deutsch.xml", file_name):

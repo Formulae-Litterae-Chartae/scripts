@@ -19,7 +19,7 @@ Various scripts used in the Formulae - Litterae - Chartae Project
 Source: https://docs.python.org/3/library/logging.html#logging-levels
 
 ### Run a script:
-
+1. `cd ~/git/scripts/`
 1. activate the virtualenv (e.g., `source .venv/bin/activate`)
 2. install the requirements via `pip install -r requirements.txt` within in the venv
 3. If the requirements have been installed properly, you can launch `python3 <your_script>.py`
