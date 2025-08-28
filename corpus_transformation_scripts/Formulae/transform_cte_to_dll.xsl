@@ -902,8 +902,8 @@
         </xsl:element>
         
         <!-- Place note element after the @targetEnd seg element -->
-        <xsl:variable name="target_end" select="concat('#', $anchor_id)"/>
-        <xsl:for-each select="//tei:note[@targetEnd=$target_end]">
+<!--        <xsl:variable name="target_end" select="concat('#', $anchor_id)"/>-->
+<!--        <xsl:for-each select="//tei:note[@targetEnd=$target_end]">
             <xsl:copy>
                 <xsl:if test="@targetEnd">
                     <xsl:attribute name="targetEnd" select="@targetEnd"/>
@@ -919,7 +919,7 @@
                 <xsl:attribute name="xml:id"><xsl:value-of select="generate-id(.)"/></xsl:attribute>
                 <xsl:apply-templates select="node()|comment()"/>
             </xsl:copy>
-        </xsl:for-each>
+        </xsl:for-each>-->
     </xsl:template>
     
 <!--    <xsl:template 

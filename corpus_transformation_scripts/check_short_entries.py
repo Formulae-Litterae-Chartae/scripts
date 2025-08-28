@@ -103,11 +103,13 @@ for text in sorted(texts):
             logging.debug("{} {} {}".format(text, re.sub('[„“"\'’]', '', whole_title.strip()), closest))          
             identifier= text.split('/')[-1]                                              
             problems.append((identifier, whole_title, closest[0] if closest else 'FEHLT'))
+            if len(problems) > 1:
+                if problems[-1] == problems[-2]:
+                    logging.warning('problem duplicate for {}. Maybe indicates an error with the footnotes.'.format(identifier))
         elif title.get('n').strip() in ('', ','):
             subprocess.run(['java', '-jar',  saxon_location, '{}'.format(text), add_bibl_xslt, '-o:{}'.format(text)])
-            
-#TODO: All entries appeared twice before
-problems = list(set(problems))
+
+        
 
 problem_path_location = Path(scripts_folder+'/results/elex_problems.txt')
 
