@@ -71,7 +71,7 @@ def subprocess_run(commands:list, logger:Logger) -> CompletedProcess:
 import os
 import requests
 
-def convert_docx_to_tei(input_docx_path: str, output_tei_path: str):
+def convert_docx_to_tei(input_docx_path: str, output_tei_path: str, logger: Logger = None):
     """
     Converts a DOCX file to TEI XML using the TEIGarage web service and writes the result to a file.
 
@@ -96,7 +96,8 @@ def convert_docx_to_tei(input_docx_path: str, output_tei_path: str):
 
     with open(output_tei_path, 'w', encoding='utf-8') as out_file:
         out_file.write(response.content.decode('utf-8'))
-    
+    if os.path.isfile(output_tei_path):
+        logger.info("{} was created overwritten. ".format(output_tei_path))
 
 def check_capitains_rng():
     """

@@ -7,7 +7,34 @@
     
     <xsl:output omit-xml-declaration="no" indent="yes"/>
     
+    <xsl:variable name="titleNode" select="normalize-space(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title)"/>
+    <xsl:variable name="filename" select="tokenize(tokenize(base-uri(), '/')[last()], '\.')[1]"/>
+    <xsl:variable name="titleParts" select="tokenize($filename, '%20')"/>
+    <xsl:variable name="mainTitle" select="string-join($titleParts, ' ')"/>
+    
+    <xsl:variable name="resolvedTitle">
+        <xsl:choose>
+            <xsl:when test="$titleNode">
+                <xsl:value-of select="$titleNode"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:message terminate="no">
+                    ⚠️ Warning: TEI title is empty for this file (<xsl:value-of select="base-uri()" />). The filename is used for bourges instead.
+                </xsl:message>
+                <xsl:value-of select="$mainTitle"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:variable>
+    
+
+    
     <xsl:template match="/">
+        <!-- Validate title format -->
+        <xsl:if test="not(matches($resolvedTitle, '^Regesten [A-Za-z]+( [A-Za-z]+)?$'))">
+            <xsl:message terminate="no">
+                ⚠️ Warning: Resolved title '<xsl:value-of select="$resolvedTitle"/>' does not match expected format: Regesten [A-z]+ [A-z]?
+            </xsl:message>
+        </xsl:if>
         <xml><xsl:for-each select="/tei:TEI/tei:text/tei:body/tei:table/tei:row">
             <regest>
                 <xsl:attribute name="docId">
@@ -17,6 +44,7 @@
                             <xsl:value-of select="replace(child::tei:cell[1]/., '.*(\d),.*', '$1')"/><xsl:text>_</xsl:text><xsl:number value="replace(child::tei:cell[1]/., '.*,(\d).*', '$1')" format="001"/>
                         </xsl:when>
                         <xsl:when test="contains(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title/text(), 'tours')">
+                                <xsl:comment>Entry in tours-style</xsl:comment>
                             <xsl:choose>
                                 <xsl:when test="contains(child::tei:cell[1]/., 'Ergänzung')">
                                     <xsl:text>2_</xsl:text><xsl:number value="replace(child::tei:cell[1]/., '.*?(\d+)(\D{0,2})$', '$1')" format="001"/><xsl:if test="matches(child::tei:cell[1]/., '.*?(\D{1,2})$')"><xsl:text>_</xsl:text><xsl:value-of select="replace(child::tei:cell[1]/., '.*?(\d+)(\D{1,2})$', '$2')"/></xsl:if>
@@ -26,11 +54,18 @@
                                 </xsl:otherwise>
                             </xsl:choose>
                         </xsl:when>
-                        <xsl:when test="contains(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title/text(), 'bourges')">
-                            <xsl:value-of select="lower-case(./preceding::tei:p[1])"/><xsl:text>_</xsl:text>
-                            <xsl:number value="replace(child::tei:cell[1]/., '.*?(\d+)(\D{0,3})$', '$1')" format="001"/><xsl:if test="matches(child::tei:cell[1]/., '[a-z]$')"><xsl:value-of select="replace(child::tei:cell[1]/., '.*?(\d+)([a-z])$', '$2')"/></xsl:if>
+                        <xsl:when test="contains(lower-case($resolvedTitle), 'bourges')">
+                            <xsl:value-of select="lower-case($titleParts[2])"/>
+                                <xsl:text>.form_</xsl:text>
+                            <xsl:value-of select="lower-case($titleParts[3])"/>
+                            <xsl:text>_</xsl:text>
+                            <xsl:number value="replace(child::tei:cell[1]/., '.*?(\d+)(\D{0,3})$', '$1')" format="001"/>
+                                <xsl:if test="matches(child::tei:cell[1]/., '[a-z]$')">
+                                    <xsl:value-of select="replace(child::tei:cell[1]/., '.*?(\d+)([a-z])$', '$2')"/>
+                                </xsl:if>
                         </xsl:when>
                             <xsl:when test="contains(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title/text(), 'Marculf')">
+                                <xsl:comment>Entry in Marculf-style</xsl:comment>
                                 <xsl:choose>
                                     <xsl:when test="contains(child::tei:cell[1]/., 'Ergänzung')">
                                         <xsl:text>3_</xsl:text>
@@ -51,12 +86,16 @@
                             </xsl:when>
 
                         <xsl:otherwise>
+                            <xsl:comment>Entry in otherwise-style</xsl:comment>
                             <xsl:number value="replace(child::tei:cell[1]/., '.*?(\d+)(\D{0,2})$', '$1')" format="001"/><xsl:value-of select="replace(child::tei:cell[1]/., '.*?(\d+)(\D{0,2})$', '$2')"/>
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:attribute>
+          
+                
                 <shortDesc><xsl:apply-templates select="child::tei:cell[2]/node()"></xsl:apply-templates></shortDesc>
                 <longDesc><xsl:apply-templates select="child::tei:cell[3]/node()"></xsl:apply-templates></longDesc>
+
             </regest>
         </xsl:for-each></xml>
     </xsl:template>

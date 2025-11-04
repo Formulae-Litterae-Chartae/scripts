@@ -98,7 +98,7 @@ if __name__ == '__main__':
     input_tei_path_list:list[str] = list()
     for input_docx_path in input_docx_path_list:
         tei_path = input_docx_path.replace('docx', 'xml')
-        convert_docx_to_tei(input_docx_path, tei_path)
+        convert_docx_to_tei(input_docx_path, tei_path, logger=logger)
         input_tei_path_list.append(tei_path)
     
     print(input_tei_path_list)
@@ -122,6 +122,9 @@ if __name__ == '__main__':
     #print(ET.tostring(root, encoding='utf8'))
     final_output_path = make_proper_path("~/git/scripts/formel_transform/output/{corpus}/regesten/urn:cts:formulae:{corpus}_regesten.xml".format(corpus=corpus_name))
     main_tree.write(final_output_path)
-    logger.info("Success! All regests from {} are converted to {} ".format(corpus_name, final_output_path))
+    if os.path.isfile(final_output_path):
+        logger.info("Success! All regests from {} are converted to {} ".format(corpus_name, final_output_path))
+    else:
+        logger.info("FAILURE! {} was not created.".format(final_output_path))
     if not args.preserve_temp_files:
         remove_files(output_paths,logger)
