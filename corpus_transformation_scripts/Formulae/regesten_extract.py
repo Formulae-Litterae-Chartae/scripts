@@ -2,6 +2,7 @@ from util import get_logger, subprocess_run, make_proper_path, convert_docx_to_t
 import os
 import argparse
 import xml.etree.ElementTree as ET
+from xml.etree.ElementTree import Element
 
 def get_corpus_information(input_tei_path)-> dict:
     corpus_information_dict = {}
@@ -20,10 +21,10 @@ def get_corpus_information(input_tei_path)-> dict:
     else:
         raise ValueError("{} has a wrong file name".format(input_tei_path))
     
-def create_subtrees(input_tei_path_list: list[str], logger):
-    if input_tei_path_list == []: raise ValueError('input_tei_path_list should not be empty')
-    xml_trees = []
-    output_paths = []
+def create_subtrees(input_tei_path_list: list[str], logger) -> tuple[str, list, list]:
+    if input_tei_path_list == []: raise ValueError('input_tei_path_list should not be empty') 
+    xml_trees: list[ET[Element[str]]] = []
+    output_paths:list[str] = []
     for input_tei_path in input_tei_path_list:
         corpus_information_dict = get_corpus_information(input_tei_path)
         corpus_name = corpus_information_dict["corpus"]
@@ -44,9 +45,14 @@ def create_subtrees(input_tei_path_list: list[str], logger):
         for child in root:
             if "regest" == child.tag:
                 if "docId" in child.attrib.keys():
-                    child.set('docId', "urn:cts:formulae:{corpus}.form{subcorpus}{form_num}".format(corpus=corpus_name, 
-                                                                                                                subcorpus=subcorpus_name,
-                                                                                                                form_num=child.get('docId')))
+                    if 'bourges' in corpus_name:
+                        child.set('docId', "urn:cts:formulae:{corpus}.form{subcorpus}{form_num}".format(corpus=corpus_name, 
+                                                                                            subcorpus=subcorpus_name,
+                                                                                            form_num=child.get('docId')))
+                    else: 
+                        child.set('docId', "urn:cts:formulae:{corpus}.form{subcorpus}{form_num}".format(corpus=corpus_name, 
+                                                                                                                    subcorpus=subcorpus_name,
+                                                                                                                    form_num=child.get('docId')))
         xml_trees.append(tree)
     return corpus_name, xml_trees, output_paths
 
@@ -110,7 +116,7 @@ if __name__ == '__main__':
     if 0 == len(xml_trees): raise FileNotFoundError('No tree found')
 
     
-    main_tree = xml_trees[0]
+    main_tree: ET = xml_trees[0]
     main_root = xml_trees[0].getroot()
     if 1 < len(xml_trees):
         # extend the first tree with all other trees
@@ -121,7 +127,8 @@ if __name__ == '__main__':
     ET.indent(main_tree, space='  ', level=0)
     #print(ET.tostring(root, encoding='utf8'))
     final_output_path = make_proper_path("~/git/scripts/formel_transform/output/{corpus}/regesten/urn:cts:formulae:{corpus}_regesten.xml".format(corpus=corpus_name))
-    main_tree.write(final_output_path)
+    with open(final_output_path, 'w', encoding='UTF-8') as final_output_file:
+        main_tree.write(final_output_file, encoding='unicode')
     if os.path.isfile(final_output_path):
         logger.info("Success! All regests from {} are converted to {} ".format(corpus_name, final_output_path))
     else:

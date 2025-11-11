@@ -54,12 +54,11 @@
                                 </xsl:otherwise>
                             </xsl:choose>
                         </xsl:when>
-                        <xsl:when test="contains(lower-case($resolvedTitle), 'bourges')">
-                            <xsl:value-of select="lower-case($titleParts[2])"/>
-                                <xsl:text>.form_</xsl:text>
-                            <xsl:value-of select="lower-case($titleParts[3])"/>
-                            <xsl:text>_</xsl:text>
+                            <!-- urn:cts:formulae:bourges.form_c_001a -->
+                        <xsl:when test="contains(lower-case($resolvedTitle), 'bourges')">->
+                                <!-- 001 -->
                             <xsl:number value="replace(child::tei:cell[1]/., '.*?(\d+)(\D{0,3})$', '$1')" format="001"/>
+                                <!-- 001a -->
                                 <xsl:if test="matches(child::tei:cell[1]/., '[a-z]$')">
                                     <xsl:value-of select="replace(child::tei:cell[1]/., '.*?(\d+)([a-z])$', '$2')"/>
                                 </xsl:if>
