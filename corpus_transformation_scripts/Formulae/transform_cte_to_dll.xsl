@@ -803,11 +803,13 @@
                         <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0">
                             <xsl:attribute name="type">no-search</xsl:attribute><xsl:value-of select="$pString"/></xsl:element>
                     </xsl:when>
-                    <xsl:when test="ancestor::tei:hi[
-                        contains(@style, 'font-style:italic;') 
-                        or contains(@rend,  'font-style:italic;') 
-                        or contains(@rend,  'italic')
-                        ]">
+                    <!--
+                    Restrict 'from-other' classification to German manuscripts and only for words
+                    inside <seg type="latin-word;">. Avoids falsely marking any italic text as
+                    foreign, since italics in CTE XML serve many non-linguistic purposes.
+                    -->
+                    <xsl:when test="contains($manuscript, 'deu0') 
+                        and ancestor::tei:seg[contains(@type, 'latin-word;')]">
                         <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0">
                             <xsl:attribute name="function">from-other</xsl:attribute>
                             <xsl:value-of select="$pString"/>
@@ -904,11 +906,13 @@
                                 <xsl:attribute name="type">no-search</xsl:attribute>
                                 <xsl:value-of select="$pString"/></xsl:element>
                         </xsl:when>
-                        <xsl:when test="ancestor::tei:hi[
-                            contains(@style, 'font-style:italic;') 
-                            or contains(@rend,  'font-style:italic;') 
-                            or contains(@rend,  'italic')
-                            ]">
+                        <!--
+                        Restrict 'from-other' classification to German manuscripts and only for words
+                        inside <seg type="latin-word;">. Avoids falsely marking any italic text as
+                        foreign, since italics in CTE XML serve many non-linguistic purposes.
+                        -->
+                        <xsl:when test="contains($manuscript, 'deu0') 
+                            and ancestor::tei:seg[contains(@type, 'latin-word;')]">
                             <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0">
                                 <xsl:attribute name="function">from-other</xsl:attribute>
                                 <xsl:value-of select="$pString"/>
