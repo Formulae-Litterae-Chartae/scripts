@@ -790,16 +790,28 @@
                 <xsl:choose>
                     <xsl:when test="not(matches($pString, '\w'))"><xsl:value-of select="$pString"/></xsl:when>
                     <xsl:when test="ancestor::tei:hi[contains(@rend, 'text-transform:uppercase;')]">
-                        <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:value-of select="upper-case($pString)"/></xsl:element>
+                        <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0">
+                            <xsl:value-of select="upper-case($pString)"/>
+                        </xsl:element>
                     </xsl:when>
                     <xsl:when test="ancestor::tei:label">
-                        <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:value-of select="upper-case($pString)"/></xsl:element>
+                        <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0">
+                            <xsl:value-of select="upper-case($pString)"/>
+                        </xsl:element>
                     </xsl:when>
-                    <xsl:when test="ancestor::tei:hi[@style='font-size:14pt;' or @rend='font-size:14pt;']">
-                        <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="type">no-search</xsl:attribute><xsl:value-of select="$pString"/></xsl:element>
+                    <xsl:when test="ancestor::tei:hi[contains(@style, 'font-size:14pt;') or @rend='font-size:14pt;']">
+                        <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0">
+                            <xsl:attribute name="type">no-search</xsl:attribute><xsl:value-of select="$pString"/></xsl:element>
                     </xsl:when>
-                    <xsl:when test="ancestor::tei:hi[@style='font-size:10pt;' or @rend='font-size:10pt;']">
-                        <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="function">from-other</xsl:attribute><xsl:value-of select="$pString"/></xsl:element>
+                    <xsl:when test="ancestor::tei:hi[
+                        contains(@style, 'font-style:italic;') 
+                        or contains(@rend,  'font-style:italic;') 
+                        or contains(@rend,  'italic')
+                        ]">
+                        <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0">
+                            <xsl:attribute name="function">from-other</xsl:attribute>
+                            <xsl:value-of select="$pString"/>
+                        </xsl:element>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:value-of select="$pString"/></xsl:element>
@@ -887,11 +899,20 @@
                         <xsl:when test="ancestor::tei:label">
                             <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:value-of select="upper-case($pString)"/></xsl:element>
                         </xsl:when>
-                        <xsl:when test="ancestor::tei:hi[@style='font-size:14pt;' or @rend='font-size:14pt;']">
-                            <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="type">no-search</xsl:attribute><xsl:value-of select="$pString"/></xsl:element>
+                        <xsl:when test="ancestor::tei:hi[contains(@style, 'font-size:14pt;') or @rend='font-size:14pt;']">
+                            <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0">
+                                <xsl:attribute name="type">no-search</xsl:attribute>
+                                <xsl:value-of select="$pString"/></xsl:element>
                         </xsl:when>
-                        <xsl:when test="ancestor::tei:hi[@style='font-size:10pt;' or @rend='font-size:10pt;']">
-                            <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="function">from-other</xsl:attribute><xsl:value-of select="$pString"/></xsl:element>
+                        <xsl:when test="ancestor::tei:hi[
+                            contains(@style, 'font-style:italic;') 
+                            or contains(@rend,  'font-style:italic;') 
+                            or contains(@rend,  'italic')
+                            ]">
+                            <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0">
+                                <xsl:attribute name="function">from-other</xsl:attribute>
+                                <xsl:value-of select="$pString"/>
+                            </xsl:element>
                         </xsl:when>
                         <xsl:otherwise>
                             <xsl:element name="w" namespace="http://www.tei-c.org/ns/1.0"><xsl:value-of select="$pString"/></xsl:element>
@@ -955,11 +976,15 @@
             </xsl:copy>
         </xsl:variable>
         <xsl:choose>
-            <xsl:when test="@type='n1'"><xsl:copy-of select="$new_note_tag"/></xsl:when>
-            <xsl:when test="@targetEnd">
-<!--                <xsl:element name="seg" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="type">note-begin-marker</xsl:attribute><xsl:attribute name="n" select="generate-id(.)"></xsl:attribute></xsl:element>-->
+            <!-- n1-notes stay as they are -->
+            <xsl:when test="@type='n1'">
+                <xsl:copy-of select="$new_note_tag"/>
             </xsl:when>
-            <xsl:otherwise><xsl:copy-of select="$new_note_tag"/></xsl:otherwise>
+            
+            <!-- ALL other notes, including those with @targetEnd, are also kept -->
+            <xsl:otherwise>
+                <xsl:copy-of select="$new_note_tag"/>
+            </xsl:otherwise>
         </xsl:choose>
         <xsl:for-each select=".//tei:note">
             <xsl:call-template name="buildNotes"></xsl:call-template>
@@ -1103,8 +1128,8 @@
         
         
     <!-- Delete note elements that are inside other note elements -->
-    <xsl:template match="tei:note//tei:note" />
-    
+<!--    <xsl:template match="tei:note//tei:note" />-->
+    <xsl:template match="tei:note//tei:note[not(@targetEnd)]" />
     <!-- In the CTE output, when a note element immediately follows a hi element, the hi element is repeated and encloses the note -->
     <!--<xsl:template match="tei:hi[tei:note]">
         <xsl:choose>
