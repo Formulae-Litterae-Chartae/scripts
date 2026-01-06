@@ -9,10 +9,16 @@ from os import environ, path
 from lxml import etree
 from trafilatura.xml import validate_tei
 from tqdm import tqdm
+import logging
 
 home_dir = environ.get('HOME', '')
 current_dir = path.abspath(path.dirname(__file__))
 bib_source = sys.argv[1] if len(sys.argv) > 1 else current_dir + '/formulae_bibliographie.bib'
+
+#from scripts.corpus_transformation_scripts.util import get_logger
+import logging
+logger = logging.getLogger(__name__)
+logger.setLevel('DEBUG')
 
 with open(bib_source) as f:
     parser = BibTexParser(common_strings=True)
@@ -223,12 +229,39 @@ with open(export_path, mode="w") as f:
 print("Done! Exported to "+export_path)
 
 
-def validate_xml(export_path:str):
+def validate_xml(export_path:str, logger):
     """
     More information: https://trafilatura.readthedocs.io/en/latest/tutorial2.html#validating-existing-files
-    """
-    mytree = etree.parse(export_path)
-    if validate_tei(mytree):
-        print("Validation passed: "+export_path)
+    https://lxml.de/validation.html#relaxng
+    https://adrien.barbaresi.eu/blog/validating-tei-xml-python.html
 
-validate_xml(export_path)
+    """
+    # import requests
+    # from io import StringIO
+    # from lxml import etree
+    # # download the TEI-XML schema
+    # schema = requests.get('https://tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng').text
+    # schema = schema.replace('encoding="utf-8"', '')
+
+
+
+    # # load the schema into LXML
+    # relaxng_doc = etree.parse(StringIO(schema))
+    # tei_relaxng = etree.RelaxNG(relaxng_doc)
+    # # open a file and parse it
+    # #mytree = etree.parse('document-name.xml')
+    # #mytree = etree.parse('document-name.xml')
+    mytree = etree.parse(export_path)
+    # validation alternative 2 (slightly more pythonic)
+    # try:
+    #     result = tei_relaxng.assert_(mytree)
+    # except AssertionError as err:
+    #     print('TEI validation error:' + err)
+    logger.info("XML-parsing was possible: "+export_path)
+    if validate_tei(mytree):
+        logger.info("Validation passed: "+export_path)
+    else:
+        logger.error("Validation not passed: "+export_path)
+
+
+validate_xml(export_path, logger)
