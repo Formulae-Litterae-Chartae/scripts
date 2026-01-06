@@ -362,7 +362,6 @@ def check_fols(man:str, fols: str, logger:logging.Logger) -> bool:
             return True
     elif not re.fullmatch(pattern_str, fols):
         logger.error(f"{man}.{fols} does not match the naming pattern for transcriptions.")
-        raise ValueError(f"{man}.{fols}  does not match the naming pattern for transcriptions.")
-        return False
+        #raise ValueError(f"{man}.{fols}  does not match the naming pattern for transcriptions.")
     else:
         return True
