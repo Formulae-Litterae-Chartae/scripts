@@ -8,7 +8,7 @@ import logging
 from util import get_logger
 import errno
 
-def xslsx_to_csv(input_path,logging=None) -> str:
+def xslsx_to_csv(input_path,logger=None) -> str:
     """
     Convert a xslsx-file located at input_path and convert it to csv-file at input_path.
     """
@@ -17,8 +17,8 @@ def xslsx_to_csv(input_path,logging=None) -> str:
     df = pd.DataFrame(pd.read_excel(input_file))
     output_file = input_file.replace('xlsx', 'csv') 
     df.to_csv(output_file, sep="\t", index=False)
-    if logging is not None:
-        logging.info('converted {input} to {output}'.format(input=input_file,output=output_file))
+    if logger is not None:
+        logger.info('converted {input} to {output}'.format(input=input_file,output=output_file))
     return output_file
 
 
@@ -221,14 +221,30 @@ def make_temp_id(title:str) -> str:
     Should be solved otherwise in the future
     """
     title_components = title.split(' ')
-    if 2< len(title_components) < 5:
-        corpus = title_components[0].lower()
-        subcorpus = title_components[1].lower()
-        number = title_components[2].zfill(3)
-        identifier="urn:cts:formulae:{corpus}.form_{subcorpus}_{number}.lat001".format(corpus=corpus , subcorpus=subcorpus, number=number)
-        return identifier
-    else:
-        raise ValueError("{} is malformatted.".format(title))
+    match len(title_components):
+        case 0 | 1:
+            raise ValueError("{} has too few information.".format(title))
+        # No subcorpus
+        case 2:
+            corpus = title_components[0].lower()
+            number = title_components[1]
+            number_match = re.match(r'^(\d+)\((\w+)\)$', number)
+            #40(A) -> (040, A)
+            if number_match:
+                number, letter = number_match.groups()
+                number = number.zfill(3)+'_'+letter
+            else:
+                number = number.zfill(3)
+            identifier="urn:cts:formulae:{corpus}.form_{number}.lat001".format(corpus=corpus , number=number)
+            return identifier
+        case 3 | 4:
+            corpus = title_components[0].lower()
+            subcorpus = title_components[1].lower()
+            number = title_components[2].zfill(3)
+            identifier="urn:cts:formulae:{corpus}.form_{subcorpus}_{number}.lat001".format(corpus=corpus , subcorpus=subcorpus, number=number)
+            return identifier
+        case _:
+            raise ValueError("{} has too much information.".format(title))
 
 import csv
 
@@ -246,8 +262,18 @@ def read_limited_csv(file_path: str, csv_column_limit: int) -> list[list[str]]:
     with open(file_path, newline='', encoding='utf-8') as csv_file:
         reader = csv.reader(csv_file, delimiter='\t')
         for row in reader:
-            rows.append(row[:csv_column_limit])
+            rows.append(row[:csv_column_limit+1])
     return rows
+
+def check_apparatus_notes(SEPERATOR_TOKEN, xml_string, rows, logger):
+    number_of_separator_tokens = xml_string.count(SEPERATOR_TOKEN)
+    number_of_documents = len(rows[1:])
+    if SEPERATOR_TOKEN not in xml_string:
+        logger.warning("No {SEPERATOR_TOKEN} found in {corpus}. Possible indicator for an incomplete reading from the input.")
+    elif number_of_documents >= number_of_separator_tokens: 
+        logger.warning(f"Only found {number_of_separator_tokens} {SEPERATOR_TOKEN} in {number_of_documents} documents. This number seems too low and is a possible indicator for an incomplete reading from the input.")
+    else:
+        logger.info(f"Found {number_of_separator_tokens} {SEPERATOR_TOKEN} in {number_of_documents} documents. This number seems ok and indicates a complete reading from the input.")
 
 
 def main():
@@ -265,9 +291,10 @@ def main():
 
     csv_file = get_csv(input_path,logging)
 
-    logging.info('csv-file: '+csv_file)
+    logger.info('csv-file: '+csv_file)
 
-    ns = {'tei': 'http://www.tei-c.org/ns/1.0', 'cpt': 'http://purl.org/capitains/ns/1.0#', 'dc': 'http://purl.org/dc/elements/1.1/', 'dct': 'http://purl.org/dc/terms/', 'bib': 'http://bibliotek-o.org/1.0/ontology/'}
+    ns = {'tei': 'http://www.tei-c.org/ns/1.0', 'cpt': 'http://purl.org/capitains/ns/1.0#', 
+          'dc': 'http://purl.org/dc/elements/1.1/', 'dct': 'http://purl.org/dc/terms/', 'bib': 'http://bibliotek-o.org/1.0/ontology/'}
 
     ed_bib_info = {'Zeu': ('Zeu', 'Zeumer, Karl: Formulae Merowingici et Karolini aevi, Hannover 1882.'),
                 'Zeua': ('Zeu&lt;span class="verso-recto"&gt;a&lt;/span&gt;', 'Zeumer, Karl: Über die älteren fränkischen Formelsammlungen, in: Neues Archiv der Gesellschaft für ältere deutsche Geschichtskunde 6 (1881), S. 9–115.'),
@@ -301,7 +328,7 @@ def main():
         if not os.path.isfile(form_corp_md_path): raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), form_corp_md_path)
         form_corp_md = etree.parse(form_corp_md_path)
         database_entries = form_corp_md.xpath('/cpt:collection/cpt:members/cpt:collection', namespaces=ns)
-        if len(database_entries)==0: logging.warning('{} entries found within {}'.format(len(database_entries),form_corp_md_path))
+        if len(database_entries)==0: logger.warning('{} entries found within {}'.format(len(database_entries),form_corp_md_path))
         for f_corp in database_entries:
             form_md_path = os.path.normpath(os.path.join(os.path.dirname(form_corp_md_path), f_corp.get('path')))
             if not os.path.isfile(form_md_path): raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), form_md_path)
@@ -316,7 +343,7 @@ def main():
 
                         key_2=c.xpath('./dc:title/text()', namespaces=ns)[0].replace(' (lat)', '')
                         title_id_dict[key_2] = identifier
-    if len(title_id_dict) == 0: logging.error('No title ids found. This will cause an empty result file.') 
+    if len(title_id_dict) == 0: logger.error('No title ids found. This will cause an empty result file.') 
 
     # Map MS sigla to the HTML needed to show them properly
     if not os.path.isfile(manuscript_collections_md_file): raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), manuscript_collections_md_file)
@@ -357,14 +384,14 @@ def main():
             try:
                 obtained_id = title_id_dict[title]
             except KeyError as ke: 
-                logging.warning('Did not find the {} in title_id_dict, which is based on {}. If this collection is brand new, this behavior is maybe expected. A temporary id will be generated.'.format(title, formulae_collections_md_file))
+                logger.warning('Did not find the {} in title_id_dict, which is based on {}. If this collection is brand new, this behavior is maybe expected. A temporary id will be generated.'.format(title, formulae_collections_md_file))
                 obtained_id=make_temp_id(title)
                 #raise ke
             
             form_ms_ed_xml.append(E.formula(info_string, n=obtained_id))
                 
         # form_ms_ed_dict[build_urn(formula)] = {'manuscripts': build_sigla(mss), 'editions': build_editions(eds)}
-    if len(form_ms_ed_xml) == 0: logging.error('form_ms_ed_xml is empty. This can be caused by a malformatted csv-file.') 
+    if len(form_ms_ed_xml) == 0: logger.error('form_ms_ed_xml is empty. This can be caused by a malformatted csv-file.') 
 
     xml_string = etree.tostring(form_ms_ed_xml, pretty_print=True, encoding='unicode')
     xml_string = xml_string.replace('&amp;', '&')
@@ -372,17 +399,16 @@ def main():
     xml_string = xml_string.replace('&amplt;', '&lt;')
     xml_string = xml_string.replace('&ampgt;', '&gt;')
     xml_path = csv_file.replace('.csv', '.xml')
+    check_apparatus_notes(SEPERATOR_TOKEN, xml_string, rows, logger)
 
     with open(xml_path, mode='w',encoding='utf-8') as f:
         #json.dump(form_ms_ed_dict, f, ensure_ascii=False, indent='\t')
-        
-        
         f.write(xml_string)
-        logging.info('Done! The file was written to: '+xml_path)
+        logger.debug('Done! The file was written to: '+xml_path)
 
     with open(output_folder_hss_editionen, mode='w+',encoding='utf-8') as f:
         f.write(xml_string)
-        logging.info('Done! The file was written to: '+output_folder_hss_editionen)
+        logger.info('Done! The file was written to: '+output_folder_hss_editionen)
 
 if __name__ == '__main__':
     main()

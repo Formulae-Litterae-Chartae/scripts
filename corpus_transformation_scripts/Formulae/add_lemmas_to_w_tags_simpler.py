@@ -7,48 +7,6 @@ import os
 import logging
 import argparse
 
-default_home_dir = os.environ.get('HOME', '')
-
-parser=argparse.ArgumentParser(description="Script to add lemma annotation to w-tags in the tei xml documents.")
-parser.add_argument("home_dir", type=str,default=default_home_dir, help="Directory, where both 'formulae-corpora' and 'scripts' are stored")
-default_lemmatized_corpora = ['andecavensis', 'auvergne', 'bourges', 'flavigny', 'formulae_marculfinae', 'marculf', 'marmoutier_dunois', 
-                                'marmoutier_serfs', 'marmoutier_vendomois', 'marmoutier_vendomois_appendix', 'pancarte_noire', 'telma_cormery', 
-                                'telma_marmoutier', 'telma_martin_tours', 'tours', 'tours_ueberarbeitung']
-parser.add_argument('lemmatized_corpora', nargs='*', default=default_lemmatized_corpora, help="Optional argument to limit the corpora to a given list. If empty the default is used.")
-args=parser.parse_args()
-
-log_file_path=os.path.join(args.home_dir,'scripts/results/add_lemmas_to_w_tags_simpler.log')
-# create the log_file
-with open(log_file_path, 'w'): pass
-
-logging.basicConfig(format='%(asctime)s %(levelname)s %(filename)s:%(lineno)s - %(message)s', 
-                    encoding='utf-8', 
-                    datefmt='%H:%M:%S',
-                    filename=log_file_path)
-logging.getLogger().setLevel('INFO')
-
-
-
-ns = {'tei': "http://www.tei-c.org/ns/1.0"}
-home_dir = args.home_dir
-xmls = list()
-lemmatized_corpora = args.lemmatized_corpora
-for corpus in lemmatized_corpora: #
-    xmls += glob(home_dir + '/formulae-corpora/data/{}/**/*.lat00*.xml'.format(corpus), recursive=True)
-    xmls += glob(home_dir + '/formulae-corpora/data/{}/**/*.deu001.xml'.format(corpus), recursive=True)
-lex_xml = etree.parse(home_dir + '/scripts/corpus_transformation_scripts/Elexicon/Begriffe_eLexikon.xml')
-lex_dict = {}
-for lem in lex_xml.xpath('/xml/lem'):
-    lex_dict[lem.text.strip()] = lem.get('elex').strip()
-del lex_xml
-first_words = []
-second_words = []
-for k, v in lex_dict.items():
-    words = k.split()
-    if len(words) == 2:
-        first_words.append(words[0])
-        second_words.append(words[1])
-
 def _export_lemma_comparison(lemmas_inflected,orig_inflected,xml_file):
     import csv
     csv_file_name=xml_file.split('/')[-1].replace('xml', 'tsv')
@@ -181,62 +139,107 @@ def set_lemmaRef(orig, lemma, next_lem, prev_lem):
                         return True
     return False
 
-logging.info('Parse '+str(len(xmls))+' xml files from '+str(lemmatized_corpora))
-success_count = 0 # increased for each successful lemmatization. Used for logging.
-for xml_file in sorted(xmls):
-    #print(xml_file)
-    
-    xml = etree.parse(xml_file).getroot()
-    '''new_xml = xml_file.replace('/formulae/', '/test_lemmaRef/')
-    try:
-        os.makedirs(os.path.dirname(new_xml))
-    except OSError:
-        pass'''
-    form_name = os.path.basename(xml_file)
-    if 'lat001' in xml_file:
-        lem_file = home_dir + '/Lemmatization/pyrrha_output/results/{}.txt'.format(form_name.replace('.xml', ''))
-        try:
-            with open(lem_file) as f:
-                lems = f.read().strip().split('\n')
-                logging.info(lem_file)
-        except FileNotFoundError:
-            logging.error('FileNotFoundError'+'\t'+xml_file+'\t'+lem_file)
-            continue
-        not_found = test_text(lems, xml.xpath('//tei:w[not(@type="no-search" or normalize-space(text())="|")]', namespaces=ns), xml_file)
+if __name__ == '__main__':
+    default_home_dir = os.environ.get('HOME', '')
+
+    parser=argparse.ArgumentParser(description="Script to add lemma annotation to w-tags in the tei xml documents.")
+    parser.add_argument("home_dir", type=str,default=default_home_dir, help="Directory, where both 'formulae-corpora' and 'scripts' are stored")
+    default_lemmatized_corpora = ['andecavensis', 'auvergne', 'bourges', 'flavigny', 'formulae_marculfinae', 'marculf', 'marmoutier_dunois', 
+                                    'marmoutier_serfs', 'marmoutier_vendomois', 'marmoutier_vendomois_appendix', 'pancarte_noire', 'telma_cormery', 
+                                    'telma_marmoutier', 'telma_martin_tours', 'tours', 'tours_ueberarbeitung']
+    parser.add_argument('lemmatized_corpora', nargs='*', default=default_lemmatized_corpora, help="Optional argument to limit the corpora to a given list. If empty the default is used.")
+    args=parser.parse_args()
+
+    log_file_path=os.path.join(args.home_dir,'scripts/results/add_lemmas_to_w_tags_simpler.log')
+    # create the log_file
+    with open(log_file_path, 'w'): pass
+
+    logging.basicConfig(format='%(asctime)s %(levelname)s %(filename)s:%(lineno)s - %(message)s', 
+                        encoding='utf-8', 
+                        datefmt='%H:%M:%S',
+                        filename=log_file_path)
+    logging.getLogger().setLevel('INFO')
+
+
+
+    ns = {'tei': "http://www.tei-c.org/ns/1.0"}
+    home_dir = args.home_dir
+    xmls = list()
+    lemmatized_corpora = args.lemmatized_corpora
+    for corpus in lemmatized_corpora: #
+        xmls += glob(home_dir + '/formulae-corpora/data/{}/**/*.lat00*.xml'.format(corpus), recursive=True)
+        xmls += glob(home_dir + '/formulae-corpora/data/{}/**/*.deu001.xml'.format(corpus), recursive=True)
+    lex_xml = etree.parse(home_dir + '/scripts/corpus_transformation_scripts/Elexicon/Begriffe_eLexikon.xml')
+    lex_dict = {}
+    for lem in lex_xml.xpath('/xml/lem'):
+        lex_dict[lem.text.strip()] = lem.get('elex').strip()
+    del lex_xml
+    first_words = []
+    second_words = []
+    for k, v in lex_dict.items():
+        words = k.split()
+        if len(words) == 2:
+            first_words.append(words[0])
+            second_words.append(words[1])
+
+
+
+    logging.info('Parse '+str(len(xmls))+' xml files from '+str(lemmatized_corpora))
+    success_count = 0 # increased for each successful lemmatization. Used for logging.
+    for xml_file in sorted(xmls):
+        #print(xml_file)
         
-        if not_found:
-            if list == type(not_found):
-                logging.warning('not_found is not empty. It has '+str(len(not_found))+' items for '+xml_file)
-            logging.warning('not_found: '+str(not_found))
-        else:
-            logging.debug('Not found is empty. This is a sign of a well-working lematization process.')
-            # w-nodes, that should have been lemmatized but were not
-            unlemmatized_w = xml.xpath('//tei:w[not(@lemma) and not(@type="no-search")]', namespaces=ns)
-            unlemmatized_w_texts = [x.text for x in unlemmatized_w]
+        xml = etree.parse(xml_file).getroot()
+        '''new_xml = xml_file.replace('/formulae/', '/test_lemmaRef/')
+        try:
+            os.makedirs(os.path.dirname(new_xml))
+        except OSError:
+            pass'''
+        form_name = os.path.basename(xml_file)
+        if 'lat001' in xml_file:
+            lem_file = home_dir + '/Lemmatization/pyrrha_output/results/{}.txt'.format(form_name.replace('.xml', ''))
+            try:
+                with open(lem_file) as f:
+                    lems = f.read().strip().split('\n')
+                    logging.info(lem_file)
+            except FileNotFoundError:
+                logging.error('FileNotFoundError'+'\t'+xml_file+'\t'+lem_file)
+                continue
+            not_found = test_text(lems, xml.xpath('//tei:w[not(@type="no-search" or normalize-space(text())="|")]', namespaces=ns), xml_file)
+            
+            if not_found:
+                if list == type(not_found):
+                    logging.warning('not_found is not empty. It has '+str(len(not_found))+' items for '+xml_file)
+                logging.warning('not_found: '+str(not_found))
+            else:
+                logging.debug('Not found is empty. This is a sign of a well-working lematization process.')
+                # w-nodes, that should have been lemmatized but were not
+                unlemmatized_w = xml.xpath('//tei:w[not(@lemma) and not(@type="no-search")]', namespaces=ns)
+                unlemmatized_w_texts = [x.text for x in unlemmatized_w]
 
-            if 0 < len(unlemmatized_w_texts):
-                unlemmatized_w_texts_without_pipes = [w for w in unlemmatized_w_texts if w != '|']
-                if 0 == len(unlemmatized_w_texts_without_pipes):
-                    logging.error(" {} hs {} 'w'-node(s) without type='no-search'. This indicates a failed lemmatization process:\n {}".format(
-                        xml_file, len(unlemmatized_w_texts), ";".join(str(x) for x in unlemmatized_w_texts)))
-                    logging.error('Consider replacing all <w>|</w> with <w type="no-search">|</w> as a hotfix.')
+                if 0 < len(unlemmatized_w_texts):
+                    unlemmatized_w_texts_without_pipes = [w for w in unlemmatized_w_texts if w != '|']
+                    if 0 == len(unlemmatized_w_texts_without_pipes):
+                        logging.error(" {} has {} '<w>|</w>'-node(s) without type='no-search'. This indicates a failed lemmatization process:\n {}".format(
+                            xml_file, len(unlemmatized_w_texts), ";".join(str(x) for x in unlemmatized_w_texts)))
+                        logging.error('Consider manually replacing all <w>|</w> with <w type="no-search">|</w> as a hotfix.')
+                    else:
+                        logging.error(" {} has {} 'w'-node(s) that are neither no-search nor have a lemma. This indicates a failed lemmatization process:\n\t{}".format(xml_file, len(unlemmatized_w), '; '.join(x for x in unlemmatized_w_texts)))
                 else:
-                    logging.error(" {} has {} 'w'-node(s) that are neither no-search nor have lemma. This indicates a failed lemmatization process:\n\t{}".format(xml_file, len(unlemmatized_w), '; '.join(x for x in unlemmatized_w_texts)))
-            else:
-                logging.debug('All w-nodes where successfully lemmatized.')
-                xml.getroottree().write(xml_file, encoding='utf-8')
-                #print('written to '+xml_file)
-                logging.info('written to '+xml_file)
-                success_count += 1 
-    else:
-        latin_words = xml.xpath('//tei:seg[@type="latin-word;"]/tei:w', namespaces=ns)
-        for i, w in enumerate(latin_words):
-            if w.text.lower() in lex_dict.keys():
-                if set_lemmaRef(w, w.text.lower(), latin_words[i + 1].text.lower() if len(latin_words) > i + 1 else ' ', latin_words[i - 1].text.lower() if i > 0 else ' ') is False:
-                    w.set('lemmaRef', lex_dict[w.text.lower()])
-            else:
-                set_lemmaRef(w, w.text.lower(), latin_words[i + 1].text.lower() if len(latin_words) > i + 1 else ' ', latin_words[i - 1].text.lower() if i > 0 else ' ')
-        xml.getroottree().write(xml_file, encoding='utf-8')
+                    logging.debug('All w-nodes where successfully lemmatized.')
+                    xml.getroottree().write(xml_file, encoding='utf-8')
+                    #print('written to '+xml_file)
+                    logging.info('written to '+xml_file)
+                    success_count += 1 
+        else:
+            latin_words = xml.xpath('//tei:seg[@type="latin-word;"]/tei:w', namespaces=ns)
+            for i, w in enumerate(latin_words):
+                if w.text.lower() in lex_dict.keys():
+                    if set_lemmaRef(w, w.text.lower(), latin_words[i + 1].text.lower() if len(latin_words) > i + 1 else ' ', latin_words[i - 1].text.lower() if i > 0 else ' ') is False:
+                        w.set('lemmaRef', lex_dict[w.text.lower()])
+                else:
+                    set_lemmaRef(w, w.text.lower(), latin_words[i + 1].text.lower() if len(latin_words) > i + 1 else ' ', latin_words[i - 1].text.lower() if i > 0 else ' ')
+            xml.getroottree().write(xml_file, encoding='utf-8')
 
-total_latin_documents = len( [ xml_file for xml_file in xmls if 'lat001' in xml_file])
-print('Done! '+ str(success_count) + '/' +str(total_latin_documents)+' where lemmatized. See the log for more information:'+str(log_file_path))
+    total_latin_documents = len( [ xml_file for xml_file in xmls if 'lat001' in xml_file])
+    print('Done! '+ str(success_count) + '/' +str(total_latin_documents)+' where lemmatized. See the log for more information:'+str(log_file_path))

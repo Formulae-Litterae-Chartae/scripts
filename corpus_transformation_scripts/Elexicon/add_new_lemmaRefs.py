@@ -3,12 +3,15 @@ from lxml import etree
 import sys
 import re
 from os import environ
+from tqdm import tqdm
 
 home_dir = environ.get('HOME', '')
 corpus_folder = sys.argv[1] if len(sys.argv) > 1 else home_dir + '/formulae-corpora/'
 scripts_folder = sys.argv[2] if len(sys.argv) > 2 else home_dir + '/scripts/'
-
-latins = [x for x in glob(corpus_folder + 'data/**/*lat*.xml', recursive=True) if 'elexicon' not in x]
+if 'data/' in corpus_folder:
+    latins = [x for x in glob(corpus_folder + '/**/*lat*.xml', recursive=True) if 'elexicon' not in x]
+else:    
+    latins = [x for x in glob(corpus_folder + 'data/**/*lat*.xml', recursive=True) if 'elexicon' not in x]
 germans = [x for x in glob(corpus_folder + 'data/**/*deu*.xml', recursive=True) if 'elexicon' not in x]
 elexes = [x for x in glob(corpus_folder + 'data/elexicon/*/*.xml') if '__capitains__' not in x]
 lex_xml = etree.parse(scripts_folder + 'corpus_transformation_scripts/Elexicon/Begriffe_eLexikon.xml')
@@ -43,7 +46,7 @@ def set_lemmaRef(orig, lemma, next_lem, prev_lem):
             return True 
     return False 
 
-for l in latins: 
+for l in tqdm(latins, desc="Add lemmaref to Latins"): 
     xml = etree.parse(l) 
     words = xml.xpath('//tei:w', namespaces=ns) 
     for i, w_tag in enumerate(words): 
