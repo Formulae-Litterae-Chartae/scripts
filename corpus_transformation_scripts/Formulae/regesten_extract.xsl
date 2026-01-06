@@ -19,7 +19,8 @@
             </xsl:when>
             <xsl:otherwise>
                 <xsl:message terminate="no">
-                    ⚠️ Warning: TEI title is empty for this file (<xsl:value-of select="base-uri()" />). The filename is used for bourges instead.
+                    Warning: TEI title is empty for this file (<xsl:value-of select="base-uri()" />). 
+                    The filename (<xsl:value-of select="$titleParts[0]"/>) is used instead.
                 </xsl:message>
                 <xsl:value-of select="$mainTitle"/>
             </xsl:otherwise>
@@ -38,19 +39,23 @@
         <xml><xsl:for-each select="/tei:TEI/tei:text/tei:body/tei:table/tei:row">
             <regest>
                 <xsl:attribute name="docId">
-                    <xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>
+<!--                    <xsl:value-of select="/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title"/>-->
                     <xsl:choose>
                         <xsl:when test="contains(child::tei:cell[1]/., ',')">
                             <xsl:value-of select="replace(child::tei:cell[1]/., '.*(\d),.*', '$1')"/><xsl:text>_</xsl:text><xsl:number value="replace(child::tei:cell[1]/., '.*,(\d).*', '$1')" format="001"/>
                         </xsl:when>
-                        <xsl:when test="contains(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title/text(), 'tours')">
-                                <xsl:comment>Entry in tours-style</xsl:comment>
+                        <xsl:when test="contains(lower-case($resolvedTitle), 'tours')">
+                            <xsl:text>urn:cts:formulae:tours.form_</xsl:text>
                             <xsl:choose>
                                 <xsl:when test="contains(child::tei:cell[1]/., 'Ergänzung')">
                                     <xsl:text>2_</xsl:text><xsl:number value="replace(child::tei:cell[1]/., '.*?(\d+)(\D{0,2})$', '$1')" format="001"/><xsl:if test="matches(child::tei:cell[1]/., '.*?(\D{1,2})$')"><xsl:text>_</xsl:text><xsl:value-of select="replace(child::tei:cell[1]/., '.*?(\d+)(\D{1,2})$', '$2')"/></xsl:if>
                                 </xsl:when>
                                 <xsl:otherwise>
-                                    <xsl:number value="replace(child::tei:cell[1]/., '.*?(\d+)(\D{0,3})$', '$1')" format="001"/><xsl:if test="matches(child::tei:cell[1]/., '\([a-z]\)$')"><xsl:text>_</xsl:text><xsl:value-of select="replace(child::tei:cell[1]/., '.*?(\d+)\(([a-z])\)$', '$2')"/></xsl:if>
+                                    <xsl:number value="replace(child::tei:cell[1]/., '.*?(\d+)(\D{0,3})$', '$1')" format="001"/>
+                                    <xsl:if test="matches(child::tei:cell[1]/., '\([a-z]\)$')">
+                                        <xsl:text>_</xsl:text>
+                                        <xsl:value-of select="replace(child::tei:cell[1]/., '.*?(\d+)\(([a-z])\)$', '$2')"/>
+                                    </xsl:if>
                                 </xsl:otherwise>
                             </xsl:choose>
                         </xsl:when>
@@ -85,6 +90,10 @@
                             </xsl:when>
 
                         <xsl:otherwise>
+                            
+                            <xsl:message terminate="yes">
+                                Warning: There is no matching if-clause for (<xsl:value-of select="$titleParts[0]"/>). Need implementation. 
+                            </xsl:message>
                             <xsl:comment>Entry in otherwise-style</xsl:comment>
                             <xsl:number value="replace(child::tei:cell[1]/., '.*?(\d+)(\D{0,2})$', '$1')" format="001"/><xsl:value-of select="replace(child::tei:cell[1]/., '.*?(\d+)(\D{0,2})$', '$2')"/>
                         </xsl:otherwise>
