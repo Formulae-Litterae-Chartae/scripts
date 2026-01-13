@@ -41,15 +41,30 @@ def test_text(lemmas: list, orig: list[etree._Element], xml_file=None) -> list |
         2) If it returns a list with one or more items  -> ERROR
         3) If it returns a string                       -> ERROR
     """
-    if len(lemmas) != len(orig):
-        logging.info('Length mismatch: There are {} lemmas and {} originals. But these lists should match in size. Trying to resolve this issue.'.format(len(lemmas), len(orig)))
+    if not type(orig) == type(list()):
+        raise ValueError
+    else:
+        for w_element in orig:
+            if not type(w_element) == etree._Element:
+                raise ValueError(str(w_element)+' has type: '+str(type(w_element))+' but should have been: '+ str(etree._Element))
     orig_inflected = [''.join(x.xpath('.//text()')) for x in orig]
     lemmas_inflected = [n.split('\t')[0] for n in lemmas]
+
+    # Never overwrite `orig` (elements). Instead, compute a safe alignment length.
+    min_len = min(len(lemmas), len(orig))
+
+    if len(lemmas) != len(orig):
+        logger.warning(
+            "Length mismatch: %s lemmas vs %s originals. Proceeding with min_len=%s.",
+            len(lemmas), len(orig), min_len
+        )
+    else:
+        logger.debug("Length match: %s", len(orig))
     lemmas_text = list()
     orig_text = list()
     for i, w in enumerate(lemmas_inflected):
         if i >= len(orig_inflected):
-            logging.warning('Index i: {} exceeded length of orig_inflected: {}. Therefore no lemmatization is done. After every "!!!" is one error in the following output:'.format(i, len(orig_inflected)))
+            logger.warning('Index i: {} exceeded length of orig_inflected: {}. Therefore no lemmatization is done. After every "!!!" is one error in the following output:'.format(i, len(orig_inflected)))
             return '\n{}\n{}'.format(' '.join(lemmas_text + ['!!!'] + [n.split('\t')[0] for n in lemmas[i:]]).lower(), ' '.join(orig_text + ['!!!']))
         else:
             clean_orig_inflected_element = clean_string(orig_inflected[i])
@@ -62,61 +77,57 @@ def test_text(lemmas: list, orig: list[etree._Element], xml_file=None) -> list |
                 logging.warning('orig_inflected={}'.format(orig_inflected))
                 _export_lemma_comparison(lemmas_inflected,orig_inflected,xml_file)
                 return '\n{}\n{}'.format(' '.join(lemmas_text + ['!!!'] + [n.split('\t')[0] for n in lemmas[i:]]).lower(), ' '.join(orig_text + ['!!!'] + [''.join(x.xpath('.//text()')) for x in orig[i:]]).lower())
-    if len(lemmas) != len(orig):
-        logging.info('Length mismatch: There are {} lemmas and {} originals. But these lists should match in size. Trying to resolve this issue.'.format(len(lemmas), len(orig)))
-        orig=orig_inflected
+
     
     # A list collecting all tokens (with their index) from the `lemmas` input  that could not be matched to the corresponding word in the `orig` XML list.
     not_found = []
-    for i, word in enumerate(lemmas):
+
+    for i in range(min_len):
+        word = lemmas[i]
         inflected, lemma, display_lem = word.split('\t')[:3]
+
         if not re.search(r'\w', inflected):
             continue
-        #inflected = re.sub(r'[{}«»„“‚‘’”\[\]…|]'.format(punctuation), '', inflected).strip()
-        inflected = clean_string(inflected)
-        prev_lem = '' 
-        next_lem = ''
-        if i < len(lemmas) - 1:
-            try:
-                next_lem = lemmas[i+1].split('\t')[1]
-            except IndexError:
-                print(lemmas[i+1], i)
-                continue
-        if i > 0:
-            prev_lem = lemmas[i-1].split('\t')[1]
-        tried = []
-        # left side -> pyrrha ; right side -> word from xml file
-        if inflected.lower().replace('v', 'u') != re.sub(r'[{}«»„“‚‘’”\[\]…|]'.format(punctuation), '', ''.join(orig[i].xpath('.//text()', namespaces=ns)).lower().replace('v', 'u')):
-            not_found.append((inflected, i))
+
+        inflected_clean = clean_string(inflected)
+
+        # Use element list for xpath and attribute setting
+        w_el = orig[i]
+        w_text_clean = clean_string(''.join(w_el.xpath('.//text()', namespaces=ns)))
+
+        if inflected_clean != w_text_clean:
+            not_found.append((inflected_clean, i))
             continue
-        #try:
-            #while inflected.lower().replace('v', 'u') != re.sub(r'[{}«»„“‚‘’”\[\]]'.format(punctuation), '', ''.join(orig[i].xpath('.//text()', namespaces=ns)).lower().replace('v', 'u')):
-                #try:
-                    #tried.append(re.sub(r'[{}«»„“‚‘’”\[\]]'.format(punctuation), '', ''.join(orig[i].xpath('.//text()', namespaces=ns)).lower().replace('v', 'u')))
-                    #i += 1
-                    #if i == len(orig):
-                        #not_found.append((inflected, tried))
-                        #continue
-                #except IndexError:
-                    #not_found.append((inflected, tried))
-                    #continue
-        #except IndexError as E:
-            #print(i, inflected, lemma, len(orig), E)
-            #continue
-        #except AttributeError as E:
-            #print(prev_lem, next_lem, inflected, lemma, len(orig), E)
-            #continue
-        orig[i].set('lemma', lemma.lower())
-        orig[i].set('n', display_lem)
+
+        w_el.set('lemma', lemma.lower())
+        w_el.set('n', display_lem)
+
+        prev_lem = lemmas[i-1].split('\t')[1] if i > 0 else ''
+        next_lem = lemmas[i+1].split('\t')[1] if i < min_len - 1 else ''
+
         for lem in lemma.split('/'):
-            if lem in lex_dict.keys():
-                if set_lemmaRef(orig[i], lem, next_lem, prev_lem) is False:
-                    orig[i].set('lemmaRef', lex_dict[lem])
+            if lem in lex_dict:
+                if set_lemmaRef(w_el, lem, next_lem, prev_lem) is False:
+                    w_el.set('lemmaRef', lex_dict[lem])
             else:
-                set_lemmaRef(orig[i], lemma, next_lem, prev_lem)
+                set_lemmaRef(w_el, lemma, next_lem, prev_lem)
+
+    # If there are extra lemmas without corresponding <w>, record/report them
+    if len(lemmas) > len(orig):
+        for j in range(len(orig), len(lemmas)):
+            inflected = lemmas[j].split('\t')[0]
+            if re.search(r'\w', inflected):
+                not_found.append((clean_string(inflected), j))
+
+    # If there are extra <w> without lemmas, record/report them too (optional)
+    # for j in range(len(lemmas), len(orig)):
+    #     not_found.append((clean_string(orig_inflected[j]), j))
+
     if not_found:
-        _export_lemma_comparison(lemmas_inflected,orig_inflected,xml_file)
+        _export_lemma_comparison(lemmas_inflected, orig_inflected, xml_file)
+
     return not_found
+
 
 
 def set_lemmaRef(orig, lemma, next_lem, prev_lem):
@@ -158,8 +169,8 @@ if __name__ == '__main__':
                         encoding='utf-8', 
                         datefmt='%H:%M:%S',
                         filename=log_file_path)
-    logging.getLogger().setLevel('INFO')
-
+    logger = logging.getLogger()
+    logger.setLevel('DEBUG')
 
 
     ns = {'tei': "http://www.tei-c.org/ns/1.0"}
@@ -184,7 +195,7 @@ if __name__ == '__main__':
 
 
 
-    logging.info('Parse '+str(len(xmls))+' xml files from '+str(lemmatized_corpora))
+    logger.info('Parse '+str(len(xmls))+' xml files from '+str(lemmatized_corpora))
     success_count = 0 # increased for each successful lemmatization. Used for logging.
     for xml_file in sorted(xmls):
         #print(xml_file)
@@ -205,7 +216,9 @@ if __name__ == '__main__':
             except FileNotFoundError:
                 logging.error('FileNotFoundError'+'\t'+xml_file+'\t'+lem_file)
                 continue
-            not_found = test_text(lems, xml.xpath('//tei:w[not(@type="no-search" or normalize-space(text())="|")]', namespaces=ns), xml_file)
+            w_elements_in_document = xml.xpath('//tei:w[not(@type="no-search" or normalize-space(text())="|")]', namespaces=ns)
+
+            not_found = test_text(lems, orig=w_elements_in_document, xml_file=xml_file)
             
             if not_found:
                 if list == type(not_found):
