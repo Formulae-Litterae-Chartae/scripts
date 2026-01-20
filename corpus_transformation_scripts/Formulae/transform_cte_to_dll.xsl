@@ -933,45 +933,30 @@
         </xsl:element>
         
         <!-- Place note element after the @targetEnd seg element -->
-<!--        <xsl:variable name="target_end" select="concat('#', $anchor_id)"/>-->
-<!--        <xsl:for-each select="//tei:note[@targetEnd=$target_end]">
+
+        <xsl:variable name="target_end" select="concat('#', $anchor_id)"/>
+        
+        <xsl:for-each select="//tei:note[@targetEnd = $target_end]">
             <xsl:copy>
-                <xsl:if test="@targetEnd">
-                    <xsl:attribute name="targetEnd" select="@targetEnd"/>
-                </xsl:if>
+                <xsl:if test="@targetEnd"><xsl:attribute name="targetEnd" select="@targetEnd"/></xsl:if>
                 <xsl:choose>
-                    <xsl:when test="@type">
-                        <xsl:attribute name="type" select="@type"/>
-                    </xsl:when>
+                    <xsl:when test="@type"><xsl:attribute name="type" select="@type"/></xsl:when>
                     <xsl:otherwise><xsl:attribute name="type">n1</xsl:attribute></xsl:otherwise>
                 </xsl:choose>
                 <xsl:attribute name="place" select="@place"/>
                 <xsl:if test="@n"><xsl:attribute name="n" select="@n"/></xsl:if>
-                <xsl:attribute name="xml:id"><xsl:value-of select="generate-id(.)"/></xsl:attribute>
+                <xsl:attribute name="xml:id" select="generate-id(.)"/>
                 <xsl:apply-templates select="node()|comment()"/>
             </xsl:copy>
-        </xsl:for-each>-->
+        </xsl:for-each>
+        
+        <xsl:if test="exists(//tei:note[@targetEnd = $target_end])
+            and following-sibling::*[1][self::tei:w or self::tei:seg]">
+            <xsl:element name="space" namespace="http://www.tei-c.org/ns/1.0"/>
+        </xsl:if>
     </xsl:template>
     
-<!--    <xsl:template 
-        match="tei:body//*[not(ancestor-or-self::tei:note) 
-        and not(ancestor-or-self::tei:locus) 
-        and not(ancestor-or-self::tei:title)]/text()
-        [following-sibling::tei:anchor]" 
-        name="processTextWithAnchor">
-        <new_seg>
-            <xsl:attribute name="new_id">
-                <xsl:value-of select="following-sibling::tei:anchor[1]/@xml:id"/>
-            </xsl:attribute>
-            
-            <new_w>
-                <xsl:value-of select="normalize-space(.)"/>
-            </new_w>
-        </new_seg>
-    </xsl:template>-->
-    
-    <!-- Clean up the unnecessary attributes on the note elements. -->
-<!---->    <xsl:template match="tei:note" name="buildNotes">
+    <xsl:template match="tei:note[not(@targetEnd)]" name="buildNotes">
         <xsl:variable name="previous_get_id" select="concat('#', preceding::tei:seg[position()=1]/@xml:id)"/>
         <xsl:variable name="new_note_tag">
             <xsl:copy>
@@ -996,181 +981,9 @@
                 <xsl:copy-of select="$new_note_tag"/>
             </xsl:otherwise>
         </xsl:choose>
-        <xsl:for-each select=".//tei:note">
-            <xsl:call-template name="buildNotes"></xsl:call-template>
-        </xsl:for-each>
-    </xsl:template>
-    
-<!--    <!-\- Place note element after the @targetEnd seg or anchor element -\->
-<!-\-    <xsl:template match="tei:seg[@xml:id]">-\->
-    <xsl:template match="tei:anchor[@xml:id] | tei:seg[@xml:id]">
-<!-\-        <xsl:variable name="target_end">
-            <xsl:text>#</xsl:text>
-            <xsl:value-of select="@xml:id"/>
-        </xsl:variable>-\->
-        <!-\- If empty anchors or segs are causing errors in the future, please change this line to <xsl:apply-templates select="node()|comment()"/> -\->
-        <!-\- Expected error behavior are empty footnotes in the nemo application -\->
- 
-<!-\-        <xsl:copy><xsl:attribute name="xml:id" select="@xml:id"></xsl:attribute><xsl:apply-templates/></xsl:copy>-\->
-        <!-\-elements without targetEnd should not be considered as notes but as seg with the idented id-\->
-        
-        <xsl:choose>
-            <xsl:when test="not(@targetEnd)">       
-                <!-\-A proper seg element should look this: <seg xml:id="w11"><w>nascuntur</w> </seg>
-                or this: ,<seg xmlns="" xml:id="w251"><w>iniunxit</w></seg>-\->
-                <seg>
-                    <xsl:attribute name="xml:id">
-                        <xsl:value-of select="@xml:id"/>
-                    </xsl:attribute>
-                    
-                    <xsl:attribute name="word">
-                        <xsl:value-of select="preceding-sibling::text()[last()]"/>
-                    </xsl:attribute>
-                    <w>
-                        <xsl:value-of select="preceding-sibling::text()[last()]"/>
-                        <xsl:apply-templates select="node()|comment()"/>
-                    </w>
-                </seg>
-<!-\-                <seg>
-                    <xsl:attribute name="xml:id" select="@xml:id"/>
-                    <!-\\-                        <xsl:apply-templates select="node()|comment()"/>-\\->
-                </seg>-\->
-                
-<!-\-                <xsl:apply-templates select="node()|comment()"/>-\->
-            </xsl:when >
-            <xsl:otherwise>
-                <xsl:variable name="target_end">
-                    <xsl:text>#</xsl:text>
-                    <xsl:value-of select="@xml:id"/>
-                </xsl:variable>
-                <xsl:for-each select="//tei:note[@targetEnd=$target_end]">
-                    <xsl:copy>
-                        <xsl:if test="@targetEnd"><xsl:attribute name="targetEnd" select="@targetEnd"/></xsl:if>
-                        <xsl:choose>
-                            <xsl:when test="@type"><xsl:attribute name="type" select="@type"/></xsl:when>
-                            <xsl:otherwise><xsl:attribute name="type">n1</xsl:attribute></xsl:otherwise>
-                        </xsl:choose>
-                        <xsl:attribute name="place" select="@place"/>
-                        <xsl:if test="@n"><xsl:attribute name="n" select="@n"/></xsl:if>
-                        <xsl:attribute name="xml:id"><xsl:value-of select="generate-id(.)"/></xsl:attribute>
-                        <xsl:apply-templates select="node()|comment()"/>
-                    </xsl:copy>
-                </xsl:for-each>
-                
-<!-\-                <xsl:apply-templates select="node()|comment()"/>-\->
-            </xsl:otherwise>
-        </xsl:choose>
-        
-        
-<!-\-        <xsl:for-each select="//tei:note[@targetEnd=$target_end]">
-            <xsl:copy>
-                <xsl:if test="@targetEnd"><xsl:attribute name="targetEnd" select="@targetEnd"/></xsl:if>
-                <xsl:choose>
-                    <xsl:when test="@type"><xsl:attribute name="type" select="@type"/></xsl:when>
-                    <xsl:otherwise><xsl:attribute name="type">n1</xsl:attribute></xsl:otherwise>
-                </xsl:choose>
-                <xsl:attribute name="place" select="@place"/>
-                <xsl:if test="@n"><xsl:attribute name="n" select="@n"/></xsl:if>
-                <xsl:attribute name="xml:id"><xsl:value-of select="generate-id(.)"/></xsl:attribute>
-                <xsl:apply-templates select="node()|comment()"/>
-            </xsl:copy>
-        </xsl:for-each>-\->
-    </xsl:template>-->
-    
-    <!-- Place note element after the @targetEnd seg or anchor element -->
-    <!--    <xsl:template match="tei:seg[@xml:id]">-->
-    <xsl:template match="tei:anchor[@xml:id and @targetEnd]">
-        <xsl:variable name="target_end">
-            <xsl:text>#</xsl:text>
-            <xsl:value-of select="@xml:id"/>
-        </xsl:variable>
-        <xsl:for-each select="//tei:note[@targetEnd=$target_end]">
-            <xsl:copy>
-                <xsl:if test="@targetEnd"><xsl:attribute name="targetEnd" select="@targetEnd"/></xsl:if>
-                <xsl:choose>
-                    <xsl:when test="@type"><xsl:attribute name="type" select="@type"/></xsl:when>
-                    <xsl:otherwise><xsl:attribute name="type">n1</xsl:attribute></xsl:otherwise>
-                </xsl:choose>
-                <xsl:attribute name="place" select="@place"/>
-                <xsl:if test="@n"><xsl:attribute name="n" select="@n"/></xsl:if>
-                <xsl:attribute name="xml:id"><xsl:value-of select="generate-id(.)"/></xsl:attribute>
-                <xsl:apply-templates select="node()|comment()"/>
-            </xsl:copy>
-        </xsl:for-each>
-    </xsl:template>
-    
-    <!-- Match anchor elements only if preceded by a text node -->
-<!--    <xsl:template match="tei:anchor[@xml:id and preceding-sibling::text()[normalize-space()] and not(@targetEnd)]">
-        <seg>
-            <xsl:attribute name="xml:id">
-                <xsl:value-of select="@xml:id"/>
-            </xsl:attribute>
-            <xsl:variable name="precedingWord" select="preceding-sibling::text()[last()]"/>
-<!-\-            <xsl:variable name="precedingWord" select="normalize-space(preceding-sibling::text()[normalize-space()][last()])"/>-\->
-            <xsl:attribute name="preceding"><xsl:value-of select="preceding-sibling::text()[last()]"/></xsl:attribute>
-            
-            <line807_w>
-                <xsl:value-of select="$precedingWord"/>
-                <xsl:apply-templates select="node()|comment()"/>
-            </line807_w>
-        </seg>
-    </xsl:template>-->
-    
-    <!-- Place note element after the @targetEnd seg element -->
-    <xsl:template match="tei:seg[@xml:id]">
-        <xsl:variable name="target_end"><xsl:text>#</xsl:text><xsl:value-of select="@xml:id"/></xsl:variable>
-        <xsl:copy><xsl:attribute name="xml:id" select="@xml:id"></xsl:attribute><xsl:apply-templates/></xsl:copy>
-        <xsl:for-each select="//tei:note[@targetEnd=$target_end]">
-            <xsl:copy>
-                <xsl:if test="@targetEnd"><xsl:attribute name="targetEnd" select="@targetEnd"/></xsl:if>
-                <xsl:choose>
-                    <xsl:when test="@type"><xsl:attribute name="type" select="@type"/></xsl:when>
-                    <xsl:otherwise><xsl:attribute name="type">n1</xsl:attribute></xsl:otherwise>
-                </xsl:choose>
-                <xsl:attribute name="place" select="@place"/>
-                <xsl:if test="@n"><xsl:attribute name="n" select="@n"/></xsl:if>
-                <xsl:attribute name="xml:id"><xsl:value-of select="generate-id(.)"/></xsl:attribute>
-                <xsl:apply-templates select="node()|comment()"/>
-            </xsl:copy>
-        </xsl:for-each>
+
     </xsl:template>
 
-        
-        
-    <!-- Delete note elements that are inside other note elements -->
-<!--    <xsl:template match="tei:note//tei:note" />-->
-    <xsl:template match="tei:note//tei:note[not(@targetEnd)]" />
-    <!-- In the CTE output, when a note element immediately follows a hi element, the hi element is repeated and encloses the note -->
-    <!--<xsl:template match="tei:hi[tei:note]">
-        <xsl:choose>
-            <xsl:when test="contains(@rend, 'font-style:italic;') or contains(@rendition, 'bold')">
-                <xsl:element name="seg" namespace="http://www.tei-c.org/ns/1.0">
-                    <xsl:if test="contains(@rendition, 'bold')">
-                        <xsl:attribute name="type">platzhalter</xsl:attribute>
-                    </xsl:if>
-                    <xsl:choose>
-                        <xsl:when test="contains(@rend, 'font-style:italic;vertical-align:sub')">
-                            <xsl:attribute name="rend">italic-subscript</xsl:attribute>
-                        </xsl:when>
-                        <xsl:when test="contains(@rend, 'font-style:italic;')">
-                            <xsl:attribute name="rend">italic</xsl:attribute>
-                        </xsl:when>
-                    </xsl:choose>
-                    <xsl:apply-templates/>
-                </xsl:element>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:apply-templates select="node()|comment()"/>
-            </xsl:otherwise>
-        </xsl:choose>
-    </xsl:template>-->
-    
-    <!--The following lines moved to 684 and should be deleted in the near future-->
-    <!-- In the CTE output, the anchors for notes when they are footnotes appear to be repeated after the note. This should remove the following anchor -->
-<!--    <xsl:template match="tei:anchor[preceding-sibling::*[1][self::tei:note]]">
-        <xsl:apply-templates select="node()|comment()"/>
-    </xsl:template>-->
-    
     <!-- Replace all <hi> elements with <seg> and transfer the @rendition attribute to @type -->
     <xsl:template match="tei:hi">
         <xsl:param name="punct">[„“"'’]</xsl:param>
@@ -1246,6 +1059,55 @@
         </xsl:choose>
     </xsl:template>
     
+    <!-- If a hi contains an end-anchored note, keep the main text in the hi,
+         but do NOT process the in-place note (it will be reinserted later). -->
+    <xsl:template match="tei:hi[tei:note[@targetEnd] and not(ancestor::tei:note)]" priority="300">
+        <xsl:variable name="rends" select="string-join((@style, @rendition, @rend), ' ')"/>
+        
+        <!-- Reuse your existing hi->seg logic, but apply-templates excluding the targetEnd note -->
+        <xsl:choose>
+            <xsl:when test="contains(@style, 'display:none;') or contains(@rend, 'display:none;')"/>
+            <xsl:when test="@rend = 'Book_Title'">
+                <!-- Keep your existing Book_Title handling if needed; otherwise, just apply-templates -->
+                <xsl:apply-templates select="node()[not(self::tei:note[@targetEnd])] | comment()"/>
+            </xsl:when>
+            
+            <xsl:when test="not(parent::tei:locus) and (contains($rends, 'font-style:italic;') or contains($rends, 'italic') or contains($rends, 'bold') or contains($rends, 'font-variant:small-caps;') or contains($rends, 'vertical-align:super;') or contains($rends, 'vertical-align:sub;') or contains($rends, 'text-decoration:line-through;'))">
+                <xsl:element name="seg" namespace="http://www.tei-c.org/ns/1.0">
+                    <!-- Keep your type-building logic exactly as you already have it -->
+                    <xsl:attribute name="type">
+                        <xsl:if test="contains($rends, 'bold')">
+                            <xsl:text>platzhalter;</xsl:text>
+                        </xsl:if>
+                        <xsl:if test="contains($rends, 'font-style:italic;') or contains($rends, 'italic')">
+                            <xsl:choose>
+                                <xsl:when test="ancestor-or-self::tei:note"><xsl:text>italic;</xsl:text></xsl:when>
+                                <xsl:when test="not(contains($manuscript,'deu0'))"><xsl:text>italic;</xsl:text></xsl:when>
+                                <xsl:otherwise><xsl:text>latin-word;</xsl:text></xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:if>
+                        <xsl:if test="contains($rends, 'font-variant:small-caps;')"><xsl:text>small-caps;</xsl:text></xsl:if>
+                        <xsl:if test="contains($rends, 'vertical-align:super;')"><xsl:text>superscript;</xsl:text></xsl:if>
+                        <xsl:if test="contains($rends, 'superscript')"><xsl:text>superscript;</xsl:text><xsl:text>smaller-text;</xsl:text></xsl:if>
+                        <xsl:if test="contains($rends, 'vertical-align:sub;')"><xsl:text>subscript;</xsl:text></xsl:if>
+                        <xsl:if test="contains($rends, 'subscript')"><xsl:text>subscript;</xsl:text><xsl:text>smaller-text;</xsl:text></xsl:if>
+                        <xsl:if test="contains($rends, 'font-size:smaller;')"><xsl:text>smaller-text;</xsl:text></xsl:if>
+                        <xsl:if test="contains($rends, 'text-decoration:line-through;')"><xsl:text>line-through;</xsl:text></xsl:if>
+                    </xsl:attribute>
+                    
+                    <!-- IMPORTANT: exclude the targetEnd note nodes -->
+                    <xsl:apply-templates select="node()[not(self::tei:note[@targetEnd])] | comment()"/>
+                </xsl:element>
+            </xsl:when>
+            
+            <xsl:otherwise>
+                <!-- Default: keep contents, excluding targetEnd note -->
+                <xsl:apply-templates select="node()[not(self::tei:note[@targetEnd])] | comment()"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
+    
     <xsl:template name="fillTypes">
         <xsl:param name="types"/>
         <xsl:param name="stringType"/>
@@ -1253,21 +1115,6 @@
             <xsl:when test="empty($types)"></xsl:when>
         </xsl:choose>
     </xsl:template>
-    
-    <!-- Transform text that has the text-transform:uppercase; styling to actual uppercase letters -->
-    <!--<xsl:template match="tei:hi[contains(@rend, 'text-transform:uppercase;')]/text()">
-        <xsl:value-of select="upper-case(.)"/>
-    </xsl:template>-->
-    
-    <!-- Adds the correct attributes to the formulae divs -->
-    <!--<xsl:template match="tei:div">
-        <xsl:element name="div" namespace="http://www.tei-c.org/ns/1.0">
-            <xsl:attribute name="type">textpart</xsl:attribute>
-            <xsl:attribute name="subtype">formula</xsl:attribute>
-            <xsl:attribute name="n">1</xsl:attribute>
-            <xsl:apply-templates/>
-        </xsl:element>
-    </xsl:template>-->
     
     <xsl:template match="tei:p">        
         <xsl:choose>

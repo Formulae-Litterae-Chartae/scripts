@@ -76,6 +76,9 @@ def get_regesten_files(collection: str, collection_title_case: str, file_type: s
     :param collection_title_case: The title-case version (e.g., 'Sens')
     :return: A list of matching file paths
     """
+    # tour_ueberarbeitung -> Tours-Überarbeitung
+    collection_title_case = collection_title_case.replace('_','-').replace('Ue','Ü')
+
     base_dir = os.path.expanduser(f"~/git/scripts/formel_transform/input/{collection}")
     #pattern = f"Regesten {collection_title_case} [ABI]*.{file_type}"
     pattern = f"Regesten {collection_title_case}*.{file_type}"

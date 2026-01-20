@@ -106,7 +106,7 @@ def check_xml_file_name(file_name:str, logger:logging.Logger, is_transcription=F
     if re.match(r"Marculf (I{1,2}|0),?[0-9]*[a-f]? ?(Capitulatio|Praefatio)?( Deutsch)?\.xml", file_name): return True 
     if re.match(r"Marculf Ergänzung [1-9],[1-9]?( Deutsch)?.xml", file_name): return True 
     ## Tours
-    if re.match(r"Tours( Ergänzung)? [0-9][0-9]?[a-b]?( Capitulatio)?( Deutsch)?.xml", file_name): return True 
+    if re.match(r"Tours( Ergänzung)? [0-9][0-9]?[a-b]?(\(A\)|\(B\))?( Capitulatio)?( Deutsch)?.xml", file_name): return True 
 
     # German matching
     if re.match(r"[a-zA-Z]+ [A-Z]*[0-9 ]+[ ]*Deutsch.xml", file_name):
