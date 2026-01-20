@@ -45,10 +45,15 @@
                             <xsl:value-of select="replace(child::tei:cell[1]/., '.*(\d),.*', '$1')"/><xsl:text>_</xsl:text><xsl:number value="replace(child::tei:cell[1]/., '.*,(\d).*', '$1')" format="001"/>
                         </xsl:when>
                         <xsl:when test="contains(lower-case($resolvedTitle), 'tours')">
-                            <xsl:text>urn:cts:formulae:tours.form_</xsl:text>
+                            <xsl:text>urn:cts:formulae:tours.form</xsl:text>
                             <xsl:choose>
                                 <xsl:when test="contains(child::tei:cell[1]/., 'Ergänzung')">
-                                    <xsl:text>2_</xsl:text><xsl:number value="replace(child::tei:cell[1]/., '.*?(\d+)(\D{0,2})$', '$1')" format="001"/><xsl:if test="matches(child::tei:cell[1]/., '.*?(\D{1,2})$')"><xsl:text>_</xsl:text><xsl:value-of select="replace(child::tei:cell[1]/., '.*?(\d+)(\D{1,2})$', '$2')"/></xsl:if>
+                                    <xsl:text>2_</xsl:text>
+                                    <xsl:number value="replace(child::tei:cell[1]/., '.*?(\d+)(\D{0,2})$', '$1')" format="001"/>
+                                    <xsl:if test="matches(child::tei:cell[1]/., '.*?(\D{1,2})$')">
+                                        <xsl:text>_</xsl:text>
+                                        <xsl:value-of select="replace(child::tei:cell[1]/., '.*?(\d+)(\D{1,2})$', '$2')"/>
+                                    </xsl:if>
                                 </xsl:when>
                                 <xsl:otherwise>
                                     <xsl:number value="replace(child::tei:cell[1]/., '.*?(\d+)(\D{0,3})$', '$1')" format="001"/>

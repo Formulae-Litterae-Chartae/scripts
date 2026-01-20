@@ -5,18 +5,22 @@ import logging
 from util import make_proper_path, get_logger
 from tqdm import tqdm
 import requests
+from requests.exceptions import ConnectionError
 
 logging = get_logger()
 logging.setLevel("DEBUG")
 
 def determine_tei_garage_url() -> str:
-    LIST_OF_POSSIBLE_HOSTS = ["http://fdm.awhamburg.de:17107", "http://localhost:8080"]
+    LIST_OF_POSSIBLE_HOSTS = ["http://fdm.awhamburg.de:17107", "http://localhost:8080", "https://teigarage.tei-c.org"]
     for host_url in LIST_OF_POSSIBLE_HOSTS:
-        response = requests.get(host_url+'/ege-webservice/Info')
-        if response.status_code == 200:
-            return host_url
+        try: 
+            response = requests.get(host_url+'/ege-webservice/Info')
+            if response.status_code == 200:
+                return host_url
+        except (ConnectionRefusedError, ConnectionError) as cre:
+            logging.warning('{}\nTrying the next possible host'.format(str(cre)))
     # none of the host provide a fitting api
-    raise ArgumentError('None of the host'+str(LIST_OF_POSSIBLE_HOSTS)+'provide an API')
+    raise ValueError('None of the hosts '+str(LIST_OF_POSSIBLE_HOSTS)+' provide an API')
 
 
 if len(argv) > 1:

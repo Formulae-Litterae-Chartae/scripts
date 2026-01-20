@@ -7,20 +7,24 @@ import os
 import logging
 import argparse
 
-def _export_lemma_comparison(lemmas_inflected,orig_inflected,xml_file):
+def _export_lemma_comparison(lemmas_inflected, orig_inflected, xml_file):
     import csv
-    csv_file_name=xml_file.split('/')[-1].replace('xml', 'tsv')
+    csv_file_name = xml_file.split('/')[-1].replace('xml', 'tsv')
     csv_file_path = os.path.abspath(csv_file_name)
-    with open(csv_file_path, 'w+') as csvfile:
+
+    max_len = max(len(lemmas_inflected), len(orig_inflected))
+
+    with open(csv_file_path, 'w+', newline='') as csvfile:
         tsv_writer = csv.writer(csvfile, delimiter='\t')
-        tsv_writer.writerow(['lemmas_inflected',  'orig_inflected'])
-        for i, _ in enumerate(lemmas_inflected): 
-            if i < len(orig_inflected):
-                tsv_writer.writerow([lemmas_inflected[i],  orig_inflected[i]])
-            else:
-                tsv_writer.writerow([lemmas_inflected[i], ''])
-    print('written to '+str(csv_file_path))
-    logging.info('Please check to see the errors: '+str(csv_file_path))
+        tsv_writer.writerow(['lemmas_inflected', 'orig_inflected'])
+
+        for i in range(max_len):
+            lemma_val = lemmas_inflected[i] if i < len(lemmas_inflected) else ''
+            orig_val  = orig_inflected[i]  if i < len(orig_inflected)  else ''
+            tsv_writer.writerow([lemma_val, orig_val])
+
+    print('written to ' + str(csv_file_path))
+    logging.info('Please check to see the errors: ' + str(csv_file_path))
         
 def clean_string(input_str:str) -> str:
     """
@@ -52,11 +56,11 @@ def test_text(lemmas: list, orig: list[etree._Element], xml_file=None) -> list |
 
     # Never overwrite `orig` (elements). Instead, compute a safe alignment length.
     min_len = min(len(lemmas), len(orig))
-
+    
     if len(lemmas) != len(orig):
         logger.warning(
-            "Length mismatch: %s lemmas vs %s originals. Proceeding with min_len=%s.",
-            len(lemmas), len(orig), min_len
+            "Length mismatch: %s lemmas vs %s lemmas inflected vs %s originals. Proceeding with min_len=%s.",
+            len(lemmas), len(lemmas_inflected), len(orig), min_len
         )
     else:
         logger.debug("Length match: %s", len(orig))
@@ -79,8 +83,25 @@ def test_text(lemmas: list, orig: list[etree._Element], xml_file=None) -> list |
                 return '\n{}\n{}'.format(' '.join(lemmas_text + ['!!!'] + [n.split('\t')[0] for n in lemmas[i:]]).lower(), ' '.join(orig_text + ['!!!'] + [''.join(x.xpath('.//text()')) for x in orig[i:]]).lower())
 
     
+
+
     # A list collecting all tokens (with their index) from the `lemmas` input  that could not be matched to the corresponding word in the `orig` XML list.
     not_found = []
+
+        # If there are extra lemmas without corresponding <w>, record/report them
+    if len(lemmas) > len(orig):
+        for j in range(len(orig), len(lemmas)):
+            inflected = lemmas[j].split('\t')[0]
+            if re.search(r'\w', inflected):
+                not_found.append((clean_string(inflected), j))
+    
+    # If there are extra <w> without corresponding lemmas, record/report them
+    if len(orig) > len(lemmas):
+        for j in range(len(lemmas), len(orig)):
+            # record the surface form of the remaining <w> elements
+            extra_w_text = clean_string(''.join(orig[j].xpath('.//text()', namespaces=ns)))
+            if re.search(r'\w', extra_w_text):
+                not_found.append((extra_w_text, j))
 
     for i in range(min_len):
         word = lemmas[i]

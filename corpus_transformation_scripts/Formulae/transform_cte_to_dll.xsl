@@ -326,7 +326,13 @@
                 <xsl:value-of select="normalize-space(replace($formTitle/tei:ref[@type='folia'], '(fol|p)\.\s*|-', ''))"/>
             </xsl:when>
             <xsl:when test="contains($formTitle, 'Tours 40')">
-                <xsl:text>form040_</xsl:text><xsl:value-of select="replace($formTitle/tei:ref[@type='form-name'], 'Tours 40\((.)\)', '$1')"/>
+                <xsl:text>form040_</xsl:text>
+                <xsl:value-of
+                    select="lower-case(
+                            replace($formTitle/tei:ref[@type='form-name'],
+                                'Tours 40\((.)\)',
+                                '$1')
+                        )"/>
             </xsl:when>
             <xsl:when test="contains($formTitle, 'Weltzeitalter')">
                 <xsl:text>computus</xsl:text>

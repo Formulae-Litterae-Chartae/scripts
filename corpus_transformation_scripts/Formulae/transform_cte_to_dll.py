@@ -105,6 +105,8 @@ def check_xml_file_name(file_name:str, logger:logging.Logger, is_transcription=F
     ## Marculf
     if re.match(r"Marculf (I{1,2}|0),?[0-9]*[a-f]? ?(Capitulatio|Praefatio)?( Deutsch)?\.xml", file_name): return True 
     if re.match(r"Marculf Ergänzung [1-9],[1-9]?( Deutsch)?.xml", file_name): return True 
+    ## Tours
+    if re.match(r"Tours( Ergänzung)? [0-9][0-9]?[a-b]?( Capitulatio)?( Deutsch)?.xml", file_name): return True 
 
     # German matching
     if re.match(r"[a-zA-Z]+ [A-Z]*[0-9 ]+[ ]*Deutsch.xml", file_name):
@@ -243,7 +245,7 @@ def produce_form_num(filename:str) -> str:
             if re.sub(r'.*?(\d+)(\w?).*', r'\2', filename):
                 form_num += '_' + re.sub(r'.*?(\d+)(\w?).*', r'\2', filename)
     elif 'Tours 40' in filename:
-        form_num = 'form040_' + re.sub(r'.*Tours 40\((.)\).*', r'\1', filename)
+        form_num = 'form040_' + re.sub(r'.*Tours 40\((.)\).*', r'\1', filename).lower()
     elif 'Bourges' in filename:
         bourges_parts = re.search(r'Bourges ([A-C]) (\d+) ?([a-m])?', filename)
         form_num = 'form_{}_{:03}{}'.format(bourges_parts[1].lower(), int(bourges_parts[2]), bourges_parts[3] if bourges_parts[3] else '')
