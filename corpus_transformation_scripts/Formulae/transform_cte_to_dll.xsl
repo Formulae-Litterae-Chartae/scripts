@@ -1266,6 +1266,24 @@
         </xsl:copy>
     </xsl:template>
     
+    <!-- CTE sometimes emits standalone <p> blocks inside a running <p>.
+         Treat them as annotations, not main text (prevents "LRV ..." leaking). -->
+    <xsl:template match="tei:p[parent::tei:p]" priority="500">
+        <xsl:variable name="hostP" select="parent::tei:p"/>
+        
+        <xsl:variable name="a"
+            select="(preceding::tei:anchor[ancestor::tei:p[1] is $hostP][1]/@xml:id)[1]"/>
+        
+        <note xmlns="http://www.tei-c.org/ns/1.0" place="foot" type="n1">
+            <xsl:if test="$a">
+                <xsl:attribute name="targetEnd" select="concat('#', $a)"/>
+            </xsl:if>
+            <xsl:apply-templates select="node()"/>
+        </note>
+    </xsl:template>
+
+
+    
     <!-- Remove the xml-stylesheet declaration that CTE sometimes has -->
     <xsl:template match="processing-instruction('xml-stylesheet')"/>
 </xsl:stylesheet>
