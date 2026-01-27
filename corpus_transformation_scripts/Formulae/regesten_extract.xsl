@@ -8,9 +8,20 @@
     <xsl:output omit-xml-declaration="no" indent="yes"/>
     
     <xsl:variable name="titleNode" select="normalize-space(/tei:TEI/tei:teiHeader/tei:fileDesc/tei:titleStmt/tei:title)"/>
-    <xsl:variable name="filename" select="tokenize(tokenize(base-uri(), '/')[last()], '\.')[1]"/>
+<!--    <xsl:variable name="filename" select="tokenize(tokenize(base-uri(), '/')[last()], '\.')[1]"/>-->
     <xsl:variable name="titleParts" select="tokenize($filename, '%20')"/>
     <xsl:variable name="mainTitle" select="string-join($titleParts, ' ')"/>
+    
+    <!-- Raw filename without extension -->
+    <xsl:variable name="filenameRaw"
+        select="tokenize(tokenize(base-uri(), '/')[last()], '\.')[1]"/>
+    
+    <xsl:variable name="filename" select="
+        replace(
+        replace($filenameRaw,
+        '%C3%9C', 'ue'),   (: Ü :)
+        '%C3%BC', 'ue')     (: ü :)
+        "/>
     
     <xsl:variable name="resolvedTitle">
         <xsl:choose>
@@ -43,6 +54,14 @@
                     <xsl:choose>
                         <xsl:when test="contains(child::tei:cell[1]/., ',')">
                             <xsl:value-of select="replace(child::tei:cell[1]/., '.*(\d),.*', '$1')"/><xsl:text>_</xsl:text><xsl:number value="replace(child::tei:cell[1]/., '.*,(\d).*', '$1')" format="001"/>
+                        </xsl:when>
+                        <xsl:when test="contains(lower-case($resolvedTitle), 'tours-ueberarbeitung')">
+                            <xsl:text>urn:cts:formulae:tours_ueberarbeitung.form</xsl:text>
+                            <xsl:number value="replace(child::tei:cell[1]/., '.*?(\d+)(\D{0,3})$', '$1')" format="001"/>
+                            <xsl:if test="matches(child::tei:cell[1]/., '\([a-z]\)$')">
+                                <xsl:text>_</xsl:text>
+                                <xsl:value-of select="replace(child::tei:cell[1]/., '.*?(\d+)\(([a-z])\)$', '$2')"/>
+                            </xsl:if>
                         </xsl:when>
                         <xsl:when test="contains(lower-case($resolvedTitle), 'tours')">
                             <xsl:text>urn:cts:formulae:tours.form</xsl:text>
