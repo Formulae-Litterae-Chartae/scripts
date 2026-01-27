@@ -285,8 +285,10 @@ for german in tqdm(germans, desc="Process German translation(s)", disable=(logge
 
 from transform_cte_to_dll_checks import check_input_regesten_format
 from transform_cte_to_dll_checks import check_fols
+from transform_cte_to_dll_checks import check_empty_notes
 # Since all following steps rely on the existance and format of the regesten file. It should be checked!
 check_input_regesten_format(destination_folder, logger)
+check_empty_notes()
 logger.setLevel('WARNING')
 if 0==len(transcriptions):logger.warning("No transcriptions found!")
 logger.info("Start with transcription(s)")

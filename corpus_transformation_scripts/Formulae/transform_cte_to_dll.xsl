@@ -1267,7 +1267,8 @@
     </xsl:template>
     
     <!-- CTE sometimes emits standalone <p> blocks inside a running <p>.
-         Treat them as annotations, not main text (prevents "LRV ..." leaking). -->
+         Treat them as annotations, not main text (prevents "LRV ..." leaking).
+         IMPORTANT: render content in a special mode so it is NOT tokenized into <w>. -->
     <xsl:template match="tei:p[parent::tei:p]" priority="500">
         <xsl:variable name="hostP" select="parent::tei:p"/>
         
@@ -1278,9 +1279,37 @@
             <xsl:if test="$a">
                 <xsl:attribute name="targetEnd" select="concat('#', $a)"/>
             </xsl:if>
-            <xsl:apply-templates select="node()"/>
+            
+            <!-- Keep a real <p>, preserve whitespace, and do NOT wrap words as <w> -->
+            <p xml:space="preserve">
+      <xsl:apply-templates select="node()" mode="note-text"/>
+    </p>
         </note>
     </xsl:template>
+    
+    <!-- ===== note-text mode: serialize as plain inline text (no <w>) ===== -->
+    
+    <!-- Default in note-text: just recurse -->
+    <xsl:template match="node()" mode="note-text">
+        <xsl:apply-templates select="node()" mode="note-text"/>
+    </xsl:template>
+    
+    <!-- Text nodes: output as-is -->
+    <xsl:template match="text()" mode="note-text">
+        <xsl:value-of select="."/>
+    </xsl:template>
+    
+    <!-- Common inline wrappers from CTE: keep their textual content only -->
+    <xsl:template match="tei:hi | tei:emph | tei:seg | tei:mentioned | tei:ref" mode="note-text">
+        <xsl:apply-templates select="node()" mode="note-text"/>
+    </xsl:template>
+    
+    <!-- Anchors inside that nested p are not part of the note text -->
+    <xsl:template match="tei:anchor" mode="note-text"/>
+    
+    <!-- If CTE nests notes inside these nested p's (rare), ignore them here -->
+    <xsl:template match="tei:note" mode="note-text"/>
+
 
 
     

@@ -365,3 +365,8 @@ def check_fols(man:str, fols: str, logger:logging.Logger) -> bool:
         #raise ValueError(f"{man}.{fols}  does not match the naming pattern for transcriptions.")
     else:
         return True
+
+def check_empty_notes():
+    # should check whether there are any empty notes. They look like this:
+    # <note type="n1" place="right"><p xml:space="preserve"/></note>
+    raise NotImplementedError
