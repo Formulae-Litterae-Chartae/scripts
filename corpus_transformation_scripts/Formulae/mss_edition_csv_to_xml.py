@@ -115,49 +115,7 @@ def build_sigla(s: str, sigla_dict: dict[str, str], logger: logging.Logger) -> s
     all_sigla = re.split(r',\s+', s)
     formatted_sigla: list[str] = []
 
-    def format_siglum(sig: str, sigla_dict: dict[str, str]) -> str:
-        """
-        Format a single siglum using the dictionary.
 
-        Args:
-            sig (str): The siglum to format.
-            sigla_dict (dict[str, str]): Mapping from base sigla to HTML representation.
-
-        Returns:
-            str: HTML-formatted siglum.
-        """
-        sig = sig.replace('**', r'\*\*').strip()
-
-        # Handle special cases
-        if sig == '(Sb†)':
-            pared_sig = 'Sb†'
-            remainder = ')'
-            pre_remainder = '('
-        elif sig == 'Rg1[Fragm.]†':
-            pared_sig = 'Rg1[Fragm.]†'
-            remainder = ''
-            pre_remainder = ''
-        else:
-            pre_remainder = ''
-            if sig == 'Fu†':
-                pared_sig = 'Fu†'
-                remainder = ''
-            else:
-                # Extract base siglum and suffix
-                pared_sig = re.sub(r'(\w+\d*\w?).*', r'\1', sig)
-                remainder = re.sub(r'\w+\d*\w?(.*)', r'\1', sig)
-
-                if remainder == '[Fragm.]':
-                    remainder = '&lt;span class="superscript smaller-text"&gt;[Fragm.]&lt;/span&gt;'
-
-        if pared_sig not in sigla_dict:
-            logger.error(
-                f"{pared_sig} not found in siglen list. "
-                "It won't be displayed properly. If it's part of the project, it should appear in the manuscript_collections_md_file. "
-                "Otherwise, add it to sigla_html_dict."
-            )
-
-        return pre_remainder + '&lt;b&gt;' + sigla_dict.get(pared_sig, pared_sig) + '&lt;/b&gt;' + remainder
 
     for sig in all_sigla:
         formatted_sigla.append(format_siglum(sig, sigla_dict))
@@ -182,30 +140,111 @@ def build_sigla(s: str, sigla_dict: dict[str, str], logger: logging.Logger) -> s
 
     return html_formatted_sigla
 
+def format_siglum(sig: str, sigla_dict: dict[str, str]) -> str:
+    """
+    Format a single siglum using the dictionary.
+
+    Args:
+        sig (str): The siglum to format.
+        sigla_dict (dict[str, str]): Mapping from base sigla to HTML representation.
+
+    Returns:
+        str: HTML-formatted siglum.
+    """
+    sig = sig.replace('**', r'\*\*').strip()
+
+    # Handle special cases
+    if sig == '(Sb†)':
+        pared_sig = 'Sb†'
+        remainder = ')'
+        pre_remainder = '('
+    elif sig == 'Rg1[Fragm.]†':
+        pared_sig = 'Rg1[Fragm.]†'
+        remainder = ''
+        pre_remainder = ''
+    # Handle special cases from Tours 1
+    elif sig == "(a) Ko2":
+        pared_sig = 'Ko2'
+        remainder = ''
+        pre_remainder = '(a)'
+    elif sig == "(b) Ko2":
+        pared_sig = 'Ko2'
+        remainder = ''
+        pre_remainder = '(b)'
+    else:
+        pre_remainder = ''
+        if sig == 'Fu†':
+            pared_sig = 'Fu†'
+            remainder = ''
+        else:
+            # Extract base siglum and suffix
+            pared_sig = re.sub(r'(\w+\d*\w?).*', r'\1', sig)
+            remainder = re.sub(r'\w+\d*\w?(.*)', r'\1', sig)
+
+            if remainder == '[Fragm.]':
+                remainder = '&lt;span class="superscript smaller-text"&gt;[Fragm.]&lt;/span&gt;'
+
+    if pared_sig not in sigla_dict:
+        raise KeyError(f"'{pared_sig}' not found in siglen list. "
+            "It won't be displayed properly. If it's part of the project, it should appear in the manuscript_collections_md_file. "
+            "Otherwise, add it to sigla_html_dict.")
+
+    return pre_remainder + '&lt;b&gt;' + sigla_dict.get(pared_sig, pared_sig) + '&lt;/b&gt;' + remainder
+
 def build_editions(s:str, ed_dict:dict[str:(str,str)], logger) -> str: 
     """
     creates mouse-over tooltips for all editions
     """
     all_eds = re.split(r'; ', s) 
-    formatted_eds = list() 
-    for ed in all_eds: 
+    formatted_eds: list[str] = []
+    for ed in all_eds:
         try:
-            editor, number = re.split(r': ', ed)
-            formatted_editor = editor
-            editor = editor.strip().lstrip()
-            biblio = ed_dict.get(editor, editor)
-            if len(biblio) == 2:
-                formatted_editor = biblio[0]
-                biblio = biblio[1]
-            formatted_eds.append('&lt;span data-toggle="tooltip" id="{editor}" data-html="true" data-container="body" title="{biblio}"&gt;&lt;b&gt;{formatted_editor}&lt;/b&gt;&lt;/span&gt;: {form_number}'.format(editor=editor, form_number=number, biblio=biblio, formatted_editor=formatted_editor))
-            if editor not in ed_dict:
-                logger.warning('"{}" not found in the list of editors'.format(editor))
-        except ValueError:
-            for w in ed.split():
-                if w in ed_dict:
-                    ed = re.sub(w, '&lt;span data-toggle="tooltip" id="{editor}" data-html="true" data-container="body" title="{biblio}"&gt;&lt;b&gt;{editor}&lt;/b&gt;&lt;/span&gt;'.format(editor=w, biblio=ed_dict[w]), ed)
+            formatted_eds.append(build_edition(ed, ed_dict, logger))
+        except KeyError:
             formatted_eds.append(ed)
+  
     return '; '.join(formatted_eds)
+
+def build_edition(edition:str, ed_dict:dict[str:(str,str)], logger) -> str: 
+    """
+    creates mouse-over tooltips for one edition
+    """
+    try:
+        editor, number = re.split(r': ', edition)
+        formatted_editor = editor
+        editor = editor.strip().lstrip()
+        biblio = ed_dict.get(editor, editor)
+        if len(biblio) == 2:
+            formatted_editor = biblio[0]
+            biblio = biblio[1]
+        if editor not in ed_dict:
+            logger.warning('"{}" not found in the list of editors'.format(editor))
+        
+        return '&lt;span data-toggle="tooltip" id="{editor}" data-html="true" data-container="body" title="{biblio}"&gt;&lt;b&gt;{formatted_editor}&lt;/b&gt;&lt;/span&gt;: {form_number}'.format(editor=editor, form_number=number, biblio=biblio, formatted_editor=formatted_editor)
+    except ValueError:
+        found_at_least_edition = False
+        for w in edition.split():
+            if w in ed_dict:
+                edition = re.sub(w, '&lt;span data-toggle="tooltip" id="{editor}" data-html="true" data-container="body" title="{biblio}"&gt;&lt;b&gt;{editor}&lt;/b&gt;&lt;/span&gt;'.format(editor=w, biblio=ed_dict[w]), edition)
+                found_at_least_edition = True
+        if not found_at_least_edition: raise KeyError
+        return edition
+
+def build_zaehlung(cell:str, sigla_html_dict, ed_bib_info, logger) -> str:
+    zaehlung_separator = " "
+    zaehlung_components: list[str] = []
+    
+    for component in cell.split(zaehlung_separator):
+        try:
+            zaehlung_components.append(format_siglum(component, sigla_dict=sigla_html_dict)) 
+        except KeyError:
+            try:
+                zaehlung_components.append(build_edition(component, ed_bib_info, logger))
+            except KeyError:
+                zaehlung_components.append(component)
+
+    return zaehlung_separator.join(zaehlung_components)
+
 
 def get_csv(input_path:str,logging) -> str:
     if not 'csv' in input_path:
@@ -274,6 +313,9 @@ def check_apparatus_notes(SEPERATOR_TOKEN, xml_string, rows, logger):
         logger.warning(f"Only found {number_of_separator_tokens} {SEPERATOR_TOKEN} in {number_of_documents} documents. This number seems too low and is a possible indicator for an incomplete reading from the input.")
     else:
         logger.info(f"Found {number_of_separator_tokens} {SEPERATOR_TOKEN} in {number_of_documents} documents. This number seems ok and indicates a complete reading from the input.")
+
+
+
 
 
 def main():
@@ -371,16 +413,21 @@ def main():
     for r in rows[1:]:
         #cells = r.strip().split('\t')
         cells = r
-        if len(cells) > 1:
-            sigla = build_sigla(cells[1].strip(), sigla_html_dict, logger)
-            info_string = sigla + SEPERATOR_TOKEN + build_editions(cells[2], ed_bib_info, logger)
-            # if '63' in cells[0]:
-            #     print('cells[1]',cells[1])
-            #     print('sigla', sigla)
-            if len(cells) > 3:
-                info_string += SEPERATOR_TOKEN + SEPERATOR_TOKEN.join(cells[3:])
+        if 0 < len(cells):
+            info_string = ""
+            if 1 < len(cells):
+                sigla = build_sigla(cells[1].strip(), sigla_html_dict, logger)
+                # contains information on editions
+                if 2 < len(cells):
+                    info_string = sigla + SEPERATOR_TOKEN + build_editions(cells[2], ed_bib_info, logger)
+                    # contains column with Zählung
+                    if 3 < len(cells):
+                        info_string += SEPERATOR_TOKEN + SEPERATOR_TOKEN.join([build_zaehlung(cell, sigla_html_dict, ed_bib_info, logger) for cell in cells[3:]])
+                        # contains column with Zählung
+                        if 4 < len(cells):
+                            info_string += SEPERATOR_TOKEN + SEPERATOR_TOKEN.join(cells[4:])
             cells[0] = re.sub(r'Flavigny Pa 7 (\D)', r'Flavigny Pa 7\1', cells[0])
-            title= cells[0].strip()
+            title = cells[0].strip()
             try:
                 obtained_id = title_id_dict[title]
             except KeyError as ke: 
