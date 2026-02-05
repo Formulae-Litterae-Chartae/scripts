@@ -288,7 +288,10 @@ from transform_cte_to_dll_checks import check_fols
 from transform_cte_to_dll_checks import check_empty_notes
 # Since all following steps rely on the existance and format of the regesten file. It should be checked!
 check_input_regesten_format(destination_folder, logger)
-check_empty_notes()
+try:
+    check_empty_notes()
+except NotImplementedError as nie:
+    logger.debug(str(nie))
 logger.setLevel('WARNING')
 if 0==len(transcriptions):logger.warning("No transcriptions found!")
 logger.info("Start with transcription(s)")
@@ -300,6 +303,8 @@ for transcription in tqdm(sorted(transcriptions), desc="Process transcription(s)
         if corpus_name == 'marculf' and 'markulf' in os.path.split(transcription)[-1].lower(): 
             pass
         elif corpus_name == 'andecavensis' and 'angers' in os.path.split(transcription)[-1].lower(): 
+            pass
+        elif corpus_name == 'tours_ueberarbeitung' and 'tours-überarbeitung' in os.path.split(transcription)[-1].lower(): 
             pass
         else:
             raise ValueError("The file name of {} does not include the corpus name {}. This will cause errors later.".format(transcription, corpus_name))
@@ -424,7 +429,7 @@ else:
 from hss_editionen_tool import check_hss_editionen
 from transform_cte_to_dll_checks import check_hss_editionen_file
 try:
-    check_hss_editionen_file(hss_editionen_file_path='~/git/scripts/formel_transform/output/sens/hss_editionen.xml', logger=logger) 
+    check_hss_editionen_file(hss_editionen_file_path='~/git/scripts/formel_transform/output/{corpus}/hss_editionen.xml'.format( corpus=corpus_name), logger=logger) 
 except Exception as e:
     logger.error(e)
 

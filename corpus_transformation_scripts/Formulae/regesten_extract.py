@@ -29,7 +29,11 @@ def create_subtrees(input_tei_path_list: list[str], logger) -> tuple[str, list, 
         corpus_information_dict = get_corpus_information(input_tei_path)
         corpus_name = corpus_information_dict["corpus"]
         if corpus_information_dict["subcorpus_index"]=='': 
-            subcorpus_name = "_a"
+            #logger.warn("I think it has a subcorpus:"+str(corpus_information_dict))
+            #subcorpus_name = "_a"
+            if "ueberarbeitung" in corpus_name.lower():
+                subcorpus_name = ""
+
         else:
             subcorpus_name = "_"+corpus_information_dict["subcorpus_index"]+"_"
 
@@ -76,12 +80,11 @@ def get_regesten_files(collection: str, collection_title_case: str, file_type: s
     :param collection_title_case: The title-case version (e.g., 'Sens')
     :return: A list of matching file paths
     """
-    # tour_ueberarbeitung -> Tours-Überarbeitung
-    collection_title_case = collection_title_case.replace('_','-').replace('Ue','Ü')
 
     base_dir = os.path.expanduser(f"~/git/scripts/formel_transform/input/{collection}")
     #pattern = f"Regesten {collection_title_case} [ABI]*.{file_type}"
     pattern = f"Regesten {collection_title_case}*.{file_type}"
+    print("pattern:"+pattern)
     search_path = os.path.join(base_dir, pattern)
     return sorted(glob.glob(search_path))
 
@@ -136,5 +139,6 @@ if __name__ == '__main__':
         logger.info("Success! All regests from {} are converted to {} ".format(corpus_name, final_output_path))
     else:
         logger.info("FAILURE! {} was not created.".format(final_output_path))
+    output_paths.remove(final_output_path)
     if not args.preserve_temp_files:
         remove_files(output_paths,logger)

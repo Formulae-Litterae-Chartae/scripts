@@ -166,7 +166,7 @@ def format_siglum(sig: str, sigla_dict: dict[str, str]) -> str:
     elif sig == "(a) Ko2":
         pared_sig = 'Ko2'
         remainder = ''
-        pre_remainder = '(a)'
+        pre_remainder = '(a) '
     elif sig == "(b) Ko2":
         pared_sig = 'Ko2'
         remainder = ''
@@ -210,7 +210,20 @@ def build_edition(edition:str, ed_dict:dict[str:(str,str)], logger) -> str:
     creates mouse-over tooltips for one edition
     """
     try:
+
+
         editor, number = re.split(r': ', edition)
+                # Handle special cases from Tours 1
+        if editor == "(a) Roz":
+            editor = 'Roz'
+            pre_remainder = '(a) '
+        elif editor == "(b) Lin":
+            editor = 'Lin'
+            pre_remainder = '(b) '
+            #raise TypeError(edition+"-"+editor+"-"+pre_remainder)
+        else:
+            pre_remainder = ''
+        
         formatted_editor = editor
         editor = editor.strip().lstrip()
         biblio = ed_dict.get(editor, editor)
@@ -220,7 +233,7 @@ def build_edition(edition:str, ed_dict:dict[str:(str,str)], logger) -> str:
         if editor not in ed_dict:
             logger.warning('"{}" not found in the list of editors'.format(editor))
         
-        return '&lt;span data-toggle="tooltip" id="{editor}" data-html="true" data-container="body" title="{biblio}"&gt;&lt;b&gt;{formatted_editor}&lt;/b&gt;&lt;/span&gt;: {form_number}'.format(editor=editor, form_number=number, biblio=biblio, formatted_editor=formatted_editor)
+        return pre_remainder+'&lt;span data-toggle="tooltip" id="{editor}" data-html="true" data-container="body" title="{biblio}"&gt;&lt;b&gt;{formatted_editor}&lt;/b&gt;&lt;/span&gt;: {form_number}'.format(editor=editor, form_number=number, biblio=biblio, formatted_editor=formatted_editor)
     except ValueError:
         found_at_least_edition = False
         for w in edition.split():

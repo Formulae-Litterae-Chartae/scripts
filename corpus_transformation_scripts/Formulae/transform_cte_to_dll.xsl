@@ -983,7 +983,15 @@
         </xsl:choose>
 
     </xsl:template>
-
+        
+    <!-- Preserve section marker like "(a)" that CTE puts into a hi before the main title text -->
+    <xsl:template match="tei:p/tei:hi[tei:milestone][1]" priority="1000">
+        <!-- emit the text before the milestone, e.g. "(a) " -->
+        <xsl:value-of select="string-join(text(), '')"/>
+        <!-- then continue with the milestone and anything else inside this hi -->
+        <xsl:apply-templates select="node()[not(self::text())]"/>
+    </xsl:template>
+    
     <!-- Replace all <hi> elements with <seg> and transfer the @rendition attribute to @type -->
     <xsl:template match="tei:hi">
         <xsl:param name="punct">[„“"'’]</xsl:param>
