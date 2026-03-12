@@ -20,7 +20,25 @@ def get_corpus_information(input_tei_path)-> dict:
         return corpus_information_dict
     else:
         raise ValueError("{} has a wrong file name".format(input_tei_path))
-    
+
+def flavigny_series_from_subcorpus(sub_idx: str) -> str:
+    """
+    Map Flavigny file token to form series number.
+    Ko    -> "3"
+    Pa    -> "2"
+    Pa+Ko -> "1"
+    """
+    key = sub_idx.strip().lower().replace(" ", "")
+    if key == "ko":
+        return "3"
+    if key == "pa":
+        return "2"
+    if key in {"pa+ko", "ko+pa"}:
+        return "1"
+    raise ValueError(f"Unknown Flavigny subcorpus token: {sub_idx!r}")
+
+
+
 def create_subtrees(input_tei_path_list: list[str], logger) -> tuple[str, list, list]:
     if input_tei_path_list == []: raise ValueError('input_tei_path_list should not be empty') 
     xml_trees: list[ET[Element[str]]] = []
@@ -49,10 +67,18 @@ def create_subtrees(input_tei_path_list: list[str], logger) -> tuple[str, list, 
         for child in root:
             if "regest" == child.tag:
                 if "docId" in child.attrib.keys():
+                    extracted_doc_id = child.get("docId")
                     if 'bourges' in corpus_name:
                         child.set('docId', "urn:cts:formulae:{corpus}.form{subcorpus}{form_num}".format(corpus=corpus_name, 
                                                                                             subcorpus=subcorpus_name,
                                                                                             form_num=child.get('docId')))
+                    elif corpus_name == "flavigny":
+                        series = flavigny_series_from_subcorpus(corpus_information_dict["subcorpus_index"])
+                        child.set("docId", f"urn:cts:formulae:{corpus_name}.form{series}_{extracted_doc_id}")
+                    
+
+                    elif corpus_name == "marculf":
+                        child.set("docId",f"urn:cts:formulae:{corpus_name}.form{extracted_doc_id}")
                     else: 
                         child.set('docId', "urn:cts:formulae:{corpus}.form{subcorpus}{form_num}".format(corpus=corpus_name, 
                                                                                                                     subcorpus=subcorpus_name,
@@ -80,12 +106,16 @@ def get_regesten_files(collection: str, collection_title_case: str, file_type: s
     :param collection_title_case: The title-case version (e.g., 'Sens')
     :return: A list of matching file paths
     """
+    def make_collection_regesten_regex(collection_title_case):
+        if "flavigny" == collection_title_case.lower(): return f"{collection_title_case}( Ko)*( Pa)*( Pa+Ko)*"
+        return collection_title_case
 
     base_dir = os.path.expanduser(f"~/git/scripts/formel_transform/input/{collection}")
     #pattern = f"Regesten {collection_title_case} [ABI]*.{file_type}"
     pattern = f"Regesten {collection_title_case}*.{file_type}"
-    print("pattern:"+pattern)
+    #pattern = f"Regesten {make_collection_regesten_regex(collection_title_case)}.{file_type}"
     search_path = os.path.join(base_dir, pattern)
+    print("search_path:"+search_path)
     return sorted(glob.glob(search_path))
 
 
@@ -106,6 +136,7 @@ if __name__ == '__main__':
     transformation_file =  make_proper_path("~/git/scripts/corpus_transformation_scripts/Formulae/regesten_extract.xsl")
     #input_docx_path = make_proper_path("~/git/scripts/formel_transform/input/{}/Regesten {} A.docx".format(collection, collection_title_case))
     input_docx_path_list = get_regesten_files(collection, collection_title_case)
+    if not input_docx_path_list: raise ValueError("input_docx_path_list should be empty. Check path or regex")
     logger.info("Found regesten files: {} for {}".format(input_docx_path_list, collection))
     input_tei_path_list:list[str] = list()
     for input_docx_path in input_docx_path_list:
@@ -139,6 +170,7 @@ if __name__ == '__main__':
         logger.info("Success! All regests from {} are converted to {} ".format(corpus_name, final_output_path))
     else:
         logger.info("FAILURE! {} was not created.".format(final_output_path))
-    output_paths.remove(final_output_path)
+    # sometimes it is added to list of temp files. I dont know why...
+    if final_output_path in output_paths: output_paths.remove(final_output_path)
     if not args.preserve_temp_files:
         remove_files(output_paths,logger)

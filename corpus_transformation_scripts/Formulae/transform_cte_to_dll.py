@@ -101,7 +101,11 @@ def check_xml_file_name(file_name:str, logger:logging.Logger, is_transcription=F
     ## Auvergne
     if re.match(r"Auvergne [1-6]( Deutsch)?.xml", file_name): return True 
     ## Bourges
-    if re.match(r"Bourges [A-C] [1-9][0-9]?( [a-m])?( Deutsch)?.xml", file_name): return True 
+    if re.match(r"Bourges [A-C] [1-9][0-9]?( [a-m])?( Deutsch)?.xml", file_name): return True  
+    ## Flavigny
+    if re.match(r"Flavigny (Ko|Pa|Pa\+Ko) [1-9][0-1]?( Deutsch)?.xml", file_name): return True 
+    if re.match(r"Flavigny Pa 7[a-m]?( Deutsch)?.xml", file_name): return True  
+    if re.match(r"Flavigny Capitulatio (Ko2|P3)( Deutsch)?.xml", file_name): return True 
     ## Marculf
     if re.match(r"Marculf (I{1,2}|0),?[0-9]*[a-f]? ?(Capitulatio|Praefatio)?( Deutsch)?\.xml", file_name): return True 
     if re.match(r"Marculf Ergänzung [1-9],[1-9]?( Deutsch)?.xml", file_name): return True 

@@ -297,7 +297,7 @@ def check_output_regesten_existance(corpus_folder:str, logger:logging.Logger, sa
                 if not capitains_found:
                     logger.debug(os.path.split(subsubpath))
                     logger.warning("No capitains file found in {}".format(subfolder))
-            
+            list(filter(lambda item: item not in b, a))
             if short_regesten_found == len(subfolders) and long_regest_found == len(subfolders):
                 logger.info("Success! All {} entries have exactly one short regest and one long regest".format(short_regesten_found))
                 print("Success! All {} entries have exactly one short regest and one long regest".format(short_regesten_found))
