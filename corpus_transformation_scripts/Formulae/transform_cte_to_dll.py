@@ -9,7 +9,14 @@ import argparse
 from tqdm import tqdm
 from util import subprocess_run, get_logger
 from bs4 import BeautifulSoup
-from transform_cte_to_dll_checks import check_if_notes_exist, check_paths_in_capitains, check_transcriptions_got_proper_names, check_if_collection_exists
+from transform_cte_to_dll_checks import (
+    check_if_notes_exist,
+    check_paths_in_capitains,
+    check_transcriptions_got_proper_names,
+    check_if_collection_exists,
+    check_leaked_apparatus_in_text,
+    check_leaked_apparatus_in_corpus,
+)
 
 home_dir = environ.get('HOME', '')
 
@@ -419,10 +426,13 @@ for transcription in tqdm(sorted(transcriptions), desc="Process transcription(s)
         f.write('<!--I am a temp file, that should have been deleted.-->\n')
         f.write('<xml/>')
     remove_space_before_note(new_name)
+
     try:
         check_transcriptions_got_proper_names(manuscript, new_name, logger)
     except Exception as e:
         logger.error(str(e))
+
+    check_leaked_apparatus_in_text(new_name, logger)
 
 if collections_not_found: 
     logger.error("{} collections not found: {}".format(len(collections_not_found), collections_not_found))
@@ -467,9 +477,17 @@ for latin in tqdm(latins, desc="Process latin(s)", disable=tqdm_switch, leave=no
     #     for collection in root.findall('.//{*}collection'):
         
     remove_space_before_note(new_name)
-    check_if_notes_exist(input_file='{}'.format(latin),transformed_file='{}'.format(new_name), logger=logger)
+
+    check_if_notes_exist(
+        input_file='{}'.format(latin),
+        transformed_file='{}'.format(new_name),
+        logger=logger
+    )
+
+    check_leaked_apparatus_in_text(new_name, logger)
+
     try:
-        check_paths_in_capitains(capitains_file_output_path,logger)
+        check_paths_in_capitains(capitains_file_output_path, logger)
     except Exception as e:
         logger.error(str(e))
 # Delete the temporary files
@@ -499,6 +517,35 @@ for sub_folder in sub_folders:
 
 ### Finish up with a sanity check
 
-from transform_cte_to_dll_checks import check_file_creation, check_output_regesten_existance
-if check_file_creation(corpus_name, latins, germans, transcriptions, logger) and check_output_regesten_existance(corpus_folder='{base_folder}/data/{corpus}'.format(base_folder=destination_folder, corpus=corpus_name), logger=logger):
+from transform_cte_to_dll_checks import (
+    check_file_creation,
+    check_output_regesten_existance,
+)
+
+corpus_output_folder = '{base_folder}/data/{corpus}'.format(
+    base_folder=destination_folder,
+    corpus=corpus_name
+)
+
+file_creation_ok = check_file_creation(
+    corpus_name,
+    latins,
+    germans,
+    transcriptions,
+    logger
+)
+
+regesten_ok = check_output_regesten_existance(
+    corpus_folder=corpus_output_folder,
+    logger=logger
+)
+
+leaked_apparatus_ok = check_leaked_apparatus_in_corpus(
+    corpus_output_folder,
+    logger
+)
+
+if file_creation_ok and regesten_ok and leaked_apparatus_ok:
     logger.info("Success! No errors detected in the file creation process.")
+else:
+    logger.warning("Finished with warnings or errors. Please check the log.")

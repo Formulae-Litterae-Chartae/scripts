@@ -31,6 +31,13 @@ cd ~/git/scripts/formel_transform/output/sens
 python3 ~/git/scripts/corpus_transformation_scripts/Formulae/transform_cte_to_dll.py ~/Downloads/SaxonHE9-8-0-11J/saxon9he.jar sens ~/git/formulae-corpora/data/formulae_collection/__capitains__.xml ~/git/scripts 
 ```
 
+#### Post-hoc checks on collections:
+```shell
+# python3 ~/git/scripts/corpus_transformation_scripts/Formulae/transform_cte_to_dll_checks.py <function> <arguments>
+python3 ~/git/scripts/corpus_transformation_scripts/Formulae/transform_cte_to_dll_checks.py check_leaked_apparatus_in_corpus ~/git/formulae-corpora/data/marculf
+```
+
+
 ## Contribution guide
 
 This collection of scripts consists of Python and xslt files.

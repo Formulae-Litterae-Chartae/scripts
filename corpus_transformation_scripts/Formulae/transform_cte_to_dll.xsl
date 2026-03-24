@@ -956,6 +956,10 @@
         </xsl:if>
     </xsl:template>
     
+    <!-- Suppress source end-anchored notes in normal processing.
+         They are reinserted explicitly after the generated note-begin-marker. -->
+    <xsl:template match="tei:note[@targetEnd]" priority="400"/>
+    
     <xsl:template match="tei:note[not(@targetEnd)]" name="buildNotes">
         <xsl:variable name="previous_get_id" select="concat('#', preceding::tei:seg[position()=1]/@xml:id)"/>
         <xsl:variable name="new_note_tag">

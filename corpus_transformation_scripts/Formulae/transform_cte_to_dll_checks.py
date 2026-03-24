@@ -297,7 +297,7 @@ def check_output_regesten_existance(corpus_folder:str, logger:logging.Logger, sa
                 if not capitains_found:
                     logger.debug(os.path.split(subsubpath))
                     logger.warning("No capitains file found in {}".format(subfolder))
-            list(filter(lambda item: item not in b, a))
+                    
             if short_regesten_found == len(subfolders) and long_regest_found == len(subfolders):
                 logger.info("Success! All {} entries have exactly one short regest and one long regest".format(short_regesten_found))
                 print("Success! All {} entries have exactly one short regest and one long regest".format(short_regesten_found))
@@ -370,3 +370,241 @@ def check_empty_notes():
     # should check whether there are any empty notes. They look like this:
     # <note type="n1" place="right"><p xml:space="preserve"/></note>
     raise NotImplementedError
+
+#############################################
+# leaked apartus notes
+def _get_tei_ns() -> dict[str, str]:
+    """
+    Namespace mapping for TEI XPath queries.
+    """
+    return {"tei": "http://www.tei-c.org/ns/1.0"}
+
+
+def _normalize_whitespace(text: str | None) -> str:
+    """
+    Collapse repeated whitespace for log-friendly output.
+    """
+    if text is None:
+        return ""
+    return " ".join(text.split())
+
+
+def _get_nearest_paragraph_id(elem) -> str | None:
+    """
+    Return the xml:id of the closest ancestor paragraph, if available.
+    """
+    ns = _get_tei_ns()
+    paragraph = elem.xpath("ancestor::tei:p[1]", namespaces=ns)
+    if paragraph:
+        return paragraph[0].get("{http://www.w3.org/XML/1998/namespace}id")
+    return None
+
+
+def _serialize_xml_snippet(elem, max_length: int = 500) -> str:
+    """
+    Serialize an element to a compact single-line XML snippet for logging.
+    """
+    snippet = etree.tostring(elem, encoding="unicode", with_tail=False)
+    snippet = snippet.replace("\n", " ")
+    return snippet[:max_length]
+
+
+def _extract_leaked_apparatus_context(mentioned_elem) -> dict[str, str | None]:
+    """
+    Extract structured context for a suspicious <mentioned> element that occurs
+    outside a <note>.
+    """
+    paragraph_id = _get_nearest_paragraph_id(mentioned_elem)
+    mentioned_text = _normalize_whitespace("".join(mentioned_elem.itertext()))
+
+    next_note_begin_marker = mentioned_elem.xpath(
+        "following::tei:seg[@type='note-begin-marker'][1]",
+        namespaces=_get_tei_ns()
+    )
+
+    next_marker_id = None
+    next_marker_text = None
+    if next_note_begin_marker:
+        next_marker = next_note_begin_marker[0]
+        next_marker_id = next_marker.get("{http://www.w3.org/XML/1998/namespace}id")
+        next_marker_text = _normalize_whitespace("".join(next_marker.itertext()))
+
+    parent_snippet = None
+    parent = mentioned_elem.getparent()
+    if parent is not None:
+        parent_snippet = _serialize_xml_snippet(parent)
+
+    return {
+        "paragraph_id": paragraph_id,
+        "mentioned_text": mentioned_text,
+        "next_marker_id": next_marker_id,
+        "next_marker_text": next_marker_text,
+        "parent_snippet": parent_snippet,
+    }
+
+
+def check_leaked_apparatus_in_text(
+    transformed_file: str,
+    logger: logging.Logger,
+    raise_errors: bool = False
+) -> bool:
+    """
+    Check whether apparatus material has leaked into the running text.
+
+    This specifically detects <mentioned> elements that occur outside <note>,
+    which is a strong indicator that note content was serialized into the text
+    instead of remaining fully enclosed in the apparatus note.
+
+    Args:
+        transformed_file: Path to the transformed TEI XML file.
+        logger: Logger instance.
+        raise_errors: If True, raise ValueError when suspicious cases are found.
+
+    Returns:
+        bool: True if no suspicious cases were found, False otherwise.
+    """
+    parser = etree.XMLParser(remove_blank_text=False, recover=True)
+
+    try:
+        tree = etree.parse(transformed_file, parser)
+    except Exception as exc:
+        logger.error("Could not parse %s: %s", transformed_file, exc)
+        if raise_errors:
+            raise
+        return False
+
+    ns = _get_tei_ns()
+    leaked_mentions = tree.xpath(
+        "//tei:mentioned[not(ancestor::tei:note)]",
+        namespaces=ns
+    )
+
+    if not leaked_mentions:
+        logger.info(
+            "Check passed! No leaked apparatus material found in %s.",
+            transformed_file
+        )
+        return True
+
+    logger.error(
+        "Check FAILED! Found %s suspicious <mentioned> element(s) outside <note> in %s.",
+        len(leaked_mentions),
+        transformed_file,
+    )
+
+    for i, mentioned_elem in enumerate(leaked_mentions, start=1):
+        context = _extract_leaked_apparatus_context(mentioned_elem)
+
+        logger.error(
+            (
+                "[%s] Suspicious leaked apparatus in %s | paragraph=%s | "
+                "mentioned=%r | next_note_begin_marker=%s | next_marker_text=%r | "
+                "parent_snippet=%s"
+            ),
+            i,
+            transformed_file,
+            context["paragraph_id"],
+            context["mentioned_text"],
+            context["next_marker_id"],
+            context["next_marker_text"],
+            context["parent_snippet"],
+        )
+
+    if raise_errors:
+        raise ValueError(
+            f"Found {len(leaked_mentions)} suspicious <mentioned> element(s) "
+            f"outside <note> in {transformed_file}."
+        )
+
+    return False
+
+def check_leaked_apparatus_in_corpus(
+    corpus_folder: str,
+    logger: logging.Logger,
+    raise_errors: bool = False
+) -> bool:
+    """
+    Run the leaked apparatus check on all XML files in a corpus folder.
+    """
+    xml_files = glob(os.path.join(corpus_folder, "**", "*.xml"), recursive=True)
+
+    if not xml_files:
+        logger.warning("No XML files found in %s.", corpus_folder)
+        return True
+
+    logger.info("Checking %s XML files in %s...", len(xml_files), corpus_folder)
+
+    all_checks_passed = True
+
+    for xml_file in xml_files:
+        passed = check_leaked_apparatus_in_text(
+            xml_file,
+            logger,
+            raise_errors=False
+        )
+        if not passed:
+            all_checks_passed = False
+
+    if all_checks_passed:
+        logger.info("All files passed leaked apparatus check.")
+    else:
+        logger.error("Leaked apparatus detected in corpus.")
+
+    if not all_checks_passed and raise_errors:
+        raise ValueError(
+            f"Leaked apparatus material found in one or more XML files under {corpus_folder}."
+        )
+
+    return all_checks_passed
+
+#############################################
+# Make it console executable
+
+def _setup_default_logger() -> logging.Logger:
+    """
+    Create a simple console logger if none is provided.
+    """
+    logger = logging.getLogger("cte_checks_cli")
+    if not logger.handlers:
+        handler = logging.StreamHandler()
+        formatter = logging.Formatter("%(levelname)s: %(message)s")
+        handler.setFormatter(formatter)
+        logger.addHandler(handler)
+        logger.setLevel(logging.WARN)
+    return logger
+
+
+if __name__ == "__main__":
+    import sys
+
+    logger = _setup_default_logger()
+
+    if len(sys.argv) < 2:
+        print("Usage:")
+        print("  python tranform_cte_to_dll_checks.py <command> [args]")
+        print("")
+        print("Available commands:")
+        print("  check_leaked_apparatus_in_corpus <corpus_folder>")
+        sys.exit(1)
+
+    command = sys.argv[1]
+
+    if command == "check_leaked_apparatus_in_corpus":
+        if len(sys.argv) < 3:
+            print("Missing argument: corpus_folder")
+            sys.exit(1)
+
+        corpus_folder = sys.argv[2]
+
+        success = check_leaked_apparatus_in_corpus(
+            corpus_folder,
+            logger,
+            raise_errors=False
+        )
+
+        if not success:
+            sys.exit(2)
+
+    else:
+        print(f"Unknown command: {command}")
+        sys.exit(1)
