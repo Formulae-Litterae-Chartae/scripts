@@ -119,7 +119,8 @@
                         </xsl:when>
                             <!-- urn:cts:formulae:bourges.form_c_001a -->
                             <xsl:when test="contains(lower-case($resolvedTitle), 'bourges') or 
-                                            contains(lower-case($resolvedTitle), 'flavigny')">
+                                            contains(lower-case($resolvedTitle), 'flavigny') or 
+                                            contains(lower-case($resolvedTitle), 'fsb')">
 
                                 <!-- 001 -->
                             <xsl:number value="replace(child::tei:cell[1]/., '.*?(\d+)(\D{0,3})$', '$1')" format="001"/>

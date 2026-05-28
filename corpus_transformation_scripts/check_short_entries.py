@@ -113,15 +113,16 @@ for text in sorted(texts):
 
 problem_path_location = Path(scripts_folder+'/results/elex_problems.txt')
 
-df = pd.DataFrame.from_records(problems)
-df = df.sort_values(by=[0,1]).reset_index(drop = True)
-df.to_csv(problem_path_location, sep='\t')
-df.columns = ['Datei', 'Referenz_in_Datei', 'Referenz_Citavi']
-df.to_excel(os.path.join(scripts_folder, 'results', 'fehlende_kurztitel.xlsx'), index=False) 
 
 if 0 == len(texts):
     logging.warning('No texts were found in {}. Please change the path'.format(glob_str))
 elif 0 == len(problems):
     logging.info('No problems detected in {}. Identified {} texts {} kurz'.format(glob_str, len(texts), len(kurztitel_list)))
 else:
+    if problems:
+        df = pd.DataFrame.from_records(problems)
+        df = df.sort_values(by=[0,1]).reset_index(drop = True)
+        df.to_csv(problem_path_location, sep='\t')
+        df.columns = ['Datei', 'Referenz_in_Datei', 'Referenz_Citavi']
+        df.to_excel(os.path.join(scripts_folder, 'results', 'fehlende_kurztitel.xlsx'), index=False) 
     logging.warning('{} problems detected in {}. Please the error log at {}'.format(len(problems),glob_str, problem_path_location))

@@ -246,10 +246,22 @@
                 <xsl:element name="ref" namespace="http://www.tei-c.org/ns/1.0">
                     <xsl:attribute name="type">form-name</xsl:attribute>
                     <xsl:choose>
-                        <xsl:when test="matches($tempTitle, ' 0 ')">
-                            <xsl:value-of select="replace($tempTitle, ' Deutsch| Übersetzung|\.xml| 0|\[|\]', '')"/>
+                        <xsl:when test="matches($tempTitle, '^FSB\s+0\s+INCIPIT(\s+(Deutsch|Latein|Latin|Übersetzung))?$', 'i')">
+                            <xsl:text>FSB Incipit</xsl:text>
                         </xsl:when>
-                        <xsl:when test="matches($tempTitle, 'Weltzeitalter|Capitula|Incipit|Praefatio|Ergänzung|Flavigny|Formula Marculfina|Bourges|Sens')">
+                        
+                        <xsl:when test="matches($tempTitle, '\s0\s')">
+                            <xsl:value-of select="
+                                normalize-space(
+                                    replace(
+                                        replace($tempTitle, '\s+(Deutsch|Latein|Latin|Übersetzung)$', ''),
+                                        '\s+0\s+',
+                                        ' '
+                                    )
+                                )
+                                            "/>
+                        </xsl:when>
+                        <xsl:when test="matches($tempTitle, 'Weltzeitalter|Capitula|Incipit|INCIPIT|Praefatio|Ergänzung|Flavigny|Formula Marculfina|Bourges|Sens')">
                             <xsl:value-of select="replace($tempTitle, ' Deutsch| Übersetzung|\.xml', '')"/>
                             <xsl:if test="matches($tempTitle, 'Formula Marculfina')">
                                 <xsl:choose>
@@ -356,13 +368,17 @@
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:when>
-            <xsl:when test="contains($formTitle, 'Incipit')">
+            <xsl:when test="matches(string($formTitle/tei:ref[@type='form-name']), '^FSB\s+Incipit$', 'i')">
+                <xsl:text>form000</xsl:text>
+            </xsl:when>
+            <xsl:when test="matches(string($formTitle), 'incipit', 'i')">
                 <xsl:choose>
-                    <xsl:when test="contains($formTitle/tei:ref[@type='form-name'], 'II')">
+                    <xsl:when test="matches(string($formTitle/tei:ref[@type='form-name']), '(^|\s)II(\s|$)')">
                         <xsl:text>2_</xsl:text>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:text>1_</xsl:text></xsl:otherwise>
+                        <xsl:text>1_</xsl:text>
+                    </xsl:otherwise>
                 </xsl:choose>
                 <xsl:text>incipit</xsl:text>
             </xsl:when>
@@ -584,7 +600,7 @@
                         <xsl:element name="respStmt" namespace="http://www.tei-c.org/ns/1.0">
                             <xsl:element name="resp" namespace="http://www.tei-c.org/ns/1.0">Hauptentwickler</xsl:element>
                             <xsl:element name="resp" namespace="http://www.tei-c.org/ns/1.0"><xsl:attribute name="xml:lang">eng</xsl:attribute>Lead developer</xsl:element>
-                            <xsl:element name="persName" namespace="http://www.tei-c.org/ns/1.0">Dr. Matthew Munson (Universität Hamburg)</xsl:element>
+                            <xsl:element name="persName" namespace="http://www.tei-c.org/ns/1.0">Thorben Schomacker (Universität Hamburg)</xsl:element>
                         </xsl:element>
                         <xsl:element name="sponsor" namespace="http://www.tei-c.org/ns/1.0">Akademie der Wissenschaften in Hamburg</xsl:element>
                         <xsl:element name="sponsor" namespace="http://www.tei-c.org/ns/1.0">Universität Hamburg</xsl:element>
@@ -1302,7 +1318,7 @@
     <!-- ===== note-text mode: serialize as plain inline text (no <w>) ===== -->
     
     <!-- Default in note-text: just recurse -->
-    <xsl:template match="node()" mode="note-text">
+    <xsl:template match="*" mode="note-text">
         <xsl:apply-templates select="node()" mode="note-text"/>
     </xsl:template>
     

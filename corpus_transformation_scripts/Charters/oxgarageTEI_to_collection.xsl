@@ -123,7 +123,7 @@
                                     <xsl:text>Lead developer</xsl:text>
                                 </xsl:element>
                                 <xsl:element name="persName" namespace="http://www.tei-c.org/ns/1.0">
-                                    <xsl:text>Dr. Matthew Munson (Universität Hamburg)</xsl:text>
+                                    <xsl:text>Thorben Schomacker (Universität Hamburg)</xsl:text>
                                 </xsl:element>
                             </xsl:element>
                             <xsl:element name="respStmt" namespace="http://www.tei-c.org/ns/1.0">

@@ -13,8 +13,10 @@ tsv_files = list()
 
 if os.path.isfile(argv[1]):
     tsv_files.append(argv[1])
-    dest_file_pattern = os.path.splitext(argv[1])[0]
+    dest_file_pattern = os.path.splitext(argv[1])[0].replace("formeln-","")
+    print("dest_file_pattern", dest_file_pattern)
     result_dir = os.path.join(os.path.dirname(argv[1]), 'results')
+    print("result_dir", result_dir)
 elif os.path.isdir(argv[1]):
     tsv_files += glob(os.path.join(argv[1], '*.tsv'))
     dest_file_pattern = os.path.join(argv[1], 'all_files')
@@ -104,9 +106,10 @@ dest_file_2 = dest_file_pattern + '_inflected_to_full_lem_mapping.json'
 dest_file_3 = dest_file_pattern + '_lemma_list.json'
 dest_file_4 = dest_file_pattern + '_inflected_to_full_lem_mapping_charters.json'
 dest_file_5 = dest_file_pattern + '_inflected_to_full_lem_mapping_formulae.json'
-dest_file_6 = os.path.join(argv[1], 'Formulae+Urkunden.csv')
+dest_file_6 = os.path.join(dest_folder, 'Formulae+Urkunden.csv')
 dest_file_7 = dest_file_pattern + '_inflected_to_lem_mapping.json'
 
+print("write to this folder:", dest_folder)
 if dest_folder:
     dest_file = os.path.join(dest_folder, 'lem_to_lem.json')
     dest_file_2 = os.path.join(dest_folder, 'inflected_to_lem.json')

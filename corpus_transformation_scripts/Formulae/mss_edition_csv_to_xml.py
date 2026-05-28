@@ -7,22 +7,25 @@ import os
 import logging
 from util import get_logger
 import errno
-
-def xslsx_to_csv(input_path,logger=None) -> str:
+import pandas as pd 
+def xslsx_to_csv(input_path,logger=None) -> str|list[str]:
     """
     Convert a xslsx-file located at input_path and convert it to csv-file at input_path.
     """
     input_file = find_csv(input_path, file_ending='*.xlsx')
-    import pandas as pd 
-    df = pd.DataFrame(pd.read_excel(input_file))
-    output_file = input_file.replace('xlsx', 'csv') 
-    df.to_csv(output_file, sep="\t", index=False)
-    if logger is not None:
-        logger.info('converted {input} to {output}'.format(input=input_file,output=output_file))
-    return output_file
+    def xslsx_to_csv_coversion(input_file,logger):
+        df = pd.DataFrame(pd.read_excel(input_file))
+        output_file = input_file.replace('xlsx', 'csv') 
+        df.to_csv(output_file, sep="\t", index=False)
+        if logger is not None:
+            logger.info('converted {input} to {output}'.format(input=input_file,output=output_file))
+        return output_file
+    if str == type(input_file): return xslsx_to_csv_coversion(input_file,logger)
+    elif list == type(input_file): return [xslsx_to_csv_coversion(input_file_item,logger) for input_file_item in input_file]
+    else: raise ValueError
 
 
-def find_csv(input_path, file_ending='*.csv'):
+def find_csv(input_path, file_ending='*.csv') -> str|list[str]:
     import fnmatch
     csv_list = []
     for file in os.listdir(input_path):
@@ -30,6 +33,7 @@ def find_csv(input_path, file_ending='*.csv'):
             csv_list.append(os.path.join(input_path, file))
     if 1==len(csv_list): return csv_list[0]
     if 0==len(csv_list): raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), input_path+'/'+file_ending)
+    if 1<len(csv_list) and 'flavigny' in input_path: return csv_list
     if 1<len(csv_list): raise Exception("There is more than one csv-file")
 
 def build_urn(s): 
@@ -258,15 +262,77 @@ def build_zaehlung(cell:str, sigla_html_dict, ed_bib_info, logger) -> str:
 
     return zaehlung_separator.join(zaehlung_components)
 
+import csv
+import os
+from typing import List
 
-def get_csv(input_path:str,logging) -> str:
-    if not 'csv' in input_path:
+def merge_csv_files(input_paths: List[str], logger) -> str:
+    """
+    Merge multiple tab-separated CSV files into a single CSV file.
+    Keeps the header from the first file only.
+    Returns the merged file path.
+    """
+    if not input_paths:
+        raise ValueError("merge_csv_files(): input_paths is empty")
+
+    # deterministic order (Ko, Pa+Ko, Pa) or alphabetical – choose what you prefer
+    input_paths = sorted(input_paths)
+
+    # write merged file next to the first file
+    base_dir = os.path.dirname(input_paths[0])
+    merged_path = os.path.join(base_dir, "_merged_flavigny.csv")
+
+    header = None
+    written_rows = 0
+
+    with open(merged_path, "w", newline="", encoding="utf-8") as out_f:
+        writer = csv.writer(out_f, delimiter="\t")
+
+        for p in input_paths:
+            with open(p, newline="", encoding="utf-8") as in_f:
+                reader = csv.reader(in_f, delimiter="\t")
+                rows = list(reader)
+                if not rows:
+                    logger.warning(f"{p} is empty, skipping")
+                    continue
+
+                if header is None:
+                    header = rows[0]
+                    writer.writerow(header)
+
+                # If some files have a different header, you should log it
+                if rows[0] != header:
+                    logger.warning(f"Header mismatch in {p}. Using header from first file.")
+
+                for r in rows[1:]:
+                    # skip fully empty lines
+                    if not any(cell.strip() for cell in r):
+                        continue
+                    writer.writerow(r)
+                    written_rows += 1
+
+    logger.info(f"Merged {len(input_paths)} files into {merged_path} ({written_rows} data rows)")
+    return merged_path
+
+
+def get_csv(input_path: str | list[str], logger) -> str:
+    # If we already got multiple files (Flavigny), merge them
+    if isinstance(input_path, list):
+        return merge_csv_files(input_path, logger)
+
+    # input_path is a string
+    if "csv" not in input_path.lower():
         try:
-            return find_csv(input_path)
+            found = find_csv(input_path)  # may return str OR list[str] (flavigny)
         except FileNotFoundError:
-            return xslsx_to_csv(input_path, logging)
-    else:
-        return input_path
+            found = xslsx_to_csv(input_path, logger)  # may return str OR list[str]
+
+        if isinstance(found, list):
+            return merge_csv_files(found, logger)
+        return found
+
+    return input_path
+
 def make_temp_id(title:str) -> str:
     """
     workaround method for mapping a title to an identifier
@@ -291,10 +357,29 @@ def make_temp_id(title:str) -> str:
             return identifier
         case 3 | 4:
             corpus = title_components[0].lower()
-            subcorpus = title_components[1].lower()
+            subcorpus = title_components[1]  # keep original case for checking
             number = title_components[2].zfill(3)
-            identifier="urn:cts:formulae:{corpus}.form_{subcorpus}_{number}.lat001".format(corpus=corpus , subcorpus=subcorpus, number=number)
+
+            if corpus == "flavigny":
+                sub_lc = subcorpus.lower()
+                if sub_lc == "ko":
+                    series = "3"
+                elif sub_lc == "pa":
+                    series = "2"
+                elif subcorpus.replace(" ", "").lower() in {"pa+ko", "ko+pa"}:
+                    series = "1"
+                else:
+                    raise ValueError(f"Unknown Flavigny subcorpus token in title: {title}")
+
+                identifier = f"urn:cts:formulae:{corpus}.form{series}_{number}.lat001"
+                return identifier
+
+            # default behavior for other corpora:
+            identifier = "urn:cts:formulae:{corpus}.form_{subcorpus}_{number}.lat001".format(
+                corpus=corpus, subcorpus=subcorpus.lower(), number=number
+            )
             return identifier
+
         case _:
             raise ValueError("{} has too much information.".format(title))
 

@@ -18,17 +18,24 @@ Various scripts used in the Formulae - Litterae - Chartae Project
 
 Source: https://docs.python.org/3/library/logging.html#logging-levels
 
-### Run a script:
+## Run a script:
 1. `cd ~/git/scripts/`
 1. activate the virtualenv (e.g., `source .venv/bin/activate`)
 2. install the requirements via `pip install -r requirements.txt` within in the venv
 3. If the requirements have been installed properly, you can launch `python3 <your_script>.py`
 
+### Formulae
 #### transform_cte_to_dll
 
 ```shell
+# Sens
 cd ~/git/scripts/formel_transform/output/sens
 python3 ~/git/scripts/corpus_transformation_scripts/Formulae/transform_cte_to_dll.py ~/Downloads/SaxonHE9-8-0-11J/saxon9he.jar sens ~/git/formulae-corpora/data/formulae_collection/__capitains__.xml ~/git/scripts 
+# Flavigny
+cd ~/git/scripts/formel_transform/output/flavigny
+## Optional: delete the existing data folder for a clean start
+## Run the actual script
+python3 ~/git/scripts/corpus_transformation_scripts/Formulae/transform_cte_to_dll.py ~/Downloads/SaxonHE9-8-0-11J/saxon9he.jar flavigny ~/git/formulae-corpora/data/formulae_collection/__capitains__.xml ~/git/scripts 
 ```
 
 #### Post-hoc checks on collections:
@@ -36,6 +43,7 @@ python3 ~/git/scripts/corpus_transformation_scripts/Formulae/transform_cte_to_dl
 # python3 ~/git/scripts/corpus_transformation_scripts/Formulae/transform_cte_to_dll_checks.py <function> <arguments>
 python3 ~/git/scripts/corpus_transformation_scripts/Formulae/transform_cte_to_dll_checks.py check_leaked_apparatus_in_corpus ~/git/formulae-corpora/data/marculf
 ```
+### lemmatization
 
 
 ## Contribution guide

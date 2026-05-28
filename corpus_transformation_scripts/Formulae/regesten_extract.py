@@ -51,6 +51,7 @@ def create_subtrees(input_tei_path_list: list[str], logger) -> tuple[str, list, 
             #subcorpus_name = "_a"
             if "ueberarbeitung" in corpus_name.lower():
                 subcorpus_name = ""
+            subcorpus_name = ""
 
         else:
             subcorpus_name = "_"+corpus_information_dict["subcorpus_index"]+"_"
@@ -107,12 +108,13 @@ def get_regesten_files(collection: str, collection_title_case: str, file_type: s
     :return: A list of matching file paths
     """
     def make_collection_regesten_regex(collection_title_case):
-        if "flavigny" == collection_title_case.lower(): return f"{collection_title_case}( Ko)*( Pa)*( Pa+Ko)*"
+        #if "flavigny" == collection_title_case.lower(): return f"{collection_title_case}( Ko)*( Pa)*( Pa+Ko)*"
+        if collection_title_case.lower() in ["fsb", "fsm"]: return collection_title_case.upper()
         return collection_title_case
 
     base_dir = os.path.expanduser(f"~/git/scripts/formel_transform/input/{collection}")
     #pattern = f"Regesten {collection_title_case} [ABI]*.{file_type}"
-    pattern = f"Regesten {collection_title_case}*.{file_type}"
+    pattern = f"Regesten {make_collection_regesten_regex(collection_title_case)}*.{file_type}"
     #pattern = f"Regesten {make_collection_regesten_regex(collection_title_case)}.{file_type}"
     search_path = os.path.join(base_dir, pattern)
     print("search_path:"+search_path)
