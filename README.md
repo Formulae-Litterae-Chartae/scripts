@@ -41,7 +41,7 @@ python3 ~/git/scripts/corpus_transformation_scripts/Formulae/transform_cte_to_dl
 #### Post-hoc checks on collections:
 ```shell
 # python3 ~/git/scripts/corpus_transformation_scripts/Formulae/transform_cte_to_dll_checks.py <function> <arguments>
-python3 ~/git/scripts/corpus_transformation_scripts/Formulae/transform_cte_to_dll_checks.py check_leaked_apparatus_in_corpus ~/git/formulae-corpora/data/marculf
+python3 ~/git/scripts/corpus_transformation_scripts/Formulae/transform_cte_to_dll_checks.py check_leaked_apparatus_in_corpus ~/git/formulae-corpora/data/bourges debug
 ```
 ### lemmatization
 

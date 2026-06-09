@@ -480,10 +480,7 @@ def check_leaked_apparatus_in_text(
     )
 
     if not leaked_mentions:
-        logger.info(
-            "Check passed! No leaked apparatus material found in %s.",
-            transformed_file
-        )
+        logger.debug("Check passed! No leaked apparatus material found in %s.",transformed_file)
         return True
 
     logger.error(
@@ -570,7 +567,7 @@ def _setup_default_logger() -> logging.Logger:
         formatter = logging.Formatter("%(levelname)s: %(message)s")
         handler.setFormatter(formatter)
         logger.addHandler(handler)
-        logger.setLevel(logging.WARN)
+        logger.setLevel(logging.INFO)
     return logger
 
 
@@ -593,9 +590,12 @@ if __name__ == "__main__":
         if len(sys.argv) < 3:
             print("Missing argument: corpus_folder")
             sys.exit(1)
-
+        if len(sys.argv) > 3: 
+            if sys.argv[3].lower() == "debug":
+                logger.setLevel(logging.DEBUG)
+        
         corpus_folder = sys.argv[2]
-
+        
         success = check_leaked_apparatus_in_corpus(
             corpus_folder,
             logger,
