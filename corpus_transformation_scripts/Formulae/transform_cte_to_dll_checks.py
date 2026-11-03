@@ -555,6 +555,197 @@ def check_leaked_apparatus_in_corpus(
     return all_checks_passed
 
 #############################################
+# subword italics that split a <w> in two
+
+_TEI_NS_URI = "http://www.tei-c.org/ns/1.0"
+_TRANSPARENT_FORMATTING_TAGS = {"seg", "hi", "emph", "foreign", "term"}
+
+
+def _is_italic_element(elem) -> bool:
+    """
+    True for <seg type="italic;"> (as produced by the transformation)
+    and for <hi rend="italic">-style elements.
+    """
+    name = etree.QName(elem).localname
+    if name == "seg":
+        return "italic" in (elem.get("type") or "").lower()
+    if name == "hi":
+        rend = (elem.get("rend") or "").lower()
+        return "italic" in rend or rend in ("i", "it")
+    return False
+
+
+def _is_transparent_element(elem) -> bool:
+    """
+    Pure formatting wrappers do not separate words.
+    Note markers (<seg type="note-begin-marker">) do, so they are not transparent.
+    """
+    name = etree.QName(elem).localname
+    if name not in _TRANSPARENT_FORMATTING_TAGS:
+        return False
+    if name == "seg" and "note" in (elem.get("type") or "").lower():
+        return False
+    return True
+
+
+def _lowest_common_ancestor(a, b):
+    b_chain = {b, *b.iterancestors()}
+    for candidate in (a, *a.iterancestors()):
+        if candidate in b_chain:
+            return candidate
+    return None
+
+
+def _find_words_split_by_italics(root) -> list[tuple]:
+    """
+    Return (first_w, second_w) pairs that are adjacent without whitespace and
+    whose boundary crosses an italic element, i.e. one word split by italics.
+    """
+    w_tag = "{%s}w" % _TEI_NS_URI
+    problems = []
+
+    w_depth = 0              # > 0 while we are inside a <w>
+    prev_w = None            # last <w> that has been closed
+    gap_text = ""            # text between prev_w and the next <w>
+    italic_in_gap = False    # italic element opened/closed inside the gap
+    gap_interrupted = False  # pc, pb, note, </p>, ... inside the gap
+
+    for event, elem in etree.iterwalk(root, events=("start", "end")):
+        if not isinstance(elem.tag, str):  # comments / processing instructions
+            continue
+
+        if elem.tag == w_tag:
+            if event == "start":
+                if (
+                    w_depth == 0
+                    and prev_w is not None
+                    and italic_in_gap
+                    and not gap_interrupted
+                    and not any(ch.isspace() for ch in gap_text)
+                ):
+                    problems.append((prev_w, elem))
+                w_depth += 1
+                prev_w = None
+            else:
+                w_depth -= 1
+                if w_depth == 0:
+                    prev_w = elem
+                    gap_text = elem.tail or ""
+                    italic_in_gap = False
+                    gap_interrupted = False
+            continue
+
+        # everything inside a <w> belongs to that word
+        if w_depth > 0 or prev_w is None:
+            continue
+
+        if event == "start":
+            if not _is_transparent_element(elem):
+                gap_interrupted = True
+            if _is_italic_element(elem):
+                italic_in_gap = True
+            gap_text += elem.text or ""
+        else:
+            if _is_italic_element(elem):
+                italic_in_gap = True
+            gap_text += elem.tail or ""
+
+    return problems
+
+
+def check_subword_italics_in_text(
+    transformed_file: str,
+    logger: logging.Logger,
+    raise_errors: bool = False
+) -> bool:
+    """
+    Check whether italics start or end inside a word, which splits one word into
+    two <w> elements. This breaks the lemmatization, e.g.:
+
+        <seg type="italic;"><w>quomodo</w> <w>caute</w> <w>ambula</w></seg><w>veris</w>
+
+    should be:
+
+        <seg type="italic;"><w>quomodo</w> <w>caute</w> </seg><w><seg type="italic;">ambula</seg>veris</w>
+
+    Returns:
+        bool: True if no split words were found, False otherwise.
+    """
+    parser = etree.XMLParser(remove_blank_text=False, recover=True)
+    try:
+        tree = etree.parse(transformed_file, parser)
+    except Exception as exc:
+        logger.error("Could not parse %s: %s", transformed_file, exc)
+        if raise_errors:
+            raise
+        return False
+
+    problems = _find_words_split_by_italics(tree.getroot())
+
+    if not problems:
+        logger.debug("Check passed! No words split by italics in %s.", transformed_file)
+        return True
+
+    logger.error(
+        "Check FAILED! Found %s word(s) split by subword italics in %s.",
+        len(problems), transformed_file,
+    )
+
+    for i, (first_w, second_w) in enumerate(problems, start=1):
+        first_text = _normalize_whitespace("".join(first_w.itertext()))
+        second_text = _normalize_whitespace("".join(second_w.itertext()))
+        ancestor = _lowest_common_ancestor(first_w, second_w)
+        logger.error(
+            "[%s] Probably one word split by italics in %s | paragraph=%s | "
+            "parts=%r + %r (-> %r) | snippet=%s",
+            i,
+            transformed_file,
+            _get_nearest_paragraph_id(first_w),
+            first_text,
+            second_text,
+            first_text + second_text,
+            _serialize_xml_snippet(ancestor) if ancestor is not None else None,
+        )
+
+    if raise_errors:
+        raise ValueError(
+            f"Found {len(problems)} word(s) split by subword italics in {transformed_file}."
+        )
+    return False
+
+
+def check_subword_italics_in_corpus(
+    corpus_folder: str,
+    logger: logging.Logger,
+    raise_errors: bool = False
+) -> bool:
+    """
+    Run the subword italics check on all XML files in a corpus folder.
+    """
+    xml_files = glob(os.path.join(corpus_folder, "**", "*.xml"), recursive=True)
+
+    if not xml_files:
+        logger.warning("No XML files found in %s.", corpus_folder)
+        return True
+
+    logger.info("Checking %s XML files in %s for subword italics...", len(xml_files), corpus_folder)
+
+    all_checks_passed = True
+    for xml_file in xml_files:
+        if not check_subword_italics_in_text(xml_file, logger, raise_errors=False):
+            all_checks_passed = False
+
+    if all_checks_passed:
+        logger.info("All files passed the subword italics check.")
+    else:
+        logger.error("Words split by subword italics detected in corpus.")
+        if raise_errors:
+            raise ValueError(f"Words split by subword italics found under {corpus_folder}.")
+
+    return all_checks_passed
+
+
+#############################################
 # Make it console executable
 
 def _setup_default_logger() -> logging.Logger:
@@ -582,6 +773,7 @@ if __name__ == "__main__":
         print("")
         print("Available commands:")
         print("  check_leaked_apparatus_in_corpus <corpus_folder>")
+        print("  check_subword_italics_in_corpus <corpus_folder> [debug]")
         sys.exit(1)
 
     command = sys.argv[1]
@@ -605,6 +797,22 @@ if __name__ == "__main__":
         if not success:
             sys.exit(2)
 
+    elif command == "check_subword_italics_in_corpus":
+        if len(sys.argv) < 3:
+            print("Missing argument: corpus_folder")
+            sys.exit(1)
+        if len(sys.argv) > 3 and sys.argv[3].lower() == "debug":
+            logger.setLevel(logging.DEBUG)
+
+        success = check_subword_italics_in_corpus(sys.argv[2], logger, raise_errors=False)
+        if not success:
+            sys.exit(2)
+
     else:
         print(f"Unknown command: {command}")
         sys.exit(1)
+
+#########
+# example commands
+# python transform_cte_to_dll_checks.py check_subword_italics_in_corpus /path/to/formulae-corpora/data/fsb debug
+# python ~/git/scripts/corpus_transformation_scripts/Formulae/transform_cte_to_dll_checks.py check_subword_italics_in_corpus ~/git/formulae-corpora/data/fsb debug
